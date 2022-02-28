@@ -3,12 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
+import { W98wModule } from 'projects/w98w/src/public-api';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    W98wModule
   ],
   providers: [],
   bootstrap: [AppComponent]
