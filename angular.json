@@ -100,6 +100,37 @@
           }
         }
       }
+    },
+    "w98w": {
+      "projectType": "library",
+      "root": "projects/w98w",
+      "sourceRoot": "projects/w98w/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/w98w/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/w98w/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/w98w/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/w98w/src/test.ts",
+            "tsConfig": "projects/w98w/tsconfig.spec.json",
+            "karmaConfig": "projects/w98w/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo-w98w"
