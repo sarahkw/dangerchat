@@ -1,4 +1,4 @@
-type Color = string & { __brand: "w98w-color" };
+export type Color = string & { __brand: "w98w-color" };
 
 export abstract class Colors {
 
