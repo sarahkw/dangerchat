@@ -50,10 +50,12 @@ export class SlantRectBevel implements Bevel {
 
 export abstract class Bevels {
 
+    // Don't forget to draw ants on focus!
+
     static readonly BUTTON = new SlantRectBevel([Colors.BEV_WHITE, Colors.BEV_LIGHTGRAY], [Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
     static readonly BUTTON_PRESSED = new SlantRectBevel([Colors.BEV_BLACK, Colors.BEV_DARKGRAY], [Colors.BEV_WHITE, Colors.BEV_LIGHTGRAY]);
-    static readonly BUTTON_ACTIVE = new SlantRectBevel([Colors.BEV_BLACK, Colors.BEV_WHITE, Colors.BEV_LIGHTGRAY], [Colors.BEV_BLACK, Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
-    static readonly BUTTON_ACTIVE_PRESSED = new RectBevel([Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
+    static readonly BUTTON_DEFAULT = new SlantRectBevel([Colors.BEV_BLACK, Colors.BEV_WHITE, Colors.BEV_LIGHTGRAY], [Colors.BEV_BLACK, Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
+    static readonly BUTTON_DEFAULT_PRESSED = new RectBevel([Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
 
     static readonly INPUTBOX = new SlantRectBevel([Colors.BEV_DARKGRAY, Colors.BEV_BLACK], [Colors.BEV_WHITE, Colors.BEV_LIGHTGRAY]);
     static readonly CHECKBOX = Bevels.INPUTBOX;
@@ -75,15 +77,4 @@ export abstract class Bevels {
 
     // systray.  just like FRAME but with 1 pixel instead of 2
     static readonly LIGHTFRAME = new SlantRectBevel([Colors.BEV_DARKGRAY], [Colors.BEV_WHITE]);
-
-    static hasAnts(bevel: Bevel) {
-        // Ants are applied via CSS border.
-        switch (bevel) {
-            case Bevels.BUTTON_ACTIVE:
-            case Bevels.BUTTON_ACTIVE_PRESSED:
-                return true;
-            default:
-                return false;
-        }
-    }
 }
