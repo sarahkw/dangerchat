@@ -10,43 +10,51 @@ div {
 .w98w-bevel-8split-left {
     left: 0;
     background-repeat: repeat-y;
+    background-position: left;
 }
 
 .w98w-bevel-8split-right {
     right: 0;
     background-repeat: repeat-y;
+    background-position: right;
 }
 
 .w98w-bevel-8split-top {
     top: 0;
     background-repeat: repeat-x;
+    background-position: top;
 }
 
 .w98w-bevel-8split-bottom {
     bottom: 0;
     background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 .w98w-bevel-8split-tl {
     top: 0;
     left: 0;
     background-repeat: no-repeat;
+    background-position: top left;
 }
 
 .w98w-bevel-8split-tr {
     top: 0;
     right: 0;
     background-repeat: no-repeat;
+    background-position: top right;
 }
 
 .w98w-bevel-8split-bl {
     bottom: 0;
     left: 0;
     background-repeat: no-repeat;
+    background-position: bottom left;
 }
 
 .w98w-bevel-8split-br {
     bottom: 0;
     right: 0;
     background-repeat: no-repeat;
+    background-position: bottom right;
 }
