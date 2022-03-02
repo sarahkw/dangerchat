@@ -1,0 +1,48 @@
+div {
+    position: absolute;
+    image-rendering: pixelated;
+}
+
+.w98w-bevel-8split-left {
+    left: 0;
+    background-repeat: repeat-y;
+}
+
+.w98w-bevel-8split-right {
+    right: 0;
+    background-repeat: repeat-y;
+}
+
+.w98w-bevel-8split-top {
+    top: 0;
+    background-repeat: repeat-x;
+}
+
+.w98w-bevel-8split-bottom {
+    bottom: 0;
+    background-repeat: repeat-x;
+}
+
+.w98w-bevel-8split-tl {
+    top: 0;
+    left: 0;
+    background-repeat: no-repeat;
+}
+
+.w98w-bevel-8split-tr {
+    top: 0;
+    right: 0;
+    background-repeat: no-repeat;
+}
+
+.w98w-bevel-8split-bl {
+    bottom: 0;
+    left: 0;
+    background-repeat: no-repeat;
+}
+
+.w98w-bevel-8split-br {
+    bottom: 0;
+    right: 0;
+    background-repeat: no-repeat;
+}

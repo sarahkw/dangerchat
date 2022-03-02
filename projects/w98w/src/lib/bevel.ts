@@ -1,5 +1,7 @@
 import { Color, Colors } from "./colors";
 
+import { BevelImageService } from "./bevel-image.service";
+
 export interface Bevel {
 }
 
@@ -36,8 +38,97 @@ export class OutToInLineBevel implements Bevel {
     }
 }
 
+export enum RectImage {
+    Left,
+    Right,
+    Top,
+    Bottom,
+    TL,
+    TR,
+    BL,
+    BR
+}
+
 export class RectBevel implements Bevel {
     constructor(public outIn: Color[]) {}
+}
+
+abstract class dh {
+
+    private static pixel(canvas: CanvasRenderingContext2D, fillStyle: string, x: number, y: number) {
+        canvas.fillStyle = fillStyle;
+        canvas.fillRect(x, y, 1, 1);
+    }
+
+    static simple(service: BevelImageService, width: number, pixels: Color[]) {
+        let uniqueKey = `w98w-bevel-simple-${width}`;
+        for (let pixel of pixels) {
+            uniqueKey += "-";
+            uniqueKey += pixel.toString();
+        }
+
+        return service.ensureImage(uniqueKey, width, pixels.length / width, (canvas) => {
+            for (let i = 0; i < pixels.length; ++i) {
+                dh.pixel(canvas, pixels[i], i % width, Math.floor(i / width));
+            }
+        });
+    }
+
+    /*
+       0 0 0
+       0 1 1
+       0 1 2
+    */
+    private static layeredGeneric(service: BevelImageService, filtKey: string,
+                                  filt: (size: number, coord: {x: number, y: number}) => {x: number, y: number},
+                                  pixels: Color[]) {
+        let uniqueKey = `w98w-bevel-layered-${filtKey}`;
+        for (let pixel of pixels) {
+            uniqueKey += "-";
+            uniqueKey += pixel.toString();
+        }
+
+        return service.ensureImage(uniqueKey, pixels.length, pixels.length, (canvas) => {
+            for (let i = 0; i < pixels.length; ++i) {
+
+                // from (i, i), fill right-wards
+
+                for (let j = i; j < pixels.length; ++j) {
+                    const coord = filt(pixels.length, {
+                        x: j,
+                        y: i
+                    });
+                    dh.pixel(canvas, pixels[i], coord.x, coord.y);
+                }
+
+                // from (i, i), fill down-wards  (essentially, not exactly)
+
+                for (let j = i + 1; j < pixels.length; ++j) {
+                    const coord = filt(pixels.length, {
+                        x: i,
+                        y: j
+                    });
+                    dh.pixel(canvas, pixels[i], coord.x, coord.y);
+                }
+            }
+        });
+    }
+
+    static layeredTL(service: BevelImageService, pixels: Color[]) {
+        return dh.layeredGeneric(service, 'TL', (_, coord) => coord, pixels);
+    }
+
+    static layeredBR(service: BevelImageService, pixels: Color[]) {
+        return dh.layeredGeneric(service, 'BR', (size, coord) => ({x: size - 1 - coord.x, y: size - 1 - coord.y}), pixels);
+    }
+
+    static layeredTR(service: BevelImageService, pixels: Color[]) {
+        return dh.layeredGeneric(service, 'TR', (size, coord) => ({x: size - 1 - coord.x, y: coord.y}), pixels);
+    }
+
+    static layeredBL(service: BevelImageService, pixels: Color[]) {
+        return dh.layeredGeneric(service, 'BL', (size, coord) => ({x: coord.x, y: size - 1 - coord.y}), pixels);
+    }
 }
 
 export class SlantRectBevel implements Bevel {
@@ -45,7 +136,36 @@ export class SlantRectBevel implements Bevel {
     constructor(
         public topLeft: Color[],
         public bottomRight: Color[],
-        public antiSlant: boolean = false) {}
+        public antiSlant: boolean = false) {
+
+        console.assert(topLeft.length == bottomRight.length);
+    }
+
+    // returns an URL
+    genImage(which: RectImage, service: BevelImageService): string {
+        console.assert(this.antiSlant == false); // true is not supported yet
+
+        switch (which) {
+        case RectImage.Left:
+            return dh.simple(service, this.topLeft.length, this.topLeft);
+        case RectImage.Right:
+            return dh.simple(service, this.bottomRight.length, this.bottomRight.slice().reverse());
+        case RectImage.Top:
+            return dh.simple(service, 1, this.topLeft);
+        case RectImage.Bottom:
+            return dh.simple(service, 1, this.bottomRight.slice().reverse());
+        case RectImage.TL:
+            return dh.layeredTL(service, this.topLeft);
+        case RectImage.TR:
+            // TODO: is placeholder, implement me!
+            return dh.layeredTR(service, this.bottomRight);
+        case RectImage.BL:
+            // TODO: is placeholder, implement me!
+            return dh.layeredBL(service, this.bottomRight);
+        case RectImage.BR:
+            return dh.layeredBR(service, this.bottomRight);
+        }
+    }
 }
 
 export abstract class Bevels {
@@ -63,12 +183,12 @@ export abstract class Bevels {
     static readonly WINDOW = new SlantRectBevel([Colors.BEV_LIGHTGRAY, Colors.BEV_WHITE], [Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
     static readonly MENU = Bevels.WINDOW;
     static readonly SCROLLBAR = Bevels.WINDOW;
-    
+
     static readonly FRAME = new SlantRectBevel([Colors.BEV_DARKGRAY, Colors.BEV_WHITE], [Colors.BEV_WHITE, Colors.BEV_DARKGRAY], true /*antiSlant*/);
 
     // taskbar
     static readonly DOCKED_PANEL = new OutToInLineBevel([Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
-    
+
     // taskbar, menu
     static readonly MENU_DIVIDER_H = new HLineBevel([Colors.BEV_DARKGRAY, Colors.BEV_WHITE]);
 
