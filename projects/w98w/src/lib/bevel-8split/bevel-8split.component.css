@@ -1,6 +1,10 @@
 div {
     position: absolute;
+
+    /* https://css-tricks.com/keep-pixelated-images-pixelated-as-they-scale/ */
     image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 .w98w-bevel-8split-left {
