@@ -1,1 +1,94 @@
-<p>pixel-alignment works!</p>
+<h2>pixel alignment</h2>
+
+<style>
+    .form-container {
+        display: inline-block;
+        width: 300px;
+        padding: 10px;
+        padding-right: 20px;
+        background-color: #c0c0c0;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .form-group label, .form-group input {
+        margin: 2px;
+        display: block;
+        width: 100%;
+    }
+
+    .draw-container {
+        display: inline-block;
+        background-color: white;
+        border: 2px solid #c0c0c0;
+        border-radius: 3px;
+        vertical-align: top;
+        padding: 10px;
+    }
+
+    .draw-target {
+        width: 100px;
+        height: 100px;
+        background-color: whitesmoke;
+        margin: auto;
+
+        /* https://css-tricks.com/keep-pixelated-images-pixelated-as-they-scale/ */
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+
+        background-position: bottom center;
+        background-repeat: no-repeat;
+    }
+
+</style>
+
+<div class="wrapper">
+
+    <div class="form-container">
+
+        <form (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <label for="csswidth">CSS width</label>
+                <input id="csswidth" name="csswidth" type="number" [(ngModel)]="csswidth">
+            </div>
+
+            <div class="form-group">
+                <label for="cssheight">CSS height</label>
+                <input id="cssheight" name="cssheight" type="number" [(ngModel)]="cssheight">
+            </div>
+
+            <div class="form-group">
+                <label for="canvaswidth">Canvas width</label>
+                <input id="canvaswidth" name="canvaswidth" type="number" [(ngModel)]="canvaswidth">
+            </div>
+
+            <div class="form-group">
+                <label for="canvasheight">Canvas height</label>
+                <input id="canvasheight" name="canvasheight" type="number" [(ngModel)]="canvasheight">
+            </div>
+
+            <div class="form-group">
+                <label for="pixelsize">Pixel size</label>
+                <input id="pixelsize" name="pixelsize" type="number" [(ngModel)]="pixelsize">
+            </div>
+
+            <div class="form-group">
+                <label for="altcount">Alt count</label>
+                <input id="altcount" name="altcount" type="number" [(ngModel)]="altcount">
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Draw</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="draw-container">
+        <div #drawTarget class="draw-target" [ngStyle]="drawTargetStyle"></div>
+    </div>
+
+</div>
