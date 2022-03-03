@@ -75,7 +75,9 @@
             <div class="form-group">
                 <label for="canvasheight">Canvas height</label>
                 <input id="canvasheight" name="canvasheight" type="number" [(ngModel)]="canvasheight">
-                <button class="tool" type="button" (click)="onAutoAssignCanvasHeight()">= CSS height * devicePixelRatio</button>
+                <button class="tool" type="button"
+                    [title]="rawAutoCanvasHeightPreview()"
+                    (click)="onAutoAssignCanvasHeight()">= CSS height * devicePixelRatio</button>
             </div>
 
             <div class="form-group">

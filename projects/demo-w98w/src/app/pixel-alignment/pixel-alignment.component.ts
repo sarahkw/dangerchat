@@ -47,6 +47,11 @@ export class PixelAlignmentComponent implements OnInit {
     this.cssheight = this.pixelsize * this.altcount;
   }
 
+  rawAutoCanvasHeightPreview() {
+    // xxx: depend on someone else to subscribe to changes
+    return this.cssheight * window.devicePixelRatio;
+  }
+
   onAutoAssignCanvasHeight() {
     this.canvasheight = Math.round(this.cssheight * window.devicePixelRatio);
   }
