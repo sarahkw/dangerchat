@@ -12,16 +12,16 @@
         margin-bottom: 10px;
     }
 
+    .form-group {
+        display: flex;
+    }
+
     .form-group .form-control {
         margin: 2px;
-        display: block;
-        width: 100%;
+        flex: 1;
     }
 
     .form-group button.tool {
-        display: block;
-        margin-left: auto;
-        margin-right: 0;
     }
 
     .draw-container {
@@ -55,48 +55,48 @@
 
         <form (ngSubmit)="onSubmit()">
 
+            <label for="direction">Direction</label>
             <div class="form-group">
-                <label for="direction">Direction</label>
                 <select id="direction" class="form-control" name="direction" [(ngModel)]="direction">
                     <option *ngFor="let d of directions" [value]="d">{{ d }}</option>
                 </select>
             </div>
 
+            <label for="csswidth">CSS width</label>
             <div class="form-group">
-                <label for="csswidth">CSS width</label>
                 <input id="csswidth" class="form-control" name="csswidth" type="number" [(ngModel)]="csswidth">
-                <button class="tool" type="button" (click)="onAutoAssignCssWidth()">= Pixel size * Alt count</button>
+                <button class="tool" type="button" (click)="onAutoAssignCssWidth()" title="= Pixel size * Alt count">Auto</button>
             </div>
 
+            <label for="cssheight">CSS height</label>
             <div class="form-group">
-                <label for="cssheight">CSS height</label>
                 <input id="cssheight" class="form-control" name="cssheight" type="number" [(ngModel)]="cssheight">
-                <button class="tool" type="button" (click)="onAutoAssignCssHeight()">= Pixel size * Alt count</button>
+                <button class="tool" type="button" (click)="onAutoAssignCssHeight()" title="= Pixel size * Alt count">Auto</button>
             </div>
 
+            <label for="canvaswidth">Canvas width</label>
             <div class="form-group">
-                <label for="canvaswidth">Canvas width</label>
                 <input id="canvaswidth" class="form-control" name="canvaswidth" type="number" [(ngModel)]="canvaswidth">
                 <button class="tool" type="button"
-                    [title]="rawAutoCanvasWidthPreview()"
-                    (click)="onAutoAssignCanvasWidth()">= CSS width * devicePixelRatio</button>
+                    [title]="'= CSS width * devicePixelRatio = ' + rawAutoCanvasWidthPreview()"
+                    (click)="onAutoAssignCanvasWidth()">Auto</button>
             </div>
 
+            <label for="canvasheight">Canvas height</label>
             <div class="form-group">
-                <label for="canvasheight">Canvas height</label>
                 <input id="canvasheight" class="form-control" name="canvasheight" type="number" [(ngModel)]="canvasheight">
                 <button class="tool" type="button"
-                    [title]="rawAutoCanvasHeightPreview()"
-                    (click)="onAutoAssignCanvasHeight()">= CSS height * devicePixelRatio</button>
+                    [title]="'= CSS height * devicePixelRatio = ' + rawAutoCanvasHeightPreview()"
+                    (click)="onAutoAssignCanvasHeight()">Auto</button>
             </div>
 
+            <label for="pixelsize">Pixel size</label>
             <div class="form-group">
-                <label for="pixelsize">Pixel size</label>
                 <input id="pixelsize" class="form-control" name="pixelsize" type="number" [(ngModel)]="pixelsize">
             </div>
 
+            <label for="altcount">Alt count</label>
             <div class="form-group">
-                <label for="altcount">Alt count</label>
                 <input id="altcount" class="form-control" name="altcount" type="number" [(ngModel)]="altcount">
             </div>
 
