@@ -7,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PixelAlignmentComponent implements OnInit {
 
-  csswidth = 300;
+  csswidth = 90;
   cssheight = 100;
-  canvaswidth = 300;
+  canvaswidth = 90;
   canvasheight = 100;
   pixelsize = 1;
-  altcount = 2;
+  altcount = 50;
 
   drawTargetStyle = {};
 
