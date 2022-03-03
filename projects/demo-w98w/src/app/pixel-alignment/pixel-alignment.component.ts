@@ -40,8 +40,10 @@ export class PixelAlignmentComponent implements OnInit {
         pos = 0;
         break;
       case "bottom":
-      case "right":
         pos = this.canvasheight;
+        break;
+      case "right":
+        pos = this.canvaswidth;
         break;
     }
 
