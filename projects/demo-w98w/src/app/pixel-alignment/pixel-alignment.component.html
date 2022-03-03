@@ -12,7 +12,7 @@
         margin-bottom: 10px;
     }
 
-    .form-group label, .form-group input {
+    .form-group label, .form-group input, .form-group select {
         margin: 2px;
         display: block;
         width: 100%;
@@ -44,7 +44,6 @@
         image-rendering: -moz-crisp-edges;
         image-rendering: crisp-edges;
 
-        background-position: bottom center;
         background-repeat: no-repeat;
     }
 
@@ -57,8 +56,16 @@
         <form (ngSubmit)="onSubmit()">
 
             <div class="form-group">
+                <label for="direction">Direction</label>
+                <select id="direction" name="direction" [(ngModel)]="direction">
+                    <option *ngFor="let d of directions" [value]="d">{{ d }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="csswidth">CSS width</label>
                 <input id="csswidth" name="csswidth" type="number" [(ngModel)]="csswidth">
+                <button class="tool" type="button" (click)="onAutoAssignCssWidth()">= Pixel size * Alt count</button>
             </div>
 
             <div class="form-group">
@@ -70,6 +77,9 @@
             <div class="form-group">
                 <label for="canvaswidth">Canvas width</label>
                 <input id="canvaswidth" name="canvaswidth" type="number" [(ngModel)]="canvaswidth">
+                <button class="tool" type="button"
+                    [title]="rawAutoCanvasWidthPreview()"
+                    (click)="onAutoAssignCanvasWidth()">= CSS width * devicePixelRatio</button>
             </div>
 
             <div class="form-group">
