@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { W98wModule } from 'projects/w98w/src/public-api';
+import { PixelAlignmentComponent } from './pixel-alignment/pixel-alignment.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PixelAlignmentComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     W98wModule
   ],
   providers: [],
