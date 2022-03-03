@@ -18,6 +18,12 @@
         width: 100%;
     }
 
+    .form-group button.tool {
+        display: block;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
     .draw-container {
         display: inline-block;
         background-color: white;
@@ -68,6 +74,7 @@
             <div class="form-group">
                 <label for="canvasheight">Canvas height</label>
                 <input id="canvasheight" name="canvasheight" type="number" [(ngModel)]="canvasheight">
+                <button class="tool" type="button" (click)="onAutoAssignCanvasHeight()">= CSS height * devicePixelRatio</button>
             </div>
 
             <div class="form-group">
