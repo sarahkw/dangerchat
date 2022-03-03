@@ -11,9 +11,9 @@ export class PixelAlignmentComponent implements OnInit {
 
   direction = this.directions[0];
   csswidth = 90;
-  cssheight = 100;
+  cssheight = 90;
   canvaswidth = 90;
-  canvasheight = 100;
+  canvasheight = 90;
   pixelsize = 1;
   altcount = 50;
 
