@@ -86,12 +86,12 @@ export class PixelAlignmentComponent implements OnInit {
     this.cssheight = this.pixelsize * this.altcount;
   }
 
-  on100CssWidth() {
-    this.csswidth = 100;
+  onFixedCssWidth(num: number) {
+    this.csswidth = num;
   }
 
-  on100CssHeight() {
-    this.cssheight = 100;
+  onFixedCssHeight(num: number) {
+    this.cssheight = num;
   }
 
   rawAutoCanvasWidthPreview() {

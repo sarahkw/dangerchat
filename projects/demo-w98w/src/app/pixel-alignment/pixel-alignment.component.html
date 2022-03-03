@@ -76,14 +76,16 @@
             <label for="csswidth">CSS width</label>
             <div class="form-group">
                 <input id="csswidth" class="form-control" name="csswidth" type="number" [(ngModel)]="csswidth">
-                <button class="tool" type="button" (click)="on100CssWidth()">100</button>
+                <button class="tool" type="button" (click)="onFixedCssWidth(10)">10</button>
+                <button class="tool" type="button" (click)="onFixedCssWidth(100)">100</button>
                 <button class="tool" type="button" (click)="onAutoAssignCssWidth()" title="= Pixel size * Alt count">Auto</button>
             </div>
 
             <label for="cssheight">CSS height</label>
             <div class="form-group">
                 <input id="cssheight" class="form-control" name="cssheight" type="number" [(ngModel)]="cssheight">
-                <button class="tool" type="button" (click)="on100CssHeight()">100</button>
+                <button class="tool" type="button" (click)="onFixedCssHeight(10)">10</button>
+                <button class="tool" type="button" (click)="onFixedCssHeight(100)">100</button>
                 <button class="tool" type="button" (click)="onAutoAssignCssHeight()" title="= Pixel size * Alt count">Auto</button>
             </div>
 
