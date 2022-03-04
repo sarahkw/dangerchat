@@ -2,7 +2,7 @@ export class StyleInjector {
 
     private element?: HTMLStyleElement;
 
-    onDestroy(): void {
+    destroy(): void {
         if (this.element) {
             this.element.remove();
             this.element = undefined;
