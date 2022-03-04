@@ -79,37 +79,30 @@ export class PixelAlignmentComponent implements OnInit {
   }
 
   onAutoAssignCssWidth() {
-    this.csswidth = this.pixelsize * this.altcount;
+    this.csswidth = Math.round(this.canvaswidth / window.devicePixelRatio);
   }
 
   onAutoAssignCssHeight() {
-    this.cssheight = this.pixelsize * this.altcount;
+    this.cssheight = Math.round(this.canvasheight / window.devicePixelRatio);
   }
 
-  onFixedCssWidth(num: number) {
-    this.csswidth = num;
-  }
-
-  onFixedCssHeight(num: number) {
-    this.cssheight = num;
-  }
-
-  rawAutoCanvasWidthPreview() {
+  rawAutoCssWidthPreview() {
     // xxx: depend on someone else to subscribe to changes
-    return this.csswidth * window.devicePixelRatio;
+    return this.canvaswidth / window.devicePixelRatio;
   }
 
-  rawAutoCanvasHeightPreview() {
+  rawAutoCssHeightPreview() {
     // xxx: depend on someone else to subscribe to changes
-    return this.cssheight * window.devicePixelRatio;
+    return this.canvasheight / window.devicePixelRatio;
   }
 
   onAutoAssignCanvasWidth() {
-    this.canvaswidth = Math.round(this.csswidth * window.devicePixelRatio);
+    this.canvaswidth = this.pixelsize * this.altcount;
   }
 
   onAutoAssignCanvasHeight() {
-    this.canvasheight = Math.round(this.cssheight * window.devicePixelRatio);
+    this.canvasheight = this.pixelsize * this.altcount;
   }
+
 
 }
