@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Bevels, RectImage } from '../bevel';
-import { BevelImageService } from '../bevel-image.service';
+import { PixelImageService } from '../pixel-image.service';
 import { Colors } from '../colors';
 import { StyleInjector } from '../style-injector';
 
@@ -20,7 +20,7 @@ export class ButtonComponent implements OnInit, OnDestroy {
 
   private styleInjector = new StyleInjector();
 
-  constructor(private imgService: BevelImageService) { }
+  constructor(private imgService: PixelImageService) { }
 
   ngOnInit(): void {
 

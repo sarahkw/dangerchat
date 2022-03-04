@@ -1,6 +1,6 @@
 import { Color, Colors } from "./colors";
 
-import { BevelImageService } from "./bevel-image.service";
+import { PixelImageService } from "./pixel-image.service";
 
 export interface Bevel {
 }
@@ -60,7 +60,7 @@ abstract class dh {
         canvas.fillRect(x, y, 1, 1);
     }
 
-    static simple(service: BevelImageService, width: number, pixels: Color[]) {
+    static simple(service: PixelImageService, width: number, pixels: Color[]) {
         let uniqueKey = `w98w-bevel-simple-${width}`;
         for (let pixel of pixels) {
             uniqueKey += "-";
@@ -79,7 +79,7 @@ abstract class dh {
        0 1 1
        0 1 2
     */
-    private static layeredGeneric(service: BevelImageService, filtKey: string,
+    private static layeredGeneric(service: PixelImageService, filtKey: string,
                                   filt: (size: number, coord: {x: number, y: number}) => {x: number, y: number},
                                   pixels: Color[]) {
         let uniqueKey = `w98w-bevel-layered-${filtKey}`;
@@ -114,19 +114,19 @@ abstract class dh {
         });
     }
 
-    static layeredTL(service: BevelImageService, pixels: Color[]) {
+    static layeredTL(service: PixelImageService, pixels: Color[]) {
         return dh.layeredGeneric(service, 'TL', (_, coord) => coord, pixels);
     }
 
-    static layeredBR(service: BevelImageService, pixels: Color[]) {
+    static layeredBR(service: PixelImageService, pixels: Color[]) {
         return dh.layeredGeneric(service, 'BR', (size, coord) => ({x: size - 1 - coord.x, y: size - 1 - coord.y}), pixels);
     }
 
-    static layeredTR(service: BevelImageService, pixels: Color[]) {
+    static layeredTR(service: PixelImageService, pixels: Color[]) {
         return dh.layeredGeneric(service, 'TR', (size, coord) => ({x: size - 1 - coord.x, y: coord.y}), pixels);
     }
 
-    static layeredBL(service: BevelImageService, pixels: Color[]) {
+    static layeredBL(service: PixelImageService, pixels: Color[]) {
         return dh.layeredGeneric(service, 'BL', (size, coord) => ({x: coord.x, y: size - 1 - coord.y}), pixels);
     }
 }
@@ -142,7 +142,7 @@ export class SlantRectBevel implements Bevel {
     }
 
     // returns an URL
-    genImage(which: RectImage, service: BevelImageService): string {
+    genImage(which: RectImage, service: PixelImageService): string {
         console.assert(this.antiSlant == false); // true is not supported yet
 
         switch (which) {
