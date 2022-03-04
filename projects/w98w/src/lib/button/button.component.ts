@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Bevels, RectImage } from '../bevel';
 import { BevelImageService } from '../bevel-image.service';
 import { Colors } from '../colors';
+import { StyleInjector } from '../style-injector';
 
 @Component({
   selector: 'w98w-button',
@@ -15,14 +16,15 @@ import { Colors } from '../colors';
   }
   `]
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnDestroy {
+
+  private styleInjector = new StyleInjector();
 
   constructor(private imgService: BevelImageService) { }
 
   ngOnInit(): void {
 
-    let style = document.createElement('style');
-    style.innerHTML = `
+    this.styleInjector.replaceStyle(`
       .w98w-button .w98w-bevel-8split-left { background-image: url('${Bevels.BUTTON.genImage(RectImage.Left, this.imgService)}'); }
       .w98w-button .w98w-bevel-8split-right { background-image: url('${Bevels.BUTTON.genImage(RectImage.Right, this.imgService)}'); }
       .w98w-button .w98w-bevel-8split-top { background-image: url('${Bevels.BUTTON.genImage(RectImage.Top, this.imgService)}'); }
@@ -32,9 +34,12 @@ export class ButtonComponent implements OnInit {
       .w98w-button .w98w-bevel-8split-tr { background-image: url('${Bevels.BUTTON.genImage(RectImage.TR, this.imgService)}'); }
       .w98w-button .w98w-bevel-8split-bl { background-image: url('${Bevels.BUTTON.genImage(RectImage.BL, this.imgService)}'); }
       .w98w-button .w98w-bevel-8split-br { background-image: url('${Bevels.BUTTON.genImage(RectImage.BR, this.imgService)}'); }
-    `;
-    document.head.appendChild(style);
+    `);
 
+  }
+
+  ngOnDestroy(): void {
+    this.styleInjector.onDestroy();
   }
 
 }
