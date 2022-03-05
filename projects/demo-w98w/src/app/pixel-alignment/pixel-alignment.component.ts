@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import Fraction from 'fraction.js';
+
 @Component({
   selector: 'app-pixel-alignment',
   templateUrl: './pixel-alignment.component.html',
@@ -96,13 +98,33 @@ export class PixelAlignmentComponent implements OnInit {
     return this.canvasheight / window.devicePixelRatio;
   }
 
-  onAutoAssignCanvasWidth() {
+  rawAutoCanvasSizePreview() {
+    return this.pixelsize * this.altcount;
+  }
+
+  onAutoAssignCanvasWidth(smart: boolean) {
     this.canvaswidth = this.pixelsize * this.altcount;
+    if (smart) {
+      this.canvaswidth += this.smartJump(this.canvaswidth);
+    }
   }
 
-  onAutoAssignCanvasHeight() {
+  onAutoAssignCanvasHeight(smart: boolean) {
     this.canvasheight = this.pixelsize * this.altcount;
+
+    if (smart) {
+      this.canvasheight += this.smartJump(this.canvasheight);
+    }
   }
 
+  smartJump(input: number) {
+    const f = new Fraction(window.devicePixelRatio);
+    const finv = f.inverse();
 
+    // next multiple of finv.d
+
+    const jumpTo = Math.ceil(input / finv.d) * finv.d;
+
+    return jumpTo - input; // left
+  }
 }
