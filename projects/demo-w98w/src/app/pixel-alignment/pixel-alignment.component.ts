@@ -119,24 +119,26 @@ export class PixelAlignmentComponent implements OnInit {
 
   smartJump(input: number) {
     const f = new Fraction(window.devicePixelRatio);
-    let finv = f.inverse();
+    const finv = f.inverse();
+
+    let finvcurrent = finv;
 
     // next multiple of finv.d
 
-    let jumpTo = Math.ceil(input / finv.d) * finv.d;
+    let jumpTo = Math.ceil(input / finvcurrent.d) * finvcurrent.d;
     let left = jumpTo - input;
 
     if (left > 15) {
-      finv = finv.simplify(0.001);
+      finvcurrent = finv.simplify(0.001);
 
-      jumpTo = Math.ceil(input / finv.d) * finv.d;
+      jumpTo = Math.ceil(input / finvcurrent.d) * finvcurrent.d;
       left = jumpTo - input;
     }
 
     if (left > 15) {
-      finv = finv.simplify(0.01);
+      finvcurrent = finv.simplify(0.01);
 
-      jumpTo = Math.ceil(input / finv.d) * finv.d;
+      jumpTo = Math.ceil(input / finvcurrent.d) * finvcurrent.d;
       left = jumpTo - input;
     }
 
