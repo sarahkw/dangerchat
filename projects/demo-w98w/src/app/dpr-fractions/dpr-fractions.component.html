@@ -1,0 +1,37 @@
+<h2>DPR Fractions</h2>
+
+<style>
+    table {
+        margin-bottom: 1em;
+    }
+</style>
+
+<table border="1">
+    <tr>
+        <th colspan="2">Invert DPR</th>
+    </tr>
+    <tr>
+      <td>(A) Raw</td>
+      <td>{{ fractionStr() }}</td>
+    </tr>
+    <tr>
+      <td>(B) Simplify 0.001</td>
+      <td>{{ fractionStr(0.001) }}</td>
+    </tr>
+    <tr>
+      <td>(C) Simplify 0.01</td>
+      <td>{{ fractionStr(0.01) }}</td>
+    </tr>
+</table>
+
+<table border="1">
+    <tr>
+        <th>i</th>
+        <th>i / dpr</th>
+    </tr>
+    <tr *ngFor="let i of range$ | async">
+        <td>{{ i }}</td>
+        <td>{{ i / dpr }}</td>
+    </tr>
+
+</table>

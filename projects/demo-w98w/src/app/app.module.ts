@@ -7,11 +7,13 @@ import { FormsModule } from '@angular/forms';
 
 import { W98wModule } from 'projects/w98w/src/public-api';
 import { PixelAlignmentComponent } from './pixel-alignment/pixel-alignment.component';
+import { DprFractionsComponent } from './dpr-fractions/dpr-fractions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PixelAlignmentComponent
+    PixelAlignmentComponent,
+    DprFractionsComponent
   ],
   imports: [
     BrowserModule,

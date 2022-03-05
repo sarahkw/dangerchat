@@ -1,0 +1,14 @@
+<h2>DPR Fractions</h2>
+
+<p>Invert DPR</p>
+<table>
+    <tr>
+
+    </tr>
+    <dt>Raw</dt>
+    <dd>{{ fraction() }}</dd>
+    <dt>Simplify 0.001</dt>
+    <dd>{{ fraction(0.001) }}</dd>
+    <dt>Simplify 0.01</dt>
+    <dd>{{ fraction(0.01) }}</dd>
+</table>
