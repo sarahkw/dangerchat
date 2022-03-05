@@ -127,7 +127,6 @@ export class PixelAlignmentComponent implements OnInit {
     let left = jumpTo - input;
 
     if (left > 15) {
-      // console.debug(`left too much ${left}`);
       finv = finv.simplify(0.001);
 
       jumpTo = Math.ceil(input / finv.d) * finv.d;
@@ -135,7 +134,6 @@ export class PixelAlignmentComponent implements OnInit {
     }
 
     if (left > 15) {
-      // console.debug(`left too much again ${left}`);
       finv = finv.simplify(0.01);
 
       jumpTo = Math.ceil(input / finv.d) * finv.d;
@@ -143,8 +141,6 @@ export class PixelAlignmentComponent implements OnInit {
     }
 
     if (left > 15) {
-      // console.debug(`left clipped`);
-
       left = 15;
     }
 
