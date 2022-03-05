@@ -12,7 +12,9 @@ export class DprFractionsComponent implements OnInit {
 
   range$ = range(1, 100).pipe(toArray());
 
-  dpr = window.devicePixelRatio;
+  dpr() {
+    return window.devicePixelRatio;
+  }
 
   constructor() { }
 

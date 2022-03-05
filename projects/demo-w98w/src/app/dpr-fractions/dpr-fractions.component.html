@@ -35,7 +35,7 @@
     </tr>
     <tr *ngFor="let i of range$ | async">
         <td>{{ i }}</td>
-        <td>{{ i / dpr }}</td>
+        <td>{{ i / dpr() }}</td>
     </tr>
 
 </table>
