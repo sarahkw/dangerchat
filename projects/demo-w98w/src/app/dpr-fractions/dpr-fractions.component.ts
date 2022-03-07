@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { range, toArray } from 'rxjs';
 
 import { DprService } from 'projects/w98w/src/lib/dpr.service';
+import { PixelDrawConfig } from 'projects/w98w/src/lib/pixel-image.service';
 
 import Fraction from 'fraction.js';
 
@@ -35,5 +36,10 @@ export class DprFractionsComponent implements OnInit {
   static fractionStr(dpr: number, simplify?: number) {
     const result = DprFractionsComponent.fraction(dpr, simplify);
     return `${result.n} / ${result.d}`;
+  }
+
+  toPixelDrawConfig = DprFractionsComponent.toPixelDrawConfig;
+  static toPixelDrawConfig(dpr: number) {
+    return new PixelDrawConfig(dpr);
   }
 }

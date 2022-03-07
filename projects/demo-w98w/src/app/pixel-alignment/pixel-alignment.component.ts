@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import Fraction from 'fraction.js';
 import { DprService } from 'projects/w98w/src/lib/dpr.service';
+import { PixelDrawConfig } from 'projects/w98w/src/lib/pixel-image.service';
 
 @Component({
   selector: 'app-pixel-alignment',
@@ -99,56 +100,31 @@ export class PixelAlignmentComponent implements OnInit {
     return this.canvasheight / this.dprService.value$.value;
   }
 
-  rawAutoCanvasSizePreview() {
-    return this.pixelsize * this.altcount;
+  rawAutoCanvasSizePreview(smart: boolean) {
+    if (smart) {
+      return this.snapSize(this.pixelsize * this.altcount);
+    } else {
+      return this.pixelsize * this.altcount;
+    }
   }
 
   onAutoAssignCanvasWidth(smart: boolean) {
-    this.canvaswidth = this.pixelsize * this.altcount;
     if (smart) {
-      this.canvaswidth += this.smartJump(this.canvaswidth);
+      this.canvaswidth = this.snapSize(this.canvaswidth);
+    } else {
+        this.canvaswidth = this.pixelsize * this.altcount;
     }
   }
 
   onAutoAssignCanvasHeight(smart: boolean) {
-    this.canvasheight = this.pixelsize * this.altcount;
-
     if (smart) {
-      this.canvasheight += this.smartJump(this.canvasheight);
+      this.canvasheight = this.snapSize(this.canvasheight);
+    } else {
+      this.canvasheight = this.pixelsize * this.altcount;
     }
   }
 
-  smartJump(input: number) {
-    const LIM = 20;
-
-    const f = new Fraction(this.dprService.value$.value);
-    const finv = f.inverse();
-
-    let finvcurrent = finv;
-
-    // next multiple of finv.d
-
-    let jumpTo = Math.ceil(input / finvcurrent.d) * finvcurrent.d;
-    let left = jumpTo - input;
-
-    if (left > LIM) {
-      finvcurrent = finv.simplify(0.001);
-
-      jumpTo = Math.ceil(input / finvcurrent.d) * finvcurrent.d;
-      left = jumpTo - input;
-    }
-
-    if (left > LIM) {
-      finvcurrent = finv.simplify(0.01);
-
-      jumpTo = Math.ceil(input / finvcurrent.d) * finvcurrent.d;
-      left = jumpTo - input;
-    }
-
-    if (left > LIM) {
-      left = LIM;
-    }
-
-    return left;
+  snapSize(scalar: number) {
+    return new PixelDrawConfig(this.dprService.value$.value).snapSize(scalar);
   }
 }

@@ -2,6 +2,43 @@ import { Injectable } from '@angular/core';
 import { DprService } from './dpr.service';
 import { PixelImageDrawer } from './pixel-image-drawer';
 
+import Fraction from 'fraction.js';
+
+export class PixelDrawConfig {
+  readonly dpr: number;
+  readonly pixelCanvasSize: number;
+
+  private readonly denoms: number[] = [];
+
+  constructor(dpr: number) {
+    this.dpr = dpr;
+    this.pixelCanvasSize = Math.ceil(dpr);
+
+    {
+      const f = new Fraction(dpr);
+      const finv = f.inverse();
+      this.denoms.push(finv.d);
+      this.denoms.push(finv.simplify(0.001).d);
+      this.denoms.push(finv.simplify(0.01).d);
+    }
+  }
+
+  snapSize(scalar: number): number {
+    const LIM = 20;
+
+    for (const denom of this.denoms) {
+      let jumpTo = Math.ceil(scalar / denom) * denom;
+      let left = jumpTo - scalar;
+
+      if (left <= LIM) {
+        return jumpTo;
+      }
+    }
+
+    return Math.ceil(scalar / LIM) * LIM;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })

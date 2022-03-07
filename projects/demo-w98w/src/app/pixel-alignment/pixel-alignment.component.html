@@ -92,15 +92,15 @@
             <label for="canvaswidth">Canvas width</label>
             <div class="form-group">
                 <input id="canvaswidth" class="form-control" name="canvaswidth" type="number" [(ngModel)]="canvaswidth">
-                <button class="tool" type="button" title="= Pixel size * Alt count" (click)="onAutoAssignCanvasWidth(false)">{{ rawAutoCanvasSizePreview() }}</button>
-                <button class="tool" type="button" (click)="onAutoAssignCanvasWidth(true)">+{{ smartJump(pixelsize * altcount) }}</button>
+                <button class="tool" type="button" title="= Pixel size * Alt count" (click)="onAutoAssignCanvasWidth(false)">{{ rawAutoCanvasSizePreview(false) }}</button>
+                <button class="tool" type="button" (click)="onAutoAssignCanvasWidth(true)">{{ rawAutoCanvasSizePreview(true) }}</button>
             </div>
 
             <label for="canvasheight">Canvas height</label>
             <div class="form-group">
                 <input id="canvasheight" class="form-control" name="canvasheight" type="number" [(ngModel)]="canvasheight">
-                <button class="tool" type="button" title="= Pixel size * Alt count" (click)="onAutoAssignCanvasHeight(false)">{{ rawAutoCanvasSizePreview() }}</button>
-                <button class="tool" type="button" (click)="onAutoAssignCanvasHeight(true)">+{{ smartJump(pixelsize * altcount) }}</button>
+                <button class="tool" type="button" title="= Pixel size * Alt count" (click)="onAutoAssignCanvasHeight(false)">{{ rawAutoCanvasSizePreview(false) }}</button>
+                <button class="tool" type="button" (click)="onAutoAssignCanvasHeight(true)">{{ rawAutoCanvasSizePreview(true) }}</button>
             </div>
 
             <label for="pixelsize">Pixel size</label>

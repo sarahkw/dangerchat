@@ -33,10 +33,12 @@
     <tr>
       <th>i</th>
       <th>i / dpr</th>
+      <th title="PixelDrawConfig snap">pdc snap</th>
     </tr>
     <tr *ngFor="let i of range$ | async">
       <td>{{ i }}</td>
       <td>{{ i / dpr }}</td>
+      <td>{{ toPixelDrawConfig(dpr).snapSize(i) }}</td>
     </tr>
   </table>
 </ng-container>
