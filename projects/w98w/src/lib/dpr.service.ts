@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DprService implements OnDestroy {
 
-  value$: BehaviorSubject<number> = new BehaviorSubject(window.devicePixelRatio);
+  readonly value$: BehaviorSubject<number> = new BehaviorSubject(window.devicePixelRatio);
 
   // use AbortController so i don't have to keep instances of MediaQueryList around
   private abortController = new AbortController();
