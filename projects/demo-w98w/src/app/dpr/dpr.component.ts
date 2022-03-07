@@ -7,12 +7,12 @@ import { PixelDrawConfig } from 'projects/w98w/src/lib/pixel-image.service';
 import Fraction from 'fraction.js';
 
 @Component({
-  selector: 'app-dpr-fractions',
-  templateUrl: './dpr-fractions.component.html',
-  styleUrls: ['./dpr-fractions.component.css'],
+  selector: 'app-dpr',
+  templateUrl: './dpr.component.html',
+  styleUrls: ['./dpr.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DprFractionsComponent implements OnInit {
+export class DprComponent implements OnInit {
 
   range$ = range(1, 100).pipe(toArray());
 
@@ -21,7 +21,7 @@ export class DprFractionsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  fraction = DprFractionsComponent.fraction;
+  fraction = DprComponent.fraction;
   static fraction(dpr: number, simplify?: number) {
     const f = new Fraction(dpr);
     const finv = f.inverse();
@@ -32,13 +32,13 @@ export class DprFractionsComponent implements OnInit {
     return result;
   }
 
-  fractionStr = DprFractionsComponent.fractionStr;
+  fractionStr = DprComponent.fractionStr;
   static fractionStr(dpr: number, simplify?: number) {
-    const result = DprFractionsComponent.fraction(dpr, simplify);
+    const result = DprComponent.fraction(dpr, simplify);
     return `${result.n} / ${result.d}`;
   }
 
-  toPixelDrawConfig = DprFractionsComponent.toPixelDrawConfig;
+  toPixelDrawConfig = DprComponent.toPixelDrawConfig;
   static toPixelDrawConfig(dpr: number) {
     return new PixelDrawConfig(dpr);
   }
