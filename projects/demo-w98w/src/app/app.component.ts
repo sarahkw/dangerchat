@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { DprService } from 'projects/w98w/src/lib/dpr.service';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +10,8 @@ import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'demo-w98w';
 
-  devicePixelRatio: number | undefined;
+  constructor(public dprService: DprService) {}
 
   ngOnInit(): void {
-
-    const updatePixelRatio = () => {
-      this.devicePixelRatio = window.devicePixelRatio;
-      matchMedia(`(resolution: ${this.devicePixelRatio}dppx)`).addEventListener("change", updatePixelRatio, { once: true })
-    }
-
-    updatePixelRatio();
-
   }
 }

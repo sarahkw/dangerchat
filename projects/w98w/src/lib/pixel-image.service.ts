@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DprService } from './dpr.service';
 import { PixelImageDrawer } from './pixel-image-drawer';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class PixelImageService {
 
   cache: Map<string, string> = new Map();
 
-  constructor() {
+  constructor(private dprService: DprService) {
   }
 
   pidRegister(pid: PixelImageDrawer) {
@@ -20,7 +21,7 @@ export class PixelImageService {
     }
 
     this.pids.set(pid, 1);
-    pid.pidApplyImages(pid.pidGenerateImages(this, window.devicePixelRatio));
+    pid.pidApplyImages(pid.pidGenerateImages(this, this.dprService.value$.value));
   }
 
   pidUnregister(pid: PixelImageDrawer) {

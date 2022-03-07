@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { range, toArray } from 'rxjs';
+
+import { DprService } from 'projects/w98w/src/lib/dpr.service';
 
 import Fraction from 'fraction.js';
 
 @Component({
   selector: 'app-dpr-fractions',
   templateUrl: './dpr-fractions.component.html',
-  styleUrls: ['./dpr-fractions.component.css']
+  styleUrls: ['./dpr-fractions.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DprFractionsComponent implements OnInit {
 
   range$ = range(1, 100).pipe(toArray());
 
-  dpr() {
-    return window.devicePixelRatio;
-  }
-
-  constructor() { }
+  constructor(public dprService: DprService) { }
 
   ngOnInit(): void {
   }
 
-  fraction(simplify?: number) {
-    const f = new Fraction(window.devicePixelRatio);
+  fraction = DprFractionsComponent.fraction;
+  static fraction(dpr: number, simplify?: number) {
+    const f = new Fraction(dpr);
     const finv = f.inverse();
     let result = finv;
     if (simplify !== undefined) {
@@ -31,8 +31,9 @@ export class DprFractionsComponent implements OnInit {
     return result;
   }
 
-  fractionStr(simplify?: number) {
-    const result = this.fraction(simplify);
+  fractionStr = DprFractionsComponent.fractionStr;
+  static fractionStr(dpr: number, simplify?: number) {
+    const result = DprFractionsComponent.fraction(dpr, simplify);
     return `${result.n} / ${result.d}`;
   }
 }

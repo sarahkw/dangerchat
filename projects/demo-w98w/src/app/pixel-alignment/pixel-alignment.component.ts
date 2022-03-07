@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import Fraction from 'fraction.js';
+import { DprService } from 'projects/w98w/src/lib/dpr.service';
 
 @Component({
   selector: 'app-pixel-alignment',
@@ -21,7 +22,7 @@ export class PixelAlignmentComponent implements OnInit {
 
   drawTargetStyle = {};
 
-  constructor() { }
+  constructor(private dprService: DprService) { }
 
   ngOnInit(): void {
   }
@@ -81,21 +82,21 @@ export class PixelAlignmentComponent implements OnInit {
   }
 
   onAutoAssignCssWidth() {
-    this.csswidth = Math.round(this.canvaswidth / window.devicePixelRatio);
+    this.csswidth = Math.round(this.canvaswidth / this.dprService.value$.value);
   }
 
   onAutoAssignCssHeight() {
-    this.cssheight = Math.round(this.canvasheight / window.devicePixelRatio);
+    this.cssheight = Math.round(this.canvasheight / this.dprService.value$.value);
   }
 
   rawAutoCssWidthPreview() {
     // xxx: depend on someone else to subscribe to changes
-    return this.canvaswidth / window.devicePixelRatio;
+    return this.canvaswidth / this.dprService.value$.value;
   }
 
   rawAutoCssHeightPreview() {
     // xxx: depend on someone else to subscribe to changes
-    return this.canvasheight / window.devicePixelRatio;
+    return this.canvasheight / this.dprService.value$.value;
   }
 
   rawAutoCanvasSizePreview() {
@@ -120,7 +121,7 @@ export class PixelAlignmentComponent implements OnInit {
   smartJump(input: number) {
     const LIM = 20;
 
-    const f = new Fraction(window.devicePixelRatio);
+    const f = new Fraction(this.dprService.value$.value);
     const finv = f.inverse();
 
     let finvcurrent = finv;
