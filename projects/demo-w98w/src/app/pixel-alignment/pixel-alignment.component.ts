@@ -110,7 +110,7 @@ export class PixelAlignmentComponent implements OnInit {
 
   onAutoAssignCanvasWidth(smart: boolean) {
     if (smart) {
-      this.canvaswidth = this.snapSize(this.canvaswidth);
+      this.canvaswidth = this.snapSize(this.pixelsize * this.altcount);
     } else {
         this.canvaswidth = this.pixelsize * this.altcount;
     }
@@ -118,7 +118,7 @@ export class PixelAlignmentComponent implements OnInit {
 
   onAutoAssignCanvasHeight(smart: boolean) {
     if (smart) {
-      this.canvasheight = this.snapSize(this.canvasheight);
+      this.canvasheight = this.snapSize(this.pixelsize * this.altcount);
     } else {
       this.canvasheight = this.pixelsize * this.altcount;
     }
