@@ -35,6 +35,7 @@ export class PixelDrawConfig {
       }
     }
 
+    // TODO maybe write a warning that this happened
     return Math.ceil(scalar / LIM) * LIM;
   }
 }
