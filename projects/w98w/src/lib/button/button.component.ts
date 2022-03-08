@@ -5,6 +5,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { Colors } from '../colors';
 import { StyleInjector } from '../style-injector';
 import { PixelImageDrawer } from '../pixel-image-drawer';
+import { PixelImageBuilderFactory } from '../pixel-image-builder';
 
 @Component({
   selector: 'w98w-button',
@@ -24,11 +25,11 @@ export class ButtonComponent implements OnInit, OnDestroy {
   static readonly PID = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();
 
-    pidGenerateImages(svc: PixelImageService, dpi: number) {
-      return new Map([
+    pidGenerateImages(svc: PixelImageService, dpi: number, pibf: PixelImageBuilderFactory) {
+      return new Map<RectImage, any>([ // XXX remove "any"
         [RectImage.Left, Bevels.BUTTON.genImage(RectImage.Left, svc)],
         [RectImage.Right, Bevels.BUTTON.genImage(RectImage.Right, svc)],
-        [RectImage.Top, Bevels.BUTTON.genImage(RectImage.Top, svc)],
+        [RectImage.Top, Bevels.BUTTON.genImage2(RectImage.Top, pibf)],
         [RectImage.Bottom, Bevels.BUTTON.genImage(RectImage.Bottom, svc)],
 
         [RectImage.TL, Bevels.BUTTON.genImage(RectImage.TL, svc)],
@@ -42,7 +43,7 @@ export class ButtonComponent implements OnInit, OnDestroy {
       this.styleInjector.replaceStyle(`
       .w98w-button .w98w-bevel-8split-left { background-image: url('${imgs.get(RectImage.Left)}'); }
       .w98w-button .w98w-bevel-8split-right { background-image: url('${imgs.get(RectImage.Right)}'); }
-      .w98w-button .w98w-bevel-8split-top { background-image: url('${imgs.get(RectImage.Top)}'); }
+      .w98w-button .w98w-bevel-8split-top { background-image: url('${imgs.get(RectImage.Top).url}'); background-size: ${imgs.get(RectImage.Top).cssWidth}px ${imgs.get(RectImage.Top).cssHeight}px; }
       .w98w-button .w98w-bevel-8split-bottom { background-image: url('${imgs.get(RectImage.Bottom)}'); }
 
       .w98w-button .w98w-bevel-8split-tl { background-image: url('${imgs.get(RectImage.TL)}'); }

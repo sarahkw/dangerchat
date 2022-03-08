@@ -5,10 +5,11 @@ import { DprService } from './dpr.service';
 import { PixelImageDrawer } from './pixel-image-drawer';
 
 import Fraction from 'fraction.js';
+import { PixelImageBuilderFactory } from './pixel-image-builder';
 
 export class PixelDrawConfig {
   readonly dpr: number;
-  readonly pixelCanvasSize: number;
+  readonly pixelCanvasSize: number;  // how many canvas pixels should we draw per art pixel?
 
   private readonly denoms: number[] = [];
 
@@ -40,6 +41,10 @@ export class PixelDrawConfig {
     // TODO maybe write a warning that this happened
     return Math.ceil(scalar / LIM) * LIM;
   }
+
+  canvasSizeToCssSize(scalar: number) {
+    return Math.max(Math.round(scalar / this.dpr), 1);
+  }
 }
 
 @Injectable({
@@ -69,7 +74,7 @@ export class PixelImageService {
     this.pids.set(pid, {
       refcount: 1,
       subscription: this.pixelDrawConfig$.subscribe(pdc => {
-        pid.pidApplyImages(pid.pidGenerateImages(this, pdc.dpr));
+        pid.pidApplyImages(pid.pidGenerateImages(this, pdc.dpr, new PixelImageBuilderFactory(pdc)));
       })
     });
   }

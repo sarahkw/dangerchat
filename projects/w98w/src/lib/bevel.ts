@@ -1,4 +1,5 @@
 import { Color, Colors } from "./colors";
+import { ColOrigin, DisplayImage, PixelImageBuilderFactory } from "./pixel-image-builder";
 
 import { PixelImageService } from "./pixel-image.service";
 
@@ -164,6 +165,14 @@ export class SlantRectBevel implements Bevel {
             return dh.layeredBL(service, this.bottomRight);
         case RectImage.BR:
             return dh.layeredBR(service, this.bottomRight);
+        }
+    }
+
+    genImage2(which: RectImage, pibf: PixelImageBuilderFactory): DisplayImage {
+        switch (which) {
+        case RectImage.Top:
+        default:
+            return pibf.col(ColOrigin.T, this.topLeft.length).pushPixels(this.topLeft).build();
         }
     }
 }
