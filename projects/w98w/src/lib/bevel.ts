@@ -1,5 +1,5 @@
 import { Color, Colors } from "./colors";
-import { VOrigin, DisplayImage, PixelImageBuilderFactory, HOrigin } from "./pixel-image-builder";
+import { VOrigin, DisplayImage, PixelImageBuilderFactory, HOrigin, ElbowOrigin } from "./pixel-image-builder";
 
 import { PixelImageService } from "./pixel-image.service";
 
@@ -178,6 +178,10 @@ export class SlantRectBevel implements Bevel {
             return pibf.col(VOrigin.Top, this.topLeft.length).pushPixels(this.topLeft).build();
         case RectImage.Bottom:
             return pibf.col(VOrigin.Bottom, this.bottomRight.length).pushPixels(this.bottomRight).build();
+        case RectImage.TL:
+            return pibf.elbow(ElbowOrigin.TopLeft, this.topLeft.length).pushPixels(this.topLeft).build();
+        case RectImage.BR:
+            return pibf.elbow(ElbowOrigin.BottomRight, this.bottomRight.length).pushPixels(this.bottomRight).build();
         default:
             // XXX placeholder!
             return pibf.col(VOrigin.Top, this.topLeft.length).pushPixels(this.topLeft).build();

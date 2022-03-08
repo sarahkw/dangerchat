@@ -45,8 +45,24 @@ class PixelImageBuilderBasic {
     }
 
     drawPixel(fillStyle: string, x: number, y: number) {
+        this.drawRect(fillStyle, x, y, 1, 1);
+    }
+
+    drawRect(fillStyle: string, x: number, y: number, w: number, h: number) {
         this.context.fillStyle = fillStyle;
-        this.context.fillRect(this.beginX + x * this.pixelSize, this.beginY + y * this.pixelSize, this.pixelSize, this.pixelSize);
+        this.context.fillRect(
+            this.beginX + x * this.pixelSize,
+            this.beginY + y * this.pixelSize,
+            w * this.pixelSize,
+            h * this.pixelSize);
+    }
+
+    drawLineLeft(fillStyle: string, x: number, y: number, len: number) {
+        this.drawRect(fillStyle, x - len + 1, y, len, 1);
+    }
+
+    drawLineUp(fillStyle: string, x: number, y: number, len: number) {
+        this.drawRect(fillStyle, x, y - len + 1, 1, len);
     }
 
     build(): DisplayImage {
@@ -122,8 +138,56 @@ class PixelImageBuilderRow extends PixelImageBuilderBasic {
     }
 }
 
-export enum GridOrigin {
-    TL, TR, BL, BR
+export enum ElbowOrigin {
+    TopLeft,
+    BottomRight
+}
+
+class PixelImageBuilderElbow extends PixelImageBuilderBasic {
+
+    static readonly H_ELBOW_MAP = {
+        [ElbowOrigin.TopLeft]: HOrigin.Left,
+        [ElbowOrigin.BottomRight]: HOrigin.Right
+    };
+
+    static readonly V_ELBOW_MAP = {
+        [ElbowOrigin.TopLeft]: VOrigin.Top,
+        [ElbowOrigin.BottomRight]: VOrigin.Bottom
+    };
+
+    private pos: number = 0;
+    private reverse: boolean = false;
+
+    constructor(pdc: PixelDrawConfig, private artPixelSize: number, origin: ElbowOrigin) {
+        super(pdc, artPixelSize, artPixelSize, PixelImageBuilderElbow.H_ELBOW_MAP[origin], PixelImageBuilderElbow.V_ELBOW_MAP[origin]);
+        if (origin == ElbowOrigin.BottomRight) {
+            this.reverse = true;
+        }
+    }
+
+    pushPixel(fillStyle: string) {
+        if (this.reverse) {
+            // across
+            this.drawLineLeft(fillStyle, this.pos, this.pos, this.pos + 1);
+            // up
+            this.drawLineUp(fillStyle, this.pos, this.pos, this.pos + 1);
+        } else {
+            // across
+            this.drawRect(fillStyle, this.pos, this.pos, this.artPixelSize - this.pos, 1);
+            // down
+            this.drawRect(fillStyle, this.pos, this.pos, 1, this.artPixelSize - this.pos);
+        }
+
+        this.pos++;
+        return this;
+    }
+
+    pushPixels(fillStyles: string[]) {
+        for (const fillStyle of fillStyles.slice().reverse()) {
+            this.pushPixel(fillStyle);
+        }
+        return this;
+    }
 }
 
 export class PixelImageBuilderFactory {
@@ -135,5 +199,9 @@ export class PixelImageBuilderFactory {
 
     row(origin: HOrigin, artPixelWidth: number) {
         return new PixelImageBuilderRow(this.pdc, artPixelWidth, origin);
+    }
+
+    elbow(origin: ElbowOrigin, artPixelSize: number) {
+        return new PixelImageBuilderElbow(this.pdc, artPixelSize, origin);
     }
 }
