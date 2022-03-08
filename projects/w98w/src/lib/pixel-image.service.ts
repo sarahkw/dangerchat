@@ -56,8 +56,6 @@ export class PixelImageService {
 
   pids: Map<PixelImageDrawer, {refcount: number, subscription: Subscription}> = new Map();
 
-  cache: Map<string, string> = new Map();
-
   constructor(dprService: DprService) {
     this.pixelDrawConfig$ = dprService.value$.pipe(
       map(dpr => new PixelDrawConfig(dpr)),
@@ -74,7 +72,7 @@ export class PixelImageService {
     this.pids.set(pid, {
       refcount: 1,
       subscription: this.pixelDrawConfig$.subscribe(pdc => {
-        pid.pidApplyImages(pid.pidGenerateImages(this, pdc.dpr, new PixelImageBuilderFactory(pdc)));
+        pid.pidApplyImages(pid.pidGenerateImages(new PixelImageBuilderFactory(pdc)));
       })
     });
   }
@@ -93,22 +91,4 @@ export class PixelImageService {
       this.pids.delete(pid);
     }
   }
-
-  ensureImage(uniqueKey: string, width: number, height: number,
-    draw: (canvas: CanvasRenderingContext2D) => void): string
-  {
-    if (this.cache.has(uniqueKey)) {
-      return this.cache.get(uniqueKey)!;
-    }
-
-    let oCanvas = document.createElement('canvas');
-    oCanvas.width = width;
-    oCanvas.height = height;
-    let oCtx = oCanvas.getContext('2d');
-    draw(oCtx!); // todo: what if this is actually null
-    let result = oCanvas.toDataURL();
-    this.cache.set(uniqueKey, result);
-    return result;
-  }
-
 }

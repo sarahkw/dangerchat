@@ -5,7 +5,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { Colors } from '../colors';
 import { StyleInjector } from '../style-injector';
 import { PixelImageDrawer } from '../pixel-image-drawer';
-import { PixelImageBuilderFactory } from '../pixel-image-builder';
+import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 
 @Component({
   selector: 'w98w-button',
@@ -25,8 +25,8 @@ export class ButtonComponent implements OnInit, OnDestroy {
   static readonly PID = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();
 
-    pidGenerateImages(svc: PixelImageService, dpi: number, pibf: PixelImageBuilderFactory) {
-      return new Map<RectImage, any>([ // XXX remove "any"
+    pidGenerateImages(pibf: PixelImageBuilderFactory) {
+      return new Map<RectImage, DisplayImage>([
         [RectImage.Left, Bevels.BUTTON.genImage2(RectImage.Left, pibf)],
         [RectImage.Right, Bevels.BUTTON.genImage2(RectImage.Right, pibf)],
         [RectImage.Top, Bevels.BUTTON.genImage2(RectImage.Top, pibf)],
@@ -39,17 +39,17 @@ export class ButtonComponent implements OnInit, OnDestroy {
       ]);
     }
 
-    pidApplyImages(imgs: any): void {
+    pidApplyImages(imgs: Map<RectImage, DisplayImage>): void {
       this.styleInjector.replaceStyle(`
-      .w98w-button .w98w-bevel-8split-left { background-image: url('${imgs.get(RectImage.Left).url}'); background-size: ${imgs.get(RectImage.Left).cssWidth}px ${imgs.get(RectImage.Left).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-right { background-image: url('${imgs.get(RectImage.Right).url}'); background-size: ${imgs.get(RectImage.Right).cssWidth}px ${imgs.get(RectImage.Right).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-top { background-image: url('${imgs.get(RectImage.Top).url}'); background-size: ${imgs.get(RectImage.Top).cssWidth}px ${imgs.get(RectImage.Top).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-bottom { background-image: url('${imgs.get(RectImage.Bottom).url}'); background-size: ${imgs.get(RectImage.Bottom).cssWidth}px ${imgs.get(RectImage.Bottom).cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-left { background-image: url('${imgs.get(RectImage.Left)!.url}'); background-size: ${imgs.get(RectImage.Left)!.cssWidth}px ${imgs.get(RectImage.Left)!.cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-right { background-image: url('${imgs.get(RectImage.Right)!.url}'); background-size: ${imgs.get(RectImage.Right)!.cssWidth}px ${imgs.get(RectImage.Right)!.cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-top { background-image: url('${imgs.get(RectImage.Top)!.url}'); background-size: ${imgs.get(RectImage.Top)!.cssWidth}px ${imgs.get(RectImage.Top)!.cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-bottom { background-image: url('${imgs.get(RectImage.Bottom)!.url}'); background-size: ${imgs.get(RectImage.Bottom)!.cssWidth}px ${imgs.get(RectImage.Bottom)!.cssHeight}px; }
 
-      .w98w-button .w98w-bevel-8split-tl { background-image: url('${imgs.get(RectImage.TL).url}'); background-size: ${imgs.get(RectImage.TL).cssWidth}px ${imgs.get(RectImage.TL).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-tr { background-image: url('${imgs.get(RectImage.TR).url}'); background-size: ${imgs.get(RectImage.TR).cssWidth}px ${imgs.get(RectImage.TR).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-bl { background-image: url('${imgs.get(RectImage.BL).url}'); background-size: ${imgs.get(RectImage.BL).cssWidth}px ${imgs.get(RectImage.BL).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-br { background-image: url('${imgs.get(RectImage.BR).url}'); background-size: ${imgs.get(RectImage.BR).cssWidth}px ${imgs.get(RectImage.BR).cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-tl { background-image: url('${imgs.get(RectImage.TL)!.url}'); background-size: ${imgs.get(RectImage.TL)!.cssWidth}px ${imgs.get(RectImage.TL)!.cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-tr { background-image: url('${imgs.get(RectImage.TR)!.url}'); background-size: ${imgs.get(RectImage.TR)!.cssWidth}px ${imgs.get(RectImage.TR)!.cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-bl { background-image: url('${imgs.get(RectImage.BL)!.url}'); background-size: ${imgs.get(RectImage.BL)!.cssWidth}px ${imgs.get(RectImage.BL)!.cssHeight}px; }
+      .w98w-button .w98w-bevel-8split-br { background-image: url('${imgs.get(RectImage.BR)!.url}'); background-size: ${imgs.get(RectImage.BR)!.cssWidth}px ${imgs.get(RectImage.BR)!.cssHeight}px; }
       `);
     }
 
