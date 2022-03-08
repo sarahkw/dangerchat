@@ -183,11 +183,18 @@ class PixelImageBuilderElbow extends PixelImageBuilderBasic {
     }
 
     pushPixels(fillStyles: string[]) {
-        for (const fillStyle of fillStyles.slice().reverse()) {
-            this.pushPixel(fillStyle);
+        if (this.reverse) {
+            for (const fillStyle of fillStyles.slice().reverse()) {
+                this.pushPixel(fillStyle);
+            }
+        } else {
+            for (const fillStyle of fillStyles.slice()) {
+                this.pushPixel(fillStyle);
+            }
         }
         return this;
     }
+}
 }
 
 export class PixelImageBuilderFactory {
