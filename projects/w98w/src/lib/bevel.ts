@@ -62,7 +62,7 @@ export class SlantRectBevel implements Bevel {
         console.assert(topLeft.length == bottomRight.length);
     }
 
-    genImage2(which: RectImage, pibf: PixelImageBuilderFactory): DisplayImage {
+    genImage(which: RectImage, pibf: PixelImageBuilderFactory): DisplayImage {
         console.assert(this.antiSlant == false); // true is not supported yet
 
         switch (which) {

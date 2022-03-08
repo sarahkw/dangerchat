@@ -27,15 +27,15 @@ export class ButtonComponent implements OnInit, OnDestroy {
 
     pidGenerateImages(pibf: PixelImageBuilderFactory) {
       return new Map<RectImage, DisplayImage>([
-        [RectImage.Left, Bevels.BUTTON.genImage2(RectImage.Left, pibf)],
-        [RectImage.Right, Bevels.BUTTON.genImage2(RectImage.Right, pibf)],
-        [RectImage.Top, Bevels.BUTTON.genImage2(RectImage.Top, pibf)],
-        [RectImage.Bottom, Bevels.BUTTON.genImage2(RectImage.Bottom, pibf)],
+        [RectImage.Left, Bevels.BUTTON.genImage(RectImage.Left, pibf)],
+        [RectImage.Right, Bevels.BUTTON.genImage(RectImage.Right, pibf)],
+        [RectImage.Top, Bevels.BUTTON.genImage(RectImage.Top, pibf)],
+        [RectImage.Bottom, Bevels.BUTTON.genImage(RectImage.Bottom, pibf)],
 
-        [RectImage.TL, Bevels.BUTTON.genImage2(RectImage.TL, pibf)],
-        [RectImage.TR, Bevels.BUTTON.genImage2(RectImage.TR, pibf)],
-        [RectImage.BL, Bevels.BUTTON.genImage2(RectImage.BL, pibf)],
-        [RectImage.BR, Bevels.BUTTON.genImage2(RectImage.BR, pibf)],
+        [RectImage.TL, Bevels.BUTTON.genImage(RectImage.TL, pibf)],
+        [RectImage.TR, Bevels.BUTTON.genImage(RectImage.TR, pibf)],
+        [RectImage.BL, Bevels.BUTTON.genImage(RectImage.BL, pibf)],
+        [RectImage.BR, Bevels.BUTTON.genImage(RectImage.BR, pibf)],
       ]);
     }
 
