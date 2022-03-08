@@ -24,6 +24,12 @@ const SELECTORS = [
   RectImage.BR,
 ];
 
+export function genGenCssInput(fn: (ri: RectImage) => DisplayImage): GenCssInput {
+  const ret: any = {};
+  SELECTORS.forEach(s => ret[s] = fn(s) );
+  return ret as GenCssInput;
+}
+
 const CLASSES = [
   ".w98w-bevel-8split-left",
   ".w98w-bevel-8split-right",
