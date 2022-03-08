@@ -6,12 +6,12 @@ export type DisplayImage = {
     url: string
 };
 
-export enum RowOrigin {
-    L, R
+export enum HOrigin {
+    Left, Right
 }
 
-export enum ColOrigin {
-    T, B
+export enum VOrigin {
+    Top, Bottom
 }
 
 class PixelImageBuilderBasic {
@@ -23,19 +23,19 @@ class PixelImageBuilderBasic {
     private beginX: number;
     private beginY: number;
 
-    constructor(private pdc: PixelDrawConfig, artPixelWidth: number, artPixelHeight: number, private hAlign: RowOrigin, private vAlign: ColOrigin) {
+    constructor(private pdc: PixelDrawConfig, artPixelWidth: number, artPixelHeight: number, private hAlign: HOrigin, private vAlign: VOrigin) {
         this.pixelSize = pdc.pixelCanvasSize;
 
         this.canvas.width = Math.max(pdc.snapSize(artPixelWidth * this.pixelSize), 1);
         this.canvas.height = Math.max(pdc.snapSize(artPixelHeight * this.pixelSize), 1);
 
-        if (hAlign == RowOrigin.R) {
+        if (hAlign == HOrigin.Right) {
             this.beginX = this.canvas.width - artPixelWidth * this.pixelSize;
         } else {
             this.beginX = 0;
         }
 
-        if (vAlign == ColOrigin.B) {
+        if (vAlign == VOrigin.Bottom) {
             this.beginY = this.canvas.height - artPixelHeight * this.pixelSize;
         } else {
             this.beginY = 0;
@@ -63,9 +63,9 @@ class PixelImageBuilderCol extends PixelImageBuilderBasic {
     private pos: number = 0;
     private reverse: boolean = false;
 
-    constructor(pdc: PixelDrawConfig, private artPixelHeight: number, origin: ColOrigin) {
-        super(pdc, 0, artPixelHeight, RowOrigin.L, origin);
-        if (origin == ColOrigin.B) {
+    constructor(pdc: PixelDrawConfig, private artPixelHeight: number, origin: VOrigin) {
+        super(pdc, 0, artPixelHeight, HOrigin.Left, origin);
+        if (origin == VOrigin.Bottom) {
             this.pos = this.artPixelHeight;
             this.reverse = true;
         }
@@ -95,9 +95,9 @@ class PixelImageBuilderRow extends PixelImageBuilderBasic {
     private pos: number = 0;
     private reverse: boolean = false;
 
-    constructor(pdc: PixelDrawConfig, private artPixelWidth: number, origin: RowOrigin) {
-        super(pdc, artPixelWidth, 0, origin, ColOrigin.T);
-        if (origin == RowOrigin.R) {
+    constructor(pdc: PixelDrawConfig, private artPixelWidth: number, origin: HOrigin) {
+        super(pdc, artPixelWidth, 0, origin, VOrigin.Top);
+        if (origin == HOrigin.Right) {
             this.pos = this.artPixelWidth;
             this.reverse = true;
         }
@@ -129,11 +129,11 @@ export enum GridOrigin {
 export class PixelImageBuilderFactory {
     constructor(private pdc: PixelDrawConfig) {}
 
-    col(origin: ColOrigin, artPixelHeight: number) {
+    col(origin: VOrigin, artPixelHeight: number) {
         return new PixelImageBuilderCol(this.pdc, artPixelHeight, origin);
     }
 
-    row(origin: RowOrigin, artPixelWidth: number) {
+    row(origin: HOrigin, artPixelWidth: number) {
         return new PixelImageBuilderRow(this.pdc, artPixelWidth, origin);
     }
 }

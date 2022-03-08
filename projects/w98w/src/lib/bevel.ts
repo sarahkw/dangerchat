@@ -1,5 +1,5 @@
 import { Color, Colors } from "./colors";
-import { ColOrigin, DisplayImage, PixelImageBuilderFactory, RowOrigin } from "./pixel-image-builder";
+import { VOrigin, DisplayImage, PixelImageBuilderFactory, HOrigin } from "./pixel-image-builder";
 
 import { PixelImageService } from "./pixel-image.service";
 
@@ -171,16 +171,16 @@ export class SlantRectBevel implements Bevel {
     genImage2(which: RectImage, pibf: PixelImageBuilderFactory): DisplayImage {
         switch (which) {
         case RectImage.Left:
-            return pibf.row(RowOrigin.L, this.topLeft.length).pushPixels(this.topLeft).build();
+            return pibf.row(HOrigin.Left, this.topLeft.length).pushPixels(this.topLeft).build();
         case RectImage.Right:
-            return pibf.row(RowOrigin.R, this.bottomRight.length).pushPixels(this.bottomRight).build();
+            return pibf.row(HOrigin.Right, this.bottomRight.length).pushPixels(this.bottomRight).build();
         case RectImage.Top:
-            return pibf.col(ColOrigin.T, this.topLeft.length).pushPixels(this.topLeft).build();
+            return pibf.col(VOrigin.Top, this.topLeft.length).pushPixels(this.topLeft).build();
         case RectImage.Bottom:
-            return pibf.col(ColOrigin.B, this.bottomRight.length).pushPixels(this.bottomRight).build();
+            return pibf.col(VOrigin.Bottom, this.bottomRight.length).pushPixels(this.bottomRight).build();
         default:
             // XXX placeholder!
-            return pibf.col(ColOrigin.T, this.topLeft.length).pushPixels(this.topLeft).build();
+            return pibf.col(VOrigin.Top, this.topLeft.length).pushPixels(this.topLeft).build();
         }
     }
 }
