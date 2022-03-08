@@ -37,13 +37,31 @@ export class ButtonComponent implements OnInit, OnDestroy {
     pidDestroy(): void {
       this.styleInjector.destroy();
     }
-  };  // PID
+  };  // PID_NORMAL
+
+  static readonly PID_PRESSED = new class implements PixelImageDrawer {
+    private styleInjector = new StyleInjector();
+
+    pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
+      return genGenCssInput(ri => Bevels.BUTTON_PRESSED.genImage(ri, pibf));
+    }
+
+    pidApplyImages(imgs: GenCssInput): void {
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-button:active", imgs));
+    }
+
+    pidDestroy(): void {
+      this.styleInjector.destroy();
+    }
+  };  // PID_PRESSED
 
   ngOnInit(): void {
     this.imgService.pidRegister(ButtonComponent.PID_NORMAL);
+    this.imgService.pidRegister(ButtonComponent.PID_PRESSED);
   }
 
   ngOnDestroy(): void {
+    this.imgService.pidUnregister(ButtonComponent.PID_PRESSED);
     this.imgService.pidUnregister(ButtonComponent.PID_NORMAL);
   }
 
