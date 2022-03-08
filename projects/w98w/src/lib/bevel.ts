@@ -171,7 +171,11 @@ export class SlantRectBevel implements Bevel {
     genImage2(which: RectImage, pibf: PixelImageBuilderFactory): DisplayImage {
         switch (which) {
         case RectImage.Top:
+            return pibf.col(ColOrigin.T, this.topLeft.length).pushPixels(this.topLeft).build();
+        case RectImage.Bottom:
+            return pibf.col(ColOrigin.B, this.bottomRight.length).pushPixels(this.bottomRight).build();
         default:
+            // XXX placeholder!
             return pibf.col(ColOrigin.T, this.topLeft.length).pushPixels(this.topLeft).build();
         }
     }
