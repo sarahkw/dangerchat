@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { map, Observable, shareReplay, Subscription } from 'rxjs';
+
 import { DprService } from './dpr.service';
 import { PixelImageDrawer } from './pixel-image-drawer';
 
@@ -45,35 +47,45 @@ export class PixelDrawConfig {
 })
 export class PixelImageService {
 
-  pids: Map<PixelImageDrawer, number> = new Map();
+  pixelDrawConfig$: Observable<PixelDrawConfig>;
+
+  pids: Map<PixelImageDrawer, {refcount: number, subscription: Subscription}> = new Map();
 
   cache: Map<string, string> = new Map();
 
-  constructor(private dprService: DprService) {
+  constructor(dprService: DprService) {
+    this.pixelDrawConfig$ = dprService.value$.pipe(
+      map(dpr => new PixelDrawConfig(dpr)),
+      shareReplay(1) // Avoid doing the fraction calcs multiple times
+      );
   }
 
   pidRegister(pid: PixelImageDrawer) {
     if (this.pids.has(pid)) {
-      this.pids.set(pid, this.pids.get(pid)! + 1);
+      this.pids.get(pid)!.refcount += 1;
       return;
     }
 
-    this.pids.set(pid, 1);
-    pid.pidApplyImages(pid.pidGenerateImages(this, this.dprService.value$.value));
+    this.pids.set(pid, {
+      refcount: 1,
+      subscription: this.pixelDrawConfig$.subscribe(pdc => {
+        pid.pidApplyImages(pid.pidGenerateImages(this, pdc.dpr));
+      })
+    });
   }
 
   pidUnregister(pid: PixelImageDrawer) {
-    if (!this.pids.has(pid)) {
+    let pidState = this.pids.get(pid);
+    if (pidState === undefined) {
       console.error('tried to unregister unknown pid');
       return;
     }
 
-    let newCount = this.pids.get(pid)! - 1;
-    if (newCount <= 0) {
+    pidState.refcount--;
+    if (pidState.refcount <= 0) {
+      pidState.subscription.unsubscribe();
       pid.pidDestroy();
       this.pids.delete(pid);
-    } else {
-      this.pids.set(pid, newCount);
     }
   }
 
