@@ -205,6 +205,10 @@ export enum SlantOrigin {
     TopRight
 }
 
+function RIDX<T>(input: T[], idx: number): T {
+    return input[input.length - idx - 1];
+}
+
 class PixelImageBuilderSlant extends PixelImageBuilderBasic {
 
     static readonly H_SLANT_MAP = {
@@ -226,7 +230,7 @@ class PixelImageBuilderSlant extends PixelImageBuilderBasic {
 
         // horizontal
         for (let i = 0; i < this.artPixelSize; ++i) {
-            this.drawLineLeft(fillStyles[this.artPixelSize - i - 1], this.artPixelSize, i, i + 2); // TODO: should be i + 1
+            this.drawLineLeft(RIDX(fillStyles, i), this.artPixelSize, i, i + 2); // TODO: should be i + 1
         }
 
         return this;
