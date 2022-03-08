@@ -1,5 +1,5 @@
 import { Color, Colors } from "./colors";
-import { ColOrigin, DisplayImage, PixelImageBuilderFactory } from "./pixel-image-builder";
+import { ColOrigin, DisplayImage, PixelImageBuilderFactory, RowOrigin } from "./pixel-image-builder";
 
 import { PixelImageService } from "./pixel-image.service";
 
@@ -170,6 +170,10 @@ export class SlantRectBevel implements Bevel {
 
     genImage2(which: RectImage, pibf: PixelImageBuilderFactory): DisplayImage {
         switch (which) {
+        case RectImage.Left:
+            return pibf.row(RowOrigin.L, this.topLeft.length).pushPixels(this.topLeft).build();
+        case RectImage.Right:
+            return pibf.row(RowOrigin.R, this.bottomRight.length).pushPixels(this.bottomRight).build();
         case RectImage.Top:
             return pibf.col(ColOrigin.T, this.topLeft.length).pushPixels(this.topLeft).build();
         case RectImage.Bottom:

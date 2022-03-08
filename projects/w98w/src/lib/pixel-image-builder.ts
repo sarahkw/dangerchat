@@ -60,6 +60,58 @@ class PixelImageBuilderCol {
     }
 }
 
+class PixelImageBuilderRow {
+    private canvas = document.createElement('canvas');
+    private context: CanvasRenderingContext2D;
+
+    private pos: number = 0;
+    private reverse: boolean = false;
+
+    private pixelSize: number;
+
+    constructor(private pdc: PixelDrawConfig, artPixelWidth: number) {
+        this.pixelSize = pdc.pixelCanvasSize;
+
+        this.canvas.width = pdc.snapSize(artPixelWidth * this.pixelSize);
+        this.canvas.height = 1;
+
+        this.context = this.canvas.getContext('2d')!;
+    }
+
+    [reverse]() {
+        this.pos = this.canvas.width;
+        this.reverse = true;
+    }
+
+    pushPixel(fillStyle: string) {
+        this.context.fillStyle = fillStyle;
+
+        if (this.reverse) {
+            this.pos -= this.pixelSize;
+            this.context.fillRect(this.pos, 0, this.pixelSize, 1);
+        } else {
+            this.context.fillRect(this.pos, 0, this.pixelSize, 1);
+            this.pos += this.pixelSize;
+        }
+        return this;
+    }
+
+    pushPixels(fillStyles: string[]) {
+        for (const fillStyle of fillStyles) {
+            this.pushPixel(fillStyle);
+        }
+        return this;
+    }
+
+    build(): DisplayImage {
+        return {
+            cssWidth: this.pdc.canvasSizeToCssSize(this.canvas.width),
+            cssHeight: this.pdc.canvasSizeToCssSize(this.canvas.height),
+            url: this.canvas.toDataURL()
+        };
+    }
+}
+
 export enum RowOrigin {
     L, R
 }
@@ -81,5 +133,13 @@ export class PixelImageBuilderFactory {
             ret[reverse]();
         }
         return ret;        
+    }
+
+    row(origin: RowOrigin, artPixelWidth: number) {
+        const ret = new PixelImageBuilderRow(this.pdc, artPixelWidth);
+        if (origin === RowOrigin.R) {
+            ret[reverse]();
+        }
+        return ret;          
     }
 }
