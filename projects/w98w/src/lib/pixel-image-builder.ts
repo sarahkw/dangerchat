@@ -57,6 +57,10 @@ class PixelImageBuilderBasic {
             h * this.pixelSize);
     }
 
+    drawRectXY(fillStyle: string, x1: number, y1: number, x2: number, y2: number) {
+        this.drawRect(fillStyle, x1, y1, x2 - x1, y2 - y1);
+    }
+
     drawLineLeft(fillStyle: string, x: number, y: number, len: number) {
         this.drawRect(fillStyle, x - len + 1, y, len, 1);
     }
@@ -195,7 +199,51 @@ class PixelImageBuilderElbow extends PixelImageBuilderBasic {
         return this;
     }
 }
+
+export enum SlantOrigin {
+    BottomLeft,
+    TopRight
 }
+
+class PixelImageBuilderSlant extends PixelImageBuilderBasic {
+
+    static readonly H_SLANT_MAP = {
+        [SlantOrigin.BottomLeft]: HOrigin.Left,
+        [SlantOrigin.TopRight]: HOrigin.Right
+    };
+
+    static readonly V_SLANT_MAP = {
+        [SlantOrigin.TopRight]: VOrigin.Top,
+        [SlantOrigin.BottomLeft]: VOrigin.Bottom
+    };
+
+    constructor(pdc: PixelDrawConfig, private artPixelSize: number, origin: SlantOrigin) {
+        super(pdc, artPixelSize, artPixelSize, PixelImageBuilderSlant.H_SLANT_MAP[origin], PixelImageBuilderSlant.V_SLANT_MAP[origin]);
+    }
+
+    applyBottomRightPixels(fillStyles: string[]) {  // draw on bottom left
+        console.assert(this.artPixelSize == fillStyles.length);
+
+        // horizontal
+        for (let i = 0; i < this.artPixelSize; ++i) {
+            this.drawLineLeft(fillStyles[this.artPixelSize - i - 1], this.artPixelSize, i, i + 2); // TODO: should be i + 1
+        }
+
+        return this;
+    }
+
+    applyTopLeftPixels(fillStyles: string[]) { // draw on bottom left
+        console.assert(this.artPixelSize == fillStyles.length);
+
+        // vertical
+        for (let i = 0; i < this.artPixelSize; ++i) {
+            this.drawRect(fillStyles[i], i, 0, 1, this.artPixelSize - i - 1);
+        }
+
+        return this;
+    }
+}
+
 
 export class PixelImageBuilderFactory {
     constructor(private pdc: PixelDrawConfig) {}
@@ -210,5 +258,9 @@ export class PixelImageBuilderFactory {
 
     elbow(origin: ElbowOrigin, artPixelSize: number) {
         return new PixelImageBuilderElbow(this.pdc, artPixelSize, origin);
+    }
+
+    slant(origin: SlantOrigin, artPixelSize: number) {
+        return new PixelImageBuilderSlant(this.pdc, artPixelSize, origin);
     }
 }
