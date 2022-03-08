@@ -180,6 +180,11 @@ export class SlantRectBevel implements Bevel {
             return pibf.col(VOrigin.Bottom, this.bottomRight.length).pushPixels(this.bottomRight).build();
         case RectImage.TL:
             return pibf.elbow(ElbowOrigin.TopLeft, this.topLeft.length).pushPixels(this.topLeft).build();
+        case RectImage.TR:
+            return pibf.slant(SlantOrigin.TopRight, this.bottomRight.length)
+                .applyBottomRightPixels(this.bottomRight)
+                .applyTopLeftPixels(this.topLeft)
+                .build();
         case RectImage.BR:
             return pibf.elbow(ElbowOrigin.BottomRight, this.bottomRight.length).pushPixels(this.bottomRight).build();
         case RectImage.BL:
@@ -187,9 +192,6 @@ export class SlantRectBevel implements Bevel {
                 .applyBottomRightPixels(this.bottomRight)
                 .applyTopLeftPixels(this.topLeft)
                 .build();
-        default:
-            // XXX placeholder!
-            return pibf.col(VOrigin.Top, this.topLeft.length).pushPixels(this.topLeft).build();
         }
     }
 }

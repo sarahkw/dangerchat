@@ -33,7 +33,7 @@ export class ButtonComponent implements OnInit, OnDestroy {
         [RectImage.Bottom, Bevels.BUTTON.genImage2(RectImage.Bottom, pibf)],
 
         [RectImage.TL, Bevels.BUTTON.genImage2(RectImage.TL, pibf)],
-        [RectImage.TR, Bevels.BUTTON.genImage(RectImage.TR, svc)],
+        [RectImage.TR, Bevels.BUTTON.genImage2(RectImage.TR, pibf)],
         [RectImage.BL, Bevels.BUTTON.genImage2(RectImage.BL, pibf)],
         [RectImage.BR, Bevels.BUTTON.genImage2(RectImage.BR, pibf)],
       ]);
@@ -47,7 +47,7 @@ export class ButtonComponent implements OnInit, OnDestroy {
       .w98w-button .w98w-bevel-8split-bottom { background-image: url('${imgs.get(RectImage.Bottom).url}'); background-size: ${imgs.get(RectImage.Bottom).cssWidth}px ${imgs.get(RectImage.Bottom).cssHeight}px; }
 
       .w98w-button .w98w-bevel-8split-tl { background-image: url('${imgs.get(RectImage.TL).url}'); background-size: ${imgs.get(RectImage.TL).cssWidth}px ${imgs.get(RectImage.TL).cssHeight}px; }
-      .w98w-button .w98w-bevel-8split-tr { background-image: url('${imgs.get(RectImage.TR)}'); }
+      .w98w-button .w98w-bevel-8split-tr { background-image: url('${imgs.get(RectImage.TR).url}'); background-size: ${imgs.get(RectImage.TR).cssWidth}px ${imgs.get(RectImage.TR).cssHeight}px; }
       .w98w-button .w98w-bevel-8split-bl { background-image: url('${imgs.get(RectImage.BL).url}'); background-size: ${imgs.get(RectImage.BL).cssWidth}px ${imgs.get(RectImage.BL).cssHeight}px; }
       .w98w-button .w98w-bevel-8split-br { background-image: url('${imgs.get(RectImage.BR).url}'); background-size: ${imgs.get(RectImage.BR).cssWidth}px ${imgs.get(RectImage.BR).cssHeight}px; }
       `);

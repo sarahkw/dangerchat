@@ -209,6 +209,13 @@ function RIDX<T>(input: T[], idx: number): T {
     return input[input.length - idx - 1];
 }
 
+function fromRight(fillStyles: string[], cb: (pos: number, fillStyle: string, x: number) => void) {
+    const width = fillStyles.length;
+    for (let i = 0; i < width; ++i) {
+        cb(i, fillStyles[i], width - 1 - i);
+    }
+}
+
 class PixelImageBuilderSlant extends PixelImageBuilderBasic {
 
     static readonly H_SLANT_MAP = {
@@ -221,16 +228,26 @@ class PixelImageBuilderSlant extends PixelImageBuilderBasic {
         [SlantOrigin.BottomLeft]: VOrigin.Bottom
     };
 
-    constructor(pdc: PixelDrawConfig, private artPixelSize: number, origin: SlantOrigin) {
+    constructor(pdc: PixelDrawConfig, private artPixelSize: number, private origin: SlantOrigin) {
         super(pdc, artPixelSize, artPixelSize, PixelImageBuilderSlant.H_SLANT_MAP[origin], PixelImageBuilderSlant.V_SLANT_MAP[origin]);
     }
 
-    applyBottomRightPixels(fillStyles: string[]) {  // draw on bottom left
+    applyBottomRightPixels(fillStyles: string[]) {
         console.assert(this.artPixelSize == fillStyles.length);
 
-        // horizontal
-        for (let i = 0; i < this.artPixelSize; ++i) {
-            this.drawLineLeft(RIDX(fillStyles, i), this.artPixelSize, i, i + 2); // TODO: should be i + 1
+        switch (this.origin) {
+            case SlantOrigin.BottomLeft:
+                // horizontal
+                for (let i = 0; i < this.artPixelSize; ++i) {
+                    this.drawLineLeft(RIDX(fillStyles, i), this.artPixelSize, i, i + 2); // TODO: should be i + 1
+                }
+                break;
+            case SlantOrigin.TopRight:
+                // vertical
+                fromRight(fillStyles, (pos, fillStyle, x) => {
+                    this.drawRectXY(fillStyle, x, pos, x + 1, this.artPixelSize);
+                });
+                break;
         }
 
         return this;
@@ -239,10 +256,18 @@ class PixelImageBuilderSlant extends PixelImageBuilderBasic {
     applyTopLeftPixels(fillStyles: string[]) { // draw on bottom left
         console.assert(this.artPixelSize == fillStyles.length);
 
-        // vertical
-        for (let i = 0; i < this.artPixelSize; ++i) {
-            this.drawRect(fillStyles[i], i, 0, 1, this.artPixelSize - i - 1);
+        switch (this.origin) {
+            case SlantOrigin.BottomLeft:
+                // vertical
+                for (let i = 0; i < this.artPixelSize; ++i) {
+                    this.drawRect(fillStyles[i], i, 0, 1, this.artPixelSize - i - 1);
+                }
+                break;
+            case SlantOrigin.TopRight:
+                // rofl it works out without this, for now!   TODO: do this though
+                break;
         }
+
 
         return this;
     }
