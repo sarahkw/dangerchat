@@ -35,14 +35,34 @@ const CLASSES = [
   ".w98w-bevel-8split-br",
 ];
 
+const PROVIDE_CONTAINER_W = [
+    true,
+    true,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+];
+
+const PROVIDE_CONTAINER_H = [
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+];
+
 @Component({
   selector: 'w98w-bevel-8split',
   templateUrl: './bevel-8split.component.html',
   styleUrls: ['./bevel-8split.component.css']
 })
 export class Bevel8SplitComponent implements OnInit {
-
-  @Input() bevelSize: string = "0";
 
   constructor() { }
 
@@ -51,7 +71,10 @@ export class Bevel8SplitComponent implements OnInit {
 
   static genCss(prefix: string, input: GenCssInput) {
     return SELECTORS.map((s, i) => {
-      return `${prefix} ${CLASSES[i]} { background-image: url('${input[s].url}'); background-size: ${input[s].cssWidth}px ${input[s].cssHeight}px; }`;
+      const w = PROVIDE_CONTAINER_W[i] ? `width: ${input[s].cssWidth}px; ` : '';
+      const h = PROVIDE_CONTAINER_H[i] ? `height: ${input[s].cssHeight}px; ` : '';
+
+      return `${prefix} ${CLASSES[i]} { background-image: url('${input[s].url}'); background-size: ${input[s].cssWidth}px ${input[s].cssHeight}px; ${w}${h} }`;
     }).join("\n");
   }
 
