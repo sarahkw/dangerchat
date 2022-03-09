@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ContentChild, Directive, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 
 import { Bevels } from '../bevel';
 import { PixelImageService } from '../pixel-image.service';
@@ -7,6 +7,13 @@ import { StyleInjector } from '../style-injector';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
+
+@Directive({
+  selector: '[w98wButtonIcon]'
+})
+export class ButtonIconDirective {
+  constructor(public templateRef: TemplateRef<unknown>) {}
+}
 
 @Component({
   selector: 'w98w-button',
@@ -33,6 +40,8 @@ export class ButtonComponent implements OnInit, OnDestroy {
 
   @Input() width?: number;
   @Input() height?: number;
+
+  @ContentChild(ButtonIconDirective) buttonIcon!: ButtonIconDirective;
 
   style: { [klass: string]: any } = {};
 

@@ -1,4 +1,5 @@
 <button class="w98w-button" [ngStyle]="style">
     <w98w-bevel-8split></w98w-bevel-8split>
+    <ng-container *ngIf="buttonIcon" [ngTemplateOutlet]="buttonIcon.templateRef"></ng-container>
     <span class="button-contents"><ng-content></ng-content></span>
 </button>
