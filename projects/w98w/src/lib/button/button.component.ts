@@ -24,8 +24,8 @@ import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8spl
   }
 
   button:active .button-contents {
-    top: 1px;
-    left: 1px;
+    top: 2px;
+    left: 2px;
   }
   `]
 })
