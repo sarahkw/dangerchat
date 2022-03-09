@@ -16,6 +16,7 @@ import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8spl
   button {
     background-color: ${Colors.WIDGET_BG};
     color: ${Colors.WIDGET_TEXT}; /* ipad safari */
+    font-family: 'W98w MS Sans Serif';
   }
 
   button .button-contents {
