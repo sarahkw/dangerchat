@@ -9,13 +9,15 @@ import { W98wModule } from 'projects/w98w/src/public-api';
 import { PixelAlignmentComponent } from './pixel-alignment/pixel-alignment.component';
 import { DprComponent } from './dpr/dpr.component';
 import { ButtonDemoComponent } from './button-demo/button-demo.component';
+import { GenImgDemoComponent } from './gen-img-demo/gen-img-demo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PixelAlignmentComponent,
     DprComponent,
-    ButtonDemoComponent
+    ButtonDemoComponent,
+    GenImgDemoComponent
   ],
   imports: [
     BrowserModule,
