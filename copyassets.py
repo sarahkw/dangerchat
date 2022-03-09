@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# why not symlink? because "ng serve" doesn't support it.
+# "ng build" does, though...
+
 SRC = {
     "w98w": "projects/w98w/src/assets"
 }
