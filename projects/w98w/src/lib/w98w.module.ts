@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { W98wComponent } from './w98w.component';
 import { ButtonComponent, ButtonIconDirective } from './button/button.component';
 import { Bevel8SplitComponent } from './bevel-8split/bevel-8split.component';
+import { PixelImageComponent } from './pixel-image/pixel-image.component';
 
 
 
@@ -12,7 +13,8 @@ import { Bevel8SplitComponent } from './bevel-8split/bevel-8split.component';
     W98wComponent,
     ButtonComponent,
     Bevel8SplitComponent,
-    ButtonIconDirective
+    ButtonIconDirective,
+    PixelImageComponent
   ],
   imports: [
     CommonModule
@@ -20,7 +22,8 @@ import { Bevel8SplitComponent } from './bevel-8split/bevel-8split.component';
   exports: [
     W98wComponent,
     ButtonComponent,
-    ButtonIconDirective
+    ButtonIconDirective,
+    PixelImageComponent
   ]
 })
 export class W98wModule { }
