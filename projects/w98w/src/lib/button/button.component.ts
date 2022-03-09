@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Bevels } from '../bevel';
 import { PixelImageService } from '../pixel-image.service';
@@ -30,7 +30,10 @@ import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8spl
 })
 export class ButtonComponent implements OnInit, OnDestroy {
 
-  constructor(private imgService: PixelImageService) { }
+  @Input() width?: number;
+  @Input() height?: number;
+
+  style: { [klass: string]: any } = {};
 
   static readonly PID_NORMAL = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();
@@ -64,9 +67,19 @@ export class ButtonComponent implements OnInit, OnDestroy {
     }
   };  // PID_PRESSED
 
+  constructor(private imgService: PixelImageService) {}
+
   ngOnInit(): void {
     this.imgService.pidRegister(ButtonComponent.PID_NORMAL);
     this.imgService.pidRegister(ButtonComponent.PID_PRESSED);
+
+    if (this.width !== undefined) {
+      this.style["width.px"] = this.width;
+    }
+
+    if (this.height !== undefined) {
+      this.style["height.px"] = this.height;
+    }
   }
 
   ngOnDestroy(): void {

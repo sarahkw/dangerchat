@@ -2,8 +2,4 @@ button {
     border: none;
     -webkit-tap-highlight-color: transparent; /* ipad safari */
     position: relative;
-
-    /* dev */
-    width: 200px;
-    height: 3em;
 }
