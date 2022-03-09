@@ -17,6 +17,15 @@ import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8spl
     background-color: ${Colors.WIDGET_BG};
     color: ${Colors.WIDGET_TEXT}; /* ipad safari */
   }
+
+  button .button-contents {
+    position: relative;
+  }
+
+  button:active .button-contents {
+    top: 1px;
+    left: 1px;
+  }
   `]
 })
 export class ButtonComponent implements OnInit, OnDestroy {
