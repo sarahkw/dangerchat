@@ -45,6 +45,8 @@ export class ButtonComponent implements OnInit, OnDestroy {
 
   style: { [klass: string]: any } = {};
 
+  //#region PIDs
+
   static readonly PID_NORMAL = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();
 
@@ -76,6 +78,8 @@ export class ButtonComponent implements OnInit, OnDestroy {
       this.styleInjector.destroy();
     }
   };  // PID_PRESSED
+
+  //#endregion
 
   constructor(private imgService: PixelImageService) {}
 
