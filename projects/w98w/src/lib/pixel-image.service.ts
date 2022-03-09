@@ -15,7 +15,7 @@ export class PixelDrawConfig {
 
   constructor(dpr: number) {
     this.dpr = dpr;
-    this.pixelCanvasSize = Math.round(dpr);
+    this.pixelCanvasSize = Math.floor(dpr);
 
     {
       const f = new Fraction(dpr);
