@@ -15,7 +15,7 @@ export class PixelDrawConfig {
 
   constructor(dpr: number) {
     this.dpr = dpr;
-    this.pixelCanvasSize = Math.floor(dpr + 0.01);
+    this.pixelCanvasSize = Math.max(Math.floor(dpr + 0.01), 1);
 
     {
       const f = new Fraction(dpr);
