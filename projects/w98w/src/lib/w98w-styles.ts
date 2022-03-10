@@ -35,7 +35,7 @@ function fontSzToTitleBarSz(fontSz: number) {
     return val;
 }
 
-const titleBarFont = 16;
+const titleBarFont = 12;
 
 export abstract class W98wStyles {
 
