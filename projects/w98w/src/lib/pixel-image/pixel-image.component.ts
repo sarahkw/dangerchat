@@ -41,7 +41,7 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
       this.style["height.px"] = h;
       this.debugShowSizeStyle = {
         "width.px": imgs.cssRequestedWidth,
-        "height.px": imgs.cssNextStepHeight,
+        "height.px": imgs.cssRequestedHeight,
         "background-color": "lightgray",
         "position": "relative",
         "z-index": -1
