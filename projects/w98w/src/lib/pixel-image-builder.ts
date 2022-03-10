@@ -9,6 +9,12 @@ export type DisplayImage = {
     cssRequestedWidth: number,
     cssRequestedHeight: number,
 
+    // a little bigger to make sure it's good. use this in cases where it's OK to take up extra space.
+    // maybe a good strategy would be to actually show this much, but do layout like we're not.
+    // so anything that would accidentally be clipped would still actually be shown.
+    cssRequestedWidthCautious: number,
+    cssRequestedHeightCautious: number,
+
     url: string
 };
 
@@ -78,11 +84,20 @@ class PixelImageBuilderBasic {
     }
 
     build(): DisplayImage {
+        const cssRequestedWidth = Math.ceil(this.artPixelWidth / this.pdc.dpr) * this.pixelSize;
+        const cssRequestedHeight = Math.ceil(this.artPixelHeight / this.pdc.dpr) * this.pixelSize;
+
         return {
             cssNextStepWidth: this.pdc.canvasSizeToCssSize(this.canvas.width),
             cssNextStepHeight: this.pdc.canvasSizeToCssSize(this.canvas.height),
-            cssRequestedWidth: Math.ceil(this.artPixelWidth / this.pdc.dpr) * this.pixelSize,
-            cssRequestedHeight: Math.ceil(this.artPixelHeight / this.pdc.dpr) * this.pixelSize,
+
+            cssRequestedWidth: cssRequestedWidth,
+            cssRequestedHeight: cssRequestedHeight,
+
+            // i experimented to get this formula, it looks pretty good, no clipping
+            cssRequestedWidthCautious: cssRequestedWidth + Math.ceil(this.pdc.dpr),
+            cssRequestedHeightCautious: cssRequestedHeight + Math.ceil(this.pdc.dpr),
+
             url: this.canvas.toDataURL()
         };
     }
