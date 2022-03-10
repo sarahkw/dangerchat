@@ -1,3 +1,20 @@
+<style>
+    @keyframes crawl {
+        from {
+            margin-left: 0;
+        }
+        to {
+            margin-left: 100px;
+        }
+    }
+
+    .animate {
+        animation-duration: 100s;
+        animation-name: crawl;
+        animation-timing-function: linear;
+    }
+</style>
+
 <h2>Gen Img</h2>
 
 <div>
@@ -10,9 +27,15 @@
     <input type="number" id="requestedSz" #requestedSzElement [value]="requestedSz$ | async" (input)="requestedSz$.next(+ requestedSzElement.value)">
 </div>
 
+<div>
+    <input type="checkbox" id="animate" #animateElement (input)="animationTrigger = animateElement.checked">
+    <label for="animate">Animate</label>
+</div>
+
 <p></p>
 
-<div style="resize: both; border: 1px dotted gray; overflow: auto; display: inline-grid; grid-template-columns: 1fr auto; grid-template-rows: 1fr auto;">
+<div style="resize: both; border: 1px dotted gray; overflow: auto; display: inline-grid; grid-template-columns: 1fr auto; grid-template-rows: 1fr auto;"
+     [ngClass]="animationTrigger ? ['animate'] : []">
     <div style="border: 1px solid gray; grid-row: 2; grid-column: 2; padding: 5px;">
 
         <table *ngFor="let requestedSz of requestedSzArray$ | async" border="1">

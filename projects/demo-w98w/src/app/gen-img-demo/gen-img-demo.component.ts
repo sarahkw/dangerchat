@@ -18,6 +18,8 @@ export class GenImgDemoComponent implements OnInit {
 
   readonly genImg1 = GenImg.DEBUG_X;
 
+  animationTrigger = false;
+
   constructor() { }
 
   ngOnInit(): void {
