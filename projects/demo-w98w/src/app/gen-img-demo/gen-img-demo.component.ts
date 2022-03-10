@@ -11,7 +11,7 @@ export class GenImgDemoComponent implements OnInit {
 
   readonly requestedSz$: BehaviorSubject<number> = new BehaviorSubject(9);
   readonly requestedSzArray$ = this.requestedSz$.pipe(map(v => [v]));
-  readonly range$ = this.requestedSz$.pipe(mergeMap(v => range(v - 5, 10).pipe(toArray())));
+  readonly range$ = this.requestedSz$.pipe(mergeMap(v => range(v - 5, 11).pipe(toArray())));
 
   readonly genImg1 = GenImg.TBAR_X;
 
