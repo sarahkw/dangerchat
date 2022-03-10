@@ -1,6 +1,11 @@
 <h2>Gen Img</h2>
 
 <div>
+    <label for="requestedRange">Range</label>
+    <input type="number" id="requestedRange" #requestedRangeElement [value]="requestedRange$ | async" (input)="requestedRange$.next(+ requestedRangeElement.value)">
+</div>
+
+<div>
     <label for="requestedSz">Size</label>
     <input type="number" id="requestedSz" #requestedSzElement [value]="requestedSz$ | async" (input)="requestedSz$.next(+ requestedSzElement.value)">
 </div>
