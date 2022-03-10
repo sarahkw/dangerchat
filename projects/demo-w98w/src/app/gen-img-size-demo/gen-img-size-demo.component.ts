@@ -3,11 +3,11 @@ import { GenImg } from 'projects/w98w/src/lib/genimg';
 import { BehaviorSubject, combineLatest, map, mergeMap, range, toArray } from 'rxjs';
 
 @Component({
-  selector: 'app-gen-img-demo',
-  templateUrl: './gen-img-demo.component.html',
-  styleUrls: ['./gen-img-demo.component.css']
+  selector: 'app-gen-img-size-demo',
+  templateUrl: './gen-img-size-demo.component.html',
+  styleUrls: ['./gen-img-size-demo.component.css']
 })
-export class GenImgDemoComponent implements OnInit {
+export class GenImgSizeDemoComponent implements OnInit {
 
   readonly requestedRange$: BehaviorSubject<number> = new BehaviorSubject(5);
 
