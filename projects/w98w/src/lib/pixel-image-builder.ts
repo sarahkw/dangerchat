@@ -94,9 +94,9 @@ class PixelImageBuilderBasic {
             cssRequestedWidth: cssRequestedWidth,
             cssRequestedHeight: cssRequestedHeight,
 
-            // i experimented to get this, it looks pretty good, no clipping
-            cssRequestedWidthCautious: cssRequestedWidth + 3,
-            cssRequestedHeightCautious: cssRequestedHeight + 3,
+            // i experimented to get this formula, it looks pretty good, no clipping
+            cssRequestedWidthCautious: cssRequestedWidth + Math.ceil(this.pdc.dpr),
+            cssRequestedHeightCautious: cssRequestedHeight + Math.ceil(this.pdc.dpr),
 
             url: this.canvas.toDataURL()
         };
