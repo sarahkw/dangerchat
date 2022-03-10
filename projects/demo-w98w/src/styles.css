@@ -7,6 +7,11 @@ body {
     background-color: #008080;
 }
 
+.w98w-font-ss {
+    font-family: 'W98w MS Sans Serif';
+    text-rendering: optimizeSpeed; /* best effort to make it look pixelated */
+}
+
 .w98w-pixelimg {
     /* https://css-tricks.com/keep-pixelated-images-pixelated-as-they-scale/ */
     image-rendering: pixelated;

@@ -5,6 +5,10 @@ export abstract class Colors {
     static readonly WIDGET_TEXT = "black" as Color;
     static readonly WIDGET_BG = "#c0c0c0" as Color;
 
+    static readonly TITLEBAR_ACTIVE = "#000080" as Color;
+    static readonly TITLEBAR_INACTIVE = "#808080" as Color;
+    static readonly TITLEBAR_TEXT = "#ffffff" as Color;
+
     // Bevel
     static readonly BEV_BLACK = "#000000" as Color;
     static readonly BEV_DARKGRAY = "#808080" as Color;
