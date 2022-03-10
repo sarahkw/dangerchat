@@ -23,7 +23,7 @@ class PixelImageBuilderBasic {
     private beginX: number;
     private beginY: number;
 
-    constructor(private pdc: PixelDrawConfig, artPixelWidth: number, artPixelHeight: number, private hAlign: HOrigin, private vAlign: VOrigin) {
+    constructor(private pdc: PixelDrawConfig, artPixelWidth: number, artPixelHeight: number, hAlign: HOrigin, vAlign: VOrigin) {
         this.pixelSize = pdc.pixelCanvasSize;
 
         this.canvas.width = Math.max(pdc.snapSize(artPixelWidth * this.pixelSize), 1);
@@ -45,8 +45,7 @@ class PixelImageBuilderBasic {
     }
 
     drawPixel(fillStyle: string, x: number, y: number) {
-        this.drawRect(fillStyle, x, y, 1, 1);
-        return this;
+        return this.drawRect(fillStyle, x, y, 1, 1);
     }
 
     drawRect(fillStyle: string, x: number, y: number, w: number, h: number) {
@@ -278,6 +277,10 @@ class PixelImageBuilderSlant extends PixelImageBuilderBasic {
 
 export class PixelImageBuilderFactory {
     constructor(private pdc: PixelDrawConfig) {}
+
+    basic(artPixelWidth: number, artPixelHeight: number) {
+        return new PixelImageBuilderBasic(this.pdc, artPixelWidth, artPixelHeight, HOrigin.Left, VOrigin.Top);
+    }
 
     col(origin: VOrigin, artPixelHeight: number) {
         return new PixelImageBuilderCol(this.pdc, artPixelHeight, origin);

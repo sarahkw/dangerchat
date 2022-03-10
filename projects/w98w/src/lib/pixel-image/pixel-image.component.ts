@@ -28,7 +28,7 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
       "width.px": imgs.cssWidth,
       "height.px": imgs.cssHeight,
       "background-image": `url('${imgs.url}')`,
-      "background-size": `${imgs.cssWidth}px ${imgs.cssHeight} px`
+      "background-size": `${imgs.cssWidth}px ${imgs.cssHeight}px`
     };
   }
 

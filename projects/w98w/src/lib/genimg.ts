@@ -14,11 +14,37 @@ export type GenImgDescriptor = {
     draw: (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory) => DisplayImage;
 };
 
+function incXincY(until: number, fn: (x: number, y: number) => void) {
+    for (let i = 0; i < until; ++i) {
+        fn(i, i);
+    }
+}
+
+function decXincY(until: number, fn: (x: number, y: number) => void) {
+    for (let i = 0; i < until; ++i) {
+        fn(until - i - 1, i);
+    }
+}
+
 export abstract class GenImg {
 
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
-            return pibf.col(VOrigin.Top, drawCssHeight).drawRect('red', 0, 0, 1, drawCssHeight).build();
+            console.assert(drawCssWidth == drawCssHeight);
+            let cssSize = Math.min(drawCssWidth, drawCssHeight);
+
+            let builder = pibf.basic(cssSize, cssSize);
+
+            const SQUARE_SZ = 2;
+            const SQUARE_PAD = 1;
+            incXincY(cssSize - SQUARE_PAD, (x, y) => {
+                builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
+            });
+            decXincY(cssSize - SQUARE_PAD, (x, y) => {
+                builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
+            });
+
+            return builder.build();
         }
     }
 
