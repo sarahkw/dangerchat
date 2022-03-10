@@ -15,8 +15,8 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
   @Input() cssWidth!: number;
   @Input() cssHeight!: number;
 
-  @Input() debugDrawnWidth: number | undefined;
-  @Input() debugDrawnHeight: number | undefined;
+  @Input() debugDrawnSize: [number, number] | undefined;
+  debugShowSizeStyle: { [klass: string]: any } | undefined;
 
   style: { [klass: string]: any } = {};
 
@@ -35,11 +35,17 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
       "background-repeat": "no-repeat"
     };
 
-    if (this.debugDrawnWidth !== undefined) {
-      this.style["width.px"] = this.debugDrawnWidth;
-    }
-    if (this.debugDrawnHeight !== undefined) {
-      this.style["height.px"] = this.debugDrawnHeight;
+    if (this.debugDrawnSize !== undefined) {
+      let [w, h] = this.debugDrawnSize;
+      this.style["width.px"] = w;
+      this.style["height.px"] = h;
+      this.debugShowSizeStyle = {
+        "width.px": imgs.cssRequestedWidth,
+        "height.px": imgs.cssNextStepHeight,
+        "background-color": "lightgray",
+        "position": "relative",
+        "z-index": -1
+      }
     }
   }
 
