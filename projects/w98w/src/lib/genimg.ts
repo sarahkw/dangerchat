@@ -36,11 +36,10 @@ export abstract class GenImg {
             let builder = pibf.basic(cssSize, cssSize);
 
             const SQUARE_SZ = 1;
-            const SQUARE_PAD = 1;
-            incXincY(cssSize - SQUARE_PAD, (x, y) => {
+            incXincY(cssSize, (x, y) => {
                 builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
             });
-            decXincY(cssSize - SQUARE_PAD, (x, y) => {
+            decXincY(cssSize, (x, y) => {
                 builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
             });
 
