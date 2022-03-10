@@ -18,11 +18,18 @@ export class GenImgDemoComponent implements OnInit {
 
   readonly genImg1 = GenImg.DEBUG_X;
 
-  animationTrigger = false;
+  animationClass: string[] = []
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  triggerAniX(value: boolean) {
+    this.animationClass = value ? ["animateX"] : [];
+  }
+
+  triggerAniY(value: boolean) {
+    this.animationClass = value ? ["animateY"] : [];
+  }
 }

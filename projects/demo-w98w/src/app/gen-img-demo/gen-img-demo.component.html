@@ -1,5 +1,5 @@
 <style>
-    @keyframes crawl {
+    @keyframes crawlX {
         from {
             margin-left: 0;
         }
@@ -8,9 +8,24 @@
         }
     }
 
-    .animate {
+    .animateX {
         animation-duration: 100s;
-        animation-name: crawl;
+        animation-name: crawlX;
+        animation-timing-function: linear;
+    }
+
+    @keyframes crawlY {
+        from {
+            margin-top: 0;
+        }
+        to {
+            margin-top: 100px;
+        }
+    }
+
+    .animateY {
+        animation-duration: 100s;
+        animation-name: crawlY;
         animation-timing-function: linear;
     }
 </style>
@@ -28,14 +43,19 @@
 </div>
 
 <div>
-    <input type="checkbox" id="animate" #animateElement (input)="animationTrigger = animateElement.checked">
-    <label for="animate">Animate</label>
+    <input type="checkbox" id="animateX" #animateXElement (input)="triggerAniX(animateXElement.checked)">
+    <label for="animateX">Animate X</label>
+</div>
+
+<div>
+    <input type="checkbox" id="animateY" #animateYElement (input)="triggerAniY(animateYElement.checked)">
+    <label for="animateY">Animate Y</label>
 </div>
 
 <p></p>
 
 <div style="resize: both; border: 1px dotted gray; overflow: auto; display: inline-grid; grid-template-columns: 1fr auto; grid-template-rows: 1fr auto;"
-     [ngClass]="animationTrigger ? ['animate'] : []">
+     [ngClass]="animationClass">
     <div style="border: 1px solid gray; grid-row: 2; grid-column: 2; padding: 5px;">
 
         <table *ngFor="let requestedSz of requestedSzArray$ | async" border="1">
