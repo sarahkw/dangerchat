@@ -63,6 +63,8 @@ export class PixelImageService {
       );
   }
 
+  // if registering the same pid multiple times, we don't make it draw again, we just
+  // increase the refcount.
   pidRegister(pid: PixelImageDrawer) {
     if (this.pids.has(pid)) {
       this.pids.get(pid)!.refcount += 1;

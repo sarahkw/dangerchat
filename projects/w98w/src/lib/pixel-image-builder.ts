@@ -46,6 +46,7 @@ class PixelImageBuilderBasic {
 
     drawPixel(fillStyle: string, x: number, y: number) {
         this.drawRect(fillStyle, x, y, 1, 1);
+        return this;
     }
 
     drawRect(fillStyle: string, x: number, y: number, w: number, h: number) {
@@ -55,18 +56,19 @@ class PixelImageBuilderBasic {
             this.beginY + y * this.pixelSize,
             w * this.pixelSize,
             h * this.pixelSize);
+        return this;
     }
 
     drawRectXY(fillStyle: string, x1: number, y1: number, x2: number, y2: number) {
-        this.drawRect(fillStyle, x1, y1, x2 - x1, y2 - y1);
+        return this.drawRect(fillStyle, x1, y1, x2 - x1, y2 - y1);
     }
 
     drawLineLeft(fillStyle: string, x: number, y: number, len: number) {
-        this.drawRect(fillStyle, x - len + 1, y, len, 1);
+        return this.drawRect(fillStyle, x - len + 1, y, len, 1);
     }
 
     drawLineUp(fillStyle: string, x: number, y: number, len: number) {
-        this.drawRect(fillStyle, x, y - len + 1, 1, len);
+        return this.drawRect(fillStyle, x, y - len + 1, 1, len);
     }
 
     build(): DisplayImage {
