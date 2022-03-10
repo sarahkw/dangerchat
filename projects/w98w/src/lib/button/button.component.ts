@@ -31,8 +31,8 @@ export class ButtonIconDirective {
   }
 
   button:active .button-contents {
-    top: 2px;
-    left: 2px;
+    top: 1px;
+    left: 1px;
   }
   `]
 })
