@@ -13,7 +13,7 @@ export class GenImgDemoComponent implements OnInit {
   readonly requestedSzArray$ = this.requestedSz$.pipe(map(v => [v]));
   readonly range$ = this.requestedSz$.pipe(mergeMap(v => range(v - 5, 11).pipe(toArray())));
 
-  readonly genImg1 = GenImg.TBAR_X;
+  readonly genImg1 = GenImg.DEBUG_X;
 
   constructor() { }
 
