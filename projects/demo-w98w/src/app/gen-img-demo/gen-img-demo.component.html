@@ -7,26 +7,32 @@
 
 <p></p>
 
-<div *ngFor="let requestedSz of requestedSzArray$ | async" style="background-color: red; margin: 2px;">
-    <w98w-pixel-image [genImg]="genImg1" [cssWidth]="requestedSz" [cssHeight]="requestedSz"></w98w-pixel-image>
+<div style="resize: both; border: 1px dotted gray; overflow: auto; display: inline-grid; grid-template-columns: 1fr auto; grid-template-rows: 1fr auto;">
+    <div style="border: 1px solid gray; grid-row: 2; grid-column: 2; padding: 5px;">
+
+        <div *ngFor="let requestedSz of requestedSzArray$ | async" style="background-color: red; margin: 2px;">
+            <w98w-pixel-image [genImg]="genImg1" [cssWidth]="requestedSz" [cssHeight]="requestedSz"></w98w-pixel-image>
+        </div>
+
+        <p></p>
+
+        <table *ngFor="let requestedSz of requestedSzArray$ | async" border="1">
+            <tr>
+                <th>sz</th>
+                <th>view</th>
+            </tr>
+
+            <tr *ngFor="let i of range$ | async" >
+                <td>{{ i }}</td>
+                <td>
+                    <div style="background-color: red; margin: 2px;">
+                        <w98w-pixel-image [genImg]="genImg1"
+                            [cssWidth]="requestedSz" [cssHeight]="requestedSz" [debugDrawnWidth]="i" [debugDrawnHeight]="i">
+                        </w98w-pixel-image>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
 </div>
-
-<p></p>
-
-<table *ngFor="let requestedSz of requestedSzArray$ | async" border="1">
-    <tr>
-        <th>sz</th>
-        <th>view</th>
-    </tr>
-
-    <tr *ngFor="let i of range$ | async" >
-        <td>{{ i }}</td>
-        <td>
-            <div style="background-color: red; margin: 2px;">
-                <w98w-pixel-image [genImg]="genImg1"
-                    [cssWidth]="requestedSz" [cssHeight]="requestedSz" [debugDrawnWidth]="i" [debugDrawnHeight]="i">
-                </w98w-pixel-image>
-            </div>
-        </td>
-    </tr>
-</table>
