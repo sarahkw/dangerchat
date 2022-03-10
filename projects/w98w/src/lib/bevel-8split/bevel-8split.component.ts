@@ -77,10 +77,10 @@ export class Bevel8SplitComponent implements OnInit {
 
   static genCss(prefix: string, input: GenCssInput) {
     return SELECTORS.map((s, i) => {
-      const w = PROVIDE_CONTAINER_W[i] ? `width: ${input[s].cssWidth}px; ` : '';
-      const h = PROVIDE_CONTAINER_H[i] ? `height: ${input[s].cssHeight}px; ` : '';
+      const w = PROVIDE_CONTAINER_W[i] ? `width: ${input[s].cssRequestedWidth}px; ` : '';
+      const h = PROVIDE_CONTAINER_H[i] ? `height: ${input[s].cssRequestedHeight}px; ` : '';
 
-      return `${prefix} ${CLASSES[i]} { background-image: url('${input[s].url}'); background-size: ${input[s].cssWidth}px ${input[s].cssHeight}px; ${w}${h} }`;
+      return `${prefix} ${CLASSES[i]} { background-image: url('${input[s].url}'); background-size: ${input[s].cssNextStepWidth}px ${input[s].cssNextStepHeight}px; ${w}${h} }`;
     }).join("\n");
   }
 

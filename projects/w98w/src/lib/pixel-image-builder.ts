@@ -1,8 +1,14 @@
 import { PixelDrawConfig } from "./pixel-image.service";
 
 export type DisplayImage = {
-    cssWidth: number,
-    cssHeight: number,
+    // css width that may be incremented in order to get a good ratio
+    cssNextStepWidth: number,
+    cssNextStepHeight: number,
+
+    // the actual container to show the img should be this size
+    cssRequestedWidth: number,
+    cssRequestedHeight: number,
+
     url: string
 };
 
@@ -23,7 +29,7 @@ class PixelImageBuilderBasic {
     private beginX: number;
     private beginY: number;
 
-    constructor(private pdc: PixelDrawConfig, artPixelWidth: number, artPixelHeight: number, hAlign: HOrigin, vAlign: VOrigin) {
+    constructor(private pdc: PixelDrawConfig, private artPixelWidth: number, private artPixelHeight: number, hAlign: HOrigin, vAlign: VOrigin) {
         this.pixelSize = pdc.pixelCanvasSize;
 
         // the max lets caller specify 0 size, in order to bypass pixel size. for example, bevel repeats just need 1 canvas pixel.
@@ -73,8 +79,10 @@ class PixelImageBuilderBasic {
 
     build(): DisplayImage {
         return {
-            cssWidth: this.pdc.canvasSizeToCssSize(this.canvas.width),
-            cssHeight: this.pdc.canvasSizeToCssSize(this.canvas.height),
+            cssNextStepWidth: this.pdc.canvasSizeToCssSize(this.canvas.width),
+            cssNextStepHeight: this.pdc.canvasSizeToCssSize(this.canvas.height),
+            cssRequestedWidth: Math.ceil(this.artPixelWidth / this.pdc.dpr) * this.pixelSize,
+            cssRequestedHeight: Math.ceil(this.artPixelHeight / this.pdc.dpr) * this.pixelSize,
             url: this.canvas.toDataURL()
         };
     }
@@ -85,10 +93,10 @@ class PixelImageBuilderCol extends PixelImageBuilderBasic {
     private pos: number = 0;
     private reverse: boolean = false;
 
-    constructor(pdc: PixelDrawConfig, private artPixelHeight: number, origin: VOrigin) {
+    constructor(pdc: PixelDrawConfig, artPixelHeight: number, origin: VOrigin) {
         super(pdc, 0, artPixelHeight, HOrigin.Left, origin);
         if (origin == VOrigin.Bottom) {
-            this.pos = this.artPixelHeight;
+            this.pos = artPixelHeight;
             this.reverse = true;
         }
     }
@@ -117,10 +125,10 @@ class PixelImageBuilderRow extends PixelImageBuilderBasic {
     private pos: number = 0;
     private reverse: boolean = false;
 
-    constructor(pdc: PixelDrawConfig, private artPixelWidth: number, origin: HOrigin) {
+    constructor(pdc: PixelDrawConfig, artPixelWidth: number, origin: HOrigin) {
         super(pdc, artPixelWidth, 0, origin, VOrigin.Top);
         if (origin == HOrigin.Right) {
-            this.pos = this.artPixelWidth;
+            this.pos = artPixelWidth;
             this.reverse = true;
         }
     }

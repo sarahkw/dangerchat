@@ -25,10 +25,11 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
 
   pidApplyImages(imgs: DisplayImage): void {
     this.style = {
-      "width.px": imgs.cssWidth,
-      "height.px": imgs.cssHeight,
+      "width.px": imgs.cssRequestedWidth,
+      "height.px": imgs.cssRequestedHeight,
       "background-image": `url('${imgs.url}')`,
-      "background-size": `${imgs.cssWidth}px ${imgs.cssHeight}px`
+      "background-size": `${imgs.cssNextStepWidth}px ${imgs.cssNextStepHeight}px`,
+      "background-repeat": "no-repeat"
     };
   }
 
