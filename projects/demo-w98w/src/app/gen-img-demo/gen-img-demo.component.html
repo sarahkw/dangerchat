@@ -64,17 +64,19 @@
             <tr>
                 <th>sz</th>
                 <th>view</th>
+                <th>req</th>
             </tr>
 
             <tr *ngFor="let i of range$ | async" >
                 <td>{{ i }}</td>
                 <td>
                     <div style="background-color: red; width: min-content; margin: 2px;">
-                        <w98w-pixel-image [genImg]="genImg1"
+                        <w98w-pixel-image #pi [genImg]="genImg1"
                             [cssWidth]="requestedSz" [cssHeight]="requestedSz" [debugDrawnSize]="[i, i]">
                         </w98w-pixel-image>
                     </div>
                 </td>
+                <td>{{ pi.debugRequestedSize }}</td>
             </tr>
         </table>
 
