@@ -26,6 +26,7 @@ class PixelImageBuilderBasic {
     constructor(private pdc: PixelDrawConfig, artPixelWidth: number, artPixelHeight: number, hAlign: HOrigin, vAlign: VOrigin) {
         this.pixelSize = pdc.pixelCanvasSize;
 
+        // the max lets caller specify 0 size, in order to bypass pixel size. for example, bevel repeats just need 1 canvas pixel.
         this.canvas.width = Math.max(pdc.snapSize(artPixelWidth * this.pixelSize), 1);
         this.canvas.height = Math.max(pdc.snapSize(artPixelHeight * this.pixelSize), 1);
 
