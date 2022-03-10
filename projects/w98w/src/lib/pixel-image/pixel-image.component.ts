@@ -15,6 +15,9 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
   @Input() cssWidth!: number;
   @Input() cssHeight!: number;
 
+  @Input() debugDrawnWidth: number | undefined;
+  @Input() debugDrawnHeight: number | undefined;
+
   style: { [klass: string]: any } = {};
 
   constructor(private pixelImageService: PixelImageService) {}
@@ -31,6 +34,13 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
       "background-size": `${imgs.cssNextStepWidth}px ${imgs.cssNextStepHeight}px`,
       "background-repeat": "no-repeat"
     };
+
+    if (this.debugDrawnWidth !== undefined) {
+      this.style["width.px"] = this.debugDrawnWidth;
+    }
+    if (this.debugDrawnHeight !== undefined) {
+      this.style["height.px"] = this.debugDrawnHeight;
+    }
   }
 
   pidDestroy(): void {

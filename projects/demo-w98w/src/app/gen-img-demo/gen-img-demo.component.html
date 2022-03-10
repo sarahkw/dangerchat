@@ -1,5 +1,32 @@
 <h2>Gen Img</h2>
 
-<div style="background-color: red;">
-    <w98w-pixel-image [genImg]="genImg1" [cssWidth]="9" [cssHeight]="9"></w98w-pixel-image>
+<div>
+    <label for="requestedSz">Size</label>
+    <input type="number" id="requestedSz" #requestedSzElement [value]="requestedSz$ | async" (input)="requestedSz$.next(+ requestedSzElement.value)">
 </div>
+
+<p></p>
+
+<div *ngFor="let requestedSz of requestedSzArray$ | async" style="background-color: red; margin: 2px;">
+    <w98w-pixel-image [genImg]="genImg1" [cssWidth]="requestedSz" [cssHeight]="requestedSz"></w98w-pixel-image>
+</div>
+
+<p></p>
+
+<table *ngFor="let requestedSz of requestedSzArray$ | async" border="1">
+    <tr>
+        <th>sz</th>
+        <th>view</th>
+    </tr>
+
+    <tr *ngFor="let i of range$ | async" >
+        <td>{{ i }}</td>
+        <td>
+            <div style="background-color: red; margin: 2px;">
+                <w98w-pixel-image [genImg]="genImg1"
+                    [cssWidth]="requestedSz" [cssHeight]="requestedSz" [debugDrawnWidth]="i" [debugDrawnHeight]="i">
+                </w98w-pixel-image>
+            </div>
+        </td>
+    </tr>
+</table>
