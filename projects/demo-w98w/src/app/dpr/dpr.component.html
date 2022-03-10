@@ -7,6 +7,7 @@
 </style>
 
 <ng-container *ngIf="dprService.value$ | async as dpr">
+  <p>=&gt; {{ dpr }}</p>
   <table border="1">
     <tr>
       <th colspan="2">Invert DPR</th>
