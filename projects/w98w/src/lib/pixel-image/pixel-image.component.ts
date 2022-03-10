@@ -16,7 +16,6 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
   @Input() cssHeight!: number;
 
   @Input() debugDrawnSize: [number, number] | undefined;
-  debugShowSizeStyle: { [klass: string]: any } | undefined;
 
   style: { [klass: string]: any } = {};
 
@@ -39,13 +38,6 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
       let [w, h] = this.debugDrawnSize;
       this.style["width.px"] = w;
       this.style["height.px"] = h;
-      this.debugShowSizeStyle = {
-        "width.px": imgs.cssRequestedWidth,
-        "height.px": imgs.cssRequestedHeight,
-        "background-color": "lightgray",
-        "position": "relative",
-        "z-index": -1
-      }
     }
   }
 
