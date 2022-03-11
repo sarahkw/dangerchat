@@ -12,11 +12,16 @@ export class TitlebarComponent implements OnInit {
   readonly COLORS = Colors;
   readonly STYLES = W98wStyles;
 
+  @Input() iconSrc!: string;
+
   @Input() debugMode = false;
 
   constructor() { }
 
   ngOnInit(): void {
+    if (!this.iconSrc) {
+      throw new Error('no icon not supported');
+    }
   }
 
 }

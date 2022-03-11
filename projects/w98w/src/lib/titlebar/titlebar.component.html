@@ -14,7 +14,7 @@
     [style.resize]="debugMode ? 'horizontal' : null"
     >
 
-    <img src="/assets/w98w/vbicon.png" />
+    <img [src]="debugMode ? '/assets/w98w/greenbox.png' : iconSrc" />
     Control Panel
     <w98w-button [width]="STYLES.titleBarBtnWidth" [height]="STYLES.titleBarBtnHeight">_</w98w-button>
     <w98w-button [width]="STYLES.titleBarBtnWidth" [height]="STYLES.titleBarBtnHeight">[]</w98w-button>
