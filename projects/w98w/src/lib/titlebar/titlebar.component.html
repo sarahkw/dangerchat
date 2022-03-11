@@ -2,6 +2,7 @@
     .titlebar {
         width: 100%;
         font-weight: bold;
+        overflow: hidden;
     }
 </style>
 
@@ -10,6 +11,7 @@
     [style.color]="COLORS.TITLEBAR_TEXT"
     [style.fontSize.px]="STYLES.titleBarFont"
     [style.height.px]="STYLES.titleBarHeight"
+    [style.resize]="debugMode ? 'horizontal' : null"
     >
 
     <img src="/assets/w98w/vbicon.png" />

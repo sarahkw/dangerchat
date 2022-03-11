@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Colors } from '../colors';
 import { W98wStyles } from '../w98w-styles';
 
@@ -11,6 +11,8 @@ export class TitlebarComponent implements OnInit {
 
   readonly COLORS = Colors;
   readonly STYLES = W98wStyles;
+
+  @Input() debugMode = false;
 
   constructor() { }
 
