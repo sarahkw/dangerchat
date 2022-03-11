@@ -24,6 +24,10 @@
     .titlebar .controls {
         white-space: nowrap;
     }
+
+    .titlebar .controls .x-space {
+        display: inline-block;
+    }
 </style>
 
 <div class="titlebar"
@@ -31,7 +35,7 @@
     [style.color]="COLORS.TITLEBAR_TEXT"
     [style.fontSize.px]="STYLES.titleBarFont"
     [style.height.px]="STYLES.titleBarHeight"
-    [style.resize]="debugMode ? 'both' : null"
+    [style.resize]="debugMode ? 'horizontal' : null"
     [style.padding.px]="STYLES.titleBarPadding"
     [style.gap.px]="STYLES.titleBarFlexGap"
     >
@@ -41,6 +45,7 @@
     <div class="controls">
         <w98w-button [width]="STYLES.titleBarBtnWidth" [height]="STYLES.titleBarBtnHeight">_</w98w-button>
         <w98w-button [width]="STYLES.titleBarBtnWidth" [height]="STYLES.titleBarBtnHeight">[]</w98w-button>
+        <div class="x-space" [style.width.px]="2"></div>
         <w98w-button [width]="STYLES.titleBarBtnWidth" [height]="STYLES.titleBarBtnHeight">X</w98w-button>
     </div>
 </div>
