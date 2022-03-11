@@ -45,6 +45,10 @@ export abstract class W98wStyles {
     static readonly titleBarBtnWidth = W98wStyles.titleBarHeight - 2;
     static readonly titleBarBtnHeight = W98wStyles.titleBarHeight - 4;
 
+    // [ _ ][ o ] [ x ]
+    //           ^-        2
+    static readonly titleBarXButtonLeftMargin = 2;
+
     // i guess this keeps the button body (button without the bezels) at the same size as the title
     // bar height. definitely hardcode this instead of auto-sizing based on button contents. the icon can
     // be stretched in CSS to fit.
