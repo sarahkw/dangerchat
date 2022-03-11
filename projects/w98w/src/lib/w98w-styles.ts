@@ -35,14 +35,19 @@ function fontSzToTitleBarSz(fontSz: number) {
     return val;
 }
 
-const titleBarFont = 12;
-
 export abstract class W98wStyles {
 
-    // also used for: taskbar button size, ...
-    static readonly titleBar = {
-        font: titleBarFont,
-        barHeight: fontSzToTitleBarSz(titleBarFont)
-    };
+    static readonly titleBarFont = 12;
+    static readonly titleBarHeight = fontSzToTitleBarSz(W98wStyles.titleBarFont);
+
+    // because width is fixed at (height + 2), don't let CSS stretch height to fill the titlebar body.
+    // because we have to set the width anyway.   unless there's a way in CSS to keep this "proportion" ?
+    static readonly titleBarBtnWidth = W98wStyles.titleBarHeight - 2;
+    static readonly titleBarBtnHeight = W98wStyles.titleBarHeight - 4;
+
+    // i guess this keeps the button body (button without the bezels) at the same size as the title
+    // bar height. definitely hardcode this instead of auto-sizing based on button contents. the icon can
+    // be stretched in CSS to fit.
+    static readonly taskBarBtnHeight = W98wStyles.titleBarHeight + 4;
 
 };
