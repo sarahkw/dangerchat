@@ -45,6 +45,8 @@ export abstract class W98wStyles {
     static readonly titleBarBtnWidth = W98wStyles.titleBarHeight - 2;
     static readonly titleBarBtnHeight = W98wStyles.titleBarHeight - 4;
 
+    static readonly titleBarFlexGap = 2;
+
     // [ _ ][ o ] [ x ]
     //           ^-        2
     static readonly titleBarXButtonLeftMargin = 2;
