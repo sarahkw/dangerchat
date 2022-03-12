@@ -10,6 +10,7 @@ import { PixelAlignmentComponent } from './pixel-alignment/pixel-alignment.compo
 import { DprComponent } from './dpr/dpr.component';
 import { ButtonDemoComponent } from './button-demo/button-demo.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
+import { ExperimentsComponent } from './experiments/experiments.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.c
     PixelAlignmentComponent,
     DprComponent,
     ButtonDemoComponent,
-    GenImgSizeDemoComponent
+    GenImgSizeDemoComponent,
+    ExperimentsComponent
   ],
   imports: [
     BrowserModule,
