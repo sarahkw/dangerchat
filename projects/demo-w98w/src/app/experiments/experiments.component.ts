@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GenImg } from 'projects/w98w/src/lib/genimg';
 
 @Component({
   selector: 'app-experiments',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./experiments.component.css']
 })
 export class ExperimentsComponent implements OnInit {
+
+  readonly genImgOnButton = GenImg.TBAR_X;
 
   constructor() { }
 
