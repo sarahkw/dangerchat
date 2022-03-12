@@ -1,5 +1,20 @@
 <h2>Experiments</h2>
 
+<style>
+    /* Observation */
+    .obsv {
+        font-style: italic;
+    }
+
+    table {
+        max-width: 80vw;
+    }
+
+    .BTORH button {
+        max-height: 40px;
+    }
+</style>
+
 <h3>Repeat After Me, Angular</h3>
 
 <table border="1">
@@ -15,3 +30,63 @@
 
 <em>TODO: Find out why I can't template bind directly to txtISay.value. There's probably a good reason.</em>
 
+<h3>Button Text Overflow</h3>
+
+<table border="1" [ngClass]="{'BTORH': getKey('BTORH')}">
+    <tr>
+        <td>txtBTO</td>
+        <td><input type="text" #txtBTO (input)="putKey('BTO', txtBTO.value)"
+             value="the quick brown fox jumps over the lazy dog"></td>
+    </tr>
+    <tr>
+        <td>txtBTORH (restrict height?)</td>
+        <td><input type="text" #txtBTORH (input)="putKey('BTORH', txtBTORH.value)"></td>
+    </tr>
+    <tr>
+        <td>No width</td>
+        <td><button>{{ getKey('BTO') }}</button></td>
+    </tr>
+    <tr>
+        <td>Fixed width</td>
+        <td>
+            <button style="width: 150px;">{{ getKey('BTO') }}</button>
+            <p class="obsv">adsf</p>
+        </td>
+    </tr>
+    <tr>
+        <td>No width, flexbox</td>
+        <td>
+            <button style="display: flex;">{{ getKey('BTO') }}</button>
+        </td>
+    </tr>
+    <tr>
+        <td>No width, flexbox, sandwiched</td>
+        <td>
+            <button style="display: flex;">
+                <div>HEAD</div>
+                {{ getKey('BTO') }}
+                <div>TAIL</div>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>No width, flexbox, sandwiched, in div</td>
+        <td>
+            <button style="display: flex;">
+                <div>HEAD</div>
+                <div>{{ getKey('BTO') }}</div>
+                <div>TAIL</div>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>What if they were span instead of div?</td>
+        <td>
+            <button style="display: flex;">
+                <span>HEAD</span>
+                <span>{{ getKey('BTO') }}</span>
+                <span>TAIL</span>
+            </button>
+        </td>
+    </tr>
+</table>
