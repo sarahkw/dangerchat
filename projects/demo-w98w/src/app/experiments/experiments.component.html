@@ -145,6 +145,26 @@
         </td>
     </tr>
     <tr>
+        <td>Flex, Icon  32x32, Fixed W &amp; H, Hide behind a div</td>
+        <td>
+            <button style="display: flex; width: 150px; height: 70px;">
+                <div><img src="/assets/w98w/greenbox.png"></div>
+                <div>{{ getKey('BTO') }}</div>
+            </button>
+            <p class="obsv">Firefox: it'll no longer shrink this if you hide it behind a div.</p>
+        </td>
+    </tr>
+    <tr>
+        <td>Flex, Div  32x32, Fixed W &amp; H, Hide behind a div</td>
+        <td>
+            <button style="display: flex; width: 150px; height: 70px;">
+                <div><div style="background-color: red; width: 32px; height: 32px;"></div></div>
+                <div>{{ getKey('BTO') }}</div>
+            </button>
+            <p class="obsv">Wow, if you hide this behind a div it becomes untouchable by flex shrink.</p>
+        </td>
+    </tr>
+    <tr>
         <td>GenImg, no div for text</td>
         <td>
             <button style="display: flex;">
