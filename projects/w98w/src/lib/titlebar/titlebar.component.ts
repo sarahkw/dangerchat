@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Colors } from '../colors';
+import { GenImg } from '../genimg';
 import { W98wStyles } from '../w98w-styles';
 
 @Component({
@@ -11,6 +12,7 @@ export class TitlebarComponent implements OnInit {
 
   readonly COLORS = Colors;
   readonly STYLES = W98wStyles;
+  readonly GENIMG = GenImg;
 
   @Input() iconSrc!: string;
 
