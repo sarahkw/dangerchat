@@ -6,6 +6,10 @@
         font-style: italic;
     }
 
+    td.btoCell {
+        text-align: right;
+    }
+
     table {
         max-width: 700px;
     }
@@ -16,6 +20,12 @@
 
     .BTOOH button {
         overflow: hidden;
+    }
+
+    .BTOUD button {
+        background-color: white;
+        border: none;
+        padding: 2px;
     }
 </style>
 
@@ -38,10 +48,11 @@
 
 <table border="1" [ngClass]="{
     'BTORH': getKey('BTORH'),
-    'BTOOH': getKey('BTOOH')
+    'BTOOH': getKey('BTOOH'),
+    'BTOUD': getKey('BTOUD')
 }">
     <tr>
-        <td>txtBTO</td>
+        <td class="btoCell">txtBTO</td>
         <td><input type="text" #txtBTO (input)="putKey('BTO', txtBTO.value)"
              [value]="getKey('BTO') || 'the quick brown fox jumps over the lazy dog'"></td>
     </tr>
@@ -52,6 +63,10 @@
     <tr>
         <td>txtBTOOH (overflow hidden?)</td>
         <td><input type="text" #txtBTOOH (input)="putKey('BTOOH', txtBTOOH.value)"></td>
+    </tr>
+    <tr>
+        <td>txtBTOUD (undecorate?)</td>
+        <td><input type="text" #txtBTOUD (input)="putKey('BTOUD', txtBTOUD.value)"></td>
     </tr>
     <tr>
         <td>No width</td>
@@ -101,7 +116,7 @@
         </td>
     </tr>
     <tr>
-        <td>txtBTO again</td>
+        <td class="btoCell">txtBTO again</td>
         <td><input type="text" #txtBTORepeat1 (input)="putKey('BTO', txtBTORepeat1.value)"
              [value]="getKey('BTO') || 'the quick brown fox jumps over the lazy dog'"></td>
     </tr>
