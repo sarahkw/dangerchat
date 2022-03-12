@@ -11,7 +11,11 @@
     }
 
     .BTORH button {
-        max-height: 40px;
+        max-height: 30px;
+    }
+
+    .BTOOH button {
+        overflow: hidden;
     }
 </style>
 
@@ -32,15 +36,22 @@
 
 <h3>Button Text Overflow</h3>
 
-<table border="1" [ngClass]="{'BTORH': getKey('BTORH')}">
+<table border="1" [ngClass]="{
+    'BTORH': getKey('BTORH'),
+    'BTOOH': getKey('BTOOH')
+}">
     <tr>
         <td>txtBTO</td>
         <td><input type="text" #txtBTO (input)="putKey('BTO', txtBTO.value)"
-             value="the quick brown fox jumps over the lazy dog"></td>
+             [value]="getKey('BTO') || 'the quick brown fox jumps over the lazy dog'"></td>
     </tr>
     <tr>
         <td>txtBTORH (restrict height?)</td>
         <td><input type="text" #txtBTORH (input)="putKey('BTORH', txtBTORH.value)"></td>
+    </tr>
+    <tr>
+        <td>txtBTOOH (overflow hidden?)</td>
+        <td><input type="text" #txtBTOOH (input)="putKey('BTOOH', txtBTOOH.value)"></td>
     </tr>
     <tr>
         <td>No width</td>
@@ -86,6 +97,20 @@
                 <span>HEAD</span>
                 <span>{{ getKey('BTO') }}</span>
                 <span>TAIL</span>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>txtBTO again</td>
+        <td><input type="text" #txtBTORepeat1 (input)="putKey('BTO', txtBTORepeat1.value)"
+             [value]="getKey('BTO') || 'the quick brown fox jumps over the lazy dog'"></td>
+    </tr>
+    <tr>
+        <td>Flex, Icon</td>
+        <td>
+            <button style="display: flex;">
+                <img src="/assets/w98w/greenbox.png">
+                <div>{{ getKey('BTO') }}</div>
             </button>
         </td>
     </tr>
