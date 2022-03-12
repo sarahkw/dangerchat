@@ -12,4 +12,14 @@ export class ExperimentsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  keys: Map<string, string> = new Map();
+
+  putKey(k: string, v: string) {
+    this.keys.set(k, v);
+  }
+
+  getKey(k: string) {
+    return this.keys.get(k) || "";
+  }
+
 }

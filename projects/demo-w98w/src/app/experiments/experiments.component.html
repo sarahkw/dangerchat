@@ -1,2 +1,17 @@
 <h2>Experiments</h2>
 
+<h3>Repeat After Me, Angular</h3>
+
+<table border="1">
+    <tr>
+        <td>I say</td>
+        <td><input type="text" #txtISay (input)="putKey('ISay', txtISay.value)" /></td>
+    </tr>
+    <tr>
+        <td>You say</td>
+        <td>{{getKey('ISay')}}</td>
+    </tr>
+</table>
+
+<em>TODO: Find out why I can't template bind directly to txtISay.value</em>
+
