@@ -20,6 +20,12 @@ export class ButtonIconDirective {
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
   styles: [`
+
+  :host {
+    /* TODO: MYSTERY-A-SEARCH-ME I added 2 display flex and suddenly the alignment was fixed. why? */
+    display: flex;
+  }
+
   button {
     background-color: ${Colors.WIDGET_BG};
     color: ${Colors.WIDGET_TEXT}; /* ipad safari */
