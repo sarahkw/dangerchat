@@ -7,7 +7,7 @@
     }
 
     table {
-        max-width: 80vw;
+        max-width: 700px;
     }
 
     .BTORH button {
@@ -106,12 +106,24 @@
              [value]="getKey('BTO') || 'the quick brown fox jumps over the lazy dog'"></td>
     </tr>
     <tr>
-        <td>Flex, Icon</td>
+        <td>Flex, Icon  32x32</td>
         <td>
             <button style="display: flex;">
                 <img src="/assets/w98w/greenbox.png">
                 <div>{{ getKey('BTO') }}</div>
             </button>
+            <p class="obsv">FF: Height stretched to fill height,  width squashed due to flex shrink.</p>
+            <p class="obsv">Chrome/Safari: Keeps img size, img aligns on top.</p>
+        </td>
+    </tr>
+    <tr>
+        <td>Flex, Div  32x32</td>
+        <td>
+            <button style="display: flex;">
+                <div style="background-color: red; width: 32px; height: 32px;"></div>
+                <div>{{ getKey('BTO') }}</div>
+            </button>
+            <p class="obsv">The image gets squashed widthwise, flex shrink. It shrinks more than the img. Height not stretched.</p>
         </td>
     </tr>
 </table>
