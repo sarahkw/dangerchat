@@ -214,4 +214,10 @@
             </button>
         </td>
     </tr>
+    <tr>
+        <td class="btoCell">txtBTO again</td>
+        <td><input type="text" #txtBTORepeat2 (input)="putKey('BTO', txtBTORepeat2.value)"
+             [value]="getKey('BTO') || 'the quick brown fox jumps over the lazy dog'"></td>
+    </tr>
+
 </table>
