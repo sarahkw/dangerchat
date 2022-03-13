@@ -1,14 +1,5 @@
 .w98w-wbutton {
+    display: inline-block;
     position: relative;
     box-sizing: border-box;
-
-    /* Clear decorations from browsers */
-    border: none;
-    margin: 0; /* iPad Safari */
-    /* Maybe we want this for iPad Safari? Not sure.
-    -webkit-tap-highlight-color: transparent;
-    */
-
-    /* Temporary until we calculate our own padding. */
-    padding: 0;
 }
