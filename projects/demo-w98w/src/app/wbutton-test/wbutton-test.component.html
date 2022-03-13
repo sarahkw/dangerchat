@@ -1,3 +1,9 @@
+<style>
+    table {
+        max-width: 700px;
+    }
+</style>
+
 <h2>WButton Test</h2>
 
 <h3>Goal 1</h3>
@@ -25,5 +31,22 @@ Bevel and focus ants will work. It can take a body to put something into its con
     <tr>
         <td>No W/H, add text content</td>
         <td><w98w-wbutton>Hello world!</w98w-wbutton></td>
+    </tr>
+    <tr>
+        <td>Image</td>
+        <td>
+            <w98w-wbutton>
+                <img src="/assets/w98w/greenbox.png">
+            </w98w-wbutton>
+            <p>Extra space at the bottom caused by inline element. It wants to start drawing text. Maybe we'll have a good solution later.</p>
+        </td>
+    </tr>
+    <tr>
+        <td>Div</td>
+        <td>
+            <w98w-wbutton>
+                <div style="background-color: red; width: 25px; height: 25px;"></div>
+            </w98w-wbutton>
+        </td>
     </tr>
 </table>
