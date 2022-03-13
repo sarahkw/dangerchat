@@ -6,6 +6,7 @@ import { ButtonComponent, ButtonIconDirective } from './button/button.component'
 import { Bevel8SplitComponent } from './bevel-8split/bevel-8split.component';
 import { PixelImageComponent } from './pixel-image/pixel-image.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
+import { WButtonComponent } from './wbutton/wbutton.component';
 
 
 
@@ -16,7 +17,8 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
     Bevel8SplitComponent,
     ButtonIconDirective,
     PixelImageComponent,
-    TitlebarComponent
+    TitlebarComponent,
+    WButtonComponent
   ],
   imports: [
     CommonModule
@@ -26,7 +28,8 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
     ButtonComponent,
     ButtonIconDirective,
     PixelImageComponent,
-    TitlebarComponent
+    TitlebarComponent,
+    WButtonComponent
   ]
 })
 export class W98wModule { }
