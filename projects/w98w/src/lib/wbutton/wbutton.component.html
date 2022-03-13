@@ -1,1 +1,11 @@
-<p>wbutton works!</p>
+<button
+    class="w98w-wbutton"
+    [style.width.px]="width"
+    [style.height.px]="height"
+    [style.fontFamily]="STYLES.defaultFont"
+    [style.fontSize.px]="STYLES.labelFontSize"
+    [style.backgroundColor]="COLORS.WIDGET_BG"
+    [style.color]="COLORS.WIDGET_TEXT">
+
+    <ng-content></ng-content>
+</button>

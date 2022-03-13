@@ -37,6 +37,9 @@ function fontSzToTitleBarSz(fontSz: number) {
 
 export abstract class W98wStyles {
 
+    static readonly labelFontSize = 12;
+    static readonly defaultFont = "W98w MS Sans Serif";
+
     static readonly titleBarFont = 12;
     static readonly titleBarHeight = fontSzToTitleBarSz(W98wStyles.titleBarFont);
 

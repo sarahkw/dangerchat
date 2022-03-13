@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Colors } from '../colors';
+import { W98wStyles } from '../w98w-styles';
 
 @Component({
   selector: 'w98w-wbutton',
@@ -6,6 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wbutton.component.css']
 })
 export class WButtonComponent implements OnInit {
+
+  @Input() width: number | undefined;
+  @Input() height: number | undefined;
+
+  // Exports to template
+  readonly STYLES = W98wStyles;
+  readonly COLORS = Colors;
 
   constructor() { }
 
