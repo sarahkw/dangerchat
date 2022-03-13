@@ -90,6 +90,11 @@ export class SlantRectBevel implements Bevel {
                 .build();
         }
     }
+
+    getPadding() {
+        console.assert(this.topLeft.length == this.bottomRight.length);
+        return this.topLeft.length;
+    }
 }
 
 export abstract class Bevels {

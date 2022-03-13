@@ -22,6 +22,9 @@ export class WButtonComponent implements OnInit, OnDestroy {
   readonly STYLES = W98wStyles;
   readonly COLORS = Colors;
 
+  calculatedPadding =
+    Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding());
+
   constructor(private imgService: PixelImageService) {}
 
   ngOnInit(): void {
