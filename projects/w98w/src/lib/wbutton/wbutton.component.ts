@@ -22,8 +22,14 @@ export class WButtonComponent implements OnInit, OnDestroy {
   readonly STYLES = W98wStyles;
   readonly COLORS = Colors;
 
-  calculatedPadding =
-    Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding());
+  readonly focusAntsOffset =
+    Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
+    1 /* not flush against the bevels */;
+
+  readonly contentOffset =
+    this.focusAntsOffset +
+    1 /* the focus ants */ +
+    1 /* not flush against the ants */;
 
   constructor(private imgService: PixelImageService) {}
 

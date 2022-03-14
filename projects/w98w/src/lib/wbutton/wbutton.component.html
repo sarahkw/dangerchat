@@ -8,7 +8,16 @@
     [style.fontSize.px]="STYLES.labelFontSize"
     [style.backgroundColor]="COLORS.WIDGET_BG"
     [style.color]="COLORS.WIDGET_TEXT"
-    [style.padding.px]="calculatedPadding">
+    [style.padding.px]="contentOffset">
     <w98w-bevel-8split></w98w-bevel-8split>
-    <ng-content></ng-content>
+    <div
+        class="w98w-focusAnts"
+        [style.top.px]="focusAntsOffset"
+        [style.left.px]="focusAntsOffset"
+        [style.bottom.px]="focusAntsOffset"
+        [style.right.px]="focusAntsOffset"
+    ></div>
+    <div class="w98w-content">
+        <ng-content></ng-content>
+    </div>
 </a>
