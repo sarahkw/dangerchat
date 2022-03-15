@@ -176,4 +176,13 @@ Bevel and focus ants will work. It can take a body to put something into its con
             </w98w-wbutton>
         </td>
     </tr>
+    <tr>
+        <td>2 child, given smaller height, normal width, stretch</td>
+        <td>
+            <w98w-wbutton [width]="200" [height]="30">
+                <img src="/assets/w98w/greenbox.png" *wbuttonContent="null; stretchImg: true">
+                <span *wbuttonLabel>hello world</span>
+            </w98w-wbutton>
+        </td>
+    </tr>
 </table>
