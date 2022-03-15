@@ -14,6 +14,7 @@ import { W98wStyles } from '../w98w-styles';
 export class WButtonBodyDirective implements OnInit {
 
   @Input() stretchImg: boolean = false;
+  @Input() allowShrinking: boolean = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -24,8 +25,13 @@ export class WButtonBodyDirective implements OnInit {
     // easily cancel it by adding a sibling. if we use justify-content
     // instead, then we have to disable them when we add a sibling.
     this.renderer.setStyle(this.elementRef.nativeElement, 'margin', 'auto');
-    // needed for divs to not get squashed in order to show the second child. imgs do this themselves.
-    this.renderer.setStyle(this.elementRef.nativeElement, 'flexShrink', '0');
+
+    if (!this.allowShrinking) {
+      // needed for divs to not get squashed in order to show the second child. imgs do this themselves.
+
+      // but don't do this for text because those can overflow block-wards.
+      this.renderer.setStyle(this.elementRef.nativeElement, 'flexShrink', '0');
+    }
 
     if (this.stretchImg) {
       // can't expand horizontally using `align-self: stretch` so this is our only option to stretch the image.

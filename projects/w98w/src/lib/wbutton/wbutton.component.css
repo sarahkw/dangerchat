@@ -50,3 +50,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.w98w-implicitBody {
+    text-align: center;
+}

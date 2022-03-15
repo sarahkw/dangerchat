@@ -23,7 +23,7 @@
         </ng-container>
 
         <ng-template #templateImplicitBody>
-            <span wbuttonBody><ng-content></ng-content></span>
+            <span wbuttonBody [allowShrinking]="true" class="w98w-implicitBody"><ng-content></ng-content></span>
         </ng-template>
 
         <span class="w98w-extraLabel" *ngIf="extraLabel !== undefined">
