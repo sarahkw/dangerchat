@@ -18,7 +18,16 @@
         [style.right.px]="focusAntsOffset"
     ></div>
     <div class="w98w-content">
-        <ng-content select="[wbuttonContent]"></ng-content>
-        <ng-content select="[wbuttonLabel]"></ng-content>
+        <ng-container *ngIf="buttonBody; else templateImplicitBody">
+            <ng-content select="[wbuttonBody]"></ng-content>
+        </ng-container>
+
+        <ng-template #templateImplicitBody>
+            <span wbuttonBody><ng-content></ng-content></span>
+        </ng-template>
+
+        <span class="w98w-extraLabel" *ngIf="extraLabel !== undefined">
+            {{ extraLabel }}
+        </span>
     </div>
 </a>

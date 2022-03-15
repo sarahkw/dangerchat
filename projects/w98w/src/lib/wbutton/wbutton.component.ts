@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -9,9 +9,9 @@ import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 
 @Directive({
-  selector: '[wbuttonContent]'
+  selector: '[wbuttonBody]'
 })
-export class WButtonContentDirective implements OnInit {
+export class WButtonBodyDirective implements OnInit {
 
   @Input() stretchImg: boolean = false;
 
@@ -34,23 +34,6 @@ export class WButtonContentDirective implements OnInit {
   }
 }
 
-@Directive({
-  selector: '[wbuttonLabel]'
-})
-export class WButtonLabelDirective {
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2) {
-  }
-
-  ngOnInit(): void {
-    this.renderer.setStyle(this.elementRef.nativeElement, 'flex', 1);
-    this.renderer.setStyle(this.elementRef.nativeElement, 'whiteSpace', 'nowrap');
-    this.renderer.setStyle(this.elementRef.nativeElement, 'textOverflow', 'ellipsis');
-    this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'hidden');
-  }
-}
-
 @Component({
   selector: 'w98w-wbutton',
   templateUrl: './wbutton.component.html',
@@ -60,6 +43,7 @@ export class WButtonComponent implements OnInit, OnDestroy {
 
   @Input() width: number | undefined;
   @Input() height: number | undefined;
+  @Input() extraLabel: string | undefined;
 
   // Exports to template
   readonly STYLES = W98wStyles;
@@ -73,6 +57,8 @@ export class WButtonComponent implements OnInit, OnDestroy {
     this.focusAntsOffset +
     1 /* the focus ants */ +
     1 /* not flush against the ants */;
+
+  @ContentChild(WButtonBodyDirective) buttonBody: WButtonBodyDirective | undefined;
 
   constructor(private imgService: PixelImageService) {}
 

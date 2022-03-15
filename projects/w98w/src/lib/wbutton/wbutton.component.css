@@ -43,3 +43,10 @@
     align-items: center;
     overflow: hidden;
 }
+
+.w98w-extraLabel {
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

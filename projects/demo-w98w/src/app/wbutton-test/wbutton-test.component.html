@@ -27,24 +27,20 @@ Bevel and focus ants will work. It can take a body to put something into its con
     <tr>
         <td>Width = 200, Height = 30</td>
         <td>
-          <w98w-wbutton [width]="200" [height]="30">
-            <span wbuttonContent>a</span>
-          </w98w-wbutton>
+          <w98w-wbutton [width]="200" [height]="30">a</w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>No W/H, add text content</td>
         <td>
-          <w98w-wbutton>
-            <span wbuttonContent>Hello world!</span>
-          </w98w-wbutton>
+          <w98w-wbutton>Hello world!</w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>Image</td>
         <td>
             <w98w-wbutton>
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
@@ -52,7 +48,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>Div</td>
         <td>
             <w98w-wbutton>
-                <div wbuttonContent style="background-color: red; width: 25px; height: 25px;"></div>
+                <div wbuttonBody style="background-color: red; width: 25px; height: 25px;"></div>
             </w98w-wbutton>
         </td>
     </tr>
@@ -67,7 +63,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>1 child, given width</td>
         <td>
             <w98w-wbutton [width]="200">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
@@ -75,7 +71,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>1 child, given height</td>
         <td>
             <w98w-wbutton [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
@@ -83,7 +79,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>1 child, given width and height</td>
         <td>
             <w98w-wbutton [width]="200" [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
@@ -91,7 +87,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>1 child, given width, stretch</td>
         <td>
             <w98w-wbutton [width]="200">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
@@ -99,7 +95,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>1 child, given height, stretch</td>
         <td>
             <w98w-wbutton [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
@@ -107,7 +103,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>1 child, given width and height, stretch</td>
         <td>
             <w98w-wbutton [width]="200" [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
@@ -115,9 +111,8 @@ Bevel and focus ants will work. It can take a body to put something into its con
     <tr>
         <td>2 child, given nothing</td>
         <td>
-            <w98w-wbutton>
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
@@ -125,63 +120,56 @@ Bevel and focus ants will work. It can take a body to put something into its con
     <tr>
         <td>2 child, given width</td>
         <td>
-            <w98w-wbutton [width]="200">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [width]="200" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>2 child, given height</td>
         <td>
-            <w98w-wbutton [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [height]="60" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>2 child, given width and height</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent>
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [width]="200" [height]="60" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
             </w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>2 child, given width, stretch</td>
         <td>
-            <w98w-wbutton [width]="200">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [width]="200" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>2 child, given height, stretch</td>
         <td>
-            <w98w-wbutton [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [height]="60" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>2 child, given width and height, stretch</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="60">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [width]="200" [height]="60" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
     <tr>
         <td>2 child, given smaller height, normal width, stretch</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="30">
-                <img src="/assets/w98w/greenbox.png" wbuttonContent [stretchImg]="true">
-                <span wbuttonLabel>hello world</span>
+            <w98w-wbutton [width]="200" [height]="30" extraLabel="hello world">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
             </w98w-wbutton>
         </td>
     </tr>
