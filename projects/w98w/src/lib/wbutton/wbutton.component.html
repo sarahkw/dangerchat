@@ -18,6 +18,7 @@
         [style.right.px]="focusAntsOffset"
     ></div>
     <div class="w98w-content">
-        <ng-content></ng-content>
+        <ng-content select="[wbuttonContent]"></ng-content>
+        <ng-content select="[wbuttonLabel]"></ng-content>
     </div>
 </a>

@@ -1,4 +1,4 @@
-import { Component, Directive, Input, OnDestroy, OnInit, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -13,31 +13,23 @@ import { W98wStyles } from '../w98w-styles';
 })
 export class WButtonContentDirective implements OnInit {
 
-  // Ignored, but we must put something here because of the microsyntax.
-  // Is a hack, but maybe Angular will support doing this in a non-hacky way someday.
-  @Input() wbuttonContent!: any;
-
-  @Input() wbuttonContentStretchImg: boolean = false;
+  @Input() stretchImg: boolean = false;
 
   constructor(
-      private templateRef: TemplateRef<any>,
-      private viewContainer: ViewContainerRef,
-      private renderer: Renderer2) {
-  }
+    private elementRef: ElementRef,
+    private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    let [elem] = this.viewContainer.createEmbeddedView(this.templateRef).rootNodes;
-
     // keep this for horizontal centering, do it this way because we
     // easily cancel it by adding a sibling. if we use justify-content
     // instead, then we have to disable them when we add a sibling.
-    this.renderer.setStyle(elem, 'margin', 'auto');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'margin', 'auto');
     // needed for divs to not get squashed in order to show the second child. imgs do this themselves.
-    this.renderer.setStyle(elem, 'flexShrink', '0');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'flexShrink', '0');
 
-    if (this.wbuttonContentStretchImg) {
+    if (this.stretchImg) {
       // can't expand horizontally using `align-self: stretch` so this is our only option to stretch the image.
-      this.renderer.setStyle(elem, 'height', '100%');
+      this.renderer.setStyle(this.elementRef.nativeElement, 'height', '100%');
     }
   }
 }
@@ -47,18 +39,15 @@ export class WButtonContentDirective implements OnInit {
 })
 export class WButtonLabelDirective {
   constructor(
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
+    private elementRef: ElementRef,
     private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
-    let [elem] = this.viewContainer.createEmbeddedView(this.templateRef).rootNodes;
-
-    this.renderer.setStyle(elem, 'flex', 1);
-    this.renderer.setStyle(elem, 'whiteSpace', 'nowrap');
-    this.renderer.setStyle(elem, 'textOverflow', 'ellipsis');
-    this.renderer.setStyle(elem, 'overflow', 'hidden');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'flex', 1);
+    this.renderer.setStyle(this.elementRef.nativeElement, 'whiteSpace', 'nowrap');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'textOverflow', 'ellipsis');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'hidden');
   }
 }
 
