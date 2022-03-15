@@ -10,7 +10,6 @@ import { PixelAlignmentComponent } from './pixel-alignment/pixel-alignment.compo
 import { DprComponent } from './dpr/dpr.component';
 import { ButtonDemoComponent } from './button-demo/button-demo.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
-import { ExperimentsComponent } from './experiments/experiments.component';
 import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 
 @NgModule({
@@ -20,7 +19,6 @@ import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
     DprComponent,
     ButtonDemoComponent,
     GenImgSizeDemoComponent,
-    ExperimentsComponent,
     WButtonTestComponent
   ],
   imports: [
