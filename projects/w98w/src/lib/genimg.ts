@@ -74,21 +74,42 @@ export abstract class GenImg {
 
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
-            console.assert(drawCssWidth == drawCssHeight);
-            let cssSize = Math.min(drawCssWidth, drawCssHeight);
+            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
-            let builder = pibf.basic(cssSize, cssSize);
+            const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
-            const SQUARE_SZ = 2;
-            const SQUARE_PAD = 1;
-            incXincY(cssSize - SQUARE_PAD, (x, y) => {
-                builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
-            });
-            decXincY(cssSize - SQUARE_PAD, (x, y) => {
-                builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
-            });
+            // padding
+            const P_L = 2;
+            const P_R = 2;
+            const P_T = 1;
+            const P_B = 1;
 
-            debug_overdraw(drawCssWidth, drawCssHeight, builder);
+            const X_W = 2;
+            const X_H = 1;
+            const X_HRUN = 1;
+
+            let rows;
+            let cols;
+            {
+                let x_w = artPixelWidth - P_L - P_R;
+                let x_h = x_w - X_HRUN;
+                if (x_h > (artPixelHeight - P_T - P_B)) {
+                    x_h = artPixelHeight - P_T - P_B;
+                    x_w = x_h + 1;
+                }
+
+                rows = x_h;
+                cols = x_w;
+            }
+
+            for (let r = 0; r < rows; ++r) {
+                builder.drawRect('black', P_L + r, P_T + r, X_W, X_H);
+
+                // i dunno, i tinkered with this until it worked
+                builder.drawRect('black', P_L + (cols - r - X_W), P_T + r, X_W, X_H);
+            }
+
+            debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
         }
     }
