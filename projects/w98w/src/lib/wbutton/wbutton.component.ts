@@ -50,11 +50,11 @@ export class WButtonComponent implements OnInit, OnDestroy {
   @Input() extraLabel: string | undefined;
   @Input() externalFocus: boolean = false;
 
-  get offsets() {
+  private static calculateOffsets(externalFocus: boolean) {
     let focusAnts;
     let content;
 
-    if (this.externalFocus) {
+    if (externalFocus) {
       focusAnts = 0;
       content = Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
                    0 /* against the bevels, if you want external focus it's because you want all the space available */;
@@ -67,6 +67,18 @@ export class WButtonComponent implements OnInit, OnDestroy {
     }
 
     return { focusAnts, content };
+  }
+
+  public static calculateAvailableBodySize(width: number, height: number, externalFocus: boolean) {
+    const o = WButtonComponent.calculateOffsets(externalFocus);
+    return {
+      width: width - 2 * (o.content),
+      height: height - 2 * (o.content)
+    };
+  }
+
+  get offsets() {
+    return WButtonComponent.calculateOffsets(this.externalFocus);
   }
 
   @HostBinding('class') get hbC() {

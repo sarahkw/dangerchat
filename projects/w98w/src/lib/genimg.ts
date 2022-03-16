@@ -58,14 +58,16 @@ export abstract class GenImg {
 
     static readonly DEBUG_BORDER: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
-            const builder = pibf.basic(drawCssWidth, drawCssHeight);
+            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
-            builder.drawRect('black', 0, 0, 1, drawCssHeight); // left
-            builder.drawRect('black', 0, 0, drawCssWidth, 1); // top
-            builder.drawRect('black', drawCssWidth - 1, 0, 1, drawCssHeight); // right
-            builder.drawRect('black', 0, drawCssHeight - 1, drawCssWidth, 1); // bottom
+            const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
-            debug_overdraw(drawCssWidth, drawCssHeight, builder);
+            builder.drawRect('black', 0, 0, 1, artPixelHeight); // left
+            builder.drawRect('black', 0, 0, artPixelWidth, 1); // top
+            builder.drawRect('black', artPixelWidth - 1, 0, 1, artPixelHeight); // right
+            builder.drawRect('black', 0, artPixelHeight - 1, artPixelWidth, 1); // bottom
+
+            debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
         }
     };

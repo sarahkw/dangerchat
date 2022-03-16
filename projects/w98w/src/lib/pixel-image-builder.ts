@@ -37,6 +37,15 @@ class PixelImageBuilderBasic {
     private beginX: number;
     private beginY: number;
 
+    // this class works when you tell it how many pixels you want to draw, and it figures out what the css size should be.
+    // but what if you want to know how many pixels you can draw within the given css size?
+    static howManyArtPixelsCanIDraw(pdc: PixelDrawConfig, cssWidth: number, cssHeight: number) {
+        return {
+            artPixelWidth: Math.floor(cssWidth * pdc.dpr / pdc.pixelCanvasSize),
+            artPixelHeight: Math.floor(cssHeight * pdc.dpr / pdc.pixelCanvasSize)
+        };
+    }
+
     constructor(private pdc: PixelDrawConfig, private artPixelWidth: number, private artPixelHeight: number, hAlign: HOrigin, vAlign: VOrigin) {
         this.pixelSize = pdc.pixelCanvasSize;
 
@@ -303,6 +312,10 @@ class PixelImageBuilderSlant extends PixelImageBuilderBasic {
 
 export class PixelImageBuilderFactory {
     constructor(private pdc: PixelDrawConfig) {}
+
+    howManyArtPixelsCanIDraw(cssWidth: number, cssHeight: number) {
+        return PixelImageBuilderBasic.howManyArtPixelsCanIDraw(this.pdc, cssWidth, cssHeight);
+    }
 
     basic(artPixelWidth: number, artPixelHeight: number) {
         return new PixelImageBuilderBasic(this.pdc, artPixelWidth, artPixelHeight, HOrigin.Left, VOrigin.Top);
