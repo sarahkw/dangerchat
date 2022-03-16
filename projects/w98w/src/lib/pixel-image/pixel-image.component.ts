@@ -22,6 +22,8 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
 
   constructor(private pixelImageService: PixelImageService) {}
 
+  // TODO: Cache these images
+
   pidGenerateImages(pibf: PixelImageBuilderFactory): DisplayImage {
     return this.genImg.draw(this.cssWidth, this.cssHeight, pibf);
   }
