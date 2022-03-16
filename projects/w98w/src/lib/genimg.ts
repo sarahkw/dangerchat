@@ -1,4 +1,4 @@
-import { DisplayImage, PixelImageBuilderFactory, VOrigin } from "./pixel-image-builder";
+import { DisplayImage, PixelImageBuilderBasic, PixelImageBuilderFactory, VOrigin } from "./pixel-image-builder";
 
 export type GenImgDescriptor = {
 
@@ -25,6 +25,15 @@ function decXincY(until: number, fn: (x: number, y: number) => void) {
         fn(until - i - 1, i);
     }
 }
+
+/*
+function debug_overdraw(drawCssWidth: number, drawCssHeight: number, builder: PixelImageBuilderBasic) {
+    builder.drawRect('red', drawCssWidth, 0, 1, drawCssHeight); // overdraw right
+    builder.drawRect('red', 0, drawCssHeight, drawCssWidth, 1); // overdraw bottom
+}
+*/
+
+function debug_overdraw(..._: any[]) {}
 
 export abstract class GenImg {
 
@@ -56,9 +65,7 @@ export abstract class GenImg {
             builder.drawRect('black', drawCssWidth - 1, 0, 1, drawCssHeight); // right
             builder.drawRect('black', 0, drawCssHeight - 1, drawCssWidth, 1); // bottom
 
-            builder.drawRect('red', drawCssWidth, 0, 1, drawCssHeight); // overdraw right
-            builder.drawRect('red', 0, drawCssHeight, drawCssWidth, 1); // overdraw bottom
-
+            debug_overdraw(drawCssWidth, drawCssHeight, builder);
             return builder.build();
         }
     };
@@ -79,6 +86,7 @@ export abstract class GenImg {
                 builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
             });
 
+            debug_overdraw(drawCssWidth, drawCssHeight, builder);
             return builder.build();
         }
     }

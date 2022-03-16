@@ -26,6 +26,8 @@ export enum VOrigin {
     Top, Bottom
 }
 
+export type { PixelImageBuilderBasic };
+
 class PixelImageBuilderBasic {
     private canvas = document.createElement('canvas');
     private context: CanvasRenderingContext2D;
