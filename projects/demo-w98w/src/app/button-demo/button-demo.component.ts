@@ -12,4 +12,13 @@ export class ButtonDemoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  readonly colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+  colorIdx = 0;
+  colorCurrent() {
+    return this.colors[this.colorIdx];
+  }
+  colorClick() {
+    this.colorIdx = (this.colorIdx + 1) % this.colors.length;
+  }
+
 }

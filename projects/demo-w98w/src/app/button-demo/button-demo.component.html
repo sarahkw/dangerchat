@@ -1,9 +1,8 @@
 <h2>Button</h2>
 
-<div>
-    <a w98w-wbutton [style.width.px]="200">fixed width</a>
+<div style="display: inline-block; border: 3px solid; border-radius: 1px;" [style.borderColor]="colorCurrent()">
+    <a w98w-wbutton [style.width.px]="200" (click)="colorClick()">fixed width (click me!)</a>
 </div>
-
 
 <p></p>
 
