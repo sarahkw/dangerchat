@@ -49,12 +49,12 @@
     <img [src]="debugMode ? '/assets/w98w/greenbox.png' : iconSrc" class="icon" />
     <span class="label w98w-font-ss"><ng-content></ng-content></span>
     <div class="controls">
-        <w98w-wbutton [width]="STYLES.titleBarBtnWidth + 6" [height]="STYLES.titleBarBtnHeight + 6">_</w98w-wbutton>
-        <w98w-wbutton [width]="STYLES.titleBarBtnWidth + 6" [height]="STYLES.titleBarBtnHeight + 6">[]</w98w-wbutton>
+        <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth + 6" [style.height.px]="STYLES.titleBarBtnHeight + 6">_</a>
+        <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth + 6" [style.height.px]="STYLES.titleBarBtnHeight + 6">[]</a>
         <div class="x-space" [style.width.px]="2"></div>
-        <w98w-wbutton [width]="STYLES.titleBarBtnWidth + 6" [height]="STYLES.titleBarBtnHeight + 6">
+        <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth + 6" [style.height.px]="STYLES.titleBarBtnHeight + 6">
             <w98w-pixel-image [genImg]="GENIMG.TBAR_X" [cssWidth]="12" [cssHeight]="12" wbuttonBody>
             </w98w-pixel-image>
-        </w98w-wbutton>
+        </a>
     </div>
 </div>

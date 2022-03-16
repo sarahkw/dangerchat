@@ -14,42 +14,42 @@ Bevel and focus ants will work. It can take a body to put something into its con
 <table border="1">
     <tr>
         <td>Just show it</td>
-        <td><w98w-wbutton></w98w-wbutton></td>
+        <td><a w98w-wbutton></a></td>
     </tr>
     <tr>
         <td>Width = 200</td>
-        <td><w98w-wbutton [width]="200"></w98w-wbutton></td>
+        <td><a w98w-wbutton [style.width.px]="200"></a></td>
     </tr>
     <tr>
         <td>Height = 30</td>
-        <td><w98w-wbutton [height]="30"></w98w-wbutton></td>
+        <td><a w98w-wbutton [style.height.px]="30"></a></td>
     </tr>
     <tr>
         <td>Width = 200, Height = 30</td>
         <td>
-          <w98w-wbutton [width]="200" [height]="30">a</w98w-wbutton>
+          <a w98w-wbutton [style.width.px]="200" [style.height.px]="30">a</a>
         </td>
     </tr>
     <tr>
         <td>No W/H, add text content</td>
         <td>
-          <w98w-wbutton>Hello world!</w98w-wbutton>
+          <a w98w-wbutton>Hello world!</a>
         </td>
     </tr>
     <tr>
         <td>Image</td>
         <td>
-            <w98w-wbutton>
+            <a w98w-wbutton>
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>Div</td>
         <td>
-            <w98w-wbutton>
+            <a w98w-wbutton>
                 <div wbuttonBody style="background-color: red; width: 25px; height: 25px;"></div>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
 </table>
@@ -62,115 +62,115 @@ Bevel and focus ants will work. It can take a body to put something into its con
     <tr>
         <td>1 child, given width</td>
         <td>
-            <w98w-wbutton [width]="200">
+            <a w98w-wbutton [style.width.px]="200">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>1 child, given height</td>
         <td>
-            <w98w-wbutton [height]="60">
+            <a w98w-wbutton [style.height.px]="60">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>1 child, given width and height</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="60">
+            <a w98w-wbutton [style.width.px]="200" [style.height.px]="60">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>1 child, given width, stretch</td>
         <td>
-            <w98w-wbutton [width]="200">
+            <a w98w-wbutton [style.width.px]="200">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>1 child, given height, stretch</td>
         <td>
-            <w98w-wbutton [height]="60">
+            <a w98w-wbutton [style.height.px]="60">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>1 child, given width and height, stretch</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="60">
+            <a w98w-wbutton [style.width.px]="200" [style.height.px]="60">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
 
     <tr>
         <td>2 child, given nothing</td>
         <td>
-            <w98w-wbutton extraLabel="hello world">
+            <a w98w-wbutton extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
 
     <tr>
         <td>2 child, given width</td>
         <td>
-            <w98w-wbutton [width]="200" extraLabel="hello world">
+            <a w98w-wbutton [style.width.px]="200" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>2 child, given height</td>
         <td>
-            <w98w-wbutton [height]="60" extraLabel="hello world">
+            <a w98w-wbutton [style.height.px]="60" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>2 child, given width and height</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="60" extraLabel="hello world">
+            <a w98w-wbutton [style.width.px]="200" [style.height.px]="60" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody>
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>2 child, given width, stretch</td>
         <td>
-            <w98w-wbutton [width]="200" extraLabel="hello world">
+            <a w98w-wbutton [style.width.px]="200" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>2 child, given height, stretch</td>
         <td>
-            <w98w-wbutton [height]="60" extraLabel="hello world">
+            <a w98w-wbutton [style.height.px]="60" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>2 child, given width and height, stretch</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="60" extraLabel="hello world">
+            <a w98w-wbutton [style.width.px]="200" [style.height.px]="60" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
     <tr>
         <td>2 child, given smaller height, normal width, stretch</td>
         <td>
-            <w98w-wbutton [width]="200" [height]="30" extraLabel="hello world">
+            <a w98w-wbutton [style.width.px]="200" [style.height.px]="30" extraLabel="hello world">
                 <img src="/assets/w98w/greenbox.png" wbuttonBody [stretchImg]="true">
-            </w98w-wbutton>
+            </a>
         </td>
     </tr>
 </table>

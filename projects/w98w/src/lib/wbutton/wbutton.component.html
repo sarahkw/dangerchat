@@ -1,33 +1,21 @@
-<a
-    class="w98w-wbutton"
-    tabindex="0"
-    role="button"
-    [style.width.px]="width"
-    [style.height.px]="height"
-    [style.fontFamily]="STYLES.defaultFont"
-    [style.fontSize.px]="STYLES.labelFontSize"
-    [style.backgroundColor]="COLORS.WIDGET_BG"
-    [style.color]="COLORS.WIDGET_TEXT"
-    [style.padding.px]="contentOffset">
-    <w98w-bevel-8split></w98w-bevel-8split>
-    <div
-        class="w98w-focusAnts"
-        [style.top.px]="focusAntsOffset"
-        [style.left.px]="focusAntsOffset"
-        [style.bottom.px]="focusAntsOffset"
-        [style.right.px]="focusAntsOffset"
-    ></div>
-    <div class="w98w-content">
-        <ng-container *ngIf="buttonBody; else templateImplicitBody">
-            <ng-content select="[wbuttonBody]"></ng-content>
-        </ng-container>
+<w98w-bevel-8split></w98w-bevel-8split>
+<div
+    class="w98w-focusAnts"
+    [style.top.px]="focusAntsOffset"
+    [style.left.px]="focusAntsOffset"
+    [style.bottom.px]="focusAntsOffset"
+    [style.right.px]="focusAntsOffset"
+></div>
+<div class="w98w-content">
+    <ng-container *ngIf="buttonBody; else templateImplicitBody">
+        <ng-content select="[wbuttonBody]"></ng-content>
+    </ng-container>
 
-        <ng-template #templateImplicitBody>
-            <span wbuttonBody [allowShrinking]="true" class="w98w-implicitBody"><ng-content></ng-content></span>
-        </ng-template>
+    <ng-template #templateImplicitBody>
+        <span wbuttonBody [allowShrinking]="true" class="w98w-implicitBody"><ng-content></ng-content></span>
+    </ng-template>
 
-        <span class="w98w-extraLabel" *ngIf="extraLabel !== undefined">
-            {{ extraLabel }}
-        </span>
-    </div>
-</a>
+    <span class="w98w-extraLabel" *ngIf="extraLabel !== undefined">
+        {{ extraLabel }}
+    </span>
+</div>

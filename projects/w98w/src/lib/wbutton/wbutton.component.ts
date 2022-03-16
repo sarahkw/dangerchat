@@ -1,4 +1,4 @@
-import { Component, ContentChild, Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, ContentChild, Directive, ElementRef, Host, HostBinding, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -41,19 +41,13 @@ export class WButtonBodyDirective implements OnInit {
 }
 
 @Component({
-  selector: 'w98w-wbutton',
+  selector: 'a[w98w-wbutton]',
   templateUrl: './wbutton.component.html',
   styleUrls: ['./wbutton.component.css']
 })
 export class WButtonComponent implements OnInit, OnDestroy {
 
-  @Input() width: number | undefined;
-  @Input() height: number | undefined;
   @Input() extraLabel: string | undefined;
-
-  // Exports to template
-  readonly STYLES = W98wStyles;
-  readonly COLORS = Colors;
 
   readonly focusAntsOffset =
     Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
@@ -63,6 +57,15 @@ export class WButtonComponent implements OnInit, OnDestroy {
     this.focusAntsOffset +
     1 /* the focus ants */ +
     1 /* not flush against the ants */;
+
+  @HostBinding('class') hbC = 'w98w-wbutton';
+  @HostBinding('tabindex') hbTabindex = 0;
+  @HostBinding('role') hbRole = 'button';  // TODO this doesn't work!
+  @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
+  @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
+  @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
+  @HostBinding('style.color') hbSC = Colors.WIDGET_TEXT;
+  @HostBinding('style.padding') hbSP = `${this.contentOffset}px`;
 
   @ContentChild(WButtonBodyDirective) buttonBody: WButtonBodyDirective | undefined;
 
