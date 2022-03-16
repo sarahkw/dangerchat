@@ -47,6 +47,22 @@ export abstract class GenImg {
         }
     }
 
+    static readonly DEBUG_BORDER: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            const builder = pibf.basic(drawCssWidth, drawCssHeight);
+
+            builder.drawRect('black', 0, 0, 1, drawCssHeight); // left
+            builder.drawRect('black', 0, 0, drawCssWidth, 1); // top
+            builder.drawRect('black', drawCssWidth - 1, 0, 1, drawCssHeight); // right
+            builder.drawRect('black', 0, drawCssHeight - 1, drawCssWidth, 1); // bottom
+
+            builder.drawRect('red', drawCssWidth, 0, 1, drawCssHeight); // overdraw right
+            builder.drawRect('red', 0, drawCssHeight, drawCssWidth, 1); // overdraw bottom
+
+            return builder.build();
+        }
+    };
+
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
             console.assert(drawCssWidth == drawCssHeight);

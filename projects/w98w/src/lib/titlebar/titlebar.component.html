@@ -50,7 +50,10 @@
     <span class="label w98w-font-ss"><ng-content></ng-content></span>
     <div class="controls">
         <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth" [style.height.px]="STYLES.titleBarBtnHeight" [externalFocus]="true">_</a>
-        <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth" [style.height.px]="STYLES.titleBarBtnHeight" [externalFocus]="true">[]</a>
+        <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth" [style.height.px]="STYLES.titleBarBtnHeight" [externalFocus]="true">
+            <w98w-pixel-image [genImg]="GENIMG.DEBUG_BORDER" [cssWidth]="12" [cssHeight]="12" wbuttonBody>
+            </w98w-pixel-image>
+        </a>
         <div class="x-space" [style.width.px]="2"></div>
         <a w98w-wbutton [style.width.px]="STYLES.titleBarBtnWidth" [style.height.px]="STYLES.titleBarBtnHeight" [externalFocus]="true">
             <w98w-pixel-image [genImg]="GENIMG.TBAR_X" [cssWidth]="12" [cssHeight]="12" wbuttonBody>
