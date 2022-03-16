@@ -11,6 +11,7 @@ import { DprComponent } from './dpr/dpr.component';
 import { ButtonDemoComponent } from './button-demo/button-demo.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
 import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
+import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
     DprComponent,
     ButtonDemoComponent,
     GenImgSizeDemoComponent,
-    WButtonTestComponent
+    WButtonTestComponent,
+    TitlebarTestComponent
   ],
   imports: [
     BrowserModule,
