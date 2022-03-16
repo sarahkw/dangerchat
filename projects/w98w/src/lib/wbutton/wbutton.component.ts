@@ -1,4 +1,4 @@
-import { Component, ContentChild, Directive, ElementRef, Host, HostBinding, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, ContentChild, Directive, ElementRef, HostBinding, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -48,24 +48,43 @@ export class WButtonBodyDirective implements OnInit {
 export class WButtonComponent implements OnInit, OnDestroy {
 
   @Input() extraLabel: string | undefined;
+  @Input() externalFocus: boolean = false;
 
-  readonly focusAntsOffset =
-    Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
-    1 /* not flush against the bevels */;
+  get offsets() {
+    let focusAnts;
+    let content;
 
-  readonly contentOffset =
-    this.focusAntsOffset +
-    1 /* the focus ants */ +
-    1 /* not flush against the ants */;
+    if (this.externalFocus) {
+      focusAnts = 0;
+      content = Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
+                   0 /* against the bevels, if you want external focus it's because you want all the space available */;
+    } else {
+      focusAnts = Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
+                   1 /* not flush against the bevels */;
+      content = focusAnts +
+                 1 /* the focus ants */ +
+                 1 /* not flush against the ants */;
+    }
 
-  @HostBinding('class') hbC = 'w98w-wbutton';
+    return { focusAnts, content };
+  }
+
+  @HostBinding('class') get hbC() {
+    if (this.externalFocus) {
+      return 'w98w-wbutton w98w-wbutton-externalFocus';
+    } else {
+      return 'w98w-wbutton';
+    }
+  }
   @HostBinding('tabindex') hbTabindex = 0;
   @HostBinding('role') hbRole = 'button';  // TODO this doesn't work!
   @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
   @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
   @HostBinding('style.color') hbSC = Colors.WIDGET_TEXT;
-  @HostBinding('style.padding') hbSP = `${this.contentOffset}px`;
+  @HostBinding('style.padding') get hbSP() {
+    return `${this.offsets.content}px`;
+  }
 
   @ContentChild(WButtonBodyDirective) buttonBody: WButtonBodyDirective | undefined;
 

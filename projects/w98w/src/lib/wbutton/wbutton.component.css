@@ -6,15 +6,15 @@
 
 /* Internal focus ring */
 
-:host:focus {
-    /* Button focus ring is drawn inside. */
-    outline: none;
-}
-
 .w98w-focusAnts {
     display: none;
     position: absolute;
     border: 1px dotted black;
+}
+
+:host:focus:not(.w98w-wbutton-externalFocus) {
+    /* Button focus ring is drawn inside. */
+    outline: none;
 }
 
 :host:focus .w98w-focusAnts {

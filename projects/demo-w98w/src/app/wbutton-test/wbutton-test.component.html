@@ -284,3 +284,28 @@ Bevel and focus ants will work. It can take a body to put something into its con
         </td>
     </tr>
 </table>
+
+<h3>External Focus</h3>
+
+<p>don't allocate space for the focus ants, and let the browser do its thing.</p>
+
+<p>save many pixels by not drawing focus internally</p>
+
+<table border="1">
+    <tr>
+        <td>Control: no w or h specified</td>
+        <td>
+            <a w98w-wbutton>
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>Experiment: no w or h specified, external focus</td>
+        <td>
+            <a w98w-wbutton [externalFocus]="true">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
+            </a>
+        </td>
+    </tr>
+</table>

@@ -1,10 +1,11 @@
 <w98w-bevel-8split></w98w-bevel-8split>
 <div
+    *ngIf="!externalFocus"
     class="w98w-focusAnts"
-    [style.top.px]="focusAntsOffset"
-    [style.left.px]="focusAntsOffset"
-    [style.bottom.px]="focusAntsOffset"
-    [style.right.px]="focusAntsOffset"
+    [style.top.px]="offsets.focusAnts"
+    [style.left.px]="offsets.focusAnts"
+    [style.bottom.px]="offsets.focusAnts"
+    [style.right.px]="offsets.focusAnts"
 ></div>
 <div class="w98w-content">
     <ng-container *ngIf="buttonBody; else templateImplicitBody">
