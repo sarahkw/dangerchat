@@ -117,6 +117,45 @@ export abstract class GenImg {
         }
     };
 
+    private static readonly _tbar_max_draw_smallwnd =
+        function (builder: PixelImageBuilderBasic, color: string, ix1: number, iy1: number, ix2: number, iy2: number) {
+            const FRAME_T = 2; // should be "2" but i tink 3 looks better
+            const FRAME_O = 1; // other
+
+            // top
+            {
+                const x1 = ix1;
+                const y1 = iy1;
+                const x2 = ix2;
+                const y2 = y1 + FRAME_T;
+                builder.drawRectXY(color, x1, y1, x2, y2);
+            }
+            // bottom
+            {
+                const x1 = ix1;
+                const y1 = iy2 - FRAME_O;
+                const x2 = ix2;
+                const y2 = y1 + FRAME_O;
+                builder.drawRectXY(color, x1, y1, x2, y2);
+            }
+            // left
+            {
+                const x1 = ix1;
+                const y1 = iy1;
+                const x2 = x1 + FRAME_O;
+                const y2 = iy2;
+                builder.drawRectXY(color, x1, y1, x2, y2);
+            }
+            // right
+            {
+                const x1 = ix2 - FRAME_O;
+                const y1 = iy1;
+                const x2 = x1 + FRAME_O;
+                const y2 = iy2;
+                builder.drawRectXY(color, x1, y1, x2, y2);
+            }
+        };
+
     private static readonly _tbar_max_draw =
         function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled = false): DisplayImage {
             let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
@@ -127,42 +166,14 @@ export abstract class GenImg {
             const P_B = 1;
             const P_R = 2;
 
-            const FRAME_T = 2; // should be "2" but i tink 3 looks better
-            const FRAME_O = 1; // other
-
             function b(color: string, offset: number) {
-                // top
-                {
-                    const x1 = P_L;
-                    const y1 = 0;
-                    const x2 = artPixelWidth - P_R;
-                    const y2 = y1 + FRAME_T;
-                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
-                }
-                // bottom
-                {
-                    const x1 = P_L;
-                    const y1 = artPixelHeight - P_B - FRAME_O;
-                    const x2 = artPixelWidth - P_R;
-                    const y2 = y1 + FRAME_O;
-                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
-                }
-                // left
-                {
-                    const x1 = P_L;
-                    const y1 = 0;
-                    const x2 = x1 + FRAME_O;
-                    const y2 = artPixelHeight - P_B;
-                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
-                }
-                // right
-                {
-                    const x1 = artPixelWidth - P_R - FRAME_O;
-                    const y1 = 0;
-                    const x2 = x1 + FRAME_O;
-                    const y2 = artPixelHeight - P_B;
-                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
-                }
+                GenImg._tbar_max_draw_smallwnd(
+                    builder,
+                    color,
+                    P_L + offset,
+                    0 + offset,
+                    artPixelWidth - P_R + offset,
+                    artPixelHeight - P_B + offset);
             }
 
             if (disabled) {
@@ -181,6 +192,47 @@ export abstract class GenImg {
     static readonly TBAR_MAX_DISABLED: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
             return GenImg._tbar_max_draw(drawCssWidth, drawCssHeight, pibf, true);
+        }
+    };
+
+    static readonly TBAR_UNMAX: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+
+            const builder = pibf.basic(artPixelWidth, artPixelHeight);
+
+            const P_T = 1;
+            const P_L = 2;
+            const P_R = 3;
+            const P_B = 2;
+
+            const OL_H = 4;
+            const OL_W = 3;
+
+            GenImg._tbar_max_draw_smallwnd(
+                builder,
+                'black',
+                P_L + OL_W,
+                P_T,
+                artPixelWidth - P_R,
+                artPixelHeight - P_B - OL_H);
+
+            {
+                const x1 = P_L;
+                const y1 = P_T + OL_H;
+                const x2 = artPixelWidth - P_R - OL_W;
+                const y2 = artPixelHeight - P_B;
+
+                builder.clearRectXY(x1, y1, x2, y2);
+
+                GenImg._tbar_max_draw_smallwnd(
+                    builder,
+                    'black',
+                    x1, y1, x2, y2);
+            }
+
+            debug_overdraw(artPixelWidth, artPixelHeight, builder);
+            return builder.build();
         }
     };
 
