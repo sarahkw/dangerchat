@@ -3,8 +3,10 @@
     position: relative;
     box-sizing: border-box;
 
-    /* hide the <button>'s border */
+    /* override user agent styles for <button> */
     border: 0;
+    text-align: left;
+    margin: 0; /* safari ipados */
 }
 
 /* Internal focus ring */
