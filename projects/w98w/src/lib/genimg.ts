@@ -72,6 +72,25 @@ export abstract class GenImg {
         }
     };
 
+    static readonly TBAR_MIN: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+
+            const builder = pibf.basic(artPixelWidth, artPixelHeight);
+
+            const P_L = 3;
+            const P_R = 6;
+            const P_B = 1;
+
+            const L_H = 2; // line
+
+            builder.drawRectXY('black', P_L, artPixelHeight - P_B - L_H, artPixelWidth - P_R, artPixelHeight - P_B - L_H + L_H);
+
+            debug_overdraw(artPixelWidth, artPixelHeight, builder);
+            return builder.build();
+        }
+    };
+
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
             let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
