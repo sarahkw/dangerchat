@@ -257,7 +257,7 @@ export abstract class GenImg {
             const P_B = 1;
 
             const X_W = 2;
-            const X_H = 1;
+            const X_H = 2;
             const X_HRUN = 1;
 
             let rows;
