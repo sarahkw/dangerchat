@@ -117,6 +117,56 @@ export abstract class GenImg {
         }
     };
 
+    static readonly TBAR_MAX: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+
+            const builder = pibf.basic(artPixelWidth, artPixelHeight);
+
+            const P_L = 1;
+            const P_B = 1;
+            const P_R = 2;
+
+            const FRAME_T = 2; // should be "2" but i tink 3 looks better
+            const FRAME_O = 1; // other
+
+            // top
+            {
+                const x1 = P_L;
+                const y1 = 0;
+                const x2 = artPixelWidth - P_R;
+                const y2 = y1 + FRAME_T;
+                builder.drawRectXY('black', x1, y1, x2, y2);
+            }
+            // bottom
+            {
+                const x1 = P_L;
+                const y1 = artPixelHeight - P_B - FRAME_O;
+                const x2 = artPixelWidth - P_R;
+                const y2 = y1 + FRAME_O;
+                builder.drawRectXY('black', x1, y1, x2, y2);
+            }
+            // left
+            {
+                const x1 = P_L;
+                const y1 = 0;
+                const x2 = x1 + FRAME_O;
+                const y2 = artPixelHeight - P_B;
+                builder.drawRectXY('black', x1, y1, x2, y2);
+            }
+            // right
+            {
+                const x1 = artPixelWidth - P_R - FRAME_O;
+                const y1 = 0;
+                const x2 = x1 + FRAME_O;
+                const y2 = artPixelHeight - P_B;
+                builder.drawRectXY('black', x1, y1, x2, y2);
+            }
+
+            debug_overdraw(artPixelWidth, artPixelHeight, builder);
+            return builder.build();
+        }
+    };
 
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
