@@ -118,7 +118,11 @@ export abstract class GenImg {
     };
 
     private static readonly _tbar_max_draw_smallwnd =
-        function (builder: PixelImageBuilderBasic, color: string, ix1: number, iy1: number, ix2: number, iy2: number) {
+        function (builder: PixelImageBuilderBasic, color: string, ix1: number, iy1: number, ix2: number, iy2: number,
+
+                  // this sucks, but clearRect doesn't seem to work properly
+                  bl_x_len = 0, bl_y_len = 0
+                 ) {
             const FRAME_T = 2; // should be "2" but i tink 3 looks better
             const FRAME_O = 1; // other
 
@@ -132,7 +136,7 @@ export abstract class GenImg {
             }
             // bottom
             {
-                const x1 = ix1;
+                const x1 = bl_x_len != 0 ? ix2 - bl_x_len : ix1; // holy shit this hack
                 const y1 = iy2 - FRAME_O;
                 const x2 = ix2;
                 const y2 = y1 + FRAME_O;
@@ -143,7 +147,7 @@ export abstract class GenImg {
                 const x1 = ix1;
                 const y1 = iy1;
                 const x2 = x1 + FRAME_O;
-                const y2 = iy2;
+                const y2 = bl_y_len != 0 ? iy2 - ((iy2 - iy1) - bl_y_len) : iy2;
                 builder.drawRectXY(color, x1, y1, x2, y2);
             }
             // right
@@ -206,7 +210,9 @@ export abstract class GenImg {
             const P_R = 3;
             const P_B = 2;
 
-            const OL_H = 4;
+            // const OL_H = 4;
+            // const OL_W = 3;
+            const OL_H = Math.floor(artPixelHeight / 4);
             const OL_W = 3;
 
             GenImg._tbar_max_draw_smallwnd(
@@ -215,15 +221,17 @@ export abstract class GenImg {
                 P_L + OL_W,
                 P_T,
                 artPixelWidth - P_R,
-                artPixelHeight - P_B - OL_H);
+                artPixelHeight - P_B - OL_H,
+                // x-len and y-len
+                OL_W,
+                OL_H
+            );
 
             {
                 const x1 = P_L;
                 const y1 = P_T + OL_H;
                 const x2 = artPixelWidth - P_R - OL_W;
                 const y2 = artPixelHeight - P_B;
-
-                builder.clearRectXY(x1, y1, x2, y2);
 
                 GenImg._tbar_max_draw_smallwnd(
                     builder,

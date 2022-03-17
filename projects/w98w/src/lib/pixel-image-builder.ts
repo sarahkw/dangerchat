@@ -86,10 +86,6 @@ class PixelImageBuilderBasic {
         return this.drawRect(fillStyle, x1, y1, x2 - x1, y2 - y1);
     }
 
-    clearRectXY(x1: number, y1: number, x2: number, y2: number) {
-        this.context.clearRect(x1, y1, x2 - x1, y2 - y1);
-    }
-
     drawLineLeft(fillStyle: string, x: number, y: number, len: number) {
         return this.drawRect(fillStyle, x - len + 1, y, len, 1);
     }
