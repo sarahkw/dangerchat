@@ -34,6 +34,11 @@ function debug_overdraw(drawCssWidth: number, drawCssHeight: number, builder: Pi
 */
 
 function debug_overdraw(..._: any[]) {}
+const TBarColors = {
+    default: 'black',
+    disabled: '#808080',
+    disabled_shadow: 'white'
+};
 
 export abstract class GenImg {
 
@@ -72,8 +77,8 @@ export abstract class GenImg {
         }
     };
 
-    static readonly TBAR_MIN: GenImgDescriptor = {
-        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+    private static readonly _tbar_min_draw =
+        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled: boolean = false): DisplayImage {
             let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
@@ -84,12 +89,34 @@ export abstract class GenImg {
 
             const L_H = 2; // line
 
-            builder.drawRectXY('black', P_L, artPixelHeight - P_B - L_H, artPixelWidth - P_R, artPixelHeight - P_B - L_H + L_H);
+            function ln(color: string, offset: number) {
+                const x1 = P_L;
+                const y1 = artPixelHeight - P_B - L_H;
+                const x2 = artPixelWidth - P_R;
+                const y2 = artPixelHeight - P_B - L_H + L_H;
+                builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
+            }
+
+            if (disabled) {
+                ln(TBarColors.disabled_shadow, 1);
+            }
+
+            ln(disabled ? TBarColors.disabled : TBarColors.default, 0);
 
             debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
         }
+
+    static readonly TBAR_MIN: GenImgDescriptor = {
+        draw: GenImg._tbar_min_draw
     };
+
+    static readonly TBAR_MIN_DISABLED: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            return GenImg._tbar_min_draw(drawCssWidth, drawCssHeight, pibf, true);
+        }
+    };
+
 
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
