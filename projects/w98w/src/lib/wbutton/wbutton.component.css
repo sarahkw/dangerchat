@@ -2,6 +2,9 @@
     display: inline-block;
     position: relative;
     box-sizing: border-box;
+
+    /* hide the <button>'s border */
+    border: 0;
 }
 
 /* Internal focus ring */

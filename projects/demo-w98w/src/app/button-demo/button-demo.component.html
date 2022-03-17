@@ -1,36 +1,36 @@
 <h2>Button</h2>
 
-<div style="display: inline-block; border: 3px solid; border-radius: 1px;" [style.borderColor]="colorCurrent()">
-    <a w98w-wbutton [style.width.px]="200" (click)="colorClick()">fixed width (click me!)</a>
+<div style="display: inline-block; border: 3px solid; border-radius: 1px;" [style.borderColor]="colorCurrent()" [style.backgroundColor]="colorCurrent()">
+    <button w98w-wbutton [style.width.px]="200" (click)="colorClick()">fixed width (click me!)</button>
 </div>
 
 <p></p>
 
 <div>
-    <a w98w-wbutton [style.width.px]="180" [style.height.px]="50">fixed width and height with super long text</a>
+    <button w98w-wbutton [style.width.px]="180" [style.height.px]="50">fixed width and height with super long text</button>
 </div>
 
 <p></p>
 
 <div>
-    <a w98w-wbutton>auto</a>
-    <a w98w-wbutton>size</a>
+    <button w98w-wbutton>auto</button>
+    <button w98w-wbutton>size</button>
 </div>
 
 <p></p>
 
 <div>
-    <a w98w-wbutton extraLabel="icon">
+    <button w98w-wbutton extraLabel="icon">
         <img class="w98w-pixelimg" src="/assets/w98w/start-win.png" wbuttonBody>
-    </a>
+    </button>
 </div>
 
 <p></p>
 
 <div>
-    <a w98w-wbutton>
+    <button w98w-wbutton>
         <img class="w98w-pixelimg" src="/assets/w98w/start-win.png" wbuttonBody>
-    </a>
+    </button>
 </div>
 
 <p></p>

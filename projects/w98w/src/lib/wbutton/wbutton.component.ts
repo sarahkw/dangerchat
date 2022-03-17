@@ -40,8 +40,11 @@ export class WButtonBodyDirective implements OnInit {
   }
 }
 
+// yeah the spec says we shouldn't put <div> in button, but google maps does it, so it's
+// battle tested. and it seems to work fine. i also think it's too much work to try to
+// imitate a button using <a>, if it's even possible.
 @Component({
-  selector: 'a[w98w-wbutton]',
+  selector: 'button[w98w-wbutton]',
   templateUrl: './wbutton.component.html',
   styleUrls: ['./wbutton.component.css']
 })
@@ -88,8 +91,6 @@ export class WButtonComponent implements OnInit, OnDestroy {
       return 'w98w-wbutton';
     }
   }
-  @HostBinding('tabindex') hbTabindex = 0;
-  @HostBinding('role') hbRole = 'button';  // TODO this doesn't work!
   @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
   @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
