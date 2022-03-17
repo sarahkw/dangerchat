@@ -244,46 +244,64 @@ export abstract class GenImg {
         }
     };
 
-    static readonly TBAR_X: GenImgDescriptor = {
-        draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
+    private static readonly _tbar_x_draw =
+        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled: boolean = false): DisplayImage {
             let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
-            // padding
-            const P_L = 2;
-            const P_R = 2;
-            const P_T = 1;
-            const P_B = 1;
+            function x(color: string, offset: number) {
+                // padding
+                const P_L = 2;
+                const P_R = 2;
+                const P_T = 1;
+                const P_B = 1;
 
-            const X_W = 2;
-            const X_H = 2;
-            const X_HRUN = 1;
+                const X_W = 2;
+                const X_H = 2;
+                const X_HRUN = 1;
 
-            let rows;
-            let cols;
-            {
-                let x_w = artPixelWidth - P_L - P_R;
-                let x_h = x_w - X_HRUN;
-                if (x_h > (artPixelHeight - P_T - P_B)) {
-                    x_h = artPixelHeight - P_T - P_B;
-                    x_w = x_h + 1;
+                let rows;
+                let cols;
+                {
+                    let x_w = artPixelWidth - P_L - P_R;
+                    let x_h = x_w - X_HRUN;
+                    if (x_h > (artPixelHeight - P_T - P_B)) {
+                        x_h = artPixelHeight - P_T - P_B;
+                        x_w = x_h + 1;
+                    }
+
+                    rows = x_h;
+                    cols = x_w;
                 }
 
-                rows = x_h;
-                cols = x_w;
+                for (let r = 0; r < rows; ++r) {
+                    builder.drawRect(color, offset + (P_L + r), offset + (P_T + r), X_W, X_H);
+
+                    // i dunno, i tinkered with this until it worked
+                    builder.drawRect(color, offset + (P_L + (cols - r - X_W)), offset + ( P_T + r), X_W, X_H);
+                }
             }
-
-            for (let r = 0; r < rows; ++r) {
-                builder.drawRect('black', P_L + r, P_T + r, X_W, X_H);
-
-                // i dunno, i tinkered with this until it worked
-                builder.drawRect('black', P_L + (cols - r - X_W), P_T + r, X_W, X_H);
+            if (disabled) {
+                x(TBarColors.disabled_shadow, 1);
+                x(TBarColors.disabled, 0);
+            } else {
+                x(TBarColors.default, 0);
             }
 
             debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
+        };
+
+    static readonly TBAR_X: GenImgDescriptor = {
+        draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
+            return GenImg._tbar_x_draw(drawCssWidth, drawCssHeight, pibf);
         }
     }
 
+    static readonly TBAR_X_DISABLED: GenImgDescriptor = {
+        draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
+            return GenImg._tbar_x_draw(drawCssWidth, drawCssHeight, pibf, true);
+        }
+    }
 }
