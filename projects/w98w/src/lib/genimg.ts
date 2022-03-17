@@ -34,6 +34,7 @@ function debug_overdraw(drawCssWidth: number, drawCssHeight: number, builder: Pi
 */
 
 function debug_overdraw(..._: any[]) {}
+
 const TBarColors = {
     default: 'black',
     disabled: '#808080',
@@ -51,10 +52,10 @@ export abstract class GenImg {
 
             const SQUARE_SZ = 1;
             incXincY(cssSize, (x, y) => {
-                builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
+                builder.drawRect(TBarColors.default, x, y, SQUARE_SZ, SQUARE_SZ);
             });
             decXincY(cssSize, (x, y) => {
-                builder.drawRect('black', x, y, SQUARE_SZ, SQUARE_SZ);
+                builder.drawRect(TBarColors.default, x, y, SQUARE_SZ, SQUARE_SZ);
             });
 
             return builder.build();
@@ -67,10 +68,10 @@ export abstract class GenImg {
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
-            builder.drawRect('black', 0, 0, 1, artPixelHeight); // left
-            builder.drawRect('black', 0, 0, artPixelWidth, 1); // top
-            builder.drawRect('black', artPixelWidth - 1, 0, 1, artPixelHeight); // right
-            builder.drawRect('black', 0, artPixelHeight - 1, artPixelWidth, 1); // bottom
+            builder.drawRect(TBarColors.default, 0, 0, 1, artPixelHeight); // left
+            builder.drawRect(TBarColors.default, 0, 0, artPixelWidth, 1); // top
+            builder.drawRect(TBarColors.default, artPixelWidth - 1, 0, 1, artPixelHeight); // right
+            builder.drawRect(TBarColors.default, 0, artPixelHeight - 1, artPixelWidth, 1); // bottom
 
             debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
@@ -217,7 +218,7 @@ export abstract class GenImg {
 
             GenImg._tbar_max_draw_smallwnd(
                 builder,
-                'black',
+                TBarColors.default,
                 P_L + OL_W,
                 P_T,
                 artPixelWidth - P_R,
@@ -235,7 +236,7 @@ export abstract class GenImg {
 
                 GenImg._tbar_max_draw_smallwnd(
                     builder,
-                    'black',
+                    TBarColors.default,
                     x1, y1, x2, y2);
             }
 
