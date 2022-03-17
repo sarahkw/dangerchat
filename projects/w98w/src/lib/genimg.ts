@@ -117,8 +117,8 @@ export abstract class GenImg {
         }
     };
 
-    static readonly TBAR_MAX: GenImgDescriptor = {
-        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+    private static readonly _tbar_max_draw =
+        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled = false): DisplayImage {
             let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
@@ -130,41 +130,57 @@ export abstract class GenImg {
             const FRAME_T = 2; // should be "2" but i tink 3 looks better
             const FRAME_O = 1; // other
 
-            // top
-            {
-                const x1 = P_L;
-                const y1 = 0;
-                const x2 = artPixelWidth - P_R;
-                const y2 = y1 + FRAME_T;
-                builder.drawRectXY('black', x1, y1, x2, y2);
+            function b(color: string, offset: number) {
+                // top
+                {
+                    const x1 = P_L;
+                    const y1 = 0;
+                    const x2 = artPixelWidth - P_R;
+                    const y2 = y1 + FRAME_T;
+                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
+                }
+                // bottom
+                {
+                    const x1 = P_L;
+                    const y1 = artPixelHeight - P_B - FRAME_O;
+                    const x2 = artPixelWidth - P_R;
+                    const y2 = y1 + FRAME_O;
+                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
+                }
+                // left
+                {
+                    const x1 = P_L;
+                    const y1 = 0;
+                    const x2 = x1 + FRAME_O;
+                    const y2 = artPixelHeight - P_B;
+                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
+                }
+                // right
+                {
+                    const x1 = artPixelWidth - P_R - FRAME_O;
+                    const y1 = 0;
+                    const x2 = x1 + FRAME_O;
+                    const y2 = artPixelHeight - P_B;
+                    builder.drawRectXY(color, x1 + offset, y1 + offset, x2 + offset, y2 + offset);
+                }
             }
-            // bottom
-            {
-                const x1 = P_L;
-                const y1 = artPixelHeight - P_B - FRAME_O;
-                const x2 = artPixelWidth - P_R;
-                const y2 = y1 + FRAME_O;
-                builder.drawRectXY('black', x1, y1, x2, y2);
+
+            if (disabled) {
+                b(TBarColors.disabled_shadow, 1);
             }
-            // left
-            {
-                const x1 = P_L;
-                const y1 = 0;
-                const x2 = x1 + FRAME_O;
-                const y2 = artPixelHeight - P_B;
-                builder.drawRectXY('black', x1, y1, x2, y2);
-            }
-            // right
-            {
-                const x1 = artPixelWidth - P_R - FRAME_O;
-                const y1 = 0;
-                const x2 = x1 + FRAME_O;
-                const y2 = artPixelHeight - P_B;
-                builder.drawRectXY('black', x1, y1, x2, y2);
-            }
+            b(disabled ? TBarColors.disabled : TBarColors.default, 0);
 
             debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
+        };
+
+    static readonly TBAR_MAX: GenImgDescriptor = {
+        draw: GenImg._tbar_max_draw
+    };
+
+    static readonly TBAR_MAX_DISABLED: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            return GenImg._tbar_max_draw(drawCssWidth, drawCssHeight, pibf, true);
         }
     };
 
