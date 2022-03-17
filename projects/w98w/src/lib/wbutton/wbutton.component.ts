@@ -37,6 +37,9 @@ export class WButtonBodyDirective implements OnInit {
       // can't expand horizontally using `align-self: stretch` so this is our only option to stretch the image.
       this.renderer.setStyle(this.elementRef.nativeElement, 'height', '100%');
     }
+
+    // needed for ipad safari, or else an <img> would eat the click event
+    this.renderer.setStyle(this.elementRef.nativeElement, 'pointer-events', 'none');
   }
 }
 
