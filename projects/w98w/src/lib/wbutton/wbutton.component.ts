@@ -1,4 +1,4 @@
-import { Component, ContentChild, Directive, ElementRef, HostBinding, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, ContentChild, Directive, ElementRef, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -49,7 +49,8 @@ export class WButtonBodyDirective implements OnInit {
 @Component({
   selector: 'button[w98w-wbutton]',
   templateUrl: './wbutton.component.html',
-  styleUrls: ['./wbutton.component.css']
+  styleUrls: ['./wbutton.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WButtonComponent implements OnInit, OnDestroy {
 
@@ -90,7 +91,7 @@ export class WButtonComponent implements OnInit, OnDestroy {
   }
 
   @HostBinding('class') get hbC() {
-    const classes = [];
+    const classes = ['w98w-wbutton'];
     if (this.pressed) {
       classes.push('w98w-wbutton-pressed');
     } else {

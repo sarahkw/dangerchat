@@ -1,22 +1,22 @@
 <w98w-bevel-8split></w98w-bevel-8split>
 <div
     *ngIf="!externalFocus"
-    class="w98w-focusAnts"
+    class="w98w-wbutton-focusAnts"
     [style.top.px]="offsets.focusAnts"
     [style.left.px]="offsets.focusAnts"
     [style.bottom.px]="offsets.focusAnts"
     [style.right.px]="offsets.focusAnts"
 ></div>
-<div class="w98w-content">
+<div class="w98w-wbutton-content">
     <ng-container *ngIf="buttonBody; else templateImplicitBody">
         <ng-content select="[wbuttonBody]"></ng-content>
     </ng-container>
 
     <ng-template #templateImplicitBody>
-        <span wbuttonBody [allowShrinking]="true" class="w98w-implicitBody"><ng-content></ng-content></span>
+        <span wbuttonBody [allowShrinking]="true" class="w98w-wbutton-implicitBody"><ng-content></ng-content></span>
     </ng-template>
 
-    <span class="w98w-extraLabel" *ngIf="extraLabel !== undefined">
+    <span class="w98w-wbutton-extraLabel" *ngIf="extraLabel !== undefined">
         {{ extraLabel }}
     </span>
 </div>

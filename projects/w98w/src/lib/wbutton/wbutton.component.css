@@ -1,4 +1,4 @@
-:host {
+.w98w-wbutton {
     display: inline-block;
     position: relative;
     box-sizing: border-box;
@@ -12,36 +12,36 @@
 /* Grayscale on disabled */
 
 /* coming soon
-:host:disabled .w98w-first-child-disabled-effect:first-child {
+.w98w-wbutton:disabled .w98w-first-child-disabled-effect:first-child {
     filter: contrast(0%) drop-shadow(1px 1px 0 white);
 }
 */
 
 /* Internal focus ring */
 
-:host:enabled .w98w-focusAnts {
+.w98w-wbutton:enabled .w98w-wbutton-focusAnts {
     display: none;
     position: absolute;
     border: 1px dotted black;
 }
 
-:host:focus:not(.w98w-wbutton-externalFocus) {
+.w98w-wbutton:focus:not(.w98w-wbutton-externalFocus) {
     /* Button focus ring is drawn inside. */
     outline: none;
 }
 
-:host:focus .w98w-focusAnts {
+.w98w-wbutton:focus .w98w-wbutton-focusAnts {
     display: unset;
 }
 
 /* Push indent */
 
-.w98w-content {
+.w98w-wbutton-content {
     position: relative;
 }
 
-:host:enabled:active .w98w-content,
-:host(.w98w-wbutton-pressed) .w98w-content
+.w98w-wbutton:enabled:active .w98w-wbutton-content,
+.w98w-wbutton-pressed .w98w-wbutton-content
 {
     top: 1px;
     left: 1px;
@@ -49,7 +49,7 @@
 
 /* Layout */
 
-.w98w-content {
+.w98w-wbutton-content {
     width: 100%;
     height: 100%;
 
@@ -59,13 +59,13 @@
     overflow: hidden;
 }
 
-.w98w-extraLabel {
+.w98w-wbutton-extraLabel {
     flex: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
-.w98w-implicitBody {
+.w98w-wbutton-implicitBody {
     text-align: center;
 }
