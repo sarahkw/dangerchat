@@ -55,6 +55,8 @@
 
     align-items: center;
     overflow: hidden;
+
+    gap: 2px;
 }
 
 .w98w-wbutton-extraLabel {
