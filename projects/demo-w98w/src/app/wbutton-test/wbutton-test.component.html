@@ -327,7 +327,7 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>Disabled, img</td>
         <td>
             <button w98w-wbutton [disabled]="whichDisabled == 2" (click)="whichDisabled = 2">
-                <img src="/assets/w98w/greenbox.png" wbuttonBody>
+                <img src="/assets/w98w/start-win.png" wbuttonBody>
             </button>
         </td>
     </tr>
@@ -339,7 +339,8 @@ Bevel and focus ants will work. It can take a body to put something into its con
 
                 <w98w-pixel-image
                     [genImg]="btnDisabledPixelImg.disabled ? GENIMG.TBAR_MAX_DISABLED : GENIMG.TBAR_MAX"
-                    [cssWidth]="17" [cssHeight]="15" wbuttonBody>
+                    [cssWidth]="17" [cssHeight]="15"
+                    wbuttonBody [showDisabledEffect]="false">
                 </w98w-pixel-image>
             </button>
         </td>

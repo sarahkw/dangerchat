@@ -7,7 +7,7 @@
     [style.bottom.px]="offsets.focusAnts"
     [style.right.px]="offsets.focusAnts"
 ></div>
-<div class="w98w-wbutton-content">
+<div class="w98w-wbutton-content" [class.w98w-wbutton-show-disabled-effect]="buttonBody?.showDisabledEffect">
     <ng-container *ngIf="buttonBody; else templateImplicitBody">
         <ng-content select="[wbuttonBody]"></ng-content>
     </ng-container>

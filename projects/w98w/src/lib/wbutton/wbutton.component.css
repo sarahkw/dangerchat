@@ -9,13 +9,11 @@
     margin: 0; /* safari ipados */
 }
 
-/* Grayscale on disabled */
+/* Make disabled button bodies look disabled */
 
-/* coming soon
-.w98w-wbutton:disabled .w98w-first-child-disabled-effect:first-child {
+.w98w-wbutton:disabled .w98w-wbutton-show-disabled-effect *:first-child {
     filter: contrast(0%) drop-shadow(1px 1px 0 white);
 }
-*/
 
 /* Internal focus ring */
 

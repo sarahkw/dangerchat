@@ -15,6 +15,7 @@ export class WButtonBodyDirective implements OnInit {
 
   @Input() stretchImg: boolean = false;
   @Input() allowShrinking: boolean = false;
+  @Input() showDisabledEffect: boolean = true;
 
   constructor(
     private elementRef: ElementRef,
