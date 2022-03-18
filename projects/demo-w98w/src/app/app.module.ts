@@ -12,6 +12,8 @@ import { ButtonDemoComponent } from './button-demo/button-demo.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
 import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
+import { DesktopTestComponent } from './desktop-test/desktop-test.component';
+import { DemoHomeComponent } from './demo-home/demo-home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
     ButtonDemoComponent,
     GenImgSizeDemoComponent,
     WButtonTestComponent,
-    TitlebarTestComponent
+    TitlebarTestComponent,
+    DesktopTestComponent,
+    DemoHomeComponent
   ],
   imports: [
     BrowserModule,
