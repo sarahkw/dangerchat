@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GenImg } from 'projects/w98w/src/lib/genimg';
 
 @Component({
   selector: 'app-wbutton-test',
@@ -16,6 +17,10 @@ oh when the drums begin to bang oh when the drums begin to bang
 oh lord i want to be in that number
 when the saints go marching in
 `;
+
+  readonly GENIMG = GenImg;
+
+  whichDisabled = 0;
 
   constructor() { }
 

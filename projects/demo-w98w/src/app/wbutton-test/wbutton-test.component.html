@@ -309,3 +309,57 @@ Bevel and focus ants will work. It can take a body to put something into its con
         </td>
     </tr>
 </table>
+
+<h3>Disabled, Pressed</h3>
+
+<p>disabled: click to acquire disability</p>
+
+<p>pressed: click to toggle pressed</p>
+
+<table border="1">
+    <tr>
+        <td>Disabled, text</td>
+        <td>
+            <button w98w-wbutton [disabled]="whichDisabled == 1" (click)="whichDisabled = 1">Hey</button>
+        </td>
+    </tr>
+    <tr>
+        <td>Disabled, img</td>
+        <td>
+            <button w98w-wbutton [disabled]="whichDisabled == 2" (click)="whichDisabled = 2">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>Disabled, pixel image (div)</td>
+        <td>
+            <button w98w-wbutton [externalFocus]="true" [disabled]="whichDisabled == 3" (click)="whichDisabled = 3"
+                #btnDisabledPixelImg>
+
+                <w98w-pixel-image
+                    [genImg]="btnDisabledPixelImg.disabled ? GENIMG.TBAR_MAX_DISABLED : GENIMG.TBAR_MAX"
+                    [cssWidth]="17" [cssHeight]="15" wbuttonBody>
+                </w98w-pixel-image>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>Disabled, Pressed</td>
+        <td>
+            <button w98w-wbutton extraLabel="Start" [pressed]="true" [disabled]="whichDisabled == 4" (click)="whichDisabled = 4">
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>Pressed</td>
+        <td>
+            <button w98w-wbutton extraLabel="Start" [pressed]="true" (click)="btnPressedFlipFlop.pressed = !btnPressedFlipFlop.pressed"
+                #btnPressedFlipFlop>
+
+                <img src="/assets/w98w/greenbox.png" wbuttonBody>
+            </button>
+        </td>
+    </tr>
+</table>

@@ -53,8 +53,10 @@ export class WButtonBodyDirective implements OnInit {
 })
 export class WButtonComponent implements OnInit, OnDestroy {
 
+  @Input() pressed: boolean = false;
   @Input() extraLabel: string | undefined;
   @Input() externalFocus: boolean = false;
+  @Input() @HostBinding('disabled') disabled: boolean = false;
 
   private static calculateOffsets(externalFocus: boolean) {
     let focusAnts;
@@ -88,16 +90,27 @@ export class WButtonComponent implements OnInit, OnDestroy {
   }
 
   @HostBinding('class') get hbC() {
-    if (this.externalFocus) {
-      return 'w98w-wbutton w98w-wbutton-externalFocus';
+    const classes = [];
+    if (this.pressed) {
+      classes.push('w98w-wbutton-pressed');
     } else {
-      return 'w98w-wbutton';
+      classes.push('w98w-wbutton-normal');
     }
+    if (this.externalFocus) {
+      classes.push('w98w-wbutton-externalFocus');
+    }
+    return classes.join(" ");
   }
   @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
   @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
-  @HostBinding('style.color') hbSC = Colors.WIDGET_TEXT;
+  @HostBinding('style.color') get hbSC() {
+    if (this.disabled) {
+      return Colors.WIDGET_TEXT_DISABLED;
+    } else {
+      return Colors.WIDGET_TEXT;
+    }
+  }
   @HostBinding('style.padding') get hbSP() {
     return `${this.offsets.content}px`;
   }
@@ -118,6 +131,19 @@ export class WButtonComponent implements OnInit, OnDestroy {
 
   //#region PIDs
 
+  /*
+    |-------------------------------------+-----------------------|
+    | selector                            | bevel                 |
+    |-------------------------------------+-----------------------|
+    | .w98w-wbutton-normal                | Bevels.BUTTON         |
+    | .w98w-wbutton-normal:enabled:active | Bevels.BUTTON_PRESSED |
+    | .w98w-wbutton-pressed               | Bevels.BUTTON_PRESSED |
+    |-------------------------------------+-----------------------|
+
+    don't show button presses when disabled.
+
+   */
+
   static readonly PID_NORMAL = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();
 
@@ -126,7 +152,7 @@ export class WButtonComponent implements OnInit, OnDestroy {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-wbutton", imgs));
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-wbutton-normal", imgs));
     }
 
     pidDestroy(): void {
@@ -142,7 +168,10 @@ export class WButtonComponent implements OnInit, OnDestroy {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-wbutton:active", imgs));
+      this.styleInjector.replaceStyle([
+          Bevel8SplitComponent.genCss(".w98w-wbutton-normal:enabled:active", imgs),
+          Bevel8SplitComponent.genCss(".w98w-wbutton-pressed", imgs)
+      ].join("\n"));
     }
 
     pidDestroy(): void {

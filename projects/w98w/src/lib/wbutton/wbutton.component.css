@@ -9,9 +9,17 @@
     margin: 0; /* safari ipados */
 }
 
+/* Grayscale on disabled */
+
+/* coming soon
+:host:disabled .w98w-first-child-disabled-effect:first-child {
+    filter: contrast(0%) drop-shadow(1px 1px 0 white);
+}
+*/
+
 /* Internal focus ring */
 
-.w98w-focusAnts {
+:host:enabled .w98w-focusAnts {
     display: none;
     position: absolute;
     border: 1px dotted black;
@@ -32,7 +40,9 @@
     position: relative;
 }
 
-:host:active .w98w-content {
+:host:enabled:active .w98w-content,
+:host(.w98w-wbutton-pressed) .w98w-content
+{
     top: 1px;
     left: 1px;
 }

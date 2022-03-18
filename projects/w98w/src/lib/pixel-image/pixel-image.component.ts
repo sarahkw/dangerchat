@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
@@ -9,7 +9,7 @@ import { PixelImageService } from '../pixel-image.service';
   templateUrl: './pixel-image.component.html',
   styleUrls: ['./pixel-image.component.css']
 })
-export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer {
+export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelImageDrawer {
 
   @Input() genImg!: GenImgDescriptor;
   @Input() cssWidth!: number;
@@ -21,6 +21,13 @@ export class PixelImageComponent implements OnInit, OnDestroy, PixelImageDrawer 
   style: { [klass: string]: any } = {};
 
   constructor(private pixelImageService: PixelImageService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['genImg'].isFirstChange()) {
+      this.pixelImageService.pidUnregister(this);
+      this.pixelImageService.pidRegister(this);
+    }
+  }
 
   // TODO: Cache these images
 
