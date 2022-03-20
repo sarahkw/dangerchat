@@ -14,6 +14,7 @@ import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
+import { ScreenTestComponent } from './screen-test/screen-test.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DemoHomeComponent } from './demo-home/demo-home.component';
     WButtonTestComponent,
     TitlebarTestComponent,
     DesktopTestComponent,
-    DemoHomeComponent
+    DemoHomeComponent,
+    ScreenTestComponent
   ],
   imports: [
     BrowserModule,
