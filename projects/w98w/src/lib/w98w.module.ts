@@ -7,7 +7,6 @@ import { PixelImageComponent } from './pixel-image/pixel-image.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { WButtonBodyDirective, WButtonComponent } from './wbutton/wbutton.component';
 import { ScreenComponent } from './screen/screen.component';
-import { WindowComponent } from './window/window.component';
 
 
 
@@ -19,8 +18,7 @@ import { WindowComponent } from './window/window.component';
     TitlebarComponent,
     WButtonComponent,
     WButtonBodyDirective,
-    ScreenComponent,
-    WindowComponent
+    ScreenComponent
   ],
   imports: [
     CommonModule
@@ -31,8 +29,7 @@ import { WindowComponent } from './window/window.component';
     TitlebarComponent,
     WButtonComponent,
     WButtonBodyDirective,
-    ScreenComponent,
-    WindowComponent
+    ScreenComponent
   ]
 })
 export class W98wModule { }
