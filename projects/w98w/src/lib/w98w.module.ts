@@ -7,6 +7,7 @@ import { PixelImageComponent } from './pixel-image/pixel-image.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { WButtonBodyDirective, WButtonComponent } from './wbutton/wbutton.component';
 import { ScreenComponent } from './screen/screen.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 
@@ -18,7 +19,8 @@ import { ScreenComponent } from './screen/screen.component';
     TitlebarComponent,
     WButtonComponent,
     WButtonBodyDirective,
-    ScreenComponent
+    ScreenComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule

@@ -15,6 +15,7 @@ import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
+import { MenuTestComponent } from './menu-test/menu-test.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
     TitlebarTestComponent,
     DesktopTestComponent,
     DemoHomeComponent,
-    ScreenTestComponent
+    ScreenTestComponent,
+    MenuTestComponent
   ],
   imports: [
     BrowserModule,
