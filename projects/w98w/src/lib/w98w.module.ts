@@ -31,7 +31,8 @@ import { MenuComponent } from './menu/menu.component';
     TitlebarComponent,
     WButtonComponent,
     WButtonBodyDirective,
-    ScreenComponent
+    ScreenComponent,
+    MenuComponent
   ]
 })
 export class W98wModule { }
