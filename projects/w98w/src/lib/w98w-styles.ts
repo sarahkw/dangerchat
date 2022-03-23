@@ -63,4 +63,6 @@ export abstract class W98wStyles {
     // be stretched in CSS to fit.
     static readonly taskBarBtnHeight = W98wStyles.titleBarHeight + 4;
 
+    // TODO i'm just guessing at these bc i'd rather not work on getting real values right now.
+    static readonly menuFontSize = W98wStyles.labelFontSize;
 };

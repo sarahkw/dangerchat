@@ -6,6 +6,7 @@ import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
+import { W98wStyles } from '../w98w-styles';
 
 @Component({
   selector: 'menu[w98w-menu]',
@@ -15,8 +16,14 @@ import { StyleInjector } from '../style-injector';
 export class MenuComponent implements OnInit, OnDestroy {
 
   @HostBinding('class') hbClass = 'w98w-menu';
-  @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
   @HostBinding('style.padding') hbP = `${Bevels.MENU.getPadding()}px`
+
+  @HostBinding('style.--menu-text-size') hbTS = W98wStyles.menuFontSize;
+  @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
+  @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
+  @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
+  @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
+  @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
 
   constructor(private imgService: PixelImageService) { }
 

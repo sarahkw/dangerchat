@@ -1,5 +1,19 @@
 :host {
-    display: inline-block;
+    display: inline-grid;
     position: relative;
     box-sizing: border-box;
+
+    font-size: var(--menu-text-size);
+    font-family: var(--menu-text-font);
+    color: var(--menu-text-color);
+    background-color: var(--menu-bg-color);
+}
+
+:host > li {
+    display: flex;
+}
+
+:host > li:hover {
+    color: var(--menu-sel-text-color);
+    background-color: var(--menu-sel-bg-color);
 }
