@@ -8,6 +8,7 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 import { WButtonBodyDirective, WButtonComponent } from './wbutton/wbutton.component';
 import { ScreenComponent } from './screen/screen.component';
 import { MenuComponent } from './menu/menu.component';
+import { MenuItemComponent } from './menu-item/menu-item.component';
 
 
 
@@ -20,7 +21,8 @@ import { MenuComponent } from './menu/menu.component';
     WButtonComponent,
     WButtonBodyDirective,
     ScreenComponent,
-    MenuComponent
+    MenuComponent,
+    MenuItemComponent
   ],
   imports: [
     CommonModule
@@ -32,7 +34,8 @@ import { MenuComponent } from './menu/menu.component';
     WButtonComponent,
     WButtonBodyDirective,
     ScreenComponent,
-    MenuComponent
+    MenuComponent,
+    MenuItemComponent
   ]
 })
 export class W98wModule { }

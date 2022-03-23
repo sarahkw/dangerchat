@@ -13,12 +13,3 @@
     /* remove user-agent margins */
     margin: 0;
 }
-
-:host > li {
-    display: flex;
-}
-
-:host > li:hover {
-    color: var(--menu-sel-text-color);
-    background-color: var(--menu-sel-bg-color);
-}

@@ -1,0 +1,8 @@
+:host {
+    display: flex;
+}
+
+:host:hover {
+    color: var(--menu-sel-text-color);
+    background-color: var(--menu-sel-bg-color);
+}
