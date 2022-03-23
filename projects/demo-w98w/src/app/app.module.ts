@@ -16,6 +16,7 @@ import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { MenuTestComponent } from './menu-test/menu-test.component';
+import { PopupTestComponent } from './popup-test/popup-test.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MenuTestComponent } from './menu-test/menu-test.component';
     DesktopTestComponent,
     DemoHomeComponent,
     ScreenTestComponent,
-    MenuTestComponent
+    MenuTestComponent,
+    PopupTestComponent
   ],
   imports: [
     BrowserModule,
