@@ -1,1 +1,9 @@
 <h2>Popup Test</h2>
+
+<button w98w-wbutton (click)="popupService.openPopup(msgbox)">show message</button>
+
+<ng-template #msgbox>
+    <w98w-msgbox>Hello world!</w98w-msgbox>
+</ng-template>
+
+<w98w-popup-host></w98w-popup-host>
