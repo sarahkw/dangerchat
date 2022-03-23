@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   @HostBinding('class') hbClass = 'w98w-menu';
   @HostBinding('style.padding') hbP = `${Bevels.MENU.getPadding()}px`
 
-  @HostBinding('style.--menu-text-size') hbTS = W98wStyles.menuFontSize;
+  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
   @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
   @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
