@@ -1,0 +1,3 @@
+<ng-container *ngFor="let menu of menuService.currentMenu$ | async">
+    <ng-container [ngTemplateOutlet]="menu"></ng-container>
+</ng-container>
