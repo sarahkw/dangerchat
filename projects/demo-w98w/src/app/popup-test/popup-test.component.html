@@ -1,10 +1,37 @@
 <h2>Popup Test</h2>
 
+<h3>Generic Popup</h3>
+
 <button w98w-wbutton (click)="popupService.openPopup(msgbox)">show message</button>
 
 <ng-template #msgbox>
     <w98w-msgbox>Hello world!</w98w-msgbox>
 </ng-template>
 
-<w98w-popup-host></w98w-popup-host>
-<w98w-menu-host></w98w-menu-host>
+<h3>Menu</h3>
+
+<div>
+    <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">show menu</button>
+</div>
+
+<ng-template w98w-menu-template #menuTemp="menuTemplate">
+    <menu w98w-menu>
+        <li w98w-menu-item="When the saints"></li>
+        <li w98w-menu-item="go marching in"></li>
+        <li w98w-menu-item="Programs">
+            <menu w98w-menu *w98w-menu-template>
+                <li w98w-menu-item="AOL Instant Messenger"></li>
+                <li w98w-menu-item="Accessories">
+                    <menu w98w-menu *w98w-menu-template>
+                        <li w98w-menu-item="Minesweeper"></li>
+                    </menu>
+                </li>
+            </menu>
+        </li>
+    </menu>
+</ng-template>
+
+<div>
+    <w98w-popup-host></w98w-popup-host>
+    <w98w-menu-host></w98w-menu-host>
+</div>

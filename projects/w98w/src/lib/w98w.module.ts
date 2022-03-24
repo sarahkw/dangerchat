@@ -14,6 +14,7 @@ import { MenuBarItemComponent } from './menu-bar-item/menu-bar-item.component';
 import { PopupHostComponent } from './popup/popup-host/popup-host.component';
 import { MsgboxComponent } from './msgbox/msgbox.component';
 import { MenuHostComponent } from './menu/menu-host/menu-host.component';
+import { MenuTemplateDirective } from './menu/menu-template.directive';
 
 
 
@@ -32,7 +33,8 @@ import { MenuHostComponent } from './menu/menu-host/menu-host.component';
     MenuBarItemComponent,
     PopupHostComponent,
     MsgboxComponent,
-    MenuHostComponent
+    MenuHostComponent,
+    MenuTemplateDirective
   ],
   imports: [
     CommonModule
@@ -50,7 +52,8 @@ import { MenuHostComponent } from './menu/menu-host/menu-host.component';
     MenuBarItemComponent,
     PopupHostComponent,
     MsgboxComponent,
-    MenuHostComponent
+    MenuHostComponent,
+    MenuTemplateDirective
   ]
 })
 export class W98wModule { }

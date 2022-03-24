@@ -10,7 +10,9 @@ import { PopupService } from 'projects/w98w/src/lib/popup/popup.service';
 })
 export class PopupTestComponent implements OnInit {
 
-  constructor(public popupService: PopupService) { }
+  constructor(
+    public popupService: PopupService,
+    public menuService: MenuService) { }
 
   ngOnInit(): void {
   }
