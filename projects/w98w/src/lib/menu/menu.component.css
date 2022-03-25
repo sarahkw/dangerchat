@@ -13,3 +13,7 @@
     /* remove user-agent margins */
     margin: 0;
 }
+
+:host(.menu-host-child):nth-child(n + 2) {
+    margin-left: -3px;
+}

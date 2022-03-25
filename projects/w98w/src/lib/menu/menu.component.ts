@@ -17,9 +17,15 @@ import { MenuContext } from './menu-context';
 })
 export class MenuComponent implements OnInit, OnDestroy {
 
-  @Input() menuContext!: MenuContext;
+  @Input() menuContext: MenuContext | undefined;
 
-  @HostBinding('class') hbClass = 'w98w-menu';
+  @HostBinding('class') get hbClass() {
+    let classes = ['w98w-menu'];
+    if (this.menuContext?.menuHostChildStyles()) {
+      classes.push('menu-host-child');
+    }
+    return classes.join(' ');
+  }
   @HostBinding('style.padding') hbP = `${Bevels.MENU.getPadding()}px`
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;

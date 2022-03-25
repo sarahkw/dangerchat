@@ -18,6 +18,9 @@ export class MenuHostComponent implements OnInit {
   makeContextFor(instance: MenuInstance): MenuContext {
     const thiz = this;
     return new class implements MenuContext {
+      menuHostChildStyles(): boolean {
+        return true;
+      }
       appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
         thiz.menuService.appendMenu(instance, template, onSubMenuClose);
       }
