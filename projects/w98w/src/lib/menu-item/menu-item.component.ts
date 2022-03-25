@@ -13,10 +13,12 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   @Input('w98w-menu-item') label!: string;
 
+  @Input() explicitSubMenu: MenuTemplateDirective | undefined;
+
   @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
 
-  @ContentChild(MenuTemplateDirective) subMenu: MenuTemplateDirective | undefined;
+  @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
   @HostBinding('class') get hbClass() {
     if (this.menu.openedChild === this) {
@@ -31,6 +33,10 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   constructor(private menu: MenuComponent) { }
 
   ngOnInit(): void {
+  }
+
+  get subMenu() {
+    return this.explicitSubMenu || this.implicitSubMenu;
   }
 
   // visually prepare to close sibling opened menu.
