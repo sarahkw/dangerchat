@@ -16,6 +16,7 @@ import { MsgboxComponent } from './msgbox/msgbox.component';
 import { MenuHostComponent } from './menu/menu-host/menu-host.component';
 import { MenuTemplateDirective } from './menu/menu-template.directive';
 import { SlidingScreenComponent } from './ss/sliding-screen/sliding-screen.component';
+import { SlidingScreenMainContentDirective } from './ss/sliding-screen-main-content.directive';
 
 
 
@@ -36,7 +37,8 @@ import { SlidingScreenComponent } from './ss/sliding-screen/sliding-screen.compo
     MsgboxComponent,
     MenuHostComponent,
     MenuTemplateDirective,
-    SlidingScreenComponent
+    SlidingScreenComponent,
+    SlidingScreenMainContentDirective
   ],
   imports: [
     CommonModule
@@ -56,7 +58,8 @@ import { SlidingScreenComponent } from './ss/sliding-screen/sliding-screen.compo
     MsgboxComponent,
     MenuHostComponent,
     MenuTemplateDirective,
-    SlidingScreenComponent
+    SlidingScreenComponent,
+    SlidingScreenMainContentDirective
   ]
 })
 export class W98wModule { }
