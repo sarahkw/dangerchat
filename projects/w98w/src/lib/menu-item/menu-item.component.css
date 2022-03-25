@@ -1,8 +1,19 @@
 :host {
     display: flex;
+
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    gap: 10px;
 }
 
 :host:hover {
     color: var(--menu-sel-text-color);
     background-color: var(--menu-sel-bg-color);
+}
+
+div.label {
+    flex: 1;
 }

@@ -30,4 +30,8 @@ export class MenuItemComponent implements OnInit {
     }
   }
 
+  get hasSubMenu() {
+    return this.subMenu !== undefined;
+  }
+
 }
