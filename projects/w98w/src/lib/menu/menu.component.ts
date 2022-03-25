@@ -2,6 +2,7 @@ import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core'
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
+import { MenuItemComponent } from '../menu-item/menu-item.component';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
@@ -25,6 +26,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
   @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
   @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
+
+  openedChild?: MenuItemComponent;
 
   constructor(private imgService: PixelImageService) { }
 

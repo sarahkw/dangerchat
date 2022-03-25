@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuContext } from '../menu-context';
 import { MenuTemplateDirective } from '../menu-template.directive';
-import { MenuInstance, MenuService } from '../menu.service';
+import { MenuInstance, MenuService, OnSubMenuClose } from '../menu.service';
 
 @Component({
   selector: 'w98w-menu-host',
@@ -18,8 +18,11 @@ export class MenuHostComponent implements OnInit {
   makeContextFor(instance: MenuInstance): MenuContext {
     const thiz = this;
     return new class implements MenuContext {
-      appendMenu(template: MenuTemplateDirective): void {
-        thiz.menuService.appendMenu(instance, template);
+      appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
+        thiz.menuService.appendMenu(instance, template, onSubMenuClose);
+      }
+      closeChildren(): void {
+        thiz.menuService.closeChildren(instance);
       }
       endMenu(): void {
         thiz.menuService.endMenu();
