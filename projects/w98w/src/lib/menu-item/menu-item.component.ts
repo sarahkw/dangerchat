@@ -1,7 +1,7 @@
 import { Component, ContentChild, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Colors } from '../colors';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
-import { MenuService } from '../menu/menu.service';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'li[w98w-menu-item]',
@@ -17,14 +17,16 @@ export class MenuItemComponent implements OnInit {
 
   @ContentChild(MenuTemplateDirective) subMenu: MenuTemplateDirective | undefined;
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menu: MenuComponent) { }
 
   ngOnInit(): void {
   }
 
   @HostListener('click') onClick() {
     if (this.subMenu) {
-      this.menuService.appendMenu(this.subMenu);
+      this.menu.menuContext.appendMenu(this.subMenu);
+    } else {
+      this.menu.menuContext.endMenu();
     }
   }
 

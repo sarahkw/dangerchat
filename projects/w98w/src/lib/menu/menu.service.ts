@@ -2,7 +2,10 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MenuTemplateDirective } from './menu-template.directive';
 
-type MaybeMenu = MenuTemplateDirective[] | undefined;
+export type MenuInstance = {
+  template: MenuTemplateDirective
+};
+type MaybeMenu = MenuInstance[] | undefined;
 
 @Injectable()
 export class MenuService {
@@ -12,16 +15,26 @@ export class MenuService {
   constructor() { }
 
   beginMenu(template: MenuTemplateDirective) {
-    this.currentMenu$.next([template]);
+    this.currentMenu$.next([{template}]);
   }
 
-  appendMenu(template: MenuTemplateDirective) {
+  appendMenu(afterInstance: MenuInstance, template: MenuTemplateDirective) {
     console.assert(this.currentMenu$.value !== undefined);
 
-    this.currentMenu$.next(this.currentMenu$.value!.concat([template]));
+    if (this.currentMenu$.value !== undefined) {
+      const idx = this.currentMenu$.value.indexOf(afterInstance);
+      let newval: MaybeMenu;
+      if (idx == -1) {
+        newval = this.currentMenu$.value.concat([{template}]);
+      } else {
+        const KEEP_CURRENT = 1;
+        newval = this.currentMenu$.value.slice(0, idx + KEEP_CURRENT).concat([{template}]);
+      }
+      this.currentMenu$.next(newval);
+    }
   }
 
   endMenu() {
-
+    this.currentMenu$.next(undefined);
   }
 }

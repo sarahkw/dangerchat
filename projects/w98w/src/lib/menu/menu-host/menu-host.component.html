@@ -1,7 +1,9 @@
-<ng-container *ngIf="menuService.currentMenu$ | async as menuItems">
+<ng-container *ngIf="menuService.currentMenu$ | async as menuInstances">
 
-    <ng-container *ngFor="let menu of menuItems">
-        <ng-container [ngTemplateOutlet]="menu.template"></ng-container>
+    <ng-container *ngFor="let menuInstance of menuInstances">
+        <ng-container
+            [ngTemplateOutlet]="menuInstance.template.template"
+            [ngTemplateOutletContext]="{$implicit: makeContextFor(menuInstance)}"></ng-container>
     </ng-container>
 
 </ng-container>

@@ -14,19 +14,37 @@
     <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">show menu</button>
 </div>
 
-<ng-template w98w-menu-template #menuTemp="menuTemplate">
-    <menu w98w-menu>
+<ng-template w98w-menu-template #menuTemp="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
         <li w98w-menu-item="When the saints"></li>
         <li w98w-menu-item="go marching in"></li>
         <li w98w-menu-item="Programs">
-            <menu w98w-menu *w98w-menu-template>
-                <li w98w-menu-item="AOL Instant Messenger"></li>
-                <li w98w-menu-item="Accessories">
-                    <menu w98w-menu *w98w-menu-template>
-                        <li w98w-menu-item="Minesweeper"></li>
-                    </menu>
-                </li>
-            </menu>
+            <ng-template w98w-menu-template let-context>
+                <menu w98w-menu [menuContext]="context">
+                    <li w98w-menu-item="AOL Instant Messenger"></li>
+                    <li w98w-menu-item="Accessories">
+                        <ng-template w98w-menu-template let-context>
+                            <menu w98w-menu [menuContext]="context">
+                                <li w98w-menu-item="Minesweeper"></li>
+                            </menu>
+                        </ng-template>
+                    </li>
+                </menu>
+            </ng-template>
+        </li>
+        <li w98w-menu-item="Programs Copy">
+            <ng-template w98w-menu-template let-context>
+                <menu w98w-menu [menuContext]="context">
+                    <li w98w-menu-item="XOL Instant Messenger"></li>
+                    <li w98w-menu-item="Xccessories">
+                        <ng-template w98w-menu-template let-context>
+                            <menu w98w-menu [menuContext]="context">
+                                <li w98w-menu-item="Xinesweeper"></li>
+                            </menu>
+                        </ng-template>
+                    </li>
+                </menu>
+            </ng-template>
         </li>
     </menu>
 </ng-template>

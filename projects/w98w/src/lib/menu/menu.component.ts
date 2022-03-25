@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -7,6 +7,7 @@ import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
+import { MenuContext } from './menu-context';
 
 @Component({
   selector: 'menu[w98w-menu]',
@@ -14,6 +15,8 @@ import { W98wStyles } from '../w98w-styles';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit, OnDestroy {
+
+  @Input() menuContext!: MenuContext;
 
   @HostBinding('class') hbClass = 'w98w-menu';
   @HostBinding('style.padding') hbP = `${Bevels.MENU.getPadding()}px`
