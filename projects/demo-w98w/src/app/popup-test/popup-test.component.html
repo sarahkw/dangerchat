@@ -19,32 +19,24 @@
         <li w98w-menu-item="When the saints"></li>
         <li w98w-menu-item="go marching in"></li>
         <li w98w-menu-item="Programs">
-            <ng-template w98w-menu-template let-context>
-                <menu w98w-menu [menuContext]="context">
-                    <li w98w-menu-item="AOL Instant Messenger"></li>
-                    <li w98w-menu-item="Accessories">
-                        <ng-template w98w-menu-template let-context>
-                            <menu w98w-menu [menuContext]="context">
-                                <li w98w-menu-item="Minesweeper"></li>
-                            </menu>
-                        </ng-template>
-                    </li>
-                </menu>
-            </ng-template>
+            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                <li w98w-menu-item="AOL Instant Messenger"></li>
+                <li w98w-menu-item="Accessories">
+                    <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                        <li w98w-menu-item="Minesweeper"></li>
+                    </menu>
+                </li>
+            </menu>
         </li>
         <li w98w-menu-item="Programs Copy">
-            <ng-template w98w-menu-template let-context>
-                <menu w98w-menu [menuContext]="context">
-                    <li w98w-menu-item="XOL Instant Messenger"></li>
-                    <li w98w-menu-item="Xccessories">
-                        <ng-template w98w-menu-template let-context>
-                            <menu w98w-menu [menuContext]="context">
-                                <li w98w-menu-item="Xinesweeper"></li>
-                            </menu>
-                        </ng-template>
-                    </li>
-                </menu>
-            </ng-template>
+            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                <li w98w-menu-item="XOL Instant Messenger"></li>
+                <li w98w-menu-item="Xccessories">
+                    <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                        <li w98w-menu-item="Xinesweeper"></li>
+                    </menu>
+                </li>
+            </menu>
         </li>
     </menu>
 </ng-template>
