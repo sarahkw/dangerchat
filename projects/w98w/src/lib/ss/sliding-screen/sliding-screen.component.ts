@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, HostBinding, OnInit } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output } from '@angular/core';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
 @Component({
@@ -6,17 +6,43 @@ import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directi
   templateUrl: './sliding-screen.component.html',
   styleUrls: ['./sliding-screen.component.css']
 })
-export class SlidingScreenComponent implements OnInit {
+export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentChecked {
+
+  @Output() needKillOverlay = new EventEmitter<any>();
 
   @ContentChild(SlidingScreenOverlayDirective) overlay: any;
 
-  @HostBinding('style.--ss-screen-width') get hbSSW() {
-    return `${this.rootDiv.nativeElement.clientWidth}px`
-  }
+  private resizeObserver?: ResizeObserver;
 
-  constructor(public rootDiv: ElementRef) { }
+  constructor(private appRef: ApplicationRef, public rootDiv: ElementRef) { }
+
+  ngAfterContentChecked(): void {
+    if (this.overlay && !this.resizeObserver) {
+      let skipFirst = true;  // will likely fire on first observe in our use case
+
+      this.resizeObserver = new ResizeObserver((entries, _observer) => {
+        if (skipFirst) {
+          skipFirst = false;
+          return;
+        }
+
+        this.needKillOverlay.emit(null);
+        this.appRef.tick();  // i guess resizeobserver doesn't trigger change detection
+      });
+      this.resizeObserver.observe(this.rootDiv.nativeElement);
+    } else if (!this.overlay && this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = undefined;
+    }
+  }
 
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = undefined;
+    }
+  }
 }

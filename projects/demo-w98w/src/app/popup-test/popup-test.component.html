@@ -10,7 +10,12 @@
 
 <h3>Menu</h3>
 
-<div w98w-sliding-screen style="width: 90%; height: 400px; max-height: 80%; border: 1px solid gray;">
+<div
+    w98w-sliding-screen
+    (needKillOverlay)="menuService.endMenu()"
+    style="width: 90%; height: 400px; max-height: 80%; border: 1px solid gray;"
+    >
+
     <ng-container w98w-sliding-screen-main-content>
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 

@@ -5,7 +5,7 @@
 
 div.ss-main-content {
     height: 100%;
-    width: var(--ss-screen-width);
+    width: 100%;
 }
 
 div.ss-inner {
