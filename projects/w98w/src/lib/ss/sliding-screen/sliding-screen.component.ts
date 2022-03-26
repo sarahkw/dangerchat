@@ -30,6 +30,8 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
 
         this.needKillOverlay.emit(null);
         this.appRef.tick();  // i guess resizeobserver doesn't trigger change detection
+
+        // XXX maybe considering disconnecting now?
       });
       this.resizeObserver.observe(this.rootDiv.nativeElement);
     } else if (!this.overlay && this.resizeObserver) {
