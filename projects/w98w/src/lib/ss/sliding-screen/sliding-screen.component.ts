@@ -8,6 +8,8 @@ import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directi
 })
 export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentChecked {
 
+  // we're not in the business of updating the main content element with our new size.
+  // that's CSS's job ideally. luckily we could just ask the overlay to close.
   @Output() needKillOverlay = new EventEmitter<any>();
 
   @ContentChild(SlidingScreenOverlayDirective) overlay: any;
