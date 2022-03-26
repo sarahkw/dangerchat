@@ -1,7 +1,5 @@
 <div class="ss-inner">
-    <div class="ss-main-content" [style.width.px]="overlay ? rootDiv.nativeElement.clientWidth : undefined">
-        <ng-content select="[w98w-sliding-screen-main-content]"></ng-content>
-    </div>
+    <ng-content select="[w98w-sliding-screen-main-content]"></ng-content>
 
     <div class="ss-overlay" *ngIf="overlay">
         <ng-content select="[w98w-sliding-screen-overlay]"></ng-content>

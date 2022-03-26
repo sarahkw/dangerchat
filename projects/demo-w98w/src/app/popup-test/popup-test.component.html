@@ -16,7 +16,7 @@
     style="width: 90%; height: 400px; max-height: 80%; border: 1px solid gray;"
     >
 
-    <ng-container w98w-sliding-screen-main-content>
+    <div w98w-sliding-screen-main-content>
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div>
@@ -51,7 +51,7 @@
                 </li>
             </menu>
         </ng-template>
-    </ng-container>
+    </div>
 
     <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.currentMenu$ | async"></w98w-menu-host>
 </div>
