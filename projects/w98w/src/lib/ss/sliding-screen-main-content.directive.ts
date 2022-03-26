@@ -11,7 +11,7 @@ export class SlidingScreenMainContentDirective {
   @HostBinding('style.height') hbSH = "100%";
   @HostBinding('style.width') get hbSW() {
     if (this.ss.overlay) {
-      return `${this.ss.rootDiv.nativeElement.clientWidth}px`;
+      return `${this.ss.rootDiv.nativeElement.getBoundingClientRect().width}px`;
     } else {
       return "100%";
     }
