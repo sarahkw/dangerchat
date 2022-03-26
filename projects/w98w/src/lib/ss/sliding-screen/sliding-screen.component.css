@@ -8,11 +8,13 @@ div.ss-inner {
     min-width: 100%;
     position: absolute;
     right: 0;
+
+    display: grid;
 }
 
 div.ss-overlay {
-    position: relative;
-    top: -100%;
+    grid-row: 1;
+    grid-column: 1;
 
     pointer-events: none;
 }
