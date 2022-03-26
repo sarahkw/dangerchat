@@ -305,4 +305,22 @@ export abstract class GenImg {
             return GenImg._tbar_x_draw(drawCssWidth, drawCssHeight, pibf, true);
         }
     }
+
+    static readonly TBAR_ARROW_RIGHT: GenImgDescriptor = {
+        draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
+            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+
+            const builder = pibf.basic(artPixelWidth, artPixelHeight);
+
+            const drawnWidth = Math.ceil(artPixelHeight / 2);
+            const x_align = Math.ceil((drawCssWidth - drawnWidth) / 2);
+
+            for (let xpos = 0; xpos < drawnWidth; xpos++) {
+                builder.drawRectXY('black', x_align + xpos, xpos, x_align + xpos + 1, artPixelHeight - xpos);
+            }
+
+            debug_overdraw(artPixelWidth, artPixelHeight, builder);
+            return builder.build();
+        }
+    };
 }

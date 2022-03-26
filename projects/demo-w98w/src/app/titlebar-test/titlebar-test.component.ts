@@ -29,4 +29,11 @@ export class TitlebarTestComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  prevOdd(num: number) {
+    if (num % 2 == 0) {
+      return num - 1;
+    } else {
+      return num;
+    }
+  }
 }
