@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuService } from '../../menu/menu.service';
+import { Component, ContentChild, ElementRef, HostBinding, OnInit } from '@angular/core';
+import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
 @Component({
   selector: 'div[w98w-sliding-screen]',
@@ -8,7 +8,13 @@ import { MenuService } from '../../menu/menu.service';
 })
 export class SlidingScreenComponent implements OnInit {
 
-  constructor() { }
+  @ContentChild(SlidingScreenOverlayDirective) overlay: any;
+
+  @HostBinding('style.--ss-screen-width') get hbSSW() {
+    return `${this.rootDiv.nativeElement.clientWidth}px`
+  }
+
+  constructor(public rootDiv: ElementRef) { }
 
   ngOnInit(): void {
   }

@@ -10,6 +10,9 @@
 
     user-select: none;
 
+    /* we'll be drawn over a div that's overlayed on top, which would disable pointer events. */
+    pointer-events: auto;
+
     /* remove user-agent margins */
     margin: 0;
 }

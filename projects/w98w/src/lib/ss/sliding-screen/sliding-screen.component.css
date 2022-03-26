@@ -3,9 +3,21 @@
     overflow: hidden;
 }
 
+div.ss-main-content {
+    height: 100%;
+    width: var(--ss-screen-width);
+}
+
 div.ss-inner {
     height: 100%;
     min-width: 100%;
     position: absolute;
     right: 0;
+}
+
+div.ss-overlay {
+    position: relative;
+    top: -100%;
+
+    pointer-events: none;
 }
