@@ -2,6 +2,8 @@ export type Color = string & { __brand: "w98w-color" };
 
 export abstract class Colors {
 
+    static readonly DESKTOP = "#008080" as Color;
+
     static readonly WIDGET_TEXT = "black" as Color;
     static readonly WIDGET_TEXT_DISABLED = "#808080" as Color;
     static readonly WIDGET_BG = "#c0c0c0" as Color;

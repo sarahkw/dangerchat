@@ -14,6 +14,7 @@ export class PopupTestComponent implements OnInit {
 
   readonly titleBarColor = Colors.TITLEBAR_ACTIVE;
   readonly titleBarHeight = W98wStyles.titleBarHeight;
+  readonly desktopColor = Colors.DESKTOP;
 
   constructor(
     public popupService: PopupService,

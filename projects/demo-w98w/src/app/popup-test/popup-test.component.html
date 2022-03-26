@@ -13,10 +13,10 @@
 <div
     w98w-sliding-screen
     (needKillOverlay)="menuService.endMenu()"
-    style="width: 90%; height: 400px; max-height: 80%; border: 1px solid gray;"
+    style="width: 90%; height: 400px; max-height: 80%; background-color: lightgray;"
     >
 
-    <div w98w-sliding-screen-main-content>
+    <div w98w-sliding-screen-main-content [style.backgroundColor]="desktopColor">
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div>
