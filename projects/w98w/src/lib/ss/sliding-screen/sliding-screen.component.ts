@@ -7,6 +7,17 @@ enum State {
   Visible
 };
 
+/* TODO:
+
+  If unfixedHeight, we should probably measure ss-inner, and set our height based on that.
+  That way the overlay can expand our height if it chooses to.
+
+  Basically, when entering overlay mode, fix the width of ss-content, so that it doesn't
+  expand width-wise along with ss-inner.
+
+  But, keep on feeding ss-inner height changes to our component.
+*/
+
 @Component({
   selector: 'div[w98w-sliding-screen]',
   templateUrl: './sliding-screen.component.html',
