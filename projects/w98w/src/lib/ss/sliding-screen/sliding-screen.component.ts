@@ -1,4 +1,4 @@
-import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
 enum State {
