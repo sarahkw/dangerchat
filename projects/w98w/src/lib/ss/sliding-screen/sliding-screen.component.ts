@@ -1,4 +1,4 @@
-import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
 enum State {
@@ -6,17 +6,6 @@ enum State {
   Measuring,
   Visible
 };
-
-/* TODO:
-
-  If unfixedHeight, we should probably measure ss-inner, and set our height based on that.
-  That way the overlay can expand our height if it chooses to.
-
-  Basically, when entering overlay mode, fix the width of ss-content, so that it doesn't
-  expand width-wise along with ss-inner.
-
-  But, keep on feeding ss-inner height changes to our component.
-*/
 
 @Component({
   selector: 'div[w98w-sliding-screen]',
@@ -30,6 +19,8 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   @Input() unfixedHeight = false;
 
   @ContentChild(SlidingScreenOverlayDirective) private overlay: any;
+
+  @ViewChild('innerDiv') private innerDiv!: ElementRef;
 
   constructor(private appRef: ApplicationRef, public rootDiv: ElementRef, private renderer: Renderer2) { }
 
@@ -70,8 +61,27 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   private stateEnter(newState: State) {
     switch (newState) {
       case State.Hidden:
+        if (this.resizeObserver) {
+          this.resizeObserver.disconnect();
+          this.resizeObserver = undefined;
+        }
         break;
       case State.Measuring:
+        break;
+      case State.Visible:
+        this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
+        this.renderer.addClass(this.rootDiv.nativeElement, "overlay");
+        if (this.unfixedHeight) {
+          this.renderer.addClass(this.rootDiv.nativeElement, "unfixed");
+        }
+        this.shouldShowOverlay = true;
+        break;
+    }
+  }
+
+  private stateExit(oldState: State) {
+    switch (oldState) {
+      case State.Hidden:
         console.assert(this.resizeObserver === undefined);
         this.resizeObserver = new ResizeObserver((entries, _observer) => {
           this.actionResizeObservation(entries);
@@ -81,31 +91,16 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
           // just don't want a weird state where we want to leave the measuring state
           // before we even got settled, if the browser ends up calling the callback synchronously.
 
-          this.resizeObserver?.observe(this.rootDiv.nativeElement);
+          this.resizeObserver?.observe(this.innerDiv.nativeElement);
         }, 0);
         break;
-      case State.Visible:
-        this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
-        this.renderer.addClass(this.rootDiv.nativeElement, "overlay");
-        this.shouldShowOverlay = true;
-        break;
-    }
-  }
-
-  private stateExit(oldState: State) {
-    switch (oldState) {
-      case State.Hidden:
-        break;
       case State.Measuring:
-        if (this.resizeObserver) {
-          this.resizeObserver.disconnect();
-          this.resizeObserver = undefined;
-        }
         break;
       case State.Visible:
         this.shouldShowOverlay = false;
         if (this.unfixedHeight) {
           this.renderer.removeStyle(this.rootDiv.nativeElement, 'height');
+          this.renderer.removeClass(this.rootDiv.nativeElement, 'unfixed');
         }
         this.renderer.removeClass(this.rootDiv.nativeElement, "overlay");
         this.mainContentFixedWidth = undefined;
@@ -142,19 +137,18 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   private actionResizeObservation(entries: ResizeObserverEntry[]) {
+    let contentRect: any = entries[0].contentRect;
+    if (Array.isArray(contentRect)) {
+      // support firefox ESR
+      contentRect = contentRect[0];
+    }
+
     switch (this.currentState) {
       case State.Hidden:
         // no-op: probably a stray due to race condition, safe to ignore
         break;
       case State.Measuring:
         if (this.unfixedHeight) {
-
-          let contentRect: any = entries[0].contentRect;
-          if (Array.isArray(contentRect)) {
-            // support firefox ESR
-            contentRect = contentRect[0];
-          }
-
           this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${contentRect.height}px`);
         }
 
@@ -163,6 +157,9 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
         this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
         break;
       case State.Visible:
+        if (this.unfixedHeight) {
+          this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${contentRect.height}px`);
+        }
         break;
     }
   }

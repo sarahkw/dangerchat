@@ -15,6 +15,10 @@ div.ss-inner {
     right: 0;
 }
 
+:host(.overlay.unfixed) div.ss-inner {
+    height: auto;
+}
+
 div.ss-overlay {
     grid-row: 1;
     grid-column: 1;
