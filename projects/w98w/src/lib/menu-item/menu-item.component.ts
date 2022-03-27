@@ -1,8 +1,10 @@
 import { Component, ContentChild, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Colors } from '../colors';
+import { GenImg } from '../genimg';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { MenuComponent } from '../menu/menu.component';
 import { OnSubMenuClose } from '../menu/menu.service';
+import { W98wStyles } from '../w98w-styles';
 
 @Component({
   selector: 'li[w98w-menu-item]',
@@ -29,6 +31,17 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
       return 'cannot-hover'
     }
   }
+
+  arrowSize = (function (){
+    const desiredSize = W98wStyles.menuFontSize - 4;
+    if (desiredSize % 2 == 0) {
+      return desiredSize + 1;
+    } else {
+      return desiredSize;
+    }
+  })();
+
+  arrowImg = GenImg.ARROW_RIGHT;
 
   constructor(private menu: MenuComponent) { }
 

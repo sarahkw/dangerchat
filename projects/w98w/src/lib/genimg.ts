@@ -306,7 +306,7 @@ export abstract class GenImg {
         }
     }
 
-    static readonly TBAR_ARROW_RIGHT: GenImgDescriptor = {
+    static readonly ARROW_RIGHT: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
             let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 

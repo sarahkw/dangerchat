@@ -1,2 +1,5 @@
 <div class="label">{{ label }}</div>
-<div class="submenu">{{ hasSubMenu ? '&gt;' : '' }}</div>
+<div class="submenu" [style.width.px]="arrowSize" [style.height.px]="arrowSize">
+    <w98w-pixel-image *ngIf="subMenu"
+     [genImg]="arrowImg" [cssWidth]="arrowSize" [cssHeight]="arrowSize"></w98w-pixel-image>
+</div>

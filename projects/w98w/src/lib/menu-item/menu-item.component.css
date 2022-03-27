@@ -19,3 +19,7 @@ div.label {
 
     white-space: nowrap;
 }
+
+div.submenu {
+    align-self: center;
+}
