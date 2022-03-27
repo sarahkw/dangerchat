@@ -1,5 +1,11 @@
-import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
+
+enum State {
+  Hidden,
+  Measuring,
+  Visible
+};
 
 @Component({
   selector: 'div[w98w-sliding-screen]',
@@ -8,35 +14,19 @@ import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directi
 })
 export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentChecked {
 
-  // we're not in the business of updating the main content element with our new size.
-  // that's CSS's job ideally. luckily we could just ask the overlay to close.
-  @Output() needKillOverlay = new EventEmitter<any>();
+  // If unfixedHeight, we will have to freeze the height to our measured value when entering overlay mode.
+  // Warning: if unfixedHeight is true, then we will take control of the style height, clobbering it.
+  @Input() unfixedHeight = false;
 
-  @ContentChild(SlidingScreenOverlayDirective) overlay: any;
+  @ContentChild(SlidingScreenOverlayDirective) private overlay: any;
 
-  private resizeObserver?: ResizeObserver;
-
-  constructor(private appRef: ApplicationRef, public rootDiv: ElementRef) { }
+  constructor(private appRef: ApplicationRef, public rootDiv: ElementRef, private renderer: Renderer2) { }
 
   ngAfterContentChecked(): void {
-    if (this.overlay && !this.resizeObserver) {
-      let skipFirst = true;  // will likely fire on first observe in our use case
-
-      this.resizeObserver = new ResizeObserver((entries, _observer) => {
-        if (skipFirst) {
-          skipFirst = false;
-          return;
-        }
-
-        this.needKillOverlay.emit(null);
-        this.appRef.tick();  // i guess resizeobserver doesn't trigger change detection
-
-        // XXX maybe considering disconnecting now?
-      });
-      this.resizeObserver.observe(this.rootDiv.nativeElement);
-    } else if (!this.overlay && this.resizeObserver) {
-      this.resizeObserver.disconnect();
-      this.resizeObserver = undefined;
+    if (this.overlay) {
+      this.actionOverlayIsSet();
+    } else {
+      this.actionOverlayIsUnset();
     }
   }
 
@@ -44,9 +34,142 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   ngOnDestroy(): void {
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-      this.resizeObserver = undefined;
+    this.actionDestroy();
+  }
+
+  //#region State Machine
+
+  shouldShowOverlay = false;  // for the template
+
+  private currentState = State.Hidden;
+  private resizeObserver?: ResizeObserver;
+  mainContentFixedWidth?: string;
+
+  private stateChange(newState: State) {
+    if (newState == this.currentState) {
+      console.warn('tried to reenter same state');  // probably a bug? but won't assert since that's not catastrophic
+      return;
+    }
+
+    this.stateExit(this.currentState);
+    this.currentState = newState;
+    this.stateEnter(newState);
+  }
+
+  private stateEnter(newState: State) {
+    switch (newState) {
+      case State.Hidden:
+        break;
+      case State.Measuring:
+        console.assert(this.resizeObserver === undefined);
+        this.resizeObserver = new ResizeObserver((entries, _observer) => {
+          this.actionResizeObservation(entries);
+        });
+        setTimeout(() => {
+          // i don't know if running later is necessary, but it's here just so we're safe I guess.
+          // just don't want a weird state where we want to leave the measuring state
+          // before we even got settled, if the browser ends up calling the callback synchronously.
+
+          this.resizeObserver?.observe(this.rootDiv.nativeElement);
+        }, 0);
+        break;
+      case State.Visible:
+        this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
+        this.renderer.addClass(this.rootDiv.nativeElement, "overlay");
+        this.shouldShowOverlay = true;
+        break;
     }
   }
+
+  private stateExit(oldState: State) {
+    switch (oldState) {
+      case State.Hidden:
+        break;
+      case State.Measuring:
+        if (this.resizeObserver) {
+          this.resizeObserver.disconnect();
+          this.resizeObserver = undefined;
+        }
+        break;
+      case State.Visible:
+        this.shouldShowOverlay = false;
+        if (this.unfixedHeight) {
+          this.renderer.removeStyle(this.rootDiv.nativeElement, 'height');
+        }
+        this.renderer.removeClass(this.rootDiv.nativeElement, "overlay");
+        this.mainContentFixedWidth = undefined;
+        break;
+    }
+  }
+
+  private actionOverlayIsSet() {
+    switch (this.currentState) {
+      case State.Hidden:
+        this.stateChange(State.Measuring);
+        break;
+      case State.Measuring:
+        // no-op: already on the process of showing
+        break;
+      case State.Visible:
+        // no-op: already showing
+        break;
+    }
+  }
+
+  private actionOverlayIsUnset() {
+    switch (this.currentState) {
+      case State.Hidden:
+        // no-op: already hidden
+        break;
+      case State.Measuring:
+        this.stateChange(State.Hidden);  // go back to Hidden so we don't enter Visible when the measure comes back
+        break;
+      case State.Visible:
+        this.stateChange(State.Hidden);
+        break;
+    }
+  }
+
+  private actionResizeObservation(entries: ResizeObserverEntry[]) {
+    switch (this.currentState) {
+      case State.Hidden:
+        // no-op: probably a stray due to race condition, safe to ignore
+        break;
+      case State.Measuring:
+        if (this.unfixedHeight) {
+
+          let contentRect: any = entries[0].contentRect;
+          if (Array.isArray(contentRect)) {
+            // support firefox ESR
+            contentRect = contentRect[0];
+          }
+
+          this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${contentRect.height}px`);
+        }
+
+        this.stateChange(State.Visible);
+
+        this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
+        break;
+      case State.Visible:
+        break;
+    }
+  }
+
+  private actionDestroy() {
+    switch (this.currentState) {
+      case State.Hidden:
+      case State.Measuring:
+      case State.Visible:
+
+        // not going to bother with any cleanup besides ensuring the resize observer is disconnected
+        if (this.resizeObserver) {
+          this.resizeObserver.disconnect();
+          this.resizeObserver = undefined;
+        }
+        break;
+    }
+  }
+
+  //#endregion
 }

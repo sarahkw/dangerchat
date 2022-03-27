@@ -10,10 +10,17 @@
 
 <h3>Menu</h3>
 
+<!--
 <div
     w98w-sliding-screen
-    (needKillOverlay)="menuService.endMenu()"
     style="width: 90%; height: 400px; max-height: 80%; background-color: lightgray;"
+    >
+-->
+
+<div
+    w98w-sliding-screen
+    [unfixedHeight]="true"
+    style="width: 90%; background-color: lightgray;"
     >
 
     <div w98w-sliding-screen-main-content [style.backgroundColor]="desktopColor">
@@ -22,6 +29,16 @@
         <div>
             <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">show menu</button>
         </div>
+
+        <p>Bork</p>
+
+        <p>Bork</p>
+
+        <p>Bork</p>
+
+        <p>Bork</p>
+
+        <p>Bork</p>
 
         <ng-template w98w-menu-template #menuTemp="menuTemplate" let-context>
             <menu w98w-menu [menuContext]="context">
