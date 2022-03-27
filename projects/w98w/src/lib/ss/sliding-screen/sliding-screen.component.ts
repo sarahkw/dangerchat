@@ -7,6 +7,8 @@ enum State {
   Visible
 };
 
+type InitialObservationMap = Map<Element, ResizeObserverEntry>;
+
 @Component({
   selector: 'div[w98w-sliding-screen]',
   templateUrl: './sliding-screen.component.html',
@@ -69,7 +71,6 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
       case State.Measuring:
         break;
       case State.Visible:
-        this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
         this.renderer.addClass(this.rootDiv.nativeElement, "overlay");
         if (this.unfixedHeight) {
           this.renderer.addClass(this.rootDiv.nativeElement, "unfixed");
@@ -83,15 +84,33 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
     switch (oldState) {
       case State.Hidden:
         console.assert(this.resizeObserver === undefined);
+
+        const toObserve = [this.innerDiv.nativeElement, this.rootDiv.nativeElement];
+        let observeMap: InitialObservationMap | undefined = new Map();
+
         this.resizeObserver = new ResizeObserver((entries, _observer) => {
-          this.actionResizeObservation(entries);
+
+          for (const entry of entries) {
+            if (observeMap === undefined) {
+              this.actionResizeContinuedObservation(entry);
+            } else {
+              observeMap.set(entry.target, entry);
+              if (observeMap.size == toObserve.length) {
+                this.actionResizeInitialObservation(observeMap);
+                observeMap = undefined;
+              }
+            }
+          }
+
         });
         setTimeout(() => {
           // i don't know if running later is necessary, but it's here just so we're safe I guess.
           // just don't want a weird state where we want to leave the measuring state
           // before we even got settled, if the browser ends up calling the callback synchronously.
 
-          this.resizeObserver?.observe(this.innerDiv.nativeElement);
+          for (const target of toObserve) {
+            this.resizeObserver?.observe(target);
+          }
         }, 0);
         break;
       case State.Measuring:
@@ -136,30 +155,56 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
     }
   }
 
-  private actionResizeObservation(entries: ResizeObserverEntry[]) {
-    let contentRect: any = entries[0].contentRect;
-    if (Array.isArray(contentRect)) {
-      // support firefox ESR
-      contentRect = contentRect[0];
+  private resolveContentRect(entry: ResizeObserverEntry): DOMRectReadOnly {
+    // support firefox ESR, which doesn't give array
+    if (Array.isArray(entry.contentRect)) {
+      return entry.contentRect[0];
+    } else {
+      return entry.contentRect;
     }
+  }
 
+  private actionResizeInitialObservation(initObservation: InitialObservationMap) {
     switch (this.currentState) {
       case State.Hidden:
-        // no-op: probably a stray due to race condition, safe to ignore
         break;
       case State.Measuring:
         if (this.unfixedHeight) {
-          this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${contentRect.height}px`);
+          const crRootDiv = this.resolveContentRect(initObservation.get(this.rootDiv.nativeElement)!);
+          this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${crRootDiv.height}px`);
         }
+
+        // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
+        this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
 
         this.stateChange(State.Visible);
 
         this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
         break;
       case State.Visible:
-        if (this.unfixedHeight) {
-          this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${contentRect.height}px`);
+        break;
+    }
+  }
+
+  private actionResizeContinuedObservation(entry: ResizeObserverEntry) {
+    switch (this.currentState) {
+      case State.Hidden:
+        break;
+      case State.Measuring:
+        break;
+      case State.Visible:
+        const cr = this.resolveContentRect(entry);
+        if (entry.target === this.innerDiv.nativeElement) {
+          if (this.unfixedHeight) {
+            this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${cr.height}px`);
+          }
+        } else if (entry.target === this.rootDiv.nativeElement) {
+          // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
+          this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
+
+          this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
         }
+
         break;
     }
   }
