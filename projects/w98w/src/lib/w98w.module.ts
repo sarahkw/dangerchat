@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { W98wComponent } from './w98w.component';
 import { Bevel8SplitComponent } from './bevel-8split/bevel-8split.component';
-import { PixelImageComponent } from './pixel-image/pixel-image.component';
+import { PixelImageComponent, PixelImageCssVarDirective } from './pixel-image/pixel-image.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { WButtonBodyDirective, WButtonComponent } from './wbutton/wbutton.component';
 import { ScreenComponent } from './screen/screen.component';
@@ -40,7 +40,8 @@ import { SlidingScreenOverlayDirective } from './ss/sliding-screen-overlay.direc
     MenuTemplateDirective,
     SlidingScreenComponent,
     SlidingScreenMainContentDirective,
-    SlidingScreenOverlayDirective
+    SlidingScreenOverlayDirective,
+    PixelImageCssVarDirective
   ],
   imports: [
     CommonModule

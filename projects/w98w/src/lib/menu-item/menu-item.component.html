@@ -1,5 +1,18 @@
 <div class="label">{{ label }}</div>
 <div class="submenu" [style.width.px]="arrowSize" [style.height.px]="arrowSize">
-    <w98w-pixel-image *ngIf="subMenu"
-     [genImg]="arrowImg" [cssWidth]="arrowSize" [cssHeight]="arrowSize"></w98w-pixel-image>
+    <div class="submenu-draw" *ngIf="subMenu" [w98w-pixel-image-css-var]="[
+            {
+                genImg: arrowImg,
+                varPrefix: 'normal',
+                cssWidth: arrowSize,
+                cssHeight: arrowSize
+            },
+            {
+                genImg: arrowImgSelected,
+                varPrefix: 'selected',
+                cssWidth: arrowSize,
+                cssHeight: arrowSize
+            }
+            ]">
+    </div>
 </div>

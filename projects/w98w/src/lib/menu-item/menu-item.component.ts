@@ -41,7 +41,8 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
     }
   })();
 
-  arrowImg = GenImg.ARROW_RIGHT;
+  arrowImg = GenImg.ARROW_RIGHT(Colors.MENU_TEXT);
+  arrowImgSelected = GenImg.ARROW_RIGHT(Colors.MENU_SELECTED_TEXT);
 
   constructor(private menu: MenuComponent) { }
 
