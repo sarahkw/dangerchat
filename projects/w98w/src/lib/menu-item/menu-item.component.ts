@@ -32,7 +32,7 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
     }
   }
 
-  arrowSize = (function (){
+  arrowSize = (function () {
     const desiredSize = W98wStyles.menuFontSize - 4;
     if (desiredSize % 2 == 0) {
       return desiredSize + 1;
