@@ -18,11 +18,15 @@
                 and apply its size to the inside. maybe a concession is that if you want a wrapping border, put sliding screen in a div
                 where we actually draw the border. -->
 
-    <div w98w-sliding-screen-main-content [style.backgroundColor]="desktopColor">
+    <div w98w-sliding-screen-main-content [style.backgroundColor]="desktopColor" style="position: relative;">
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div style="margin-left: 20px; margin-top: 10px;">
-            <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">show menu</button>
+            <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">down menu</button>
+        </div>
+
+        <div style="position: absolute; left: 20px; bottom: 20px;">
+            <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">up menu</button>
         </div>
 
         <ng-template w98w-menu-template #menuTemp="menuTemplate" let-context>
