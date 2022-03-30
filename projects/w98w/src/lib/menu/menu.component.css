@@ -32,7 +32,7 @@
         ;
 }
 
-:host-context(.w98w-menu) {
+:host-context(.w98w-menu) :host /* exclude root */ {
     grid-row-start: item-start var(--menu-parent-grid-index);
     grid-row-end: child-end;
     grid-column: child;
