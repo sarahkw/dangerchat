@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Colors } from 'projects/w98w/src/lib/colors';
 import { MenuService } from 'projects/w98w/src/lib/menu/menu.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { MenuService } from 'projects/w98w/src/lib/menu/menu.service';
 })
 export class MenuTestComponent implements OnInit {
 
-  constructor() { }
+  readonly desktopColor = Colors.DESKTOP;
+
+  constructor(public menuService: MenuService) { }
 
   ngOnInit(): void {
   }
