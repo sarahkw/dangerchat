@@ -35,12 +35,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   // These are the new ones for the grid "cartridge"
   @HostBinding('style.--menu-border-padding') hbMBP = `${Bevels.MENU.getPadding()}px`;
   @HostBinding('style.--menu-n') get hbMN() {
-    return this.children.length;
+    return this.childItems.length;
   }
 
   openedChild?: MenuItemComponent;
 
-  @ContentChildren(MenuItemComponent) children!: QueryList<MenuItemComponent>;
+  @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
 
   constructor(private imgService: PixelImageService) { }
 
@@ -53,14 +53,14 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   // TODO maybe cache this so that it's not linear searching each time
-  getGridIndex(instance: MenuItemComponent) {
-    for (let i = 0; i < this.children.length; ++i) {
-      if (this.children.get(i) === instance) {
+  getChildGridIndex(instance: MenuItemComponent) {
+    for (let i = 0; i < this.childItems.length; ++i) {
+      if (this.childItems.get(i) === instance) {
         return i + 1;
       }
     }
 
-    console.error('getGridIndex cannot find instance');
+    console.error('getChildGridIndex cannot find instance');
     return 0;
   }
 
