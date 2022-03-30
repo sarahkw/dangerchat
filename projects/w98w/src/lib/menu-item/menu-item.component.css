@@ -9,6 +9,17 @@
     gap: 10px;
 }
 
+:host-context(.w98w-menu) {
+    /* FU CSS ... can't (grid-row: item N;) */
+    grid-row-start: item-start var(--menu-item-index);
+    grid-row-end: item-end var(--menu-item-index);
+
+    grid-column: item;
+
+    /* grid seems to want to draw the bevel above us */
+    z-index: 1;
+}
+
 :host(.can-hover):hover, :host(.sub-opened), :host(.cannot-hover):active {
     color: var(--menu-sel-text-color);
     background-color: var(--menu-sel-bg-color);

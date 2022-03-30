@@ -13,9 +13,35 @@
     /* we'll be drawn over a div that's overlayed on top, which would disable pointer events. */
     pointer-events: auto;
 
-    /* remove user-agent margins */
+    /* remove user-agent styles */
     margin: 0;
+    padding: 0;
+
+    grid-template-rows:
+        [pad-t-start] var(--menu-border-padding) [pad-t-end]
+        repeat(var(--menu-n), [item-start] auto [item-end])
+        [pad-b-start] var(--menu-border-padding) [pad-b-end]
+        ;
+
+
+    grid-template-columns:
+        [pad-l-start] var(--menu-border-padding) [pad-l-end item-start]
+        auto
+        [item-end pad-r-start] var(--menu-border-padding) [pad-r-end]
+        ;
+
 }
+
+.bevel {
+    grid-row-start: pad-t-start;
+    grid-row-end: pad-b-end;
+    grid-column-start: pad-l-start;
+    grid-column-end: pad-r-end;
+
+    /* Bevel8SplitComponent to fill up this container */
+    position: relative;
+}
+
 
 :host(.menu-host-child):nth-child(n + 2) {
     margin-left: -3px;

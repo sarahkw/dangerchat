@@ -20,6 +20,10 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
 
+  @HostBinding('style.--menu-item-index') get hbMII() {
+    return this.menu.getGridIndex(this);
+  }
+
   @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
   @HostBinding('class') get hbClass() {

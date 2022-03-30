@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ContentChildren, HostBinding, Input, OnDestroy, OnInit, QueryList } from '@angular/core';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -26,14 +26,21 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
     return classes.join(' ');
   }
-  @HostBinding('style.padding') hbP = `${Bevels.MENU.getPadding()}px`
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
   @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
   @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
 
+  // These are the new ones for the grid "cartridge"
+  @HostBinding('style.--menu-border-padding') hbMBP = `${Bevels.MENU.getPadding()}px`;
+  @HostBinding('style.--menu-n') get hbMN() {
+    return this.children.length;
+  }
+
   openedChild?: MenuItemComponent;
+
+  @ContentChildren(MenuItemComponent) children!: QueryList<MenuItemComponent>;
 
   constructor(private imgService: PixelImageService) { }
 
@@ -43,6 +50,18 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.imgService.pidUnregister(MenuComponent.PID);
+  }
+
+  // TODO maybe cache this so that it's not linear searching each time
+  getGridIndex(instance: MenuItemComponent) {
+    for (let i = 0; i < this.children.length; ++i) {
+      if (this.children.get(i) === instance) {
+        return i + 1;
+      }
+    }
+
+    console.error('getGridIndex cannot find instance');
+    return 0;
   }
 
   static readonly PID = new class implements PixelImageDrawer {
