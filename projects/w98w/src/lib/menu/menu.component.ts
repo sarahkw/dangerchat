@@ -9,6 +9,8 @@ import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
+import { MenuTemplateDirective } from './menu-template.directive';
+import { MenuService, OnSubMenuClose } from './menu.service';
 
 @Component({
   selector: 'menu[w98w-menu]',
@@ -16,6 +18,10 @@ import { MenuContext } from './menu-context';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit, OnDestroy {
+
+  @HostBinding('style.--menu-parent-grid-index') get hbMPGI() {
+    return this.menuContext?.inlineSubMenuParentGridItemIndex();
+  }
 
   @Input() menuContext: MenuContext | undefined;
 
@@ -63,6 +69,39 @@ export class MenuComponent implements OnInit, OnDestroy {
     console.error('getChildGridIndex cannot find instance');
     return 0;
   }
+
+  //#region Inline Sub Menu
+
+  inlineSubMenu: MenuTemplateDirective | undefined;
+  inlineSubMenuContext: MenuContext | undefined;
+
+  inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
+    const idx = this.getChildGridIndex(instance);
+    this.inlineSubMenu = template;
+    this.inlineSubMenuContext = new class implements MenuContext {
+      menuHostChildStyles(): boolean {
+        return false;
+      }
+      inlineSubMenuParentGridItemIndex(): number | undefined {
+        return idx;
+      }
+      appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
+        // TODO
+      }
+      closeChildren(): void {
+        // TODO
+      }
+      endMenu(): void {
+        // TODO
+      }
+    };
+  }
+
+  inlineSubMenuClose() {
+    this.inlineSubMenu = undefined;
+  }
+
+  //#endregion
 
   static readonly PID = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();

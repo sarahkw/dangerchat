@@ -21,6 +21,9 @@ export class MenuHostComponent implements OnInit {
       menuHostChildStyles(): boolean {
         return true;
       }
+      inlineSubMenuParentGridItemIndex(): number | undefined {
+        return undefined;
+      }
       appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
         thiz.menuService.appendMenu(instance, template, onSubMenuClose);
       }

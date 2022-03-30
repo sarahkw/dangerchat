@@ -6,7 +6,6 @@
     font-size: var(--menu-text-size);
     font-family: var(--menu-text-font);
     color: var(--menu-text-color);
-    background-color: var(--menu-bg-color);
 
     user-select: none;
 
@@ -21,22 +20,28 @@
     padding: 0;
 
     grid-template-rows:
-        [bevel-start] var(--menu-border-padding)
+        [child-start bevel-start] var(--menu-border-padding)
         repeat(var(--menu-n), [item-start] auto [item-end])
-        var(--menu-border-padding) [bevel-end]
+        var(--menu-border-padding) [bevel-end overflow-start] 1fr [overflow-end child-end]
         ;
-
 
     grid-template-columns:
         [bevel-start] var(--menu-border-padding) [item-start]
         auto
-        [item-end] var(--menu-border-padding) [bevel-end]
+        [item-end] var(--menu-border-padding) [bevel-end child-start] auto [child-end]
         ;
+}
 
+:host-context(.w98w-menu) {
+    grid-row-start: item-start var(--menu-parent-grid-index);
+    grid-row-end: child-end;
+    grid-column: child;
 }
 
 .bevel {
     grid-area: bevel;
+
+    background-color: var(--menu-bg-color);
 
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
