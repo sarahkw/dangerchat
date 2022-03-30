@@ -21,25 +21,22 @@
     padding: 0;
 
     grid-template-rows:
-        [pad-t-start] var(--menu-border-padding) [pad-t-end]
+        [bevel-start] var(--menu-border-padding)
         repeat(var(--menu-n), [item-start] auto [item-end])
-        [pad-b-start] var(--menu-border-padding) [pad-b-end]
+        var(--menu-border-padding) [bevel-end]
         ;
 
 
     grid-template-columns:
-        [pad-l-start] var(--menu-border-padding) [pad-l-end item-start]
+        [bevel-start] var(--menu-border-padding) [item-start]
         auto
-        [item-end pad-r-start] var(--menu-border-padding) [pad-r-end]
+        [item-end] var(--menu-border-padding) [bevel-end]
         ;
 
 }
 
 .bevel {
-    grid-row-start: pad-t-start;
-    grid-row-end: pad-b-end;
-    grid-column-start: pad-l-start;
-    grid-column-end: pad-r-end;
+    grid-area: bevel;
 
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
