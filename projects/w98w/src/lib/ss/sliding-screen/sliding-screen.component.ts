@@ -48,6 +48,7 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   private currentState = State.Hidden;
   private resizeObserver?: ResizeObserver;
   mainContentFixedWidth?: string;
+  mainContentFixedHeight?: string;  // if the overlay does stretch the height (which it probably shouldn't anyway), we don't want the main content affected
 
   private stateChange(newState: State) {
     if (newState == this.currentState) {
@@ -123,6 +124,7 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
         }
         this.renderer.removeClass(this.rootDiv.nativeElement, "overlay");
         this.mainContentFixedWidth = undefined;
+        this.mainContentFixedHeight = undefined;
         break;
     }
   }
@@ -175,7 +177,11 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
         }
 
         // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
-        this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
+        const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
+        this.mainContentFixedWidth = `${bcr.width}px`;
+        if (!this.unfixedHeight) {
+          this.mainContentFixedHeight = `${bcr.height}px`;
+        }
 
         this.stateChange(State.Visible);
 
@@ -200,7 +206,12 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
           }
         } else if (entry.target === this.rootDiv.nativeElement) {
           // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
-          this.mainContentFixedWidth = `${this.rootDiv.nativeElement.getBoundingClientRect().width}px`;
+          const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
+          this.mainContentFixedWidth = `${bcr.width}px`;
+          if (!this.unfixedHeight) {
+            // this actually shouldn't change, we probably don't really need this here but it is here for consistency
+            this.mainContentFixedHeight = `${bcr.height}px`;
+          }
 
           this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
         }
