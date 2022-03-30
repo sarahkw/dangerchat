@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { ElementRef, Injectable, TemplateRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MenuTemplateDirective } from './menu-template.directive';
 
@@ -6,9 +6,15 @@ export interface OnSubMenuClose {
   onSubMenuClose(): void;
 }
 
+export type AnchorDescriptor = [
+  HTMLElement, // the anchor
+  HTMLElement  // relative to parent?
+];
+
 export type MenuInstance = {
   template: MenuTemplateDirective,
-  onSubMenuClose?: OnSubMenuClose
+  onSubMenuClose?: OnSubMenuClose,
+  anchor?: AnchorDescriptor
 };
 type MaybeMenu = MenuInstance[] | undefined;
 
@@ -19,8 +25,8 @@ export class MenuService {
 
   constructor() { }
 
-  beginMenu(template: MenuTemplateDirective) {
-    this.currentMenu$.next([{template}]);
+  beginMenu(template: MenuTemplateDirective, anchor: AnchorDescriptor) {
+    this.currentMenu$.next([{template, anchor}]);
   }
 
   appendMenu(afterInstance: MenuInstance, template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {

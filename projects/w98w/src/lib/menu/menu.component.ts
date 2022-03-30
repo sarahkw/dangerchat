@@ -10,7 +10,7 @@ import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
 import { MenuTemplateDirective } from './menu-template.directive';
-import { MenuService, OnSubMenuClose } from './menu.service';
+import { AnchorDescriptor, MenuService, OnSubMenuClose } from './menu.service';
 
 @Component({
   selector: 'menu[w98w-menu]',
@@ -30,6 +30,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (this.menuContext?.menuHostChildStyles()) {
       classes.push('menu-host-child');
     }
+    if (this.menuContext?.anchor()) {
+      classes.push('menu-ip');
+    }
     return classes.join(' ');
   }
 
@@ -42,6 +45,21 @@ export class MenuComponent implements OnInit, OnDestroy {
   @HostBinding('style.--menu-border-padding') hbMBP = `${Bevels.MENU.getPadding()}px`;
   @HostBinding('style.--menu-n') get hbMN() {
     return this.childItems.length;
+  }
+
+  @HostBinding('style.--menu-ip-offset-h') get hbMIOH() {
+    if (this.menuContext?.anchor()) {
+      const [anchor, parent] = this.menuContext.anchor()!;
+      return `${anchor.getBoundingClientRect().x - parent.getBoundingClientRect().x}px`;
+    }
+    return undefined;
+  }
+  @HostBinding('style.--menu-ip-offset-v') get hbMIOV() {
+    if (this.menuContext?.anchor()) {
+      const [anchor, parent] = this.menuContext.anchor()!;
+      return `${anchor.getBoundingClientRect().bottom - parent.getBoundingClientRect().y}px`;
+    }
+    return undefined;
   }
 
   openedChild?: MenuItemComponent;
@@ -84,6 +102,10 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
       inlineSubMenuParentGridItemIndex(): number | undefined {
         return idx;
+      }
+      anchor(): AnchorDescriptor | undefined {
+        // submenus have no anchors, it's for the initial menu only
+        return undefined;
       }
       appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
         // TODO

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuContext } from '../menu-context';
 import { MenuTemplateDirective } from '../menu-template.directive';
-import { MenuInstance, MenuService, OnSubMenuClose } from '../menu.service';
+import { AnchorDescriptor, MenuInstance, MenuService, OnSubMenuClose } from '../menu.service';
 
 @Component({
   selector: 'w98w-menu-host',
@@ -23,6 +23,9 @@ export class MenuHostComponent implements OnInit {
       }
       inlineSubMenuParentGridItemIndex(): number | undefined {
         return undefined;
+      }
+      anchor(): AnchorDescriptor | undefined {
+        return instance.anchor;
       }
       appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
         thiz.menuService.appendMenu(instance, template, onSubMenuClose);

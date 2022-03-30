@@ -18,6 +18,7 @@ import { MenuTemplateDirective } from './menu/menu-template.directive';
 import { SlidingScreenComponent } from './ss/sliding-screen/sliding-screen.component';
 import { SlidingScreenMainContentDirective } from './ss/sliding-screen-main-content.directive';
 import { SlidingScreenOverlayDirective } from './ss/sliding-screen-overlay.directive';
+import { MenuAnchorDirective } from './menu/menu-anchor.directive';
 
 
 
@@ -41,7 +42,8 @@ import { SlidingScreenOverlayDirective } from './ss/sliding-screen-overlay.direc
     SlidingScreenComponent,
     SlidingScreenMainContentDirective,
     SlidingScreenOverlayDirective,
-    PixelImageCssVarDirective
+    PixelImageCssVarDirective,
+    MenuAnchorDirective
   ],
   imports: [
     CommonModule
@@ -63,7 +65,8 @@ import { SlidingScreenOverlayDirective } from './ss/sliding-screen-overlay.direc
     MenuTemplateDirective,
     SlidingScreenComponent,
     SlidingScreenMainContentDirective,
-    SlidingScreenOverlayDirective
+    SlidingScreenOverlayDirective,
+    MenuAnchorDirective
   ]
 })
 export class W98wModule { }

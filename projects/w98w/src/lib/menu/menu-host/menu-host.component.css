@@ -1,6 +1,4 @@
 :host {
     display: flex;
     align-items: flex-start;
-
-    padding-top: 100px; /* this is for dev only, bc we don't have v-position yet */
 }

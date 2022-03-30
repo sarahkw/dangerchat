@@ -32,6 +32,12 @@
         ;
 }
 
+:host.menu-ip {
+    margin-left: var(--menu-ip-offset-h);
+    margin-top: var(--menu-ip-offset-v);
+    height: calc(100% - var(--menu-ip-offset-v));
+}
+
 :host-context(.w98w-menu) :host /* exclude root */ {
     grid-row-start: item-start var(--menu-parent-grid-index);
     grid-row-end: child-end;

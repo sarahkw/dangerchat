@@ -27,11 +27,19 @@
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div style="margin-left: 20px; margin-top: 10px;">
-            <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">down menu</button>
+            <button
+                w98w-wbutton
+                w98w-menu-anchor #ankBtnDown="menuAnchor"
+                (click)="menuService.beginMenu(menuTemp, [ankBtnDown.element.nativeElement, elemBtnRoot])"
+                >down menu</button>
         </div>
 
         <div style="position: absolute; left: 20px; bottom: 20px;">
-            <button w98w-wbutton (click)="menuService.beginMenu(menuTemp)">up menu</button>
+            <button
+                w98w-wbutton
+                w98w-menu-anchor #ankBtnUp="menuAnchor"
+                (click)="menuService.beginMenu(menuTemp, [ankBtnUp.element.nativeElement, elemBtnRoot])"
+            >up menu</button>
         </div>
 
         <ng-template w98w-menu-template #menuTemp="menuTemplate" let-context>
