@@ -10,6 +10,7 @@
     user-select: none;
 
     /* i need this to create a stacking context, otherwise the labels of the submenus will be on top of us */
+    /* note: this was for when submenus were siblings instead of children. but this might still be needed we'll see */
     z-index: 0;
 
     /* we'll be drawn over a div that's overlayed on top, which would disable pointer events. */
