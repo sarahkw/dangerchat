@@ -6,7 +6,7 @@
     style="background-color: lightgray; width: 100%;"
     >
 
-    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="desktopColor" #elemContentRoot>
+    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="desktopColor">
 
         <h3 style="margin-top: 0;">Import from other test</h3>
 
@@ -14,7 +14,7 @@
             <button
                 w98w-wbutton
                 w98w-menu-anchor #ankBtnDown="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown.element.nativeElement, elemContentRoot, false])"
+                (click)="menuService.beginMenu(library.menuTemp, ankBtnDown.element.nativeElement)"
                 >down menu</button>
         </div>
 
@@ -126,12 +126,12 @@
             <button
                 w98w-wbutton
                 w98w-menu-anchor #ankBtnDown2="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown2.element.nativeElement, elemContentRoot, false])"
+                (click)="menuService.beginMenu(library.menuTemp, ankBtnDown2.element.nativeElement)"
                 >down menu</button>
         </div>
+
+        <app-test-menu-lib #library></app-test-menu-lib>
     </div>
 
     <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.currentMenu$ | async" style="height: 100%;"></w98w-menu-host>
 </div>
-
-<app-test-menu-lib #library></app-test-menu-lib>

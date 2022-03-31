@@ -23,14 +23,14 @@
                     later on, so let's just avoid that. just lighten the bg color instead hah.
             -->
 
-    <div w98w-sliding-screen-main-content style="position: relative; background-color: #0e8585;" #elemContentRoot>
+    <div w98w-sliding-screen-main-content style="position: relative; background-color: #0e8585;">
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div style="margin-left: 20px; margin-top: 10px;">
             <button
                 w98w-wbutton
                 w98w-menu-anchor #ankBtnDown="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown.element.nativeElement, elemContentRoot, false])"
+                (click)="menuService.beginMenu(library.menuTemp, ankBtnDown.element.nativeElement)"
                 >down menu</button>
         </div>
 
@@ -38,9 +38,11 @@
             <button
                 w98w-wbutton
                 w98w-menu-anchor #ankBtnUp="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, [ankBtnUp.element.nativeElement, elemContentRoot, true])"
+                (click)="menuService.beginMenu(library.menuTemp, ankBtnUp.element.nativeElement)"
             >up menu</button>
         </div>
+
+        <app-test-menu-lib #library></app-test-menu-lib>
     </div>
 
     <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.currentMenu$ | async" style="height: 100%;"></w98w-menu-host>
@@ -49,5 +51,3 @@
 <div>
     <w98w-popup-host></w98w-popup-host>
 </div>
-
-<app-test-menu-lib #library></app-test-menu-lib>

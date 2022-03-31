@@ -6,16 +6,10 @@ export interface OnSubMenuClose {
   onSubMenuClose(): void;
 }
 
-export type AnchorDescriptor = [
-  HTMLElement, // the anchor
-  HTMLElement, // relative to parent?
-  boolean // go up instead?
-];
-
 export type MenuInstance = {
   template: MenuTemplateDirective,
   onSubMenuClose?: OnSubMenuClose,
-  anchor?: AnchorDescriptor
+  anchor?: HTMLElement
 };
 type MaybeMenu = MenuInstance[] | undefined;
 
@@ -26,7 +20,7 @@ export class MenuService {
 
   constructor() { }
 
-  beginMenu(template: MenuTemplateDirective, anchor: AnchorDescriptor) {
+  beginMenu(template: MenuTemplateDirective, anchor: HTMLElement) {
     this.currentMenu$.next([{template, anchor}]);
   }
 

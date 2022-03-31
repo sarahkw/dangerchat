@@ -6,11 +6,12 @@ import { MenuItemComponent } from '../menu-item/menu-item.component';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
+import { SlidingScreenMainContentDirective } from '../ss/sliding-screen-main-content.directive';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
 import { MenuTemplateDirective } from './menu-template.directive';
-import { AnchorDescriptor, MenuService, OnSubMenuClose } from './menu.service';
+import { MenuService, OnSubMenuClose } from './menu.service';
 
 @Component({
   selector: 'menu[w98w-menu]',
@@ -25,16 +26,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @Input() menuContext: MenuContext | undefined;
 
-  private goingUp() {
-    if (!this.menuContext) return false;
-    let descr = this.menuContext.anchor();
-    if (descr) {
-      const [_anchor, _parent, goUp] = descr;
-      return goUp;
-    }
-    return false;
-  }
-
   @HostBinding('class') get hbClass() {
     let classes = ['w98w-menu'];
     if (this.menuContext?.menuHostChildStyles()) {
@@ -43,12 +34,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     if (this.menuContext?.anchor()) {
       classes.push('menu-ip');
-    }
-
-    if (this.goingUp()) {
-      classes.push('menu-up');
-    } else {
-      classes.push('menu-down');
     }
 
     return classes.join(' ');
@@ -66,16 +51,16 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   @HostBinding('style.--menu-ip-offset-h') get hbMIOH() {
-    if (this.menuContext?.anchor()) {
-      const [anchor, parent] = this.menuContext.anchor()!;
-      return `${anchor.getBoundingClientRect().x - parent.getBoundingClientRect().x}px`;
+    const anchor = this.menuContext?.anchor();
+    if (anchor) {
+      return `${anchor.getBoundingClientRect().x - this.screen.element.nativeElement.getBoundingClientRect().x}px`;
     }
     return undefined;
   }
   @HostBinding('style.--menu-ip-offset-v') get hbMIOV() {
-    if (this.menuContext?.anchor()) {
-      const [anchor, parent] = this.menuContext.anchor()!;
-      return `${anchor.getBoundingClientRect().bottom - parent.getBoundingClientRect().y}px`;
+    const anchor = this.menuContext?.anchor();
+    if (anchor) {
+      return `${anchor.getBoundingClientRect().bottom - this.screen.element.nativeElement.getBoundingClientRect().y}px`;
     }
     return undefined;
   }
@@ -84,7 +69,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
 
-  constructor(private imgService: PixelImageService) { }
+  constructor(private imgService: PixelImageService, private screen: SlidingScreenMainContentDirective) { }
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuComponent.PID);
@@ -123,7 +108,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       inlineSubMenuParentGridItemIndex(): number | undefined {
         return idx;   // TODO remove me
       }
-      anchor(): AnchorDescriptor | undefined {
+      anchor(): HTMLElement | undefined {
         // submenus have no anchors, it's for the initial menu only
         return undefined;
       }
