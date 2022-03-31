@@ -53,14 +53,14 @@ export class MenuComponent implements OnInit, OnDestroy {
   @HostBinding('style.--menu-ip-offset-h') get hbMIOH() {
     const anchor = this.menuContext?.anchor();
     if (anchor) {
-      return `${anchor.getBoundingClientRect().x - this.screen.element.nativeElement.getBoundingClientRect().x}px`;
+      return `${anchor.getBoundingClientRect().x - this.screenRoot.element.nativeElement.getBoundingClientRect().x}px`;
     }
     return undefined;
   }
   @HostBinding('style.--menu-ip-offset-v') get hbMIOV() {
     const anchor = this.menuContext?.anchor();
     if (anchor) {
-      return `${anchor.getBoundingClientRect().bottom - this.screen.element.nativeElement.getBoundingClientRect().y}px`;
+      return `${anchor.getBoundingClientRect().bottom - this.screenRoot.element.nativeElement.getBoundingClientRect().y}px`;
     }
     return undefined;
   }
@@ -69,7 +69,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
 
-  constructor(private imgService: PixelImageService, private screen: SlidingScreenMainContentDirective) { }
+  constructor(private imgService: PixelImageService, private screenRoot: SlidingScreenMainContentDirective) { }
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuComponent.PID);
