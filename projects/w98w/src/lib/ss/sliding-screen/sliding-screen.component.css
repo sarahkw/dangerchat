@@ -28,3 +28,16 @@ div.ss-overlay {
     /* allow menu to fill the height */
     height: 100%;
 }
+
+div.ss-controls {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background-color: #c0c0c0;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 1px;
+}
