@@ -7,6 +7,9 @@
     padding-bottom: 5px;
 
     gap: 10px;
+
+    /* we'll be drawn over a div that's overlayed on top, which would disable pointer events. */
+    pointer-events: auto;
 }
 
 :host-context(.w98w-menu) {

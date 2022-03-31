@@ -12,9 +12,6 @@
     /* note: this was for when submenus were siblings instead of children. but this might still be needed we'll see */
     z-index: 0;
 
-    /* we'll be drawn over a div that's overlayed on top, which would disable pointer events. */
-    pointer-events: auto;
-
     /* remove user-agent styles */
     margin: 0;
     padding: 0;
