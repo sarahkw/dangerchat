@@ -1,0 +1,28 @@
+<ng-template w98w-menu-template #menuTemp="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
+        <li w98w-menu-item="When the saints"></li>
+        <li w98w-menu-item="go marching in"></li>
+        <li w98w-menu-item="Programs">
+            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                <li w98w-menu-item="AOL Instant Messenger"></li>
+                <li w98w-menu-item="Accessories">
+                    <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                        <li w98w-menu-item="Minesweeper"></li>
+                        <li w98w-menu-item="Again?" [explicitSubMenu]="menuTemp"></li>
+                    </menu>
+                </li>
+            </menu>
+        </li>
+        <li w98w-menu-item="Programs Copy">
+            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                <li w98w-menu-item="XOL Instant Messenger"></li>
+                <li w98w-menu-item="Xccessories">
+                    <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+                        <li w98w-menu-item="Xinesweeper"></li>
+                        <li w98w-menu-item="Xgain?" [explicitSubMenu]="menuTemp"></li>
+                    </menu>
+                </li>
+            </menu>
+        </li>
+    </menu>
+</ng-template>
