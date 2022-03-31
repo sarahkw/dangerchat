@@ -23,14 +23,14 @@
                     later on, so let's just avoid that. just lighten the bg color instead hah.
             -->
 
-    <div w98w-sliding-screen-main-content style="position: relative; background-color: #0e8585;" #elemBtnRoot>
+    <div w98w-sliding-screen-main-content style="position: relative; background-color: #0e8585;" #elemContentRoot>
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div style="margin-left: 20px; margin-top: 10px;">
             <button
                 w98w-wbutton
                 w98w-menu-anchor #ankBtnDown="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown.element.nativeElement, elemBtnRoot, false])"
+                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown.element.nativeElement, elemContentRoot, false])"
                 >down menu</button>
         </div>
 
@@ -38,7 +38,7 @@
             <button
                 w98w-wbutton
                 w98w-menu-anchor #ankBtnUp="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, [ankBtnUp.element.nativeElement, elemBtnRoot, true])"
+                (click)="menuService.beginMenu(library.menuTemp, [ankBtnUp.element.nativeElement, elemContentRoot, true])"
             >up menu</button>
         </div>
     </div>

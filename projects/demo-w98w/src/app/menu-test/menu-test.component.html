@@ -6,9 +6,19 @@
     style="background-color: lightgray; width: 100%;"
     >
 
-    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="desktopColor">
+    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="desktopColor" #elemContentRoot>
 
-        <h3 style="margin-top: 0;">Initial</h3>
+        <h3 style="margin-top: 0;">Import from other test</h3>
+
+        <div>
+            <button
+                w98w-wbutton
+                w98w-menu-anchor #ankBtnDown="menuAnchor"
+                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown.element.nativeElement, elemContentRoot, false])"
+                >down menu</button>
+        </div>
+
+        <h3>Initial</h3>
 
         <p>Green div to show removing user-agent margins</p>
 
@@ -109,7 +119,19 @@
                 <li w98w-menu-item="Left"></li>
             </menu>
         </div>
+
+        <h3>Import from other test</h3>
+
+        <div>
+            <button
+                w98w-wbutton
+                w98w-menu-anchor #ankBtnDown2="menuAnchor"
+                (click)="menuService.beginMenu(library.menuTemp, [ankBtnDown2.element.nativeElement, elemContentRoot, false])"
+                >down menu</button>
+        </div>
     </div>
 
     <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.currentMenu$ | async"></w98w-menu-host>
 </div>
+
+<app-test-menu-lib #library></app-test-menu-lib>
