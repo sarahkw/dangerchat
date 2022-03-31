@@ -25,23 +25,23 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @Input() menuContext: MenuContext | undefined;
 
+  private goingUp() {
+    if (!this.menuContext) return false;
+    const [_anchor, _parent, goUp] = this.menuContext.anchor()!;
+    return goUp;
+  }
+
   @HostBinding('class') get hbClass() {
     let classes = ['w98w-menu'];
     if (this.menuContext?.menuHostChildStyles()) {
       classes.push('menu-host-child');
     }
 
-    let classGoUp = false;
-
     if (this.menuContext?.anchor()) {
       classes.push('menu-ip');
-      const [_anchor, _parent, goUp] = this.menuContext.anchor()!;
-      if (goUp) {
-        classGoUp = true;
-      }
     }
 
-    if (classGoUp) {
+    if (this.goingUp()) {
       classes.push('menu-up');
     } else {
       classes.push('menu-down');
