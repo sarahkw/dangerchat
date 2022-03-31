@@ -15,6 +15,10 @@ export class SlidingScreenMainContentDirective {
     return this.ss.mainContentFixedHeight || "100%";
   }
 
+  get viewport() {
+    return this.ss.rootDiv.nativeElement;
+  }
+
   constructor(private ss: SlidingScreenComponent, public element: ElementRef<HTMLElement>, renderer: Renderer2) {
 
     // screen should have its own stacking context because we don't want anything on the screen to draw

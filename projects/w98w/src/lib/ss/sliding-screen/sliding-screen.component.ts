@@ -24,7 +24,7 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
 
   @ViewChild('innerDiv') private innerDiv!: ElementRef;
 
-  constructor(private appRef: ApplicationRef, private rootDiv: ElementRef, private renderer: Renderer2) { }
+  constructor(private appRef: ApplicationRef, public rootDiv: ElementRef, private renderer: Renderer2) { }
 
   ngAfterContentChecked(): void {
     if (this.overlay) {

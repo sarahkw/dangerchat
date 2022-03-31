@@ -57,9 +57,16 @@
     position: relative;
 }
 
+:host.dmo-waiting {
+    visibility: hidden;
+}
 
 :host(.menu-host-child):nth-child(n + 2) {
     margin-left: -3px;
+}
+
+:host.dmo-child-wants-detach {
+    background-color: red;
 }
 
 .hug {
