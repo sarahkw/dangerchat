@@ -5,3 +5,7 @@
         <ng-content select="[w98w-sliding-screen-overlay]"></ng-content>
     </div>
 </div>
+
+<div *ngIf="shouldShowOverlay"
+    style="position: absolute; right: -3px; top: 50px; bottom: 50px; width: 33px; background-color: black; opacity: .8; border-radius: 3px;">
+</div>
