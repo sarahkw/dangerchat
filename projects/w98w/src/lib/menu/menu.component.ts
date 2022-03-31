@@ -26,17 +26,12 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @Input() menuContext: MenuContext | undefined;
 
-  @HostBinding('class') get hbClass() {
-    let classes = ['w98w-menu'];
-    if (this.menuContext?.menuHostChildStyles()) {
-      classes.push('menu-host-child');
-    }
-
-    if (this.menuContext?.anchor()) {
-      classes.push('menu-ip');
-    }
-
-    return classes.join(' ');
+  @HostBinding('class.w98w-menu') readonly hbcMenu = true;
+  @HostBinding('class.menu-host-child') get hbcMHC() {
+    return this.menuContext?.menuHostChildStyles();
+  }
+  @HostBinding('class.menu-ip') get hbcMI() {
+    return this.menuContext?.anchor();
   }
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
