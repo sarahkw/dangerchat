@@ -1,10 +1,11 @@
 import { MenuTemplateDirective } from "./menu-template.directive";
+import { MenuComponent } from "./menu.component";
 import { OnSubMenuClose } from "./menu.service";
 
 export interface MenuContext {
 
     menuHostChildStyles(): boolean;
-    inlineSubMenuParentGridItemIndex(): number | undefined;
+    parent(): MenuComponent | undefined;
     anchor(): HTMLElement | undefined;
 
     appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void;

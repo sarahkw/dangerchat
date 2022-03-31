@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuContext } from '../menu-context';
 import { MenuTemplateDirective } from '../menu-template.directive';
+import { MenuComponent } from '../menu.component';
 import { MenuInstance, MenuService, OnSubMenuClose } from '../menu.service';
 
 @Component({
@@ -21,8 +22,8 @@ export class MenuHostComponent implements OnInit {
       menuHostChildStyles(): boolean {
         return true;
       }
-      inlineSubMenuParentGridItemIndex(): number | undefined {
-        return undefined;
+      parent(): MenuComponent | undefined {
+        return undefined;  // no parent for root menu
       }
       anchor(): HTMLElement | undefined {
         return instance.anchor;

@@ -98,15 +98,15 @@ export class MenuComponent implements OnInit, OnDestroy {
   inlineSubMenuContext: MenuContext | undefined;
 
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
-    const idx = this.getChildGridIndex(instance);
+    const thiz = this;
     this.inlineSubMenu = template;
-    this.inlineSubMenuChildIndex = idx;
+    this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
     this.inlineSubMenuContext = new class implements MenuContext {
       menuHostChildStyles(): boolean {
         return false;
       }
-      inlineSubMenuParentGridItemIndex(): number | undefined {
-        return idx;   // TODO remove me
+      parent(): MenuComponent | undefined {
+        return thiz;
       }
       anchor(): HTMLElement | undefined {
         // submenus have no anchors, it's for the initial menu only
