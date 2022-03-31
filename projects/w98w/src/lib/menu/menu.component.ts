@@ -7,6 +7,7 @@ import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
 import { SlidingScreenMainContentDirective } from '../ss/sliding-screen-main-content.directive';
+import { SlidingScreenComponent } from '../ss/sliding-screen/sliding-screen.component';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
@@ -66,7 +67,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
 
-  constructor(private imgService: PixelImageService, private screenRoot: SlidingScreenMainContentDirective) { }
+  constructor(private imgService: PixelImageService, private ss: SlidingScreenComponent, private screenRoot: SlidingScreenMainContentDirective) { }
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuComponent.PID);
@@ -134,7 +135,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
       }, {
-        root: this.screenRoot.viewport,
+        root: this.ss.overlayDiv.nativeElement,
         threshold: [0, 1]
       });
 
@@ -187,6 +188,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   inlineSubMenuClose() {
+    this.dmoReset();
     this.inlineSubMenu = undefined;
   }
 
