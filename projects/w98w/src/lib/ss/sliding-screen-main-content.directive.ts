@@ -1,4 +1,4 @@
-import { Directive, HostBinding } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Renderer2 } from '@angular/core';
 import { SlidingScreenComponent } from './sliding-screen/sliding-screen.component';
 
 @Directive({
@@ -15,6 +15,12 @@ export class SlidingScreenMainContentDirective {
     return this.ss.mainContentFixedHeight || "100%";
   }
 
-  constructor(private ss: SlidingScreenComponent) { }
+  constructor(private ss: SlidingScreenComponent, public element: ElementRef<HTMLElement>, renderer: Renderer2) {
 
+    // screen should have its own stacking context because we don't want anything on the screen to draw
+    // above any overlays
+    renderer.setStyle(element.nativeElement, 'position', 'relative');
+    renderer.setStyle(element.nativeElement, 'zIndex', 0);
+
+  }
 }
