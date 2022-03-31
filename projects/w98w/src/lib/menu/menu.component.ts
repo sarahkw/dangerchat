@@ -27,8 +27,12 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   private goingUp() {
     if (!this.menuContext) return false;
-    const [_anchor, _parent, goUp] = this.menuContext.anchor()!;
-    return goUp;
+    let descr = this.menuContext.anchor();
+    if (descr) {
+      const [_anchor, _parent, goUp] = descr;
+      return goUp;
+    }
+    return false;
   }
 
   @HostBinding('class') get hbClass() {
