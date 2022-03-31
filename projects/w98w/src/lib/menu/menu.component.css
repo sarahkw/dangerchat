@@ -36,7 +36,7 @@
     height: calc(100% - var(--menu-ip-offset-v));
 
     /* keep some room for controls */
-    margin-right: 34px;
+    margin-right: 36px;
 }
 
 :host-context(.w98w-menu) :host /* exclude root */ {
