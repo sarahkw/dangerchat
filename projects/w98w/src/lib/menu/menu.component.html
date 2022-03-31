@@ -4,6 +4,8 @@
 
 <ng-content select="[w98w-menu-item]"></ng-content>
 
-<ng-container *ngIf="inlineSubMenu"
-    [ngTemplateOutlet]="inlineSubMenu.template"
-    [ngTemplateOutletContext]="{$implicit: inlineSubMenuContext}"></ng-container>
+<div *ngIf="inlineSubMenu" class="hug">
+    <ng-container
+        [ngTemplateOutlet]="inlineSubMenu.template"
+        [ngTemplateOutletContext]="{$implicit: inlineSubMenuContext}"></ng-container>
+</div>

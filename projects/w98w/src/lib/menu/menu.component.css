@@ -37,9 +37,9 @@
 }
 
 :host-context(.w98w-menu) :host /* exclude root */ {
-    grid-row-start: item-start var(--menu-parent-grid-index);
-    grid-row-end: child-end;
-    grid-column: child;
+    /* basically if we're not menu-ip, then we want to fill the parent because we're in someone's "hug" div */
+    /* this is important because we'll hug the bottom edge if we would overflow otherwise */
+    height: 100%;
 }
 
 .bevel {
@@ -57,4 +57,15 @@
 
 :host(.menu-host-child):nth-child(n + 2) {
     margin-left: -3px;
+}
+
+.hug {
+    grid-row-start: item-start var(--menu-parent-grid-index);
+    grid-row-end: child-end;
+    grid-column: child;
+
+    /*
+    display: flex;
+    align-items: flex-end;
+    */
 }

@@ -20,7 +20,7 @@ import { AnchorDescriptor, MenuService, OnSubMenuClose } from './menu.service';
 export class MenuComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.--menu-parent-grid-index') get hbMPGI() {
-    return this.menuContext?.inlineSubMenuParentGridItemIndex();
+    return this.inlineSubMenuChildIndex;
   }
 
   @Input() menuContext: MenuContext | undefined;
@@ -109,17 +109,19 @@ export class MenuComponent implements OnInit, OnDestroy {
   //#region Inline Sub Menu
 
   inlineSubMenu: MenuTemplateDirective | undefined;
+  inlineSubMenuChildIndex: number | undefined;
   inlineSubMenuContext: MenuContext | undefined;
 
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
     const idx = this.getChildGridIndex(instance);
     this.inlineSubMenu = template;
+    this.inlineSubMenuChildIndex = idx;
     this.inlineSubMenuContext = new class implements MenuContext {
       menuHostChildStyles(): boolean {
         return false;
       }
       inlineSubMenuParentGridItemIndex(): number | undefined {
-        return idx;
+        return idx;   // TODO remove me
       }
       anchor(): AnchorDescriptor | undefined {
         // submenus have no anchors, it's for the initial menu only
