@@ -8,7 +8,8 @@ export interface OnSubMenuClose {
 
 export type AnchorDescriptor = [
   HTMLElement, // the anchor
-  HTMLElement  // relative to parent?
+  HTMLElement, // relative to parent?
+  boolean // go up instead?
 ];
 
 export type MenuInstance = {

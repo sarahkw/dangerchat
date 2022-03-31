@@ -30,9 +30,23 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (this.menuContext?.menuHostChildStyles()) {
       classes.push('menu-host-child');
     }
+
+    let classGoUp = false;
+
     if (this.menuContext?.anchor()) {
       classes.push('menu-ip');
+      const [_anchor, _parent, goUp] = this.menuContext.anchor()!;
+      if (goUp) {
+        classGoUp = true;
+      }
     }
+
+    if (classGoUp) {
+      classes.push('menu-up');
+    } else {
+      classes.push('menu-down');
+    }
+
     return classes.join(' ');
   }
 
