@@ -24,4 +24,7 @@ div.ss-overlay {
     grid-column: 1;
 
     pointer-events: none;
+
+    /* allow menu to fill the height */
+    height: 100%;
 }
