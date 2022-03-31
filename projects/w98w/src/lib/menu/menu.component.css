@@ -47,6 +47,9 @@
 
     background-color: var(--menu-bg-color);
 
+    /* don't let clicks "fall through", that would be weird behavior */
+    pointer-events: auto;
+
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
 }
