@@ -49,10 +49,12 @@ div.ss-controls {
 }
 
 div.ss-controls button {
-    filter: drop-shadow(2px 2px 2px #808080);
+    filter: drop-shadow(1px 1px 1px #808080);
+
+    border-radius: 2px;
 
     border: none;
-    background-color: transparent;
+    background-color: #dfdfdf;
     aspect-ratio: 1;
     padding: 0;
 }
