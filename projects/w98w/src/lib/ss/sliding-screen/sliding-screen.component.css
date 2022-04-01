@@ -53,6 +53,7 @@ div.ss-controls button {
 
     border-radius: 2px;
 
+    color: black; /* safari */
     border: none;
     background-color: #dfdfdf;
     aspect-ratio: 1;
