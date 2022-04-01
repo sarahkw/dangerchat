@@ -9,7 +9,6 @@ body {
 
 .w98w-font-ss {
     font-family: 'W98w MS Sans Serif';
-    text-rendering: optimizeSpeed; /* best effort to make it look pixelated */
 }
 
 .w98w-pixelimg {

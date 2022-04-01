@@ -46,10 +46,14 @@ div.ss-controls {
 
     display: flex;
     flex-direction: column;
+
+    /* TODO: this looks nice but makes the text blurry */
+    /*filter: drop-shadow(-1px 1px 1px #808080);*/
 }
 
 div.ss-controls button {
-    filter: drop-shadow(1px 1px 1px #808080);
+    /* TODO: this looks nice but makes the text blurry */
+    /*filter: drop-shadow(1px 1px 1px #808080);*/
 
     border-radius: 2px;
 
