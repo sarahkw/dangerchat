@@ -33,11 +33,31 @@ div.ss-controls {
     position: absolute;
     right: 0px;
     top: 0;
-    bottom: 0;
     width: 30px;
+    bottom: 0;
     background-color: #c0c0c0;
     border-left: 1px solid black;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-    border-radius: 2px;
+    border-radius: 2px 0 0 2px;
+    gap: 4px;
+
+    padding: 4px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+div.ss-controls button {
+    filter: drop-shadow(2px 2px 2px #808080);
+
+    border: none;
+    background-color: transparent;
+    aspect-ratio: 1;
+    padding: 0;
+}
+
+div.ss-controls button:active {
+    padding-left: 1px;
+    padding-top: 1px;
 }
