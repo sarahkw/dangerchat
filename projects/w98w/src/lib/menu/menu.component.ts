@@ -98,6 +98,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   //#region Detach Me Observer
 
   @HostBinding('class.dmo-child-wants-detach') hbcDmoChildWantsDetach = false;
+  @HostBinding('class.dmo-i-want-detach') hbcDmoIWantDetach = false;
   @HostBinding('class.dmo-waiting') hbcDmoWaiting = false;
 
   private dmoObserver: IntersectionObserver | undefined;
@@ -126,6 +127,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         // TODO: do we need fuzzy compare?
         if (entries[0].intersectionRatio != 1) {
           parent.hbcDmoChildWantsDetach = true;
+          this.hbcDmoIWantDetach = true;
 
           console.info('child wants detach');
 

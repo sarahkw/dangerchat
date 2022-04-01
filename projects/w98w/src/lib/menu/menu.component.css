@@ -65,17 +65,19 @@
     margin-left: -3px;
 }
 
-:host.dmo-child-wants-detach {
-    background-color: red;
-}
-
 .hug {
     grid-row-start: item-start var(--menu-parent-grid-index);
     grid-row-end: child-end;
     grid-column: child;
+}
 
-    /*
+:host.dmo-child-wants-detach > .hug {
     display: flex;
     align-items: flex-end;
-    */
+    background-color: red;
+}
+
+:host.dmo-i-want-detach {
+    background-color: blue;
+    height: unset;
 }
