@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, HostBinding, Input, OnDestroy, OnInit, QueryList } from '@angular/core';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -12,7 +12,7 @@ import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
 import { MenuTemplateDirective } from './menu-template.directive';
-import { MenuService, OnSubMenuClose } from './menu.service';
+import { OnSubMenuClose } from './menu.service';
 
 @Component({
   selector: 'menu[w98w-menu]',
@@ -63,23 +63,18 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openedChild?: MenuItemComponent;
 
-  @ViewChild('elemBevel') private elemBevel!: ElementRef<HTMLElement>;
-
   @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
 
   constructor(private imgService: PixelImageService, private ss: SlidingScreenComponent, private screenRoot: SlidingScreenMainContentDirective) { }
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuComponent.PID);
-    this.dmoInit();
   }
 
   ngAfterViewInit(): void {
-    this.dmoAfterViewInit();
   }
 
   ngOnDestroy(): void {
-    this.dmoDestroy();
     this.imgService.pidUnregister(MenuComponent.PID);
   }
 
@@ -95,65 +90,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     return 0;
   }
 
-  //#region Detach Me Observer
-
-  @HostBinding('class.dmo-child-wants-detach') hbcDmoChildWantsDetach = false;
-  @HostBinding('class.dmo-i-want-detach') hbcDmoIWantDetach = false;
-  @HostBinding('class.dmo-waiting') hbcDmoWaiting = false;
-
-  private dmoObserver: IntersectionObserver | undefined;
-
-  private dmoInit() {
-    /* we have to do it in init instead of in afterviewinit because of change detection */
-    const parent = this.menuContext?.parent();
-    if (parent) {
-      this.hbcDmoWaiting = true;
-    }
-  }
-
-  private dmoReset() {
-    this.hbcDmoChildWantsDetach = false;
-  }
-
-  private dmoAfterViewInit() {
-    const parent = this.menuContext?.parent();
-    if (parent) {
-      this.dmoObserver = new IntersectionObserver((entries, _observer) => {
-
-        console.info(entries);
-
-        this.hbcDmoWaiting = false;
-
-        // TODO: do we need fuzzy compare?
-        if (entries[0].intersectionRatio != 1) {
-          parent.hbcDmoChildWantsDetach = true;
-          this.hbcDmoIWantDetach = true;
-
-          console.info('child wants detach');
-
-          // keep going until we detach, because a resize can always happen later
-          this.dmoObserver?.disconnect();
-          this.dmoObserver = undefined;
-        }
-
-      }, {
-        root: this.ss.overlayDiv.nativeElement,
-        threshold: [0, 1]
-      });
-
-      this.dmoObserver.observe(this.elemBevel.nativeElement);
-    }
-  }
-
-  private dmoDestroy() {
-    if (this.dmoObserver) {
-      this.dmoObserver.disconnect();
-      this.dmoObserver = undefined;
-    }
-  }
-
-  //#endregion
-
   //#region Inline Sub Menu
 
   inlineSubMenu: MenuTemplateDirective | undefined;
@@ -161,8 +97,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   inlineSubMenuContext: MenuContext | undefined;
 
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
-    this.dmoReset();
-
     const thiz = this;
     this.inlineSubMenu = template;
     this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
@@ -190,7 +124,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   inlineSubMenuClose() {
-    this.dmoReset();
     this.inlineSubMenu = undefined;
   }
 

@@ -57,10 +57,6 @@
     position: relative;
 }
 
-:host.dmo-waiting {
-    visibility: hidden;
-}
-
 :host(.menu-host-child):nth-child(n + 2) {
     margin-left: -3px;
 }
@@ -69,15 +65,4 @@
     grid-row-start: item-start var(--menu-parent-grid-index);
     grid-row-end: child-end;
     grid-column: child;
-}
-
-:host.dmo-child-wants-detach > .hug {
-    display: flex;
-    align-items: flex-end;
-    background-color: red;
-}
-
-:host.dmo-i-want-detach {
-    background-color: blue;
-    height: unset;
 }
