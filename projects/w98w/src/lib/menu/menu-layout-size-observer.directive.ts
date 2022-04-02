@@ -108,6 +108,8 @@ function generate(rootElement_: Element) {
                ro_.disconnect();
                ro_ = undefined;
             }
+
+            subscriber_ = undefined;
          }
       };
    }
