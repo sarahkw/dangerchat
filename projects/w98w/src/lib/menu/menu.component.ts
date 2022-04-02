@@ -40,7 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.menuContinuationSubscription = this._menuContext?.menuContinuation$().subscribe(mc => {
-      this.setStyleMIOVAndH(`${mc.yourVerticalOffset}px`, mc.yourHorizontalOffset ? `${mc.yourHorizontalOffset}px` : undefined);
+      this.setStyleMIOVAndH(`${mc.originVerticalOffset}px`, mc.originHorizontalOffset ? `${mc.originHorizontalOffset}px` : undefined);
     });
   }
   get menuContext() {
@@ -115,8 +115,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.inlineSubMenuContext = new class implements MenuContext {
       menuContinuation$(): Observable<MenuContinuation> {
         const ret: MenuContinuation = {
-          yourVerticalOffset: 0,
-          yourHorizontalOffset: undefined,
+          originVerticalOffset: 0,
+          originHorizontalOffset: undefined,
           resizeUpdates: undefined as any // TODO
         }
         return of(ret);
