@@ -11,7 +11,7 @@
 <h3>Menu</h3>
 
 <div
-    w98w-sliding-screen
+    w98w-sliding-screen #compSlidingScreen
     style="width: 100%; height: 400px; max-height: calc(100vh - 10px); background-color: lightgray; resize: vertical;"
     >
     <!-- TODO: can't add border on the side because the content width gets misaligned. i think it's because we measure the sliding screen
@@ -45,7 +45,10 @@
         <app-test-menu-lib #library></app-test-menu-lib>
     </div>
 
-    <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.currentMenu$ | async" style="height: 100%;"></w98w-menu-host>
+    <w98w-menu-host *ngIf="menuService.currentMenu$ | async"
+        w98w-menu-layout-size-observer [rootElement]="compSlidingScreen.rootDiv.nativeElement"
+        w98w-sliding-screen-overlay style="height: 100%;"
+    ></w98w-menu-host>
 </div>
 
 <div>

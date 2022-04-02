@@ -1,4 +1,5 @@
 import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { resolveContentRect } from '../../menu/menu-layout-size-observer.directive';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
 enum State {
@@ -24,7 +25,7 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
 
   @ViewChild('innerDiv') private innerDiv!: ElementRef;
 
-  constructor(private appRef: ApplicationRef, private rootDiv: ElementRef, private renderer: Renderer2) { }
+  constructor(private appRef: ApplicationRef, public rootDiv: ElementRef, private renderer: Renderer2) { }
 
   ngAfterContentChecked(): void {
     if (this.overlay) {
@@ -157,22 +158,13 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
     }
   }
 
-  private resolveContentRect(entry: ResizeObserverEntry): DOMRectReadOnly {
-    // support firefox ESR, which doesn't give array
-    if (Array.isArray(entry.contentRect)) {
-      return entry.contentRect[0];
-    } else {
-      return entry.contentRect;
-    }
-  }
-
   private actionResizeInitialObservation(initObservation: InitialObservationMap) {
     switch (this.currentState) {
       case State.Hidden:
         break;
       case State.Measuring:
         if (this.unfixedHeight) {
-          const crRootDiv = this.resolveContentRect(initObservation.get(this.rootDiv.nativeElement)!);
+          const crRootDiv = resolveContentRect(initObservation.get(this.rootDiv.nativeElement)!);
           this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${crRootDiv.height}px`);
         }
 
@@ -199,7 +191,7 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
       case State.Measuring:
         break;
       case State.Visible:
-        const cr = this.resolveContentRect(entry);
+        const cr = resolveContentRect(entry);
         if (entry.target === this.innerDiv.nativeElement) {
           if (this.unfixedHeight) {
             this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${cr.height}px`);

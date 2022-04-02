@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { MenuContext } from '../menu-context';
+import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from '../menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from '../menu-template.directive';
 import { MenuComponent } from '../menu.component';
 import { MenuInstance, MenuService, OnSubMenuClose } from '../menu.service';
@@ -11,7 +13,17 @@ import { MenuInstance, MenuService, OnSubMenuClose } from '../menu.service';
 })
 export class MenuHostComponent implements OnInit {
 
-  constructor(public menuService: MenuService) { }
+  private mlsoContext: MlsoMenuContext;
+  private mlsoObserver$: Observable<ResizeUpdates>;
+
+  constructor(
+    public menuService: MenuService,
+    menuLayoutSizeObserver: MenuLayoutSizeObserverDirective) {
+
+      const foo = menuLayoutSizeObserver.generate();
+      this.mlsoContext = foo.context;
+      this.mlsoObserver$ = new Observable(foo.subscribe);
+    }
 
   ngOnInit(): void {
   }
