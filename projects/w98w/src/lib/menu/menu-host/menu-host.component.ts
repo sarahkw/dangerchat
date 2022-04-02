@@ -14,8 +14,8 @@ export interface OnSubMenuClose {
 
 export type MenuInstance = {
   template: MenuTemplateDirective,
-  onSubMenuClose?: OnSubMenuClose,
-  anchor?: HTMLElement
+  context: MenuContext,
+  onSubMenuClose?: OnSubMenuClose
 };
 type MaybeMenu = MenuInstance[] | undefined;
 
@@ -51,7 +51,32 @@ export class MenuHostComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
-        this.renderedMenu$.next([newMenu]);
+        const thiz = this;
+        const menuInstance: MenuInstance = {
+          template: newMenu.template,
+          context: new class implements MenuContext {
+            menuHostChildStyles(): boolean {
+              return true;
+            }
+            parent(): MenuComponent | undefined {
+              return undefined;  // no parent for root menu
+            }
+            anchor(): HTMLElement | undefined {
+              return newMenu.anchor;
+            }
+            appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
+              // thiz.appendMenu(menuInstance, template, onSubMenuClose);
+            }
+            closeChildren(): void {
+              thiz.closeChildren(menuInstance);
+            }
+            endMenu(): void {
+              thiz.menuService.endMenu();
+            }
+          }
+        };
+
+        this.renderedMenu$.next([menuInstance]);
       } else {
         this.renderedMenu$.next(undefined);
       }
@@ -62,53 +87,29 @@ export class MenuHostComponent implements OnInit, OnDestroy {
     this.rootMenuSubscription?.unsubscribe();
   }
 
-  makeContextFor(instance: MenuInstance): MenuContext {
-    const thiz = this;
-    return new class implements MenuContext {
-      menuHostChildStyles(): boolean {
-        return true;
-      }
-      parent(): MenuComponent | undefined {
-        return undefined;  // no parent for root menu
-      }
-      anchor(): HTMLElement | undefined {
-        return instance.anchor;
-      }
-      appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
-        thiz.appendMenu(instance, template, onSubMenuClose);
-      }
-      closeChildren(): void {
-        thiz.closeChildren(instance);
-      }
-      endMenu(): void {
-        thiz.menuService.endMenu();
-      }
-    };
-  }
-
   //#region Migrate from MenuService
 
-  appendMenu(afterInstance: MenuInstance, template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
-    const oldval = this.renderedMenu$.value;
+  // appendMenu(afterInstance: MenuInstance, template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
+  //   const oldval = this.renderedMenu$.value;
 
-    console.assert(oldval !== undefined);
+  //   console.assert(oldval !== undefined);
 
-    if (oldval !== undefined) {
-      const idx = oldval.indexOf(afterInstance);
-      let newval: MaybeMenu;
-      if (idx == -1) {
-        newval = oldval;
-      } else {
-        const KEEP_CURRENT = 1;
-        newval = oldval.slice(0, idx + KEEP_CURRENT);
+  //   if (oldval !== undefined) {
+  //     const idx = oldval.indexOf(afterInstance);
+  //     let newval: MaybeMenu;
+  //     if (idx == -1) {
+  //       newval = oldval;
+  //     } else {
+  //       const KEEP_CURRENT = 1;
+  //       newval = oldval.slice(0, idx + KEEP_CURRENT);
 
-        for (let i = idx + KEEP_CURRENT; i < oldval.length; ++i) {
-          oldval[i].onSubMenuClose?.onSubMenuClose();
-        }
-      }
-      this.renderedMenu$.next(newval.concat({template, onSubMenuClose: onSubMenuClose}));
-    }
-  }
+  //       for (let i = idx + KEEP_CURRENT; i < oldval.length; ++i) {
+  //         oldval[i].onSubMenuClose?.onSubMenuClose();
+  //       }
+  //     }
+  //     this.renderedMenu$.next(newval.concat({template, onSubMenuClose: onSubMenuClose}));
+  //   }
+  // }
 
   closeChildren(afterInstance: MenuInstance) {
     const oldval = this.renderedMenu$.value;
