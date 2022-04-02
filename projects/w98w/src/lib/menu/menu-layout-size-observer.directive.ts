@@ -121,23 +121,19 @@ function generate(rootElement_: Element) {
             const batch = new ResizeUpdates();
 
             for (const entry of entries) {
+
                if (entry.target == rootElement_) {
                   rootLatestValue_ = resolveContentRect(entry);
-
                   batch.root = ORIGINAL(rootLatestValue_);
-                  // root rect is treated special as in we hardcode subscribe it.
-                  // but there's a small chance that someone is interested in it too.
-                  if (contextObservations_.has(entry.target)) {
-                     batch.updates.set(entry.target, batch.root);
-                  }
-               } else {
-                  const detail = contextObservations_.get(entry.target);
-                  if (detail) {
-                     const val = resolveContentRect(entry);
-                     detail.latestValue = val;
+                  // do continue as normal in case someone specifically observed for it
+               }
 
-                     batch.updates.set(entry.target, ORIGINAL(val));
-                  }
+               const detail = contextObservations_.get(entry.target);
+               if (detail) {
+                  const val = resolveContentRect(entry);
+                  detail.latestValue = val;
+
+                  batch.updates.set(entry.target, ORIGINAL(val));
                }
             }
 
