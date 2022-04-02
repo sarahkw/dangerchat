@@ -33,7 +33,7 @@ export type RootMenuDescriptor = {
 })
 export class MenuHostComponent implements OnInit, OnDestroy {
 
-  currentMenu$: BehaviorSubject<MaybeMenu> = new BehaviorSubject(undefined as MaybeMenu);
+  renderedMenu$: BehaviorSubject<MaybeMenu> = new BehaviorSubject(undefined as MaybeMenu);
   private rootMenuSubscription?: Subscription;
 
   private mlsoContext: MlsoMenuContext;
@@ -51,9 +51,9 @@ export class MenuHostComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
-        this.currentMenu$.next([newMenu]);
+        this.renderedMenu$.next([newMenu]);
       } else {
-        this.currentMenu$.next(undefined);
+        this.renderedMenu$.next(undefined);
       }
     });
   }
@@ -89,7 +89,7 @@ export class MenuHostComponent implements OnInit, OnDestroy {
   //#region Migrate from MenuService
 
   appendMenu(afterInstance: MenuInstance, template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
-    const oldval = this.currentMenu$.value;
+    const oldval = this.renderedMenu$.value;
 
     console.assert(oldval !== undefined);
 
@@ -106,12 +106,12 @@ export class MenuHostComponent implements OnInit, OnDestroy {
           oldval[i].onSubMenuClose?.onSubMenuClose();
         }
       }
-      this.currentMenu$.next(newval.concat({template, onSubMenuClose: onSubMenuClose}));
+      this.renderedMenu$.next(newval.concat({template, onSubMenuClose: onSubMenuClose}));
     }
   }
 
   closeChildren(afterInstance: MenuInstance) {
-    const oldval = this.currentMenu$.value;
+    const oldval = this.renderedMenu$.value;
 
     console.assert(oldval !== undefined);
 
@@ -134,7 +134,7 @@ export class MenuHostComponent implements OnInit, OnDestroy {
           return;
         }
       }
-      this.currentMenu$.next(newval);
+      this.renderedMenu$.next(newval);
     }
   }
 
