@@ -40,7 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.menuContinuationSubscription = this._menuContext?.menuContinuation$.subscribe(mc => {
-      this.setStyleMIOVAndH(`${mc.originVerticalOffset}px`, mc.originHorizontalOffset ? `${mc.originHorizontalOffset}px` : undefined);
+      this.setStyleMIOVAndH(`${mc.prevExpandSlotVertical}px`, mc.prevExpandSlotHorizontal ? `${mc.prevExpandSlotHorizontal}px` : undefined);
     });
   }
   get menuContext() {
@@ -115,12 +115,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.inlineSubMenuContext = new class implements MenuContext {
       get menuContinuation$(): Observable<MenuContinuation> {
         const ret: MenuContinuation = {
-          originVerticalOffset: 0,
-          originHorizontalOffset: undefined,
-
-          // TODO
-          root: undefined,
-          updates: new Map()
+          prevExpandSlotVertical: 0,
+          prevExpandSlotHorizontal: null,
+          updates: null
         }
         return of(ret);
       }

@@ -90,12 +90,9 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             }),
             map(val => {
               const ret: MenuContinuation = {
-                originVerticalOffset: val ? val.y : 0,
-                originHorizontalOffset: val ? val.x : 0,
-
-                // TODO
-                root: undefined,
-                updates: new Map()
+                prevExpandSlotVertical: val ? val.y : 0,
+                prevExpandSlotHorizontal: val ? val.x : 0,
+                updates: null
               };
               return ret;
             }));
