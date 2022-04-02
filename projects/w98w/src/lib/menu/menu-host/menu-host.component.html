@@ -1,4 +1,4 @@
-<ng-container *ngIf="menuService.currentMenu$ | async as menuInstances">
+<ng-container *ngIf="currentMenu$ | async as menuInstances">
 
     <ng-container *ngFor="let menuInstance of menuInstances">
         <ng-container

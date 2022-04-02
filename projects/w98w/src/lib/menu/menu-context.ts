@@ -1,6 +1,6 @@
+import { OnSubMenuClose } from "./menu-host/menu-host.component";
 import { MenuTemplateDirective } from "./menu-template.directive";
 import { MenuComponent } from "./menu.component";
-import { OnSubMenuClose } from "./menu.service";
 
 export interface MenuContext {
 

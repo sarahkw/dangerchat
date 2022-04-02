@@ -11,8 +11,8 @@ import { SlidingScreenComponent } from '../ss/sliding-screen/sliding-screen.comp
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
+import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MenuTemplateDirective } from './menu-template.directive';
-import { OnSubMenuClose } from './menu.service';
 
 @Component({
   selector: 'menu[w98w-menu]',

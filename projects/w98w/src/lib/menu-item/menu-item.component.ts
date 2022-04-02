@@ -1,9 +1,9 @@
 import { Component, ContentChild, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Colors } from '../colors';
 import { GenImg } from '../genimg';
+import { OnSubMenuClose } from '../menu/menu-host/menu-host.component';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { MenuComponent } from '../menu/menu.component';
-import { OnSubMenuClose } from '../menu/menu.service';
 import { W98wStyles } from '../w98w-styles';
 
 @Component({
