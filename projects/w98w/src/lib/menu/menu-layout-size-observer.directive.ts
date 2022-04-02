@@ -6,13 +6,26 @@
 import { Directive, Input } from "@angular/core";
 import { Subscriber, Unsubscribable } from "rxjs";
 
+export type Redeliverable<T> = {
+   value: T,
+   redelivery: boolean
+};
+
+function ORIGINAL<T>(value: T): Redeliverable<T> {
+   return { value, redelivery: false };
+}
+
+function REDELIVERY<T>(value: T): Redeliverable<T> {
+   return { value, redelivery: true };
+}
+
 export class ResizeUpdates {
-   root: DOMRectReadOnly | undefined;
-   updates: Map<Element, DOMRectReadOnly> = new Map();
+   root: Redeliverable<DOMRectReadOnly> | undefined;
+   updates: Map<Element, Redeliverable<DOMRectReadOnly>> = new Map();
 }
 
 export interface MlsoMenuContext {
-   observe(caller: any, target: Element): void;
+   observe(caller: any, targets: Element[], redeliver: boolean): void;
    unobserve(caller: any, target: Element): void;
    unobserveAll(caller: any): void;
 }
@@ -30,27 +43,47 @@ function generate(rootElement_: Element) {
    let subscriber_: Subscriber<ResizeUpdates> | undefined;
    let ro_: ResizeObserver | undefined;
 
-   let contextObservations_: Map<Element, Set<any>> = new Map();
+   let contextObservations_: Map<Element, {observers: Set<any>, latestValue: DOMRectReadOnly | undefined}> = new Map();
+   let rootLatestValue_: DOMRectReadOnly | undefined;
+
+   function ensureObservationOfBy(of: Element, by: any) {
+      let details = contextObservations_.get(of);
+      if (!details) { // haven't seen before
+         details = {observers: new Set(), latestValue: undefined};
+         contextObservations_.set(of, details);
+
+         if (ro_) {
+            ro_.observe(of);
+         }
+      }
+
+      details.observers.add(by);
+      return details.latestValue && REDELIVERY(details.latestValue);
+   }
 
    const context = new class implements MlsoMenuContext {
-      observe(caller: any, target: Element): void {
-         let s = contextObservations_.get(target);
-         if (!s) {
-            s = new Set();
-            contextObservations_.set(target, s);
+      observe(caller: any, targets: Element[], redeliver: boolean): void {
 
-            if (ro_) {
-               ro_.observe(target);
-            }
+         const batch = redeliver ? new ResizeUpdates() : undefined;
+
+         targets.forEach(v => {
+            const latestValue = ensureObservationOfBy(v, caller);
+            latestValue && batch?.updates.set(v, latestValue);
+         });
+
+         if (batch && rootLatestValue_) {
+            batch.root = REDELIVERY(rootLatestValue_);
          }
 
-         s.add(caller);
+         if (batch?.root || batch?.updates.size != 0) {
+            subscriber_?.next(batch);
+         }
       }
       unobserve(caller: any, target: Element): void {
-         const obsset = contextObservations_.get(target);
-         if (obsset) {
-            obsset.delete(caller);
-            if (obsset.size == 0) {
+         const details = contextObservations_.get(target);
+         if (details) {
+            details.observers.delete(caller);
+            if (details.observers.size == 0) {
                contextObservations_.delete(target);
                ro_?.unobserve(target);
             }
@@ -59,10 +92,10 @@ function generate(rootElement_: Element) {
       unobserveAll(caller: any): void {
          const toDiscard: Element[] = [];
 
-         contextObservations_.forEach((observers, elem) => {
-            if (observers.has(caller)) {
-               observers.delete(caller);
-               if (observers.size == 0) {
+         contextObservations_.forEach((details, elem) => {
+            if (details.observers.has(caller)) {
+               details.observers.delete(caller);
+               if (details.observers.size == 0) {
                   toDiscard.push(elem);
                }
             }
@@ -84,23 +117,31 @@ function generate(rootElement_: Element) {
 
       if (!ro_) {
          ro_ = new ResizeObserver((entries, _observer) => {
-            let rootRect: DOMRectReadOnly | undefined;
 
-            const updates: Map<Element, DOMRectReadOnly> = new Map();
+            const batch = new ResizeUpdates();
+
             for (const entry of entries) {
                if (entry.target == rootElement_) {
-                  rootRect = resolveContentRect(entry);
+                  rootLatestValue_ = resolveContentRect(entry);
+
+                  batch.root = ORIGINAL(rootLatestValue_);
                   // root rect is treated special as in we hardcode subscribe it.
                   // but there's a small chance that someone is interested in it too.
                   if (contextObservations_.has(entry.target)) {
-                     updates.set(entry.target, rootRect);
+                     batch.updates.set(entry.target, batch.root);
                   }
                } else {
-                  updates.set(entry.target, resolveContentRect(entry));
+                  const detail = contextObservations_.get(entry.target);
+                  if (detail) {
+                     const val = resolveContentRect(entry);
+                     detail.latestValue = val;
+
+                     batch.updates.set(entry.target, ORIGINAL(val));
+                  }
                }
             }
 
-            subscriber_?.next({root: rootRect, updates});
+            subscriber_?.next(batch);
          });
          ro_.observe(rootElement_);
 
