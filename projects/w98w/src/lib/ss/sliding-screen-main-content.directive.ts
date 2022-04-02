@@ -2,7 +2,8 @@ import { Directive, ElementRef, HostBinding, Renderer2 } from '@angular/core';
 import { SlidingScreenComponent } from './sliding-screen/sliding-screen.component';
 
 @Directive({
-  selector: '[w98w-sliding-screen-main-content]'
+  selector: '[w98w-sliding-screen-main-content]',
+  exportAs: 'ssMainContent'
 })
 export class SlidingScreenMainContentDirective {
   @HostBinding('style.gridRow') hbGR = 1;

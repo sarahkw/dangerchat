@@ -6,7 +6,7 @@
     style="background-color: lightgray; width: 100%;"
     >
 
-    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="desktopColor">
+    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="desktopColor" #dirSSMC="ssMainContent">
 
         <h3 style="margin-top: 0;">Import from other test</h3>
 
@@ -133,5 +133,8 @@
         <app-test-menu-lib #library></app-test-menu-lib>
     </div>
 
-    <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.activeRootMenu$ | async" style="height: 100%;"></w98w-menu-host>
+    <w98w-menu-host *ngIf="menuService.activeRootMenu$ | async"
+        w98w-menu-layout-size-observer [rootElement]="dirSSMC.element.nativeElement"
+        w98w-sliding-screen-overlay style="height: 100%;"
+    ></w98w-menu-host>
 </div>

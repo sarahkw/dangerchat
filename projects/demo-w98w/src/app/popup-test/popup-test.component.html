@@ -23,7 +23,7 @@
                     later on, so let's just avoid that. just lighten the bg color instead hah.
             -->
 
-    <div w98w-sliding-screen-main-content style="position: relative; background-color: #0e8585;">
+    <div w98w-sliding-screen-main-content style="position: relative; background-color: #0e8585;" #dirSSMC="ssMainContent">
         <div [style.height.px]="titleBarHeight" [style.backgroundColor]="titleBarColor"></div>
 
         <div style="margin-left: 20px; margin-top: 10px;">
@@ -46,7 +46,7 @@
     </div>
 
     <w98w-menu-host *ngIf="menuService.activeRootMenu$ | async"
-        w98w-menu-layout-size-observer [rootElement]="compSlidingScreen.rootDiv.nativeElement"
+        w98w-menu-layout-size-observer [rootElement]="dirSSMC.element.nativeElement"
         w98w-sliding-screen-overlay style="height: 100%;"
     ></w98w-menu-host>
 </div>
