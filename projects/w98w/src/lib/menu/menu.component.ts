@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ContentChildren, HostBinding, Input, OnDestroy, OnInit, QueryList } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -6,11 +7,10 @@ import { MenuItemComponent } from '../menu-item/menu-item.component';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
-import { SlidingScreenMainContentDirective } from '../ss/sliding-screen-main-content.directive';
-import { SlidingScreenComponent } from '../ss/sliding-screen/sliding-screen.component';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
+import { MenuContinuation } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MenuTemplateDirective } from './menu-template.directive';
 
@@ -25,7 +25,23 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.inlineSubMenuChildIndex;
   }
 
-  @Input() menuContext: MenuContext | undefined;
+  private menuContinuationSubscription: Subscription | undefined;
+  private _menuContext: MenuContext | undefined;
+  @Input() set menuContext(val: MenuContext | undefined) {
+    this._menuContext = val;
+
+    if (this.menuContinuationSubscription) {
+      this.menuContinuationSubscription.unsubscribe();
+    }
+
+    this.menuContinuationSubscription = this._menuContext?.menuContinuation$().subscribe(mc => {
+      this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', `${mc.yourVerticalOffset}px`, RendererStyleFlags2.DashCase);
+      this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', `${mc.yourHorizontalOffset}px`, RendererStyleFlags2.DashCase);
+    });
+  }
+  get menuContext() {
+    return this._menuContext;
+  }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
@@ -46,26 +62,14 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.childItems.length;
   }
 
-  @HostBinding('style.--menu-ip-offset-h') get hbMIOH() {
-    const anchor = this.menuContext?.anchor();
-    if (anchor) {
-      return `${anchor.getBoundingClientRect().x - this.screenRoot.element.nativeElement.getBoundingClientRect().x}px`;
-    }
-    return undefined;
-  }
-  @HostBinding('style.--menu-ip-offset-v') get hbMIOV() {
-    const anchor = this.menuContext?.anchor();
-    if (anchor) {
-      return `${anchor.getBoundingClientRect().bottom - this.screenRoot.element.nativeElement.getBoundingClientRect().y}px`;
-    }
-    return undefined;
-  }
-
   openedChild?: MenuItemComponent;
 
   @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
 
-  constructor(private imgService: PixelImageService, private ss: SlidingScreenComponent, private screenRoot: SlidingScreenMainContentDirective) { }
+  constructor(
+    private imgService: PixelImageService,
+    private elementRef: ElementRef<HTMLElement>,
+    private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuComponent.PID);
@@ -75,6 +79,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
+    if (this.menuContinuationSubscription) {
+      this.menuContinuationSubscription.unsubscribe();
+      this.menuContinuationSubscription = undefined;
+    }
     this.imgService.pidUnregister(MenuComponent.PID);
   }
 
@@ -101,6 +109,14 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.inlineSubMenu = template;
     this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
     this.inlineSubMenuContext = new class implements MenuContext {
+      menuContinuation$(): Observable<MenuContinuation> {
+        const ret: MenuContinuation = {
+          yourVerticalOffset: 0,
+          yourHorizontalOffset: undefined,
+          resizeUpdates: undefined as any // TODO
+        }
+        return of(ret);
+      }
       menuHostChildStyles(): boolean {
         return false;
       }

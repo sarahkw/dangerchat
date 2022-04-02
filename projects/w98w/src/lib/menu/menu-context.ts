@@ -1,9 +1,11 @@
+import { Observable } from "rxjs";
+import { MenuContinuation } from "./menu-continuation";
 import { OnSubMenuClose } from "./menu-host/menu-host.component";
 import { MenuTemplateDirective } from "./menu-template.directive";
 import { MenuComponent } from "./menu.component";
 
 export interface MenuContext {
-
+    menuContinuation$(): Observable<MenuContinuation>;
     menuHostChildStyles(): boolean;
     parent(): MenuComponent | undefined;
     anchor(): HTMLElement | undefined;

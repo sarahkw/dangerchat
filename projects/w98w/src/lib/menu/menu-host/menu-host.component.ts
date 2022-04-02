@@ -1,6 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Component, DoCheck, Input, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, distinctUntilChanged, map, Observable, Subscription } from 'rxjs';
 import { MenuContext } from '../menu-context';
+import { MenuContinuation } from '../menu-continuation';
 import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from '../menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from '../menu-template.directive';
 import { MenuComponent } from '../menu.component';
@@ -31,30 +32,76 @@ export type RootMenuDescriptor = {
   templateUrl: './menu-host.component.html',
   styleUrls: ['./menu-host.component.css']
 })
-export class MenuHostComponent implements OnInit, OnDestroy {
+export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
   renderedMenu$: BehaviorSubject<MaybeMenu> = new BehaviorSubject(undefined as MaybeMenu);
   private rootMenuSubscription?: Subscription;
+
+  private rootAnchor: Element | undefined;
+  private rootAnchorDims$: BehaviorSubject<{x: number, y: number} | undefined> = new BehaviorSubject(undefined as any);
 
   private mlsoContext: MlsoMenuContext;
   private mlsoObserver$: Observable<ResizeUpdates>;
 
   constructor(
     public menuService: MenuService,
-    menuLayoutSizeObserver: MenuLayoutSizeObserverDirective) {
+    private menuLayoutSizeObserver: MenuLayoutSizeObserverDirective) {
 
       const foo = menuLayoutSizeObserver.generate();
       this.mlsoContext = foo.context;
       this.mlsoObserver$ = new Observable(foo.subscribe);
     }
 
+  private checkRootAnchor() {
+    if (this.rootAnchor) {
+      const viewport = this.menuLayoutSizeObserver.rootElement;
+      const dims = {
+        x: this.rootAnchor.getBoundingClientRect().x - viewport.getBoundingClientRect().x,
+        y: this.rootAnchor.getBoundingClientRect().bottom - viewport.getBoundingClientRect().y
+      };
+
+      this.rootAnchorDims$.next(dims);
+    } else {
+      this.rootAnchorDims$.next(undefined);
+    }
+  }
+
+  ngDoCheck(): void {
+    this.checkRootAnchor();
+  }
+
   ngOnInit(): void {
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
+        this.rootAnchor = newMenu.anchor;
+        this.checkRootAnchor();
+
+        const menuContinuation$ =
+          this.rootAnchorDims$.pipe(
+            distinctUntilChanged((prev, curr) => {
+              if (!prev || !curr) {
+                return prev == curr;
+              }
+              return prev.x == curr.x && prev.y == curr.y;
+            }),
+            map(val => {
+              const ret: MenuContinuation = {
+                yourVerticalOffset: val ? val.y : 0,
+                yourHorizontalOffset: val ? val.x : 0,
+                resizeUpdates: undefined as any // TODO
+              };
+              return ret;
+            }));
+
         const thiz = this;
         const menuInstance: MenuInstance = {
           template: newMenu.template,
           context: new class implements MenuContext {
+
+            menuContinuation$(): Observable<MenuContinuation> {
+              return menuContinuation$;
+            }
+
             menuHostChildStyles(): boolean {
               return true;
             }
@@ -79,6 +126,9 @@ export class MenuHostComponent implements OnInit, OnDestroy {
         this.renderedMenu$.next([menuInstance]);
       } else {
         this.renderedMenu$.next(undefined);
+
+        this.rootAnchor = undefined;
+        this.checkRootAnchor();
       }
     });
   }
