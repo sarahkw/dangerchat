@@ -33,16 +33,6 @@
 :host.menu-ip {
     margin-left: var(--menu-ip-offset-h);
     margin-top: var(--menu-ip-offset-v);
-    height: calc(100% - var(--menu-ip-offset-v));
-
-    /* keep some room for controls */
-    margin-right: 44px;
-}
-
-:host-context(.w98w-menu) :host /* exclude root */ {
-    /* basically if we're not menu-ip, then we want to fill the parent because we're in someone's "hug" div */
-    /* this is important because we'll hug the bottom edge if we would overflow otherwise */
-    height: 100%;
 }
 
 .bevel {

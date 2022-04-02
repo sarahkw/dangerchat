@@ -1,4 +1,7 @@
 :host {
     display: flex;
     align-items: flex-start;
+
+    /* keep some room for controls */
+    margin-right: 44px;
 }
