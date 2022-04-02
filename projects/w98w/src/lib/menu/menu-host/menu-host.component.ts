@@ -98,7 +98,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
           template: newMenu.template,
           context: new class implements MenuContext {
 
-            menuContinuation$(): Observable<MenuContinuation> {
+            get menuContinuation$(): Observable<MenuContinuation> {
               return menuContinuation$;
             }
 

@@ -5,7 +5,7 @@ import { MenuTemplateDirective } from "./menu-template.directive";
 import { MenuComponent } from "./menu.component";
 
 export interface MenuContext {
-    menuContinuation$(): Observable<MenuContinuation>;
+    get menuContinuation$(): Observable<MenuContinuation>;
     menuHostChildStyles(): boolean;
     parent(): MenuComponent | undefined;
 

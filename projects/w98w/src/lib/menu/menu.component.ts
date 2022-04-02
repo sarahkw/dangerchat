@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       this.menuContinuationSubscription.unsubscribe();
     }
 
-    this.menuContinuationSubscription = this._menuContext?.menuContinuation$().subscribe(mc => {
+    this.menuContinuationSubscription = this._menuContext?.menuContinuation$.subscribe(mc => {
       this.setStyleMIOVAndH(`${mc.originVerticalOffset}px`, mc.originHorizontalOffset ? `${mc.originHorizontalOffset}px` : undefined);
     });
   }
@@ -113,7 +113,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.inlineSubMenu = template;
     this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
     this.inlineSubMenuContext = new class implements MenuContext {
-      menuContinuation$(): Observable<MenuContinuation> {
+      get menuContinuation$(): Observable<MenuContinuation> {
         const ret: MenuContinuation = {
           originVerticalOffset: 0,
           originHorizontalOffset: undefined,
