@@ -8,7 +8,7 @@ import { Subscriber, Unsubscribable } from "rxjs";
 
 export type Redeliverable<T> = {
    value: T,
-   redelivery: boolean
+   redelivery: boolean  // ! if it's a redelivery because of a resubscription, this won't reflect that
 };
 
 function ORIGINAL<T>(value: T): Redeliverable<T> {
