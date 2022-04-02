@@ -49,7 +49,7 @@ export class MenuHostComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.rootMenuSubscription = this.menuService.currentMenu$.subscribe(newMenu => {
+    this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
         this.currentMenu$.next([newMenu]);
       } else {

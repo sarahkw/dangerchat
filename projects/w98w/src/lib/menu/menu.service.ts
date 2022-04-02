@@ -6,15 +6,15 @@ import { MenuTemplateDirective } from './menu-template.directive';
 @Injectable()
 export class MenuService {
 
-  currentMenu$: BehaviorSubject<RootMenuDescriptor | undefined> = new BehaviorSubject(undefined as any);
+  activeRootMenu$: BehaviorSubject<RootMenuDescriptor | undefined> = new BehaviorSubject(undefined as any);
 
   constructor() { }
 
   beginMenu(template: MenuTemplateDirective, anchor: HTMLElement) {
-    this.currentMenu$.next({template, anchor});
+    this.activeRootMenu$.next({template, anchor});
   }
 
   endMenu() {
-    this.currentMenu$.next(undefined);
+    this.activeRootMenu$.next(undefined);
   }
 }

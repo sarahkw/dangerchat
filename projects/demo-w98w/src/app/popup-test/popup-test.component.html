@@ -45,7 +45,7 @@
         <app-test-menu-lib #library></app-test-menu-lib>
     </div>
 
-    <w98w-menu-host *ngIf="menuService.currentMenu$ | async"
+    <w98w-menu-host *ngIf="menuService.activeRootMenu$ | async"
         w98w-menu-layout-size-observer [rootElement]="compSlidingScreen.rootDiv.nativeElement"
         w98w-sliding-screen-overlay style="height: 100%;"
     ></w98w-menu-host>

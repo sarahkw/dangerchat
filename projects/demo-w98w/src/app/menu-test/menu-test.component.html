@@ -133,5 +133,5 @@
         <app-test-menu-lib #library></app-test-menu-lib>
     </div>
 
-    <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.currentMenu$ | async" style="height: 100%;"></w98w-menu-host>
+    <w98w-menu-host w98w-sliding-screen-overlay *ngIf="menuService.activeRootMenu$ | async" style="height: 100%;"></w98w-menu-host>
 </div>
