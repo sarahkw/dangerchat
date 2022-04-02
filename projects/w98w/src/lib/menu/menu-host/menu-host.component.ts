@@ -55,9 +55,13 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   private checkRootAnchor() {
     if (this.rootAnchor) {
       const viewport = this.menuLayoutSizeObserver.rootElement;
+
+      const rootAnchorBCR = this.rootAnchor.getBoundingClientRect();
+      const viewportBCR = viewport.getBoundingClientRect();
+
       const dims = {
-        x: this.rootAnchor.getBoundingClientRect().x - viewport.getBoundingClientRect().x,
-        y: this.rootAnchor.getBoundingClientRect().bottom - viewport.getBoundingClientRect().y
+        x: rootAnchorBCR.x - viewportBCR.x,
+        y: rootAnchorBCR.bottom - viewportBCR.y
       };
 
       this.rootAnchorDims$.next(dims);
