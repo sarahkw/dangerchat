@@ -8,7 +8,6 @@ export interface MenuContext {
     menuContinuation$(): Observable<MenuContinuation>;
     menuHostChildStyles(): boolean;
     parent(): MenuComponent | undefined;
-    anchor(): HTMLElement | undefined;
 
     appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void;
     closeChildren(): void;

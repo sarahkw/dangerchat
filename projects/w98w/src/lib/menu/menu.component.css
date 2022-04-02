@@ -27,10 +27,7 @@
         auto
         [item-end] var(--menu-border-padding) [bevel-end child-start] auto [child-end]
         ;
-}
 
-/* "ip" means initial position */
-:host.menu-ip {
     margin-left: var(--menu-ip-offset-h);
     margin-top: var(--menu-ip-offset-v);
 }

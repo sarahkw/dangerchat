@@ -21,6 +21,11 @@ import { MenuTemplateDirective } from './menu-template.directive';
 })
 export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  private setStyleMIOVAndH(miov: any, mioh: any) {
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', miov || 'initial', RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', mioh || 'initial', RendererStyleFlags2.DashCase);
+  }
+
   @HostBinding('style.--menu-parent-grid-index') get hbMPGI() {
     return this.inlineSubMenuChildIndex;
   }
@@ -35,8 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.menuContinuationSubscription = this._menuContext?.menuContinuation$().subscribe(mc => {
-      this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', `${mc.yourVerticalOffset}px`, RendererStyleFlags2.DashCase);
-      this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', `${mc.yourHorizontalOffset}px`, RendererStyleFlags2.DashCase);
+      this.setStyleMIOVAndH(`${mc.yourVerticalOffset}px`, mc.yourHorizontalOffset ? `${mc.yourHorizontalOffset}px` : undefined);
     });
   }
   get menuContext() {
@@ -46,9 +50,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
     return this.menuContext?.menuHostChildStyles();
-  }
-  @HostBinding('class.menu-ip') get hbcMI() {
-    return this.menuContext?.anchor();
   }
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
@@ -69,7 +70,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private imgService: PixelImageService,
     private elementRef: ElementRef<HTMLElement>,
-    private renderer: Renderer2) { }
+    private renderer: Renderer2) {
+
+    this.setStyleMIOVAndH(undefined, undefined);
+  }
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuComponent.PID);
@@ -122,10 +126,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       parent(): MenuComponent | undefined {
         return thiz;
-      }
-      anchor(): HTMLElement | undefined {
-        // submenus have no anchors, it's for the initial menu only
-        return undefined;
       }
       appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
         // TODO

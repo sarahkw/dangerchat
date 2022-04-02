@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, map, Observable, Subscription } from 'rxjs';
 import { MenuContext } from '../menu-context';
 import { MenuContinuation } from '../menu-continuation';
@@ -107,9 +107,6 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             }
             parent(): MenuComponent | undefined {
               return undefined;  // no parent for root menu
-            }
-            anchor(): HTMLElement | undefined {
-              return newMenu.anchor;
             }
             appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
               // thiz.appendMenu(menuInstance, template, onSubMenuClose);
