@@ -6,13 +6,14 @@
 import { Directive, Input } from "@angular/core";
 import { Subscriber, Unsubscribable } from "rxjs";
 
-export type ResizeUpdates = {
-   root: DOMRectReadOnly;
-   updates: Map<Element, DOMRectReadOnly>;
-};
+export class ResizeUpdates {
+   root: DOMRectReadOnly | undefined;
+   updates: Map<Element, DOMRectReadOnly> = new Map();
+}
 
 export interface MlsoMenuContext {
    observe(caller: any, target: Element): void;
+   unobserve(caller: any, target: Element): void;
    unobserveAll(caller: any): void;
 }
 
@@ -28,7 +29,6 @@ export function resolveContentRect(entry: ResizeObserverEntry): DOMRectReadOnly 
 function generate(rootElement_: Element) {
    let subscriber_: Subscriber<ResizeUpdates> | undefined;
    let ro_: ResizeObserver | undefined;
-   let rootRect_: DOMRectReadOnly | undefined;
 
    let contextObservations_: Map<Element, Set<any>> = new Map();
 
@@ -46,23 +46,31 @@ function generate(rootElement_: Element) {
 
          s.add(caller);
       }
+      unobserve(caller: any, target: Element): void {
+         const obsset = contextObservations_.get(target);
+         if (obsset) {
+            obsset.delete(caller);
+            if (obsset.size == 0) {
+               contextObservations_.delete(target);
+               ro_?.unobserve(target);
+            }
+         }
+      }
       unobserveAll(caller: any): void {
          const toDiscard: Element[] = [];
 
-         contextObservations_.forEach((v, k) => {
-            if (v.has(caller)) {
-               v.delete(caller);
-               if (v.size == 0) {
-                  toDiscard.push(k);
+         contextObservations_.forEach((observers, elem) => {
+            if (observers.has(caller)) {
+               observers.delete(caller);
+               if (observers.size == 0) {
+                  toDiscard.push(elem);
                }
             }
          });
 
          for (const discard of toDiscard) {
             contextObservations_.delete(discard);
-            if (ro_) {
-               ro_.unobserve(discard);
-            }
+            ro_?.unobserve(discard);
          }
       }
    };
@@ -76,24 +84,23 @@ function generate(rootElement_: Element) {
 
       if (!ro_) {
          ro_ = new ResizeObserver((entries, _observer) => {
+            let rootRect: DOMRectReadOnly | undefined;
+
             const updates: Map<Element, DOMRectReadOnly> = new Map();
             for (const entry of entries) {
                if (entry.target == rootElement_) {
-                  rootRect_ = resolveContentRect(entry);
+                  rootRect = resolveContentRect(entry);
+                  // root rect is treated special as in we hardcode subscribe it.
+                  // but there's a small chance that someone is interested in it too.
+                  if (contextObservations_.has(entry.target)) {
+                     updates.set(entry.target, rootRect);
+                  }
                } else {
                   updates.set(entry.target, resolveContentRect(entry));
                }
             }
 
-            if (rootRect_) {
-               subscriber_?.next({root: rootRect_, updates});
-            } else {
-               // XXX this isn't that great, but with the current planned usage this shouldn't happen
-               //
-               // but i guess circumstances can change so that it can happen, so TODO maybe merge
-               // dropped updates until we get rootRect
-               console.error('dropping update because of missing rootRect');
-            }
+            subscriber_?.next({root: rootRect, updates});
          });
          ro_.observe(rootElement_);
 
