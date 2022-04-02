@@ -117,7 +117,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         const ret: MenuContinuation = {
           originVerticalOffset: 0,
           originHorizontalOffset: undefined,
-          resizeUpdates: undefined as any // TODO
+
+          // TODO
+          root: undefined,
+          updates: new Map()
         }
         return of(ret);
       }
