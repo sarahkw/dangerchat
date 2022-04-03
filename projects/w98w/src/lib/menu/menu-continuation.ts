@@ -1,11 +1,6 @@
 import { Observable, Subscription } from "rxjs";
 import { ResizeUpdates } from "./menu-layout-size-observer.directive";
 
-export type MenuCalculationInput = {
-    continuation: MenuContinuation | undefined;
-    expandSlotElement: Element | null | undefined;
-};
-
 function menuEngine(continuation$: Observable<MenuContinuation>, expandSlotElement$: Observable<Element | null>) {
     return new Observable<MenuCalculationFrame>(subscriber => {
 
