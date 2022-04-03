@@ -127,13 +127,17 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             next(value: ResizeUpdates): void {
               currentResizeUpdates = value;
 
-              // checkRootAnchor because it's possible the root anchor moved due to resize of root.
-              // for example, if it's aligned to the bottom of the root.
-              //
-              // checkRootAnchor would have next'ed itself so we shouldn't duplicate
-              const old = currentRootAnchorDims;
-              thiz.checkRootAnchor();
-              if (old == currentRootAnchorDims) {
+              if (value.root) {
+                // checkRootAnchor because it's possible the root anchor moved due to resize of root.
+                // for example, if it's aligned to the bottom of the root.
+                //
+                // checkRootAnchor would have next'ed itself so we shouldn't duplicate
+                const old = currentRootAnchorDims;
+                thiz.checkRootAnchor();
+                if (old == currentRootAnchorDims) {
+                  nextIfAble();
+                }
+              } else {
                 nextIfAble();
               }
             }
