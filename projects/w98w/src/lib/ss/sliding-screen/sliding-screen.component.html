@@ -3,7 +3,7 @@
 
     <!-- TODO: i'm not sure why we have to fix the height on this overlay. it's like grid "pushes" its height even though
                it should be set to 100% of parent. maybe let's find out why. -->
-    <div class="ss-overlay" *ngIf="shouldShowOverlay" [style.height]="mainContentFixedHeight">
+    <div class="ss-overlay" *ngIf="shouldShowOverlay" [style.height]="(mainContentFixedSize$ | async)!.height">
         <ng-content select="[w98w-sliding-screen-overlay]"></ng-content>
     </div>
 </div>

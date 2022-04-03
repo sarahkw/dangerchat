@@ -1,4 +1,5 @@
 import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { resolveContentRect } from '../../menu/menu-layout-size-observer.directive';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
@@ -48,8 +49,12 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
 
   private currentState = State.Hidden;
   private resizeObserver?: ResizeObserver;
-  mainContentFixedWidth?: string;
-  mainContentFixedHeight?: string;  // if the overlay does stretch the height (which it probably shouldn't anyway), we don't want the main content affected
+
+  mainContentFixedSize$: BehaviorSubject<{width: string | null, height: string | null}> =
+    new BehaviorSubject({
+      width: null as any,
+      height: null as any  // if the overlay does stretch the height (which it probably shouldn't anyway), we don't want the main content affected
+    });
 
   private stateChange(newState: State) {
     if (newState == this.currentState) {
@@ -124,8 +129,10 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
           this.renderer.removeClass(this.rootDiv.nativeElement, 'unfixed');
         }
         this.renderer.removeClass(this.rootDiv.nativeElement, "overlay");
-        this.mainContentFixedWidth = undefined;
-        this.mainContentFixedHeight = undefined;
+        this.mainContentFixedSize$.next({
+          width: null,
+          height: null
+        })
         break;
     }
   }
@@ -170,10 +177,10 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
 
         // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
         const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
-        this.mainContentFixedWidth = `${bcr.width}px`;
-        if (!this.unfixedHeight) {
-          this.mainContentFixedHeight = `${bcr.height}px`;
-        }
+        this.mainContentFixedSize$.next({
+          width: `${bcr.width}px`,
+          height: (!this.unfixedHeight) ? `${bcr.height}px` : null
+        });
 
         this.stateChange(State.Visible);
 
@@ -199,13 +206,13 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
         } else if (entry.target === this.rootDiv.nativeElement) {
           // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
           const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
-          this.mainContentFixedWidth = `${bcr.width}px`;
-          if (!this.unfixedHeight) {
-            // this actually shouldn't change, we probably don't really need this here but it is here for consistency
-            this.mainContentFixedHeight = `${bcr.height}px`;
-          }
+          this.mainContentFixedSize$.next({
+            width: `${bcr.width}px`,
+            // old comment: this actually shouldn't change, we probably don't really need this here but it is here for consistency
+            height: (!this.unfixedHeight) ? `${bcr.height}px` : null
+          });
 
-          this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
+          // no change detection! w00t!  i hope it was worth it. ideally we should also throttle how often we respond to resize observer
         }
 
         break;
