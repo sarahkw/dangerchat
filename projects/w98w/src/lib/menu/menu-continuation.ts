@@ -1,10 +1,10 @@
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subject, Subscription } from "rxjs";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
 
 function menuEngine(
     continuation$: Observable<MenuContinuation>,
-    expandSlotElement$: Observable<Element | null>,
+    expandSlotElement$: Subject<Element | null>,
     bodyElement: Element,
     mlsoMenuContext: MlsoMenuContext
     )
@@ -28,13 +28,9 @@ function menuEngine(
         let sub_expandSlotElement = expandSlotElement$.subscribe({
             next(value: Element | null): void {
 
-            },
-            error(err: any): void {
-
-            },
-            complete(): void {
-
             }
+
+            // error and complete unsupported
         });
 
         return sub_continuation.add(sub_expandSlotElement);
