@@ -1,7 +1,16 @@
 import { Observable, Subscription } from "rxjs";
-import { ResizeUpdates } from "./menu-layout-size-observer.directive";
+import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
-function menuEngine(continuation$: Observable<MenuContinuation>, expandSlotElement$: Observable<Element | null>) {
+
+function menuEngine(
+    continuation$: Observable<MenuContinuation>,
+    expandSlotElement$: Observable<Element | null>,
+    bodyElement: Element,
+    mlsoMenuContext: MlsoMenuContext
+    )
+{
+    const state_ = new MenuCalculationState(bodyElement);
+
     return new Observable<MenuCalculationFrame>(subscriber => {
 
         let sub_continuation = continuation$.subscribe({
@@ -32,21 +41,25 @@ function menuEngine(continuation$: Observable<MenuContinuation>, expandSlotEleme
     });
 }
 
-export type MenuCalculationState = {
-    ready: boolean;
+class MenuCalculationState {
+    ready: boolean = false;
 
     bodyElement: Element;
-    expandSlotElement: Element | null;
+    expandSlotElement: Element | null = null;
 
     // keep these precursors to calculation so we can know when we need rerender, and to wait until ready
-    prevExpandSlotVertical: number;
-    prevExpandSlotHorizontal: number | null;
+    prevExpandSlotVertical: number | undefined;
+    prevExpandSlotHorizontal: number | null | undefined;
     precursorRoot: DOMRectReadOnly | undefined;
     precursorBody: DOMRectReadOnly | undefined;
     precursorExpandSlot: DOMRectReadOnly | null | undefined;
 
     // batch things up here until we're ready
-    batchedUpdates: ResizeUpdates | null;
+    batchedUpdates: ResizeUpdates | null = new ResizeUpdates();
+
+    constructor(bodyElement: Element) {
+        this.bodyElement = bodyElement;
+    }
 }
 
 export type MenuRender = {

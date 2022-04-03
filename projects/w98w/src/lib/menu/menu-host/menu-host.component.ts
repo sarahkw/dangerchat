@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, map, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, Observer, Subscription } from 'rxjs';
 import { MenuContext } from '../menu-context';
 import { MenuContinuation } from '../menu-continuation';
 import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from '../menu-layout-size-observer.directive';
@@ -27,6 +27,8 @@ export type RootMenuDescriptor = {
 
 //#endregion
 
+type Dim = {x: number, y: number};
+
 @Component({
   selector: 'w98w-menu-host',
   templateUrl: './menu-host.component.html',
@@ -38,19 +40,12 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   private rootMenuSubscription?: Subscription;
 
   private rootAnchor: Element | undefined;
-  private rootAnchorDims$: BehaviorSubject<{x: number, y: number} | undefined> = new BehaviorSubject(undefined as any);
-
-  private mlsoContext: MlsoMenuContext;
-  private mlsoObserver$: Observable<ResizeUpdates>;
+  private rootAnchorDims$: BehaviorSubject<Dim | undefined> = new BehaviorSubject(undefined as any);
 
   constructor(
     public menuService: MenuService,
     private menuLayoutSizeObserver: MenuLayoutSizeObserverDirective) {
-
-      const foo = menuLayoutSizeObserver.generate();
-      this.mlsoContext = foo.context;
-      this.mlsoObserver$ = new Observable(foo.subscribe);
-    }
+  }
 
   private checkRootAnchor() {
     if (this.rootAnchor) {
@@ -77,35 +72,99 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   ngOnInit(): void {
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
+        const thiz = this;
+
         this.rootAnchor = newMenu.anchor;
         this.checkRootAnchor();
 
-        const menuContinuation$ =
-          this.rootAnchorDims$.pipe(
-            distinctUntilChanged((prev, curr) => {
-              if (!prev || !curr) {
-                return prev == curr;
-              }
-              return prev.x == curr.x && prev.y == curr.y;
-            }),
-            map(val => {
-              const ret: MenuContinuation = {
-                bodyOffsetVertical: val ? val.y : 0,
-                bodyOffsetHorizontal: val ? val.x : 0,
-                updates: null
-              };
-              return ret;
-            }));
+        const {context: mlsoContext, resizeUpdates$} = this.menuLayoutSizeObserver.generate();
 
-        const thiz = this;
+        const distinctRootAnchorDims$ = this.rootAnchorDims$.pipe(
+          distinctUntilChanged((prev, curr) => {
+            if (!prev || !curr) {
+              return prev == curr;
+            }
+            return prev.x == curr.x && prev.y == curr.y;
+          }));
+
+        const menuContinuation$ = new Observable<MenuContinuation>(subscriber => {
+
+          let currentRootAnchorDims: Dim | undefined;
+          let currentResizeUpdates: ResizeUpdates | undefined;
+
+          function nextIfAble() {
+            if (currentRootAnchorDims) {
+              subscriber.next({
+                bodyOffsetVertical: currentRootAnchorDims.y,
+                bodyOffsetHorizontal: currentRootAnchorDims.x,
+                updates: currentResizeUpdates || null
+              });
+            }
+          }
+
+          const box: { subscription: Subscription | undefined } = {
+            subscription: undefined
+          };
+          let syncUnsubscribe = false;
+          box.subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
+            next(value: Dim | undefined): void {
+              currentRootAnchorDims = value;
+              nextIfAble();
+            }
+            error(err: any): void {
+              subscriber.error(err);
+              box.subscription?.unsubscribe();
+              syncUnsubscribe = true;
+            }
+            complete(): void {
+              subscriber.complete();
+              box.subscription?.unsubscribe();
+              syncUnsubscribe = true;
+            }
+          });
+
+          box.subscription.add(resizeUpdates$.subscribe(new class implements Observer<ResizeUpdates> {
+            next(value: ResizeUpdates): void {
+              currentResizeUpdates = value;
+
+              // checkRootAnchor because it's possible the root anchor moved due to resize of root.
+              // for example, if it's aligned to the bottom of the root.
+              //
+              // checkRootAnchor would have next'ed itself so we shouldn't duplicate
+              const old = currentRootAnchorDims;
+              thiz.checkRootAnchor();
+              if (old == currentRootAnchorDims) {
+                nextIfAble();
+              }
+            }
+            error(err: any): void {
+              subscriber.error(err);
+              box.subscription?.unsubscribe();
+              syncUnsubscribe = true;
+            }
+            complete(): void {
+              subscriber.complete();
+              box.subscription?.unsubscribe();
+              syncUnsubscribe = true;
+            }
+          }));
+
+          if (syncUnsubscribe) {
+            box.subscription.unsubscribe();
+          }
+
+          return box.subscription;
+        });
+
         const menuInstance: MenuInstance = {
           template: newMenu.template,
           context: new class implements MenuContext {
-
             get menuContinuation$(): Observable<MenuContinuation> {
               return menuContinuation$;
             }
-
+            get mlsoContext(): MlsoMenuContext {
+              return mlsoContext;
+            }
             menuHostChildStyles(): boolean {
               return true;
             }

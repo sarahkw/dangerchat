@@ -12,6 +12,7 @@ import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
 import { MenuContinuation } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
+import { MlsoMenuContext } from './menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from './menu-template.directive';
 
 @Component({
@@ -110,6 +111,13 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
     const thiz = this;
+
+    const menuContext = this._menuContext;
+    if (!menuContext) {
+      console.debug('missing menu context');
+      return;
+    }
+
     this.inlineSubMenu = template;
     this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
     this.inlineSubMenuContext = new class implements MenuContext {
@@ -120,6 +128,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
           updates: null
         }
         return of(ret);
+      }
+      get mlsoContext(): MlsoMenuContext {
+        return menuContext.mlsoContext;
       }
       menuHostChildStyles(): boolean {
         return false;

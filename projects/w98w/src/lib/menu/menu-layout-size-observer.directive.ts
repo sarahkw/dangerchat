@@ -4,7 +4,7 @@
    results by waiting for it to trickle down throughout the hierarchy */
 
 import { Directive, Input } from "@angular/core";
-import { Subscriber, Unsubscribable } from "rxjs";
+import { Observable, Subscriber, TeardownLogic, Unsubscribable } from "rxjs";
 
 export type Redeliverable<T> = {
    value: T,
@@ -61,7 +61,7 @@ function generate(rootElement_: Element) {
       return details.latestValue && REDELIVERY(details.latestValue);
    }
 
-   const context = new class implements MlsoMenuContext {
+   const context: MlsoMenuContext = new class implements MlsoMenuContext {
       observe(caller: any, targets: Element[], redeliver: boolean): void {
 
          const batch = redeliver ? new ResizeUpdates() : undefined;
@@ -108,7 +108,7 @@ function generate(rootElement_: Element) {
       }
    };
 
-   const subscribe = (subscriber: Subscriber<ResizeUpdates>) => {
+   const resizeUpdates$ = new Observable<ResizeUpdates>((subscriber: Subscriber<ResizeUpdates>) => {
       if (subscriber_) {
          // this API doesn't support multiple subscribers. there's only 1 menucontext.
          subscriber_.error(new Error("you're getting replaced"));
@@ -156,9 +156,9 @@ function generate(rootElement_: Element) {
             subscriber_ = undefined;
          }
       };
-   }
+   });
 
-   return {context, subscribe};
+   return {context, resizeUpdates$};
 }
 
 @Directive({selector: '[w98w-menu-layout-size-observer]'})
