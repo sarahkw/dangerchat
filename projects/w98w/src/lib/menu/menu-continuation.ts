@@ -2,7 +2,7 @@ import { ResizeUpdates } from "./menu-layout-size-observer.directive";
 
 export type MenuCalculationInput = {
     continuation: MenuContinuation | undefined;
-    expandSlotElement: Element | undefined;
+    expandSlotElement: Element | null | undefined;
 };
 
 export type MenuCalculationState = {
@@ -34,7 +34,7 @@ export type MenuContinuation = {
     updates: ResizeUpdates | null;
 };
 
-export type MenuCalculationOutput = {
+export type MenuCalculationFrame = {
     render: MenuRender | undefined;
     continuation: MenuContinuation | null | undefined;  // can we use null and map that to 'complete' ?
 };
