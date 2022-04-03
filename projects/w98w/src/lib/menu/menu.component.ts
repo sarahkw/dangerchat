@@ -34,8 +34,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   private menuContinuationSubscription: Subscription | undefined;
   private _menuContext: MenuContext | undefined;
   @Input() set menuContext(val: MenuContext | undefined) {
+    console.assert(val !== this.menuContext);  // i put this here because i'm new to angular and want to learn if angular can set to the same thing
     this._menuContext = val;
 
+    // probably won't happen but if it does, don't want to leak a live resizeobserver
     if (this.menuContinuationSubscription) {
       this.menuContinuationSubscription.unsubscribe();
     }

@@ -70,6 +70,15 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnInit(): void {
+
+    const distinctRootAnchorDims$ = this.rootAnchorDims$.pipe(
+      distinctUntilChanged((prev, curr) => {
+        if (!prev || !curr) {
+          return prev == curr;
+        }
+        return prev.x == curr.x && prev.y == curr.y;
+      }));
+
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
         const thiz = this;
@@ -78,14 +87,6 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
         this.checkRootAnchor();
 
         const {context: mlsoContext, resizeUpdates$} = this.menuLayoutSizeObserver.generate();
-
-        const distinctRootAnchorDims$ = this.rootAnchorDims$.pipe(
-          distinctUntilChanged((prev, curr) => {
-            if (!prev || !curr) {
-              return prev == curr;
-            }
-            return prev.x == curr.x && prev.y == curr.y;
-          }));
 
         const menuContinuation$ = new Observable<MenuContinuation>(subscriber => {
 
