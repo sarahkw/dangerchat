@@ -103,28 +103,23 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             }
           }
 
-          const box: { subscription: Subscription | undefined } = {
-            subscription: undefined
-          };
-          let syncUnsubscribe = false;
-          box.subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
+          let subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
             next(value: Dim | undefined): void {
               currentRootAnchorDims = value;
               nextIfAble();
             }
             error(err: any): void {
               subscriber.error(err);
-              box.subscription?.unsubscribe();
-              syncUnsubscribe = true;
             }
             complete(): void {
               subscriber.complete();
-              box.subscription?.unsubscribe();
-              syncUnsubscribe = true;
             }
           });
 
-          box.subscription.add(resizeUpdates$.subscribe(new class implements Observer<ResizeUpdates> {
+          // if distinctRootAnchorDims$ completes, the other subscription we add to its subscription
+          // will also get torn down.
+
+          subscription.add(resizeUpdates$.subscribe(new class implements Observer<ResizeUpdates> {
             next(value: ResizeUpdates): void {
               currentResizeUpdates = value;
 
@@ -144,21 +139,15 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             }
             error(err: any): void {
               subscriber.error(err);
-              box.subscription?.unsubscribe();
-              syncUnsubscribe = true;
+              subscription.unsubscribe(); // the other one
             }
             complete(): void {
               subscriber.complete();
-              box.subscription?.unsubscribe();
-              syncUnsubscribe = true;
+              subscription.unsubscribe(); // the other one
             }
           }));
 
-          if (syncUnsubscribe) {
-            box.subscription.unsubscribe();
-          }
-
-          return box.subscription;
+          return subscription;
         });
 
         const menuInstance: MenuInstance = {
