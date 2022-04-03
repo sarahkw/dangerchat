@@ -6,6 +6,37 @@ export type MenuCalculationInput = {
     expandSlotElement: Element | null | undefined;
 };
 
+function menuEngine(continuation$: Observable<MenuContinuation>, expandSlotElement$: Observable<Element | null>) {
+    return new Observable<MenuCalculationFrame>(subscriber => {
+
+        let sub_continuation = continuation$.subscribe({
+            next(value: MenuContinuation): void {
+
+            },
+            error(err: any): void {
+
+            },
+            complete(): void {
+
+            }
+        });
+
+        let sub_expandSlotElement = expandSlotElement$.subscribe({
+            next(value: Element | null): void {
+
+            },
+            error(err: any): void {
+
+            },
+            complete(): void {
+
+            }
+        });
+
+        return sub_continuation.add(sub_expandSlotElement);
+    });
+}
+
 export type MenuCalculationState = {
     ready: boolean;
 
