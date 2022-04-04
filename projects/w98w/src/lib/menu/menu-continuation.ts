@@ -1,4 +1,4 @@
-import { map, Observable, Subject, Subscription } from "rxjs";
+import { map, Observable, Observer, Subject, Subscription } from "rxjs";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
 
@@ -20,7 +20,7 @@ export function menuEngine(
 
     // TODO: small step: next menu just draws where the current menu ends, so kinda like stacking.
 
-    return continuation$.pipe(map((value): MenuCalculationFrame => ({
+    return continuation$.pipe(map((value: MenuContinuation): MenuCalculationFrame => ({
         render: {
             myOffsetHorizontal: value.bodyOffsetHorizontal,
             myOffsetVertical: value.bodyOffsetVertical
@@ -96,7 +96,33 @@ export type MenuCalculationFrame = {
     continuation: MenuContinuation | null | undefined;  // can we use null and map that to 'complete' ?
 };
 
-function complete_when_null<T>() {
+function reduceWhileThenFlow<V, A>(
+    // while
+    predicate: (value: V) => boolean,
+
+    // reduce
+    accumulator: (acc: V | A, value: V) => A,
+    seed?: any
+) {
+    return function (observable: Observable<V>) {
+        return new Observable<A>(subscriber => {
+
+            return observable.subscribe(new class implements Observer<V> {
+                next(value: V): void {
+
+                }
+                error(err: any): void {
+                    subscriber.error(err);
+                }
+                complete(): void {
+                    subscriber.complete();
+                }
+            });
+        });
+    }
+}
+
+function completeWhenNull<T>() {
     return function (observable: Observable<T | null>) {
         return new Observable<T>(subscriber => {
             const box: {
