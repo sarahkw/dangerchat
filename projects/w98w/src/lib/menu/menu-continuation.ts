@@ -96,19 +96,19 @@ export type MenuCalculationFrame = {
     continuation: MenuContinuation | null | undefined;  // can we use null and map that to 'complete' ?
 };
 
-function reduceWhileThenFlow<V, A>(
-    // while
-    predicate: (value: V) => boolean,
-
+function reduceWhileThenPassthrough<T>(
     // reduce
-    accumulator: (acc: V | A, value: V) => A,
-    seed?: any
-) {
-    return function (observable: Observable<V>) {
-        return new Observable<A>(subscriber => {
+    accumulator: (acc: T, value: T) => T,
+    seed: any,
 
-            return observable.subscribe(new class implements Observer<V> {
-                next(value: V): void {
+    // while - runs on the output of the accumulator
+    predicate: (value: T) => boolean
+) {
+    return function (observable: Observable<T>) {
+        return new Observable<T>(subscriber => {
+
+            return observable.subscribe(new class implements Observer<T> {
+                next(value: T): void {
 
                 }
                 error(err: any): void {
