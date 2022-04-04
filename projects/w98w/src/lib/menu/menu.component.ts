@@ -72,8 +72,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     console.assert(!this.menuRenderSubscription);
 
-    console.info(this.elemBevel);
-
     if (this.menuContext) {
       this.menuRenderSubscription = this.menuContext.menuContinuation$.pipe(menuCalculate(this.elemBevel.nativeElement, this.menuContext.mlsoContext))
         .subscribe(value => {

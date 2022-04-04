@@ -21,8 +21,8 @@ export function menuCalculate(
                 finalize(() => mlsoMenuContext.unobserveAll(identity))
             ).subscribe(new class implements Observer<MenuContinuation> {
                 next(value: MenuContinuation): void {
-                    rootDim = rootDim || value.updates?.root?.value;
-                    bodyDim = bodyDim || value.updates?.updates.get(bodyElement)?.value;
+                    rootDim = value.updates?.root?.value || rootDim;
+                    bodyDim = value.updates?.updates.get(bodyElement)?.value || bodyDim;
 
                     const mcf: MenuCalculationFrame = {
                         render: {
@@ -31,6 +31,10 @@ export function menuCalculate(
                         },
                         continuation: undefined
                     };
+
+                    if (mcf.render!.myOffsetVertical + bodyDim!.height > rootDim!.height) {
+                        mcf.render!.myOffsetVertical = rootDim!.height - bodyDim!.height;
+                    }
 
                     subscription.next(mcf);
                 }
