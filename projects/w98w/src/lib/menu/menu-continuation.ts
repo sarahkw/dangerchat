@@ -68,10 +68,6 @@ export function menuEngine(
 
     // TODO: small step: next menu just draws where the current menu ends, so kinda like stacking.
 
-    // TODO: small step: wait for my body size, in order to not get clipped off the screen
-
-    // remember to wait for root to be defined also
-
     return continuation$.pipe(map((value: MenuContinuation): MenuCalculationFrame => ({
         render: {
             myOffsetHorizontal: value.bodyOffsetHorizontal,
