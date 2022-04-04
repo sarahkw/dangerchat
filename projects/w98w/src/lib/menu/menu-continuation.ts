@@ -10,6 +10,16 @@ export function menuEngine(
     */
     )
 {
+    // TODO: wait for our body size and the root size to come. that's how we know where
+    //       we should draw ourselves.
+
+    // TODO: upon receiving an expandSlotElement$, wait for its size, and then when we get it,
+    //       we can start passing along continuation.
+    //
+    //       also, think about passing the continuation to the next menu as an observable.
+
+    // TODO: small step: next menu just draws where the current menu ends, so kinda like stacking.
+
     return continuation$.pipe(map((value): MenuCalculationFrame => ({
         render: {
             myOffsetHorizontal: value.bodyOffsetHorizontal,
