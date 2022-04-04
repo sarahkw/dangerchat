@@ -85,10 +85,11 @@ export type MenuRender = {
 };
 
 export type MenuContinuation = {
+    // these will always have data, we'll wait if we have to
     bodyOffsetVertical: number;
-    bodyOffsetHorizontal: number | null;
+    bodyOffsetHorizontal: number | null;  // null means no horizontal offset
 
-    updates: ResizeUpdates | null;
+    updates: ResizeUpdates | undefined;  // undefined means there's no data to update
 };
 
 export type MenuCalculationFrame = {

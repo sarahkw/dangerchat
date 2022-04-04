@@ -29,7 +29,7 @@ export class ResizeUpdates {
       const result = new ResizeUpdates();
 
       if (newer.root) {
-         console.assert(older.root);  // losing root not supported
+         console.assert(!!older.root);  // losing root not supported
 
          result.root = {
             value: newer.root.value,
