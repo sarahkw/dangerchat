@@ -1,41 +1,31 @@
-import { finalize, map, Observable, Observer, Subject, Subscription } from "rxjs";
+import { finalize, map, Observable, Observer, pipe, Subject, Subscription } from "rxjs";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
-export function menuCalculate(
-    bodyElement: Element,
+export function menuNext(
+    rulerElement: Element,
     mlsoMenuContext: MlsoMenuContext) {
 
     return function (source: Observable<MenuContinuation>) {
-
         return new Observable<MenuContinuation>(subscription => {
             const identity = {};
 
             let rootDim: DOMRectReadOnly | undefined;
-            let bodyDim: DOMRectReadOnly | undefined;
+            let rulerDim: DOMRectReadOnly | undefined;
 
             return source.pipe(
-                reduceUntilThenPassthrough(accumulateMenuContinuationTakeNewerData, undefined,
-                    mc => !!mc && !!mc.updates && !!mc.updates.root && !!mc.updates.updates.get(bodyElement)),
-
-                initialize(() => mlsoMenuContext.observe(identity, [bodyElement], true)),
-                finalize(() => mlsoMenuContext.unobserveAll(identity))
+                observeAndBlock(identity, mlsoMenuContext, [rulerElement])
             ).subscribe(new class implements Observer<MenuContinuation> {
                 next(value: MenuContinuation): void {
                     rootDim = value.updates?.root?.value || rootDim;
-                    bodyDim = value.updates?.updates.get(bodyElement)?.value || bodyDim;
+                    rulerDim = value.updates?.updates.get(rulerElement)?.value || rulerDim;
 
-                    // the pipeline should have waited until these were both available in a packet, before waking us up
-                    console.assert(!!rootDim && !!bodyDim);
+                    console.assert(!!rootDim && !!rulerDim);
 
                     const mc: MenuContinuation = {
-                        bodyOffsetHorizontal: value.bodyOffsetHorizontal,
-                        bodyOffsetVertical: value.bodyOffsetVertical,
+                        bodyOffsetHorizontal: null,  // original menu can have horizontal offset, but subsequent menus are just side by side
+                        bodyOffsetVertical: value.bodyOffsetVertical + rulerDim!.height,
                         updates: value.updates
                     };
-
-                    if (mc.bodyOffsetVertical + bodyDim!.height > rootDim!.height) {
-                        mc.bodyOffsetVertical = rootDim!.height - bodyDim!.height;
-                    }
 
                     subscription.next(mc);
                 }
@@ -45,7 +35,68 @@ export function menuCalculate(
                 complete(): void {
                     subscription.complete();
                 }
+            });
+        });
+    }
+}
 
+// also waits for root
+function observeAndBlock(identity: any, mlsoMenuContext: MlsoMenuContext, targets: Element[]) {
+    return pipe(
+        reduceUntilThenPassthrough(accumulateMenuContinuationTakeNewerData, undefined,
+            mc => {
+                if (mc && mc.updates) {
+                    if (!mc.updates.root) return false;
+                    for (const needle of targets) {
+                        if (!mc.updates.updates.has(needle)) return false;
+                    }
+                    return true;
+                }
+                return false;
+            }),
+        initialize(() => mlsoMenuContext.observe(identity, targets, true)),
+        finalize(() => mlsoMenuContext.unobserveAll(identity))
+    );
+}
+
+export function menuCalculate(
+    bodyElement: Element,
+    mlsoMenuContext: MlsoMenuContext) {
+
+    return function (source: Observable<MenuContinuation>) {
+        return new Observable<MenuContinuation>(subscription => {
+            const identity = {};
+
+            let rootDim: DOMRectReadOnly | undefined;
+            let bodyDim: DOMRectReadOnly | undefined;
+
+            return source.pipe(observeAndBlock(identity, mlsoMenuContext, [bodyElement]))
+                .subscribe(new class implements Observer<MenuContinuation> {
+                    next(value: MenuContinuation): void {
+                        rootDim = value.updates?.root?.value || rootDim;
+                        bodyDim = value.updates?.updates.get(bodyElement)?.value || bodyDim;
+
+                        // the pipeline should have waited until these were both available in a packet, before waking us up
+                        console.assert(!!rootDim && !!bodyDim);
+
+                        const mc: MenuContinuation = {
+                            bodyOffsetHorizontal: value.bodyOffsetHorizontal,
+                            bodyOffsetVertical: value.bodyOffsetVertical,
+                            updates: value.updates
+                        };
+
+                        if (mc.bodyOffsetVertical + bodyDim!.height > rootDim!.height) {
+                            mc.bodyOffsetVertical = rootDim!.height - bodyDim!.height;
+                        }
+
+                        subscription.next(mc);
+                    }
+                    error(err: any): void {
+                        subscription.error(err);
+                    }
+                    complete(): void {
+                        subscription.complete();
+                    }
             });
         });
     };

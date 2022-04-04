@@ -96,7 +96,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
           function nextIfAble() {
             if (currentRootAnchorDims) {
               subscriber.next({
-                bodyOffsetVertical: currentRootAnchorDims.y,
+                bodyOffsetVertical: 0, // TODO XXX TEMP DISABLE currentRootAnchorDims.y,
                 bodyOffsetHorizontal: currentRootAnchorDims.x,
                 updates: currentResizeUpdates
               });

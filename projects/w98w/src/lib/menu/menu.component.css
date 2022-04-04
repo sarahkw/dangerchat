@@ -49,7 +49,11 @@
 }
 
 .hug {
-    grid-row-start: item-start var(--menu-parent-grid-index);
-    grid-row-end: child-end;
-    grid-column: child;
+    grid-area: child;
+}
+
+.ruler {
+    grid-column: item;
+    grid-row-start: bevel;
+    grid-row-end: item-start var(--menu-parent-grid-index);
 }

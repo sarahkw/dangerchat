@@ -10,7 +10,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
-import { menuCalculate, MenuContinuation, menuEngine } from './menu-continuation';
+import { menuCalculate, MenuContinuation, menuEngine, menuNext } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MlsoMenuContext } from './menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from './menu-template.directive';
@@ -30,10 +30,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding('style.--menu-parent-grid-index') get hbMPGI() {
     return this.inlineSubMenuChildIndex;
   }
-
-  private menuRenderSubscription: Subscription | undefined;
-
-  @Input() menuContext: MenuContext | undefined;
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
@@ -68,12 +64,25 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @ViewChild('elemBevel') elemBevel!: ElementRef<HTMLDivElement>;
+  @ViewChild('elemRuler') elemRuler!: ElementRef<HTMLDivElement>;
+
+  @Input() menuContext: MenuContext | undefined;
+
+  private myCalculationsShared$: Observable<MenuContinuation> | undefined;
+
+  private menuRenderSubscription: Subscription | undefined;
+  private nextMenuSubscription: Subscription | undefined;
 
   ngAfterViewInit(): void {
     console.assert(!this.menuRenderSubscription);
 
     if (this.menuContext) {
-      this.menuRenderSubscription = this.menuContext.menuContinuation$.pipe(menuCalculate(this.elemBevel.nativeElement, this.menuContext.mlsoContext))
+      this.myCalculationsShared$ =
+        this.menuContext.menuContinuation$.pipe(
+          menuCalculate(this.elemBevel.nativeElement, this.menuContext.mlsoContext),
+          share());
+
+      this.menuRenderSubscription = this.myCalculationsShared$
         .subscribe(value => {
           if (value) {
               this.setStyleMIOVAndH(
@@ -86,6 +95,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.menuRenderSubscription?.unsubscribe();
+    this.nextMenuSubscription?.unsubscribe();
 
     this.imgService.pidUnregister(MenuComponent.PID);
   }
@@ -117,16 +127,20 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    const myCalculationsShared$ = this.myCalculationsShared$;
+    if (!myCalculationsShared$) {
+      console.debug('missing calcs');
+      return;
+    }
+
+    const nextContinuation$ =
+      myCalculationsShared$.pipe(menuNext(this.elemRuler.nativeElement, menuContext.mlsoContext));
+
     this.inlineSubMenu = template;
     this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
     this.inlineSubMenuContext = new class implements MenuContext {
       get menuContinuation$(): Observable<MenuContinuation> {
-        const ret: MenuContinuation = {
-          bodyOffsetVertical: 0,
-          bodyOffsetHorizontal: null,
-          updates: undefined
-        }
-        return of(ret);
+        return nextContinuation$;
       }
       get mlsoContext(): MlsoMenuContext {
         return menuContext.mlsoContext;
@@ -151,6 +165,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   inlineSubMenuClose() {
     this.inlineSubMenu = undefined;
+    this.nextMenuSubscription?.unsubscribe();
   }
 
   //#endregion
