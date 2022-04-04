@@ -111,6 +111,18 @@ export type MenuCalculationFrame = {
     continuation: MenuContinuation | null | undefined;  // can we use null and map that to 'complete' ?
 };
 
+function initialize<T>(callback: () => void) {
+    return function (source: Observable<T>) {
+        return new Observable<T>(subscriber => {
+            const subscription = source.subscribe(subscriber);
+
+            callback();
+
+            return subscription;
+        });
+    };
+}
+
 function reduceUntilThenPassthrough<T>(
     // reduce
     accumulator: (acc: T, value: T) => T,
