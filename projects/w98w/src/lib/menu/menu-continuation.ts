@@ -119,12 +119,12 @@ function reduceUntilThenPassthrough<T>(
     // until - runs on the output of the accumulator
     predicate: (value: T) => boolean
 ) {
-    return function (observable: Observable<T>) {
+    return function (source: Observable<T>) {
         return new Observable<T>(subscriber => {
             let state: any = seed;
             let passthrough = predicate(state);
 
-            return observable.subscribe(new class implements Observer<T> {
+            return source.subscribe(new class implements Observer<T> {
                 next(value: T): void {
                     if (!passthrough) {
                         state = accumulator(state, value);
@@ -151,7 +151,7 @@ function reduceUntilThenPassthrough<T>(
 }
 
 function completeWhenNull<T>() {
-    return function (observable: Observable<T | null>) {
+    return function (source: Observable<T | null>) {
         return new Observable<T>(subscriber => {
             const box: {
                 subscription: Subscription | undefined;
@@ -160,7 +160,7 @@ function completeWhenNull<T>() {
                 subscription: undefined,
                 needToUnsubscribeSynchronously: false,
             };
-            box.subscription = observable.subscribe({
+            box.subscription = source.subscribe({
                 next(value: T | null): void {
                     if (box.needToUnsubscribeSynchronously) {
                         // dropping values because not unsubscribed in time
