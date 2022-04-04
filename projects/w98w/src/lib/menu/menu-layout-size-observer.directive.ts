@@ -99,6 +99,8 @@ function generate(rootElement_: Element) {
    }
 
    const context: MlsoMenuContext = new class implements MlsoMenuContext {
+
+      // is OK to only wait for root by passing blank array to targets
       observe(caller: any, targets: Element[], redeliver: boolean): void {
 
          const batch = redeliver ? new ResizeUpdates() : undefined;
