@@ -22,6 +22,37 @@ function REDELIVERY<T>(value: T): Redeliverable<T> {
 export class ResizeUpdates {
    root: Redeliverable<DOMRectReadOnly> | undefined;
    updates: Map<Element, Redeliverable<DOMRectReadOnly>> = new Map();
+
+   // TODO: maybe have an option where function can "take" older, so we don't have to keep copying
+   //       data. when using as an accumulator, we don't need the older one anymore, it'll get discarded.
+   static accumulateNewerData(older: ResizeUpdates, newer: ResizeUpdates): ResizeUpdates {
+      const result = new ResizeUpdates();
+
+      if (newer.root) {
+         console.assert(older.root);  // losing root not supported
+
+         result.root = {
+            value: newer.root.value,
+            redelivery: older.root!.redelivery && newer.root.redelivery
+         }
+      }
+
+      for (const [k, v] of older.updates) {
+         result.updates.set(k, v);
+      }
+
+      for (const [k, v] of newer.updates) {
+         const preExisting = result.updates.get(k);
+         if (preExisting) {
+            preExisting.value = v.value;
+            preExisting.redelivery = preExisting.redelivery && v.redelivery;
+         } else {
+            result.updates.set(k, v);
+         }
+      }
+
+      return result;
+   }
 }
 
 export interface MlsoMenuContext {
