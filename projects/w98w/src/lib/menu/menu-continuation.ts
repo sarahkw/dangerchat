@@ -120,11 +120,10 @@ function reduceUntilThenPassthrough<T>(
     predicate: (value: T) => boolean
 ) {
     return function (observable: Observable<T>) {
-
-        let state: any = seed;
-        let passthrough = predicate(state);
-
         return new Observable<T>(subscriber => {
+            let state: any = seed;
+            let passthrough = predicate(state);
+
             return observable.subscribe(new class implements Observer<T> {
                 next(value: T): void {
                     if (!passthrough) {
