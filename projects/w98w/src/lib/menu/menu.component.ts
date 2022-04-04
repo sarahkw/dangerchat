@@ -75,10 +75,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.menuContext) {
       this.menuRenderSubscription = this.menuContext.menuContinuation$.pipe(menuCalculate(this.elemBevel.nativeElement, this.menuContext.mlsoContext))
         .subscribe(value => {
-          if (value.render) {
+          if (value) {
               this.setStyleMIOVAndH(
-                `${value.render.myOffsetVertical}px`,
-                value.render.myOffsetHorizontal ? `${value.render.myOffsetHorizontal}px` : undefined);
+                `${value.bodyOffsetVertical}px`,
+                value.bodyOffsetHorizontal ? `${value.bodyOffsetHorizontal}px` : undefined);
           }
         });
     }

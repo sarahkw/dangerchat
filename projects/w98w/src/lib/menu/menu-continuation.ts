@@ -7,7 +7,7 @@ export function menuCalculate(
 
     return function (source: Observable<MenuContinuation>) {
 
-        return new Observable<MenuCalculationFrame>(subscription => {
+        return new Observable<MenuContinuation>(subscription => {
             const identity = {};
 
             let rootDim: DOMRectReadOnly | undefined;
@@ -27,19 +27,17 @@ export function menuCalculate(
                     // the pipeline should have waited until these were both available in a packet, before waking us up
                     console.assert(!!rootDim && !!bodyDim);
 
-                    const mcf: MenuCalculationFrame = {
-                        render: {
-                            myOffsetHorizontal: value.bodyOffsetHorizontal,
-                            myOffsetVertical: value.bodyOffsetVertical
-                        },
-                        continuation: undefined
+                    const mc: MenuContinuation = {
+                        bodyOffsetHorizontal: value.bodyOffsetHorizontal,
+                        bodyOffsetVertical: value.bodyOffsetVertical,
+                        updates: value.updates
                     };
 
-                    if (mcf.render!.myOffsetVertical + bodyDim!.height > rootDim!.height) {
-                        mcf.render!.myOffsetVertical = rootDim!.height - bodyDim!.height;
+                    if (mc.bodyOffsetVertical + bodyDim!.height > rootDim!.height) {
+                        mc.bodyOffsetVertical = rootDim!.height - bodyDim!.height;
                     }
 
-                    subscription.next(mcf);
+                    subscription.next(mc);
                 }
                 error(err: any): void {
                     subscription.error(err);
@@ -71,6 +69,7 @@ export function menuEngine(
 
     // TODO: small step: next menu just draws where the current menu ends, so kinda like stacking.
 
+    /*
     return continuation$.pipe(map((value: MenuContinuation): MenuCalculationFrame => ({
         render: {
             myOffsetHorizontal: value.bodyOffsetHorizontal,
@@ -78,6 +77,7 @@ export function menuEngine(
         },
         continuation: undefined
     })));
+    */
 
     /*
     const state_ = new MenuCalculationState(bodyElement);
@@ -130,11 +130,6 @@ class MenuCalculationState {
     }
 }
 
-export type MenuRender = {
-    myOffsetVertical: number;
-    myOffsetHorizontal: number | null;
-};
-
 export type MenuContinuation = {
     // these will always have data, we'll wait if we have to
     bodyOffsetVertical: number;
@@ -154,11 +149,6 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
         updates: (!!prev.updates && !!curr.updates) ? ResizeUpdates.accumulateNewerData(prev.updates, curr.updates) : (curr.updates || prev.updates)
     };
 }
-
-export type MenuCalculationFrame = {
-    render: MenuRender | undefined;
-    continuation: MenuContinuation | null | undefined;  // can we use null and map that to 'complete' ?
-};
 
 function initialize<T>(callback: () => void) {
     return function (source: Observable<T>) {
