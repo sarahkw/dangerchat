@@ -34,13 +34,10 @@ export class ResizeUpdates {
 
       const result = new ResizeUpdates();
 
+      result.root = older.root;
       if (newer.root) {
-         console.assert(!!older.root);  // losing root not supported
-
-         result.root = {
-            value: newer.root.value,
-            redelivery: older.root!.redelivery && newer.root.redelivery
-         }
+         result.root = newer.root;
+         result.root.redelivery = result.root.redelivery && newer.root.redelivery;
       }
 
       for (const [k, v] of older.updates) {

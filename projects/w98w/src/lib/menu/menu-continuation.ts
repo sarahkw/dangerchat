@@ -1,6 +1,50 @@
-import { map, Observable, Observer, Subject, Subscription } from "rxjs";
+import { finalize, map, Observable, Observer, Subject, Subscription } from "rxjs";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
+export function menuCalculate(
+    bodyElement: Element,
+    mlsoMenuContext: MlsoMenuContext) {
+
+    return function (source: Observable<MenuContinuation>) {
+
+        return new Observable<MenuCalculationFrame>(subscription => {
+            const identity = {};
+
+            let rootDim: DOMRectReadOnly | undefined;
+            let bodyDim: DOMRectReadOnly | undefined;
+
+            return source.pipe(
+                reduceUntilThenPassthrough(accumulateMenuContinuationTakeNewerData, undefined,
+                    mc => !!mc && !!mc.updates && !!mc.updates.root && !!mc.updates.updates.get(bodyElement)),
+
+                initialize(() => mlsoMenuContext.observe(identity, [bodyElement], true)),
+                finalize(() => mlsoMenuContext.unobserveAll(identity))
+            ).subscribe(new class implements Observer<MenuContinuation> {
+                next(value: MenuContinuation): void {
+                    rootDim = rootDim || value.updates?.root?.value;
+                    bodyDim = bodyDim || value.updates?.updates.get(bodyElement)?.value;
+
+                    const mcf: MenuCalculationFrame = {
+                        render: {
+                            myOffsetHorizontal: value.bodyOffsetHorizontal,
+                            myOffsetVertical: value.bodyOffsetVertical
+                        },
+                        continuation: undefined
+                    };
+
+                    subscription.next(mcf);
+                }
+                error(err: any): void {
+                    subscription.error(err);
+                }
+                complete(): void {
+                    subscription.complete();
+                }
+
+            });
+        });
+    };
+}
 
 export function menuEngine(
     continuation$: Observable<MenuContinuation> /*,
@@ -128,10 +172,10 @@ function initialize<T>(callback: () => void) {
 function reduceUntilThenPassthrough<T>(
     // reduce
     accumulator: (acc: T, value: T) => T,
-    seed: any,
+    seed: any | undefined,
 
     // until - runs on the output of the accumulator
-    predicate: (value: T) => boolean
+    predicate: (value: T | undefined) => boolean
 ) {
     return function (source: Observable<T>) {
         return new Observable<T>(subscriber => {

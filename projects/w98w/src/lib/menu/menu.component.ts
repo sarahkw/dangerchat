@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
 import { map, Observable, of, share, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
@@ -10,7 +10,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
-import { MenuContinuation, menuEngine } from './menu-continuation';
+import { menuCalculate, MenuContinuation, menuEngine } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MlsoMenuContext } from './menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from './menu-template.directive';
@@ -33,31 +33,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private menuRenderSubscription: Subscription | undefined;
 
-  private _menuContext: MenuContext | undefined;
-  @Input() set menuContext(val: MenuContext | undefined) {
-    console.assert(val !== this.menuContext);  // i put this here because i'm new to angular and want to learn if angular can set to the same thing
-    this._menuContext = val;
-
-    // probably won't happen, but don't leak subscriptions in case it does
-    this.menuRenderSubscription?.unsubscribe();
-
-    if (this._menuContext) {
-      const frame = menuEngine(this._menuContext.menuContinuation$).pipe(share());
-
-      this.menuRenderSubscription =
-        frame.pipe(map(value => value.render))
-          .subscribe(menuRender => {
-            if (menuRender) {
-              this.setStyleMIOVAndH(
-                `${menuRender.myOffsetVertical}px`,
-                menuRender.myOffsetHorizontal ? `${menuRender.myOffsetHorizontal}px` : undefined);
-            }
-          });
-    }
-  }
-  get menuContext() {
-    return this._menuContext;
-  }
+  @Input() menuContext: MenuContext | undefined;
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
@@ -91,7 +67,23 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.imgService.pidRegister(MenuComponent.PID);
   }
 
+  @ViewChild('elemBevel') elemBevel!: ElementRef<HTMLDivElement>;
+
   ngAfterViewInit(): void {
+    console.assert(!this.menuRenderSubscription);
+
+    console.info(this.elemBevel);
+
+    if (this.menuContext) {
+      this.menuRenderSubscription = this.menuContext.menuContinuation$.pipe(menuCalculate(this.elemBevel.nativeElement, this.menuContext.mlsoContext))
+        .subscribe(value => {
+          if (value.render) {
+              this.setStyleMIOVAndH(
+                `${value.render.myOffsetVertical}px`,
+                value.render.myOffsetHorizontal ? `${value.render.myOffsetHorizontal}px` : undefined);
+          }
+        });
+    }
   }
 
   ngOnDestroy(): void {
@@ -121,7 +113,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
     const thiz = this;
 
-    const menuContext = this._menuContext;
+    const menuContext = this.menuContext;
     if (!menuContext) {
       console.debug('missing menu context');
       return;
