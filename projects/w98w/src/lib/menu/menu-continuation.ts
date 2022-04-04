@@ -92,6 +92,18 @@ export type MenuContinuation = {
     updates: ResizeUpdates | undefined;  // undefined means there's no data to update
 };
 
+function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefined, curr: MenuContinuation): MenuContinuation {
+    if (!prev) {  // from seed value?
+        return curr;
+    }
+
+    return {
+        bodyOffsetVertical: curr.bodyOffsetVertical,
+        bodyOffsetHorizontal: curr.bodyOffsetHorizontal,
+        updates: (!!prev.updates && !!curr.updates) ? ResizeUpdates.accumulateNewerData(prev.updates, curr.updates) : (curr.updates || prev.updates)
+    };
+}
+
 export type MenuCalculationFrame = {
     render: MenuRender | undefined;
     continuation: MenuContinuation | null | undefined;  // can we use null and map that to 'complete' ?

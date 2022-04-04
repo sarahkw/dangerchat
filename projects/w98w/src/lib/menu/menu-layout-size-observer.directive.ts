@@ -25,7 +25,13 @@ export class ResizeUpdates {
 
    // TODO: maybe have an option where function can "take" older, so we don't have to keep copying
    //       data. when using as an accumulator, we don't need the older one anymore, it'll get discarded.
-   static accumulateNewerData(older: ResizeUpdates, newer: ResizeUpdates): ResizeUpdates {
+   static accumulateNewerData(older: ResizeUpdates | undefined, newer: ResizeUpdates): ResizeUpdates {
+
+      // can be from seed value. i'm not making a copy here, even though it's inconsistent ...
+      if (!older) {
+         return newer;
+      }
+
       const result = new ResizeUpdates();
 
       if (newer.root) {
