@@ -24,6 +24,9 @@ export function menuCalculate(
                     rootDim = value.updates?.root?.value || rootDim;
                     bodyDim = value.updates?.updates.get(bodyElement)?.value || bodyDim;
 
+                    // the pipeline should have waited until these were both available in a packet, before waking us up
+                    console.assert(!!rootDim && !!bodyDim);
+
                     const mcf: MenuCalculationFrame = {
                         render: {
                             myOffsetHorizontal: value.bodyOffsetHorizontal,
