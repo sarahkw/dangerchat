@@ -1,14 +1,24 @@
-import { Observable, Subject, Subscription } from "rxjs";
+import { map, Observable, Subject, Subscription } from "rxjs";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
 
-function menuEngine(
-    continuation$: Observable<MenuContinuation>,
+export function menuEngine(
+    continuation$: Observable<MenuContinuation> /*,
     expandSlotElement$: Subject<Element | null>,
     bodyElement: Element,
     mlsoMenuContext: MlsoMenuContext
+    */
     )
 {
+    return continuation$.pipe(map((value): MenuCalculationFrame => ({
+        render: {
+            myOffsetHorizontal: value.bodyOffsetHorizontal,
+            myOffsetVertical: value.bodyOffsetVertical
+        },
+        continuation: undefined
+    })));
+
+    /*
     const state_ = new MenuCalculationState(bodyElement);
 
     return new Observable<MenuCalculationFrame>(subscriber => {
@@ -35,6 +45,7 @@ function menuEngine(
 
         return sub_continuation.add(sub_expandSlotElement);
     });
+    */
 }
 
 class MenuCalculationState {

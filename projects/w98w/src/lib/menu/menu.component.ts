@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2 } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { map, Observable, of, share, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -10,7 +10,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
-import { MenuContinuation } from './menu-continuation';
+import { MenuContinuation, menuEngine } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MlsoMenuContext } from './menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from './menu-template.directive';
@@ -31,20 +31,29 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.inlineSubMenuChildIndex;
   }
 
-  private menuContinuationSubscription: Subscription | undefined;
+  private menuRenderSubscription: Subscription | undefined;
+
   private _menuContext: MenuContext | undefined;
   @Input() set menuContext(val: MenuContext | undefined) {
     console.assert(val !== this.menuContext);  // i put this here because i'm new to angular and want to learn if angular can set to the same thing
     this._menuContext = val;
 
-    // probably won't happen but if it does, don't want to leak a live resizeobserver
-    if (this.menuContinuationSubscription) {
-      this.menuContinuationSubscription.unsubscribe();
-    }
+    // probably won't happen, but don't leak subscriptions in case it does
+    this.menuRenderSubscription?.unsubscribe();
 
-    this.menuContinuationSubscription = this._menuContext?.menuContinuation$.subscribe(mc => {
-      this.setStyleMIOVAndH(`${mc.bodyOffsetVertical}px`, mc.bodyOffsetHorizontal ? `${mc.bodyOffsetHorizontal}px` : undefined);
-    });
+    if (this._menuContext) {
+      const frame = menuEngine(this._menuContext.menuContinuation$).pipe(share());
+
+      this.menuRenderSubscription =
+        frame.pipe(map(value => value.render))
+          .subscribe(menuRender => {
+            if (menuRender) {
+              this.setStyleMIOVAndH(
+                `${menuRender.myOffsetVertical}px`,
+                menuRender.myOffsetHorizontal ? `${menuRender.myOffsetHorizontal}px` : undefined);
+            }
+          });
+    }
   }
   get menuContext() {
     return this._menuContext;
@@ -86,10 +95,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    if (this.menuContinuationSubscription) {
-      this.menuContinuationSubscription.unsubscribe();
-      this.menuContinuationSubscription = undefined;
-    }
+    this.menuRenderSubscription?.unsubscribe();
+
     this.imgService.pidUnregister(MenuComponent.PID);
   }
 
