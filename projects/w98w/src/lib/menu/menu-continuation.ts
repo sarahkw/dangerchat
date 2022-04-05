@@ -13,10 +13,20 @@ export type MenuContinuation = {
     next: {
         offsetVertical: number,
         offsetHorizontal: number | null;  // null means no horizontal offset
-    } | undefined
+    } | undefined,
 
-    updates: ResizeUpdates | undefined;  // undefined means there's no data to update
+    // data that just flows through the menus. the menu doesn't have to propagate this data themselves, just pass it through.
+    passthrough: {
+        updates: ResizeUpdates | undefined;  // undefined means there's no data to update
+    }
 };
+
+accumulateMenuContinuationTakeNewerData;
+/* ACCUMULATION ALGORITHM:
+
+   current and next: just take the newer one.
+   passthrough: take the newer one, but updates has a special algorithm to merge updates from the older one.
+*/
 
 export function menuCalculateSelf(
     bodyElement: Element,
@@ -32,8 +42,8 @@ export function menuCalculateSelf(
             return source.pipe(observeAndBlock(identity, mlsoMenuContext, [bodyElement]))
                 .subscribe(new class implements Observer<MenuContinuation> {
                     next(value: MenuContinuation): void {
-                        rootDim = value.updates?.root?.value || rootDim;
-                        bodyDim = value.updates?.updates.get(bodyElement)?.value || bodyDim;
+                        rootDim = value.passthrough.updates?.root?.value || rootDim;
+                        bodyDim = value.passthrough.updates?.updates.get(bodyElement)?.value || bodyDim;
 
                         // the pipeline should have waited until these were both available in a packet, before waking us up
                         console.assert(!!rootDim && !!bodyDim);
@@ -49,7 +59,7 @@ export function menuCalculateSelf(
                                 fixedHeight: null,
                             },
                             next: undefined,
-                            updates: value.updates
+                            passthrough: value.passthrough
                         };
 
                         const current = mc.current!; // TODO codequality: current to have its own type, build MenuContination later
@@ -90,8 +100,8 @@ export function menuCalculateNext(
                 observeAndBlock(identity, mlsoMenuContext, [rulerElement])
             ).subscribe(new class implements Observer<MenuContinuation> {
                 next(value: MenuContinuation): void {
-                    rootDim = value.updates?.root?.value || rootDim;
-                    rulerDim = value.updates?.updates.get(rulerElement)?.value || rulerDim;
+                    rootDim = value.passthrough.updates?.root?.value || rootDim;
+                    rulerDim = value.passthrough.updates?.updates.get(rulerElement)?.value || rulerDim;
 
                     console.assert(!!rootDim && !!rulerDim);
                     if (!rootDim || !rulerDim) return;
@@ -108,7 +118,7 @@ export function menuCalculateNext(
                             offsetVertical: current.offsetVertical + rulerDim.height - borderPadding,
                         },
 
-                        updates: value.updates
+                        passthrough: value.passthrough
                     };
 
                     // if overflowed, align next one at bottom because the current one has scrollbar
@@ -134,10 +144,16 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
         return curr;
     }
 
+    let passthrough = {
+        ...curr.passthrough
+    };
+
+    passthrough.updates = ResizeUpdates.accumulateNewerData(prev.passthrough.updates, curr.passthrough.updates);
+
     return {
         current: curr.current,
         next: curr.next,
-        updates: (!!prev.updates && !!curr.updates) ? ResizeUpdates.accumulateNewerData(prev.updates, curr.updates) : (curr.updates || prev.updates)
+        passthrough
     };
 }
 
@@ -146,10 +162,10 @@ function observeAndBlock(identity: any, mlsoMenuContext: MlsoMenuContext, target
     return pipe(
         reduceUntilThenPassthrough(accumulateMenuContinuationTakeNewerData, undefined,
             mc => {
-                if (mc && mc.updates) {
-                    if (!mc.updates.root) return false;
+                if (mc && mc.passthrough.updates) {
+                    if (!mc.passthrough.updates.root) return false;
                     for (const needle of targets) {
-                        if (!mc.updates.updates.has(needle)) return false;
+                        if (!mc.passthrough.updates.updates.has(needle)) return false;
                     }
                     return true;
                 }
