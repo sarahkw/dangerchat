@@ -21,12 +21,25 @@ import { MenuTemplateDirective } from './menu-template.directive';
 })
 export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private setStyleMIOVAndH(miov: any, mioh: any, fixedHeight: any) {
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', miov || 'initial', RendererStyleFlags2.DashCase);
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', mioh || 'initial', RendererStyleFlags2.DashCase);
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-fixed-h', fixedHeight || 'initial', RendererStyleFlags2.DashCase);
-  }
+  private applyMenuCalculation(calcs: MenuContinuation | undefined) {
+      let offsetV = 'initial';
+      let offsetH = 'initial';
+      let fixedHeight = 'initial';
 
+    if (calcs) {
+      offsetV = `${calcs.offsetVertical}px`;
+
+      if (calcs.offsetHorizontal !== null)
+        offsetH = `${calcs.offsetHorizontal}px`;
+
+      if (calcs.fixedHeight !== null)
+        fixedHeight = `${calcs.fixedHeight}px`;
+    }
+
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', offsetV, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', offsetH, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-fixed-h', fixedHeight, RendererStyleFlags2.DashCase);
+  }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
@@ -54,7 +67,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2) {
 
-    this.setStyleMIOVAndH(undefined, undefined, undefined);
+    this.applyMenuCalculation(undefined);
   }
 
   ngOnInit(): void {
@@ -82,12 +95,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.menuRenderSubscription = this.myCalculationsShared$
         .subscribe(value => {
-          if (value) {
-              this.setStyleMIOVAndH(
-                `${value.offsetVertical}px`,
-                value.offsetHorizontal ? `${value.offsetHorizontal}px` : undefined,
-                value.fixedHeight ? `${value.fixedHeight}px` : undefined);
-          }
+          value && this.applyMenuCalculation(value);
         });
     }
   }
