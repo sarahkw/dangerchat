@@ -42,6 +42,14 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   private rootAnchor: Element | undefined;
   private rootAnchorDims$: BehaviorSubject<Dim | undefined> = new BehaviorSubject(undefined as any);
 
+  private distinctRootAnchorDims$ = this.rootAnchorDims$.pipe(
+    distinctUntilChanged((prev, curr) => {
+      if (!prev || !curr) {
+        return prev == curr;
+      }
+      return prev.x == curr.x && prev.y == curr.y;
+    }));
+
   constructor(
     public menuService: MenuService,
     private menuLayoutSizeObserver: MenuLayoutSizeObserverDirective) {
@@ -70,15 +78,6 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnInit(): void {
-
-    const distinctRootAnchorDims$ = this.rootAnchorDims$.pipe(
-      distinctUntilChanged((prev, curr) => {
-        if (!prev || !curr) {
-          return prev == curr;
-        }
-        return prev.x == curr.x && prev.y == curr.y;
-      }));
-
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
         const thiz = this;
@@ -103,7 +102,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             }
           }
 
-          let subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
+          let subscription = this.distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
             next(value: Dim | undefined): void {
               currentRootAnchorDims = value;
               nextIfAble();
