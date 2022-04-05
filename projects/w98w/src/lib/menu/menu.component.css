@@ -14,7 +14,7 @@
     pointer-events: auto;
 
     max-height: var(--menu-calcs-fixed-h);
-    overflow-y: auto;
+    overflow: hidden auto;
 }
 
 div.container {
