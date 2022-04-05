@@ -24,8 +24,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   private applyMenuCalculation(calcs: MenuContinuation | undefined) {
       let offsetV = 'initial';
       let offsetH = 'initial';
-      let fixedHeight = 'initial';
+      let maxHeight = 'initial';
       let overflowY = 'initial';
+      let maxWidth = 'initial';
 
     if (calcs) {
       console.assert(!!calcs.current);
@@ -38,15 +39,19 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         offsetH = `${calcs.current.offsetHorizontal}px`;
 
       if (calcs.current.fixedHeight !== null) {
-        fixedHeight = `${calcs.current.fixedHeight}px`;
+        maxHeight = `${calcs.current.fixedHeight}px`;
         overflowY = 'scroll';
       }
+
+      // TODO do something more reasonable here than hardcode the value haha
+      maxWidth = `${calcs.current.rootWidth - 100}px`;
     }
 
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-v', offsetV, RendererStyleFlags2.DashCase);
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-h', offsetH, RendererStyleFlags2.DashCase);
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-fixed-h', fixedHeight, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-max-h', maxHeight, RendererStyleFlags2.DashCase);
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-overflow-y', overflowY, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-max-w', maxWidth, RendererStyleFlags2.DashCase);
   }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;

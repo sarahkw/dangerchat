@@ -8,6 +8,10 @@ export type MenuContinuation = {
         offsetVertical: number;
         offsetHorizontal: number | null;  // null means no horizontal offset
         fixedHeight: number | null;  // if fixed then we might need to scroll
+
+        // this should be a passthrough but since menus need the root dims anyway might as well put it here.
+        // that's simpler than having menu host subscribe to root and waiting on that.
+        rootWidth: number;
     } | undefined,
 
     next: {
@@ -57,6 +61,7 @@ export function menuCalculateSelf(
                                 offsetHorizontal: nextFromLast.offsetHorizontal,
                                 offsetVertical: nextFromLast.offsetVertical,
                                 fixedHeight: null,
+                                rootWidth: rootDim.width
                             },
                             next: undefined,
                             passthrough: value.passthrough

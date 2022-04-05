@@ -51,6 +51,10 @@ div.label {
     flex: 1;
 
     white-space: nowrap;
+
+    max-width: var(--menu-calcs-max-w);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 div.submenu {

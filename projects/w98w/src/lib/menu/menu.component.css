@@ -13,7 +13,7 @@
     /* overlay layer will be on top of everything, which would disable pointer events. clearly this menu should take pointer events. */
     pointer-events: auto;
 
-    max-height: var(--menu-calcs-fixed-h);
+    max-height: var(--menu-calcs-max-h);
     /* we have to take 'scroll' from JS instead of using 'auto' because if we use auto, then firefox will try to keep the same width
        and have the scrollbar intrude into us */
     overflow-y: var(--menu-calcs-overflow-y);
