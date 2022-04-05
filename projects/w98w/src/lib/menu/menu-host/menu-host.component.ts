@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, Observable, Observer, Subscription } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Observable, Observer, Subscriber, Subscription } from 'rxjs';
 import { MenuContext } from '../menu-context';
 import { MenuContinuation } from '../menu-continuation';
 import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from '../menu-layout-size-observer.directive';
@@ -76,33 +76,36 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
     resizeUpdates$: Observable<ResizeUpdates>,
     checkRootAnchor: () => void) {
 
+    // put fn out here so it has no access to closure
+    function nextContinuation(
+      subscriber: Subscriber<MenuContinuation>,
+      currentRootAnchorDims: Dim,
+      resizeUpdates: ResizeUpdates | undefined
+    ) {
+      subscriber.next({
+        current: undefined,
+        next: {
+          offsetVertical: currentRootAnchorDims.y,
+          offsetHorizontal: currentRootAnchorDims.x
+        },
+        passthrough: {
+          updates: resizeUpdates
+        }
+      });
+    }
+
     return new Observable<MenuContinuation>(subscriber => {
 
       let currentRootAnchorDims: Dim | undefined;
-      let currentResizeUpdates: ResizeUpdates | undefined;
-
-      function nextIfAble() {
-        if (currentRootAnchorDims) {
-          subscriber.next({
-            current: undefined,
-            next: {
-              offsetVertical: currentRootAnchorDims.y,
-              offsetHorizontal: currentRootAnchorDims.x
-            },
-            passthrough: {
-              updates: currentResizeUpdates
-            }
-          });
-
-          // don't want to send the same update again, it flows like water
-          currentResizeUpdates = undefined;
-        }
-      }
+      let resizeUpdateOutBuffer: ResizeUpdates | undefined;
 
       let subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
         next(value: Dim | undefined): void {
-          currentRootAnchorDims = value;
-          nextIfAble();
+          if (value) {
+            currentRootAnchorDims = value;
+            nextContinuation(subscriber, currentRootAnchorDims, resizeUpdateOutBuffer);
+            resizeUpdateOutBuffer = undefined;
+          }
         }
         error(err: any): void {
           subscriber.error(err);
@@ -117,20 +120,23 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
       subscription.add(resizeUpdates$.subscribe(new class implements Observer<ResizeUpdates> {
         next(value: ResizeUpdates): void {
-          currentResizeUpdates = value;
+
+          // it's coming from behaviorsubject so we'll always have this before we got a resize update.
+          // otherwise, we have to drop this update and that's not good.
+          console.assert(!!currentRootAnchorDims);
 
           if (value.root) {
             // checkRootAnchor because it's possible the root anchor moved due to resize of root.
             // for example, if it's aligned to the bottom of the root.
-            //
-            // checkRootAnchor would have next'ed itself so we shouldn't duplicate
-            const old = currentRootAnchorDims;
+
+            resizeUpdateOutBuffer = value;
             checkRootAnchor();
-            if (old == currentRootAnchorDims) {
-              nextIfAble();
+            if (resizeUpdateOutBuffer) {  // it didn't send so we must
+              nextContinuation(subscriber, currentRootAnchorDims!, resizeUpdateOutBuffer);
+              resizeUpdateOutBuffer = undefined;
             }
           } else {
-            nextIfAble();
+            nextContinuation(subscriber, currentRootAnchorDims!, value);
           }
         }
         error(err: any): void {
