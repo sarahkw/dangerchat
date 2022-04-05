@@ -6,6 +6,7 @@ import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.dire
 export type MenuContinuation = {
     offsetVertical: number;
     offsetHorizontal: number | null;  // null means no horizontal offset
+    fixedHeight: number | null;  // if fixed then we might need to scroll
 
     updates: ResizeUpdates | undefined;  // undefined means there's no data to update
 };
@@ -29,15 +30,20 @@ export function menuCalculateSelf(
 
                         // the pipeline should have waited until these were both available in a packet, before waking us up
                         console.assert(!!rootDim && !!bodyDim);
+                        if (!rootDim || !bodyDim) return;
 
                         const mc: MenuContinuation = {
                             offsetHorizontal: value.offsetHorizontal,
                             offsetVertical: value.offsetVertical,
+                            fixedHeight: null,
                             updates: value.updates
                         };
 
-                        if (mc.offsetVertical + bodyDim!.height > rootDim!.height) {
-                            mc.offsetVertical = rootDim!.height - bodyDim!.height;
+                        if (bodyDim.height > rootDim.height) {
+                            mc.offsetVertical = 0;
+                            mc.fixedHeight = rootDim.height;
+                        } else if (mc.offsetVertical + bodyDim.height > rootDim.height) {
+                            mc.offsetVertical = rootDim.height - bodyDim.height;
                         }
 
                         subscription.next(mc);
@@ -73,12 +79,21 @@ export function menuCalculateNext(
                     rulerDim = value.updates?.updates.get(rulerElement)?.value || rulerDim;
 
                     console.assert(!!rootDim && !!rulerDim);
+                    if (!rootDim || !rulerDim) return;
 
                     const mc: MenuContinuation = {
                         offsetHorizontal: null,  // original menu can have horizontal offset, but subsequent menus are just side by side
-                        offsetVertical: value.offsetVertical + rulerDim!.height - borderPadding,
+                        offsetVertical: value.offsetVertical + rulerDim.height - borderPadding,
+                        fixedHeight: null,  // only the next menu will know whether its height should be fixed
                         updates: value.updates
                     };
+
+                    // if overflowed, align next one at bottom because the current one has scrollbar
+                    //
+                    // TODO or try vertical center? that might look better.
+                    if (value.fixedHeight !== null) {
+                        mc.offsetVertical = rootDim.height;
+                    }
 
                     subscription.next(mc);
                 }
@@ -101,6 +116,7 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
     return {
         offsetVertical: curr.offsetVertical,
         offsetHorizontal: curr.offsetHorizontal,
+        fixedHeight: curr.fixedHeight,
         updates: (!!prev.updates && !!curr.updates) ? ResizeUpdates.accumulateNewerData(prev.updates, curr.updates) : (curr.updates || prev.updates)
     };
 }

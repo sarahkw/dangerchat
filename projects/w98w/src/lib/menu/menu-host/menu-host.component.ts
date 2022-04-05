@@ -86,6 +86,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
           subscriber.next({
             offsetVertical: currentRootAnchorDims.y,
             offsetHorizontal: currentRootAnchorDims.x,
+            fixedHeight: null,
             updates: currentResizeUpdates
           });
         }
