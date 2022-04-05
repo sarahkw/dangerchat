@@ -17,15 +17,15 @@
     padding: 0;
 
     grid-template-rows:
-        [child-start bevel-start] var(--menu-border-padding)
+        [bevel-start] var(--menu-border-padding)
         repeat(var(--menu-n), [item-start] auto [item-end])
-        var(--menu-border-padding) [bevel-end overflow-start] 1fr [overflow-end child-end]
+        var(--menu-border-padding) [bevel-end]
         ;
 
     grid-template-columns:
         [bevel-start] var(--menu-border-padding) [item-start]
         auto
-        [item-end] var(--menu-border-padding) [bevel-end child-start] auto [child-end]
+        [item-end] var(--menu-border-padding) [bevel-end]
         ;
 
     margin-left: var(--menu-ip-offset-h);
@@ -46,10 +46,6 @@
 
 :host(.menu-host-child):nth-child(n + 2) {
     margin-left: -3px;
-}
-
-.hug {
-    grid-area: child;
 }
 
 .ruler {
