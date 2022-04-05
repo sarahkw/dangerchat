@@ -1,4 +1,6 @@
-import { finalize, Observable, Observer, pipe, Subscription } from "rxjs";
+import { finalize, Observable, Observer, pipe } from "rxjs";
+import { initialize } from "../rx/initialize";
+import { reduceUntilThenPassthrough } from "../rx/reduce-until-then-passthrough";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
 export function menuNext(
@@ -120,102 +122,4 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
         bodyOffsetHorizontal: curr.bodyOffsetHorizontal,
         updates: (!!prev.updates && !!curr.updates) ? ResizeUpdates.accumulateNewerData(prev.updates, curr.updates) : (curr.updates || prev.updates)
     };
-}
-
-function initialize<T>(callback: () => void) {
-    return function (source: Observable<T>) {
-        return new Observable<T>(subscriber => {
-            const subscription = source.subscribe(subscriber);
-
-            callback();
-
-            return subscription;
-        });
-    };
-}
-
-function reduceUntilThenPassthrough<T>(
-    // reduce
-    accumulator: (acc: T, value: T) => T,
-    seed: any | undefined,
-
-    // until - runs on the output of the accumulator
-    predicate: (value: T | undefined) => boolean
-) {
-    return function (source: Observable<T>) {
-        return new Observable<T>(subscriber => {
-            let state: any = seed;
-            let passthrough = predicate(state);
-
-            return source.subscribe(new class implements Observer<T> {
-                next(value: T): void {
-                    if (!passthrough) {
-                        state = accumulator(state, value);
-                        if (predicate(state)) {
-                            passthrough = true;
-                            value = state;
-                            state = undefined;
-                        }
-                    }
-
-                    if (passthrough) {
-                        subscriber.next(value);
-                    }
-                }
-                error(err: any): void {
-                    subscriber.error(err);
-                }
-                complete(): void {
-                    subscriber.complete();
-                }
-            });
-        });
-    }
-}
-
-function completeWhenNull<T>() {
-    return function (source: Observable<T | null>) {
-        return new Observable<T>(subscriber => {
-            const box: {
-                subscription: Subscription | undefined;
-                needToUnsubscribeSynchronously: boolean;
-            } = {
-                subscription: undefined,
-                needToUnsubscribeSynchronously: false,
-            };
-            box.subscription = source.subscribe({
-                next(value: T | null): void {
-                    if (box.needToUnsubscribeSynchronously) {
-                        // dropping values because not unsubscribed in time
-
-                        // ok to flip the flag off in case of error or complete because rxjs
-                        // would stop sending values if those happen.
-                    } else if (value === null) {
-                        subscriber.complete();
-                        if (box.subscription) {
-                            box.subscription.unsubscribe();
-                        } else {
-                            box.needToUnsubscribeSynchronously = true;
-                        }
-                    } else {
-                        subscriber.next(value);
-                    }
-                },
-                error(err: any): void {
-                    subscriber.error(err);
-                    box.needToUnsubscribeSynchronously = false;
-                },
-                complete(): void {
-                    subscriber.complete();
-                    box.needToUnsubscribeSynchronously = false;
-                }
-            });
-            if (box.needToUnsubscribeSynchronously) {
-                box.subscription.unsubscribe();
-                return;
-            } else {
-                return box.subscription;
-            }
-        });
-    }
 }
