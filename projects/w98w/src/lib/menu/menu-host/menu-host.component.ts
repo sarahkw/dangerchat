@@ -93,6 +93,9 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
               updates: currentResizeUpdates
             }
           });
+
+          // don't want to send the same update again, it flows like water
+          currentResizeUpdates = undefined;
         }
       }
 
