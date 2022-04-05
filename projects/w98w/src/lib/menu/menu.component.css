@@ -46,6 +46,9 @@
 
 :host(.menu-host-child):nth-child(n + 2) {
     margin-left: -3px;
+
+    /* TODO out of sync with layout code */
+    margin-top: calc(var(--menu-ip-offset-v) - var(--menu-border-padding));
 }
 
 .ruler {
