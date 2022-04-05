@@ -2,6 +2,7 @@ import { finalize, Observable, Observer, pipe } from "rxjs";
 import { initialize } from "../rx/initialize";
 import { reduceUntilThenPassthrough } from "../rx/reduce-until-then-passthrough";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
+import { MenuComponent } from "./menu.component";
 
 export type MenuContinuation = {
     current: {
@@ -102,7 +103,9 @@ export function menuCalculateNext(
                     const mc: MenuContinuation = {
                         current: undefined,
                         next: {
-                            offsetHorizontal: null,  // original menu can have horizontal offset, but subsequent menus are just side by side
+                            // tell next menu to scoot into me unless i have scrollbar
+                            offsetHorizontal: current.fixedHeight !== null ? 0 : -3,
+
                             offsetVertical: current.offsetVertical + rulerDim.height - borderPadding,
                         },
 

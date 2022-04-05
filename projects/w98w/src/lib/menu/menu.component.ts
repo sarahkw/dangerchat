@@ -46,10 +46,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
-  @HostBinding('class.menu-host-child') get hbcMHC() {
-    // this is only to support debug view where we show the menu standalone
-    return !!this.menuContext;
-  }
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;

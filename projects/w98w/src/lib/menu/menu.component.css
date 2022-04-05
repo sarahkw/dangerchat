@@ -49,10 +49,6 @@ div.container {
     position: relative;
 }
 
-:host(.menu-host-child):nth-child(n + 2) {
-    margin-left: -3px;
-}
-
 .ruler {
     grid-column: item;
     grid-row-start: bevel;
