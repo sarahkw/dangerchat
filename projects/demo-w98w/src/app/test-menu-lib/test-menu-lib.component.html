@@ -58,37 +58,40 @@
             </menu>
         </li>
         <li w98w-menu-item="Absurdly Long">
-            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
-                <li w98w-menu-item="Longgggggg"></li>
-                <li w98w-menu-item="Longggggg"></li>
-                <li w98w-menu-item="Longgggg"></li>
-                <li w98w-menu-item="Longggg"></li>
-                <li w98w-menu-item="Longgg"></li>
-                <li w98w-menu-item="Longg"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Recur?" [explicitSubMenu]="menuTemp"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Long"></li>
-                <li w98w-menu-item="Longg"></li>
-                <li w98w-menu-item="Longgg"></li>
-                <li w98w-menu-item="Longggg"></li>
-                <li w98w-menu-item="Longgggg"></li>
-                <li w98w-menu-item="Longggggg"></li>
-                <li w98w-menu-item="Longgggggg"></li>
-            </menu>
+            <ng-template w98w-menu-template #menuAbsurdLong="menuTemplate" let-context>
+                <menu w98w-menu [menuContext]="context">
+                    <li w98w-menu-item="Longgggggg"></li>
+                    <li w98w-menu-item="Longggggg"></li>
+                    <li w98w-menu-item="Longgggg"></li>
+                    <li w98w-menu-item="Longggg"></li>
+                    <li w98w-menu-item="Longgg"></li>
+                    <li w98w-menu-item="Longg"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Recur?" [explicitSubMenu]="menuTemp"></li>
+                    <li w98w-menu-item="Again?" [explicitSubMenu]="menuAbsurdLong"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Long"></li>
+                    <li w98w-menu-item="Longg"></li>
+                    <li w98w-menu-item="Longgg"></li>
+                    <li w98w-menu-item="Longggg"></li>
+                    <li w98w-menu-item="Longgggg"></li>
+                    <li w98w-menu-item="Longggggg"></li>
+                    <li w98w-menu-item="Longgggggg"></li>
+                </menu>
+            </ng-template>
         </li>
     </menu>
 </ng-template>
