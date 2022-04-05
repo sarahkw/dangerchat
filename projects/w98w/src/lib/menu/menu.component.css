@@ -55,5 +55,5 @@
 .ruler {
     grid-column: item;
     grid-row-start: bevel;
-    grid-row-end: item-start var(--menu-parent-grid-index);
+    grid-row-end: item-start var(--menu-ruler-grid-index);
 }

@@ -27,9 +27,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', mioh || 'initial', RendererStyleFlags2.DashCase);
   }
 
-  @HostBinding('style.--menu-parent-grid-index') get hbMPGI() {
-    return this.inlineSubMenuChildIndex;
-  }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
@@ -115,6 +112,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //#region Inline Sub Menu
 
+
+  @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
+
   inlineSubMenu: MenuTemplateDirective | undefined;
   inlineSubMenuChildIndex: number | undefined;
   inlineSubMenuContext: MenuContext | undefined;
@@ -134,9 +134,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const nextContinuation$ =
       myCalculationsShared$.pipe(menuNext(this.elemRuler.nativeElement, menuContext.mlsoContext));
+    this.hbRulerGridIndex = this.getChildGridIndex(instance);
 
     this.inlineSubMenu = template;
-    this.inlineSubMenuChildIndex = this.getChildGridIndex(instance);
     this.inlineSubMenuContext = new class implements MenuContext {
       get menuContinuation$(): Observable<MenuContinuation> {
         return nextContinuation$;
