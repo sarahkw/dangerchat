@@ -13,17 +13,6 @@
                 </li>
             </menu>
         </li>
-        <li w98w-menu-item="Programs Copy">
-            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
-                <li w98w-menu-item="XOL Instant Messenger"></li>
-                <li w98w-menu-item="Xccessories">
-                    <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
-                        <li w98w-menu-item="Xinesweeper"></li>
-                        <li w98w-menu-item="Xgain?" [explicitSubMenu]="menuTemp"></li>
-                    </menu>
-                </li>
-            </menu>
-        </li>
         <li w98w-menu-item="Really Long">
             <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
                 <li w98w-menu-item="Recur?" [explicitSubMenu]="menuTemp"></li>
@@ -92,6 +81,11 @@
                     <li w98w-menu-item="Longgggggg"></li>
                 </menu>
             </ng-template>
+        </li>
+        <li w98w-menu-item="Absurdly Wide">
+            <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
+               <li w98w-menu-item="the quick brown fox jumps over the lazy dog, and then the dog greeted me. the dog is my neighbor's his name is spot. what a cliche name for a dog. the funny thing is he doesn't even have a spot on him."></li>
+            </menu>
         </li>
     </menu>
 </ng-template>
