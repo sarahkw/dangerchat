@@ -8,7 +8,11 @@ export interface MenuContext {
     get menuContinuation$(): Observable<MenuContinuation>;
     get mlsoContext(): MlsoMenuContext;
 
-    appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void;
+    appendMenu(
+        template: MenuTemplateDirective,
+        nextContinuation$: Observable<MenuContinuation>,
+        mlsoContext: MlsoMenuContext,
+        onSubMenuClose?: OnSubMenuClose): void;
     closeChildren(): void;
     endMenu(): void;
 

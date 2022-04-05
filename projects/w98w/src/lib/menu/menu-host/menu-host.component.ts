@@ -89,7 +89,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
       function nextIfAble() {
         if (currentRootAnchorDims) {
           subscriber.next({
-            bodyOffsetVertical: 0, // TODO XXX TEMP DISABLE currentRootAnchorDims.y,
+            bodyOffsetVertical: currentRootAnchorDims.y,
             bodyOffsetHorizontal: currentRootAnchorDims.x,
             updates: currentResizeUpdates
           });
@@ -179,8 +179,13 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
         get mlsoContext(): MlsoMenuContext {
           return mlsoContext;
         }
-        appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
-          // thiz.appendMenu(menuInstance, template, onSubMenuClose);
+        appendMenu(
+          template: MenuTemplateDirective,
+          nextContinuation$: Observable<MenuContinuation>,
+          mlsoContext: MlsoMenuContext,
+          onSubMenuClose?: OnSubMenuClose): void {
+
+          thiz.appendMenu(template, nextContinuation$, mlsoContext, onSubMenuClose);
         }
         closeChildren(): void {
           thiz.closeChildren(menuInstance);
@@ -192,6 +197,49 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
     };
 
     this.renderedMenu$.next([menuInstance]);
+  }
+
+  appendMenu(
+    template: MenuTemplateDirective,
+    nextContinuation$: Observable<MenuContinuation>,
+    mlsoContext: MlsoMenuContext,
+    onSubMenuClose?: OnSubMenuClose) {
+
+      const thiz = this;
+
+      const menuInstance: MenuInstance = {
+        template,
+        context: new class implements MenuContext {
+          get menuContinuation$(): Observable<MenuContinuation> {
+            return nextContinuation$;
+          }
+          get mlsoContext(): MlsoMenuContext {
+            return mlsoContext;
+          }
+          appendMenu(template: MenuTemplateDirective,
+            nextContinuation$: Observable<MenuContinuation>,
+            mlsoContext: MlsoMenuContext,
+            onSubMenuClose?: OnSubMenuClose): void {
+
+            thiz.appendMenu(template, nextContinuation$, mlsoContext, onSubMenuClose);
+          }
+          closeChildren(): void {
+            // TODO
+          }
+          endMenu(): void {
+            thiz.menuService.endMenu();
+          }
+        },
+        onSubMenuClose
+      };
+
+      const currentMenu = this.renderedMenu$.value;
+      if (!currentMenu) {
+        console.debug('missing current menu');
+        return;
+      }
+
+      this.renderedMenu$.next(currentMenu.concat(menuInstance));
   }
 
   endMenu() {

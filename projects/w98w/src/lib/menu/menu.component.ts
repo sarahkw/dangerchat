@@ -115,10 +115,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
 
-  inlineSubMenu: MenuTemplateDirective | undefined;
-  inlineSubMenuChildIndex: number | undefined;
-  inlineSubMenuContext: MenuContext | undefined;
-
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
     const menuContext = this.menuContext;
     if (!menuContext) {
@@ -136,29 +132,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       myCalculationsShared$.pipe(menuNext(this.elemRuler.nativeElement, menuContext.mlsoContext));
     this.hbRulerGridIndex = this.getChildGridIndex(instance);
 
-    this.inlineSubMenu = template;
-    this.inlineSubMenuContext = new class implements MenuContext {
-      get menuContinuation$(): Observable<MenuContinuation> {
-        return nextContinuation$;
-      }
-      get mlsoContext(): MlsoMenuContext {
-        return menuContext.mlsoContext;
-      }
-      appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
-        // TODO
-      }
-      closeChildren(): void {
-        // TODO
-      }
-      endMenu(): void {
-        // TODO
-      }
-    };
-  }
-
-  inlineSubMenuClose() {
-    this.inlineSubMenu = undefined;
-    this.nextMenuSubscription?.unsubscribe();
+    menuContext.appendMenu(template, nextContinuation$, menuContext.mlsoContext);
   }
 
   //#endregion
