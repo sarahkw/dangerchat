@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       let offsetV = 'initial';
       let offsetH = 'initial';
       let fixedHeight = 'initial';
+      let overflowY = 'initial';
 
     if (calcs) {
       console.assert(!!calcs.current);
@@ -36,13 +37,16 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       if (calcs.current.offsetHorizontal !== null)
         offsetH = `${calcs.current.offsetHorizontal}px`;
 
-      if (calcs.current.fixedHeight !== null)
+      if (calcs.current.fixedHeight !== null) {
         fixedHeight = `${calcs.current.fixedHeight}px`;
+        overflowY = 'scroll';
+      }
     }
 
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-v', offsetV, RendererStyleFlags2.DashCase);
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-h', offsetH, RendererStyleFlags2.DashCase);
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-fixed-h', fixedHeight, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-overflow-y', overflowY, RendererStyleFlags2.DashCase);
   }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;

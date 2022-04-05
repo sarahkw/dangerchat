@@ -14,7 +14,9 @@
     pointer-events: auto;
 
     max-height: var(--menu-calcs-fixed-h);
-    overflow: hidden auto;
+    /* we have to take 'scroll' from JS instead of using 'auto' because if we use auto, then firefox will try to keep the same width
+       and have the scrollbar intrude into us */
+    overflow-y: var(--menu-calcs-overflow-y);
 
     /* don't want that extra space at the bottom like it was drawing text. not using flex otherwise. */
     /* TODO: is there a better way to do this? i don't want to set font-size to 0 that seems like a worse hack than using flex */
