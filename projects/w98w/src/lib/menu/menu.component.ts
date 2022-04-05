@@ -36,9 +36,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         fixedHeight = `${calcs.fixedHeight}px`;
     }
 
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', offsetV, RendererStyleFlags2.DashCase);
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', offsetH, RendererStyleFlags2.DashCase);
-    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-fixed-h', fixedHeight, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-v', offsetV, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-h', offsetH, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-fixed-h', fixedHeight, RendererStyleFlags2.DashCase);
   }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;

@@ -7,13 +7,13 @@
     /* note: this was for when submenus were siblings instead of children. but this might still be needed we'll see */
     z-index: 0;
 
-    margin-left: var(--menu-ip-offset-h);
-    margin-top: var(--menu-ip-offset-v);
+    margin-left: var(--menu-calcs-offset-h);
+    margin-top: var(--menu-calcs-offset-v);
 
      /* overlay layer will be on top of everything, which would disable pointer events. clearly this menu should take pointer events. */
     pointer-events: auto;
 
-    max-height: var(--menu-ip-fixed-h);
+    max-height: var(--menu-calcs-fixed-h);
     overflow-y: auto;
 }
 
