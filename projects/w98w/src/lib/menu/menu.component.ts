@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
-import { map, Observable, of, share, Subscription } from 'rxjs';
+import { Observable, share, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { Colors } from '../colors';
@@ -10,7 +10,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
-import { menuCalculate, MenuContinuation, menuEngine, menuNext } from './menu-continuation';
+import { menuCalculate, MenuContinuation, menuNext } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MlsoMenuContext } from './menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from './menu-template.directive';
@@ -120,8 +120,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   inlineSubMenuContext: MenuContext | undefined;
 
   inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
-    const thiz = this;
-
     const menuContext = this.menuContext;
     if (!menuContext) {
       console.debug('missing menu context');

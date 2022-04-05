@@ -1,4 +1,4 @@
-import { finalize, map, Observable, Observer, pipe, Subject, Subscription } from "rxjs";
+import { finalize, Observable, Observer, pipe, Subscription } from "rxjs";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
 export function menuNext(
@@ -100,85 +100,6 @@ export function menuCalculate(
             });
         });
     };
-}
-
-export function menuEngine(
-    continuation$: Observable<MenuContinuation> /*,
-    expandSlotElement$: Subject<Element | null>,
-    bodyElement: Element,
-    mlsoMenuContext: MlsoMenuContext
-    */
-    )
-{
-    // TODO: wait for our body size and the root size to come. that's how we know where
-    //       we should draw ourselves.
-
-    // TODO: upon receiving an expandSlotElement$, wait for its size, and then when we get it,
-    //       we can start passing along continuation.
-    //
-    //       also, think about passing the continuation to the next menu as an observable.
-
-    // TODO: small step: next menu just draws where the current menu ends, so kinda like stacking.
-
-    /*
-    return continuation$.pipe(map((value: MenuContinuation): MenuCalculationFrame => ({
-        render: {
-            myOffsetHorizontal: value.bodyOffsetHorizontal,
-            myOffsetVertical: value.bodyOffsetVertical
-        },
-        continuation: undefined
-    })));
-    */
-
-    /*
-    const state_ = new MenuCalculationState(bodyElement);
-
-    return new Observable<MenuCalculationFrame>(subscriber => {
-
-        let sub_continuation = continuation$.subscribe({
-            next(value: MenuContinuation): void {
-
-            },
-            error(err: any): void {
-
-            },
-            complete(): void {
-
-            }
-        });
-
-        let sub_expandSlotElement = expandSlotElement$.subscribe({
-            next(value: Element | null): void {
-
-            }
-
-            // error and complete unsupported
-        });
-
-        return sub_continuation.add(sub_expandSlotElement);
-    });
-    */
-}
-
-class MenuCalculationState {
-    ready: boolean = false;
-
-    bodyElement: Element;
-    expandSlotElement: Element | null = null;
-
-    // keep these precursors to calculation so we can know when we need rerender, and to wait until ready
-    prevExpandSlotVertical: number | undefined;
-    prevExpandSlotHorizontal: number | null | undefined;
-    precursorRoot: DOMRectReadOnly | undefined;
-    precursorBody: DOMRectReadOnly | undefined;
-    precursorExpandSlot: DOMRectReadOnly | null | undefined;
-
-    // batch things up here until we're ready
-    batchedUpdates: ResizeUpdates | null = new ResizeUpdates();
-
-    constructor(bodyElement: Element) {
-        this.bodyElement = bodyElement;
-    }
 }
 
 export type MenuContinuation = {
