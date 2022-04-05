@@ -185,7 +185,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
           mlsoContext: MlsoMenuContext,
           onSubMenuClose?: OnSubMenuClose): void {
 
-          thiz.appendMenu(template, nextContinuation$, mlsoContext, onSubMenuClose);
+          thiz.appendMenu(menuInstance, template, nextContinuation$, mlsoContext, onSubMenuClose);
         }
         closeChildren(): void {
           thiz.closeChildren(menuInstance);
@@ -200,6 +200,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   appendMenu(
+    caller: MenuInstance,
     template: MenuTemplateDirective,
     nextContinuation$: Observable<MenuContinuation>,
     mlsoContext: MlsoMenuContext,
@@ -221,7 +222,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             mlsoContext: MlsoMenuContext,
             onSubMenuClose?: OnSubMenuClose): void {
 
-            thiz.appendMenu(template, nextContinuation$, mlsoContext, onSubMenuClose);
+            thiz.appendMenu(menuInstance, template, nextContinuation$, mlsoContext, onSubMenuClose);
           }
           closeChildren(): void {
             thiz.closeChildren(menuInstance);
@@ -239,7 +240,18 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
         return;
       }
 
-      this.renderedMenu$.next(currentMenu.concat(menuInstance));
+      const callerPosition = currentMenu.indexOf(caller);
+      if (callerPosition == -1) {
+        console.debug('who called?');
+        return;
+      }
+
+      const newMenu = currentMenu.slice(0, callerPosition + 1); // don't lose who's requesting the submenu open!
+      newMenu.push(menuInstance);
+
+      // XXX not currently calling the 'closed' callbacks even though we should.
+
+      this.renderedMenu$.next(newMenu);
   }
 
   endMenu() {
@@ -248,30 +260,6 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
     this.rootAnchor = undefined;
     this.checkRootAnchor();
   }
-
-  //#region Migrate from MenuService
-
-  // appendMenu(afterInstance: MenuInstance, template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
-  //   const oldval = this.renderedMenu$.value;
-
-  //   console.assert(oldval !== undefined);
-
-  //   if (oldval !== undefined) {
-  //     const idx = oldval.indexOf(afterInstance);
-  //     let newval: MaybeMenu;
-  //     if (idx == -1) {
-  //       newval = oldval;
-  //     } else {
-  //       const KEEP_CURRENT = 1;
-  //       newval = oldval.slice(0, idx + KEEP_CURRENT);
-
-  //       for (let i = idx + KEEP_CURRENT; i < oldval.length; ++i) {
-  //         oldval[i].onSubMenuClose?.onSubMenuClose();
-  //       }
-  //     }
-  //     this.renderedMenu$.next(newval.concat({template, onSubMenuClose: onSubMenuClose}));
-  //   }
-  // }
 
   closeChildren(afterInstance: MenuInstance) {
     const oldval = this.renderedMenu$.value;
@@ -298,6 +286,4 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
       }
     }
   }
-
-  //#endregion
 }
