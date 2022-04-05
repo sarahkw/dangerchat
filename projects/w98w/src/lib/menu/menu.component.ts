@@ -38,7 +38,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
   @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
 
-  @HostBinding('style.--menu-border-padding') hbMBP = `${Bevels.MENU.getPadding()}px`;
+  static readonly borderPadding = Bevels.MENU.getPadding();
+  @HostBinding('style.--menu-border-padding') hbMBP = `${MenuComponent.borderPadding}px`;
   @HostBinding('style.--menu-n') get hbMN() {
     return this.childItems.length;
   }
@@ -124,7 +125,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
     menuContext.appendMenu(
       toOpenTemplate,
-      myCalculationsShared$.pipe(menuCalculateNext(this.elemRuler.nativeElement, menuContext.mlsoContext)),
+      myCalculationsShared$.pipe(menuCalculateNext(this.elemRuler.nativeElement, menuContext.mlsoContext, MenuComponent.borderPadding)),
       menuContext.mlsoContext,
       onSubMenuClose);
   }

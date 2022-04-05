@@ -55,7 +55,8 @@ export function menuCalculateSelf(
 
 export function menuCalculateNext(
     rulerElement: Element,
-    mlsoMenuContext: MlsoMenuContext) {
+    mlsoMenuContext: MlsoMenuContext,
+    borderPadding: number) {
 
     return function (source: Observable<MenuContinuation>) {
         return new Observable<MenuContinuation>(subscription => {
@@ -75,7 +76,7 @@ export function menuCalculateNext(
 
                     const mc: MenuContinuation = {
                         offsetHorizontal: null,  // original menu can have horizontal offset, but subsequent menus are just side by side
-                        offsetVertical: value.offsetVertical + rulerDim!.height,
+                        offsetVertical: value.offsetVertical + rulerDim!.height - borderPadding,
                         updates: value.updates
                     };
 
