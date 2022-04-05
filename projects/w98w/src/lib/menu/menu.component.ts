@@ -146,9 +146,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       get mlsoContext(): MlsoMenuContext {
         return menuContext.mlsoContext;
       }
-      parent(): MenuComponent | undefined {
-        return thiz;
-      }
       appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
         // TODO
       }

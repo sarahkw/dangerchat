@@ -1,10 +1,9 @@
 import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, distinctUntilChanged, map, Observable, Observer, Subscription } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Observable, Observer, Subscription } from 'rxjs';
 import { MenuContext } from '../menu-context';
 import { MenuContinuation } from '../menu-continuation';
 import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from '../menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from '../menu-template.directive';
-import { MenuComponent } from '../menu.component';
 import { MenuService } from '../menu.service';
 
 //#region Migrate from MenuService
@@ -167,9 +166,6 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             }
             get mlsoContext(): MlsoMenuContext {
               return mlsoContext;
-            }
-            parent(): MenuComponent | undefined {
-              return undefined;  // no parent for root menu
             }
             appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
               // thiz.appendMenu(menuInstance, template, onSubMenuClose);
