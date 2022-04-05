@@ -2,7 +2,6 @@ import { finalize, Observable, Observer, pipe } from "rxjs";
 import { initialize } from "../rx/initialize";
 import { reduceUntilThenPassthrough } from "../rx/reduce-until-then-passthrough";
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
-import { MenuComponent } from "./menu.component";
 
 export type MenuContinuation = {
     current: {
