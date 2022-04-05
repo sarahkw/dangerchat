@@ -147,50 +147,58 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
   ngOnInit(): void {
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
-        const thiz = this;
-
-        this.rootAnchor = newMenu.anchor;
-        this.checkRootAnchor();
-
-        const {context: mlsoContext, resizeUpdates$} = this.menuLayoutSizeObserver.generate();
-
-        const menuContinuation$ = MenuHostComponent.rootMenuContinuation$(this.distinctRootAnchorDims$, resizeUpdates$, () => {
-          this.checkRootAnchor();
-        });
-
-        const menuInstance: MenuInstance = {
-          template: newMenu.template,
-          context: new class implements MenuContext {
-            get menuContinuation$(): Observable<MenuContinuation> {
-              return menuContinuation$;
-            }
-            get mlsoContext(): MlsoMenuContext {
-              return mlsoContext;
-            }
-            appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
-              // thiz.appendMenu(menuInstance, template, onSubMenuClose);
-            }
-            closeChildren(): void {
-              thiz.closeChildren(menuInstance);
-            }
-            endMenu(): void {
-              thiz.menuService.endMenu();
-            }
-          }
-        };
-
-        this.renderedMenu$.next([menuInstance]);
+        this.beginMenu(newMenu);
       } else {
-        this.renderedMenu$.next(undefined);
-
-        this.rootAnchor = undefined;
-        this.checkRootAnchor();
+        this.endMenu();
       }
     });
   }
 
   ngOnDestroy(): void {
     this.rootMenuSubscription?.unsubscribe();
+  }
+
+  beginMenu(newMenu: RootMenuDescriptor) {
+    const thiz = this;
+
+    this.rootAnchor = newMenu.anchor;
+    this.checkRootAnchor();
+
+    const {context: mlsoContext, resizeUpdates$} = this.menuLayoutSizeObserver.generate();
+
+    const menuContinuation$ = MenuHostComponent.rootMenuContinuation$(this.distinctRootAnchorDims$, resizeUpdates$, () => {
+      this.checkRootAnchor();
+    });
+
+    const menuInstance: MenuInstance = {
+      template: newMenu.template,
+      context: new class implements MenuContext {
+        get menuContinuation$(): Observable<MenuContinuation> {
+          return menuContinuation$;
+        }
+        get mlsoContext(): MlsoMenuContext {
+          return mlsoContext;
+        }
+        appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void {
+          // thiz.appendMenu(menuInstance, template, onSubMenuClose);
+        }
+        closeChildren(): void {
+          thiz.closeChildren(menuInstance);
+        }
+        endMenu(): void {
+          thiz.menuService.endMenu();
+        }
+      }
+    };
+
+    this.renderedMenu$.next([menuInstance]);
+  }
+
+  endMenu() {
+    this.renderedMenu$.next(undefined);
+
+    this.rootAnchor = undefined;
+    this.checkRootAnchor();
   }
 
   //#region Migrate from MenuService
