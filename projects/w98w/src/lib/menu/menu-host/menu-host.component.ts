@@ -224,7 +224,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             thiz.appendMenu(template, nextContinuation$, mlsoContext, onSubMenuClose);
           }
           closeChildren(): void {
-            // TODO
+            thiz.closeChildren(menuInstance);
           }
           endMenu(): void {
             thiz.menuService.endMenu();
@@ -275,10 +275,9 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
   closeChildren(afterInstance: MenuInstance) {
     const oldval = this.renderedMenu$.value;
+    console.assert(!!oldval);
 
-    console.assert(oldval !== undefined);
-
-    if (oldval !== undefined) {
+    if (oldval) {
       const idx = oldval.indexOf(afterInstance);
       let newval: MaybeMenu;
       if (idx == -1) {
@@ -293,11 +292,10 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
           oldval[i].onSubMenuClose?.onSubMenuClose();
         }
 
-        if (!hasClosed) {
-          return;
+        if (hasClosed) {
+          this.renderedMenu$.next(newval);
         }
       }
-      this.renderedMenu$.next(newval);
     }
   }
 

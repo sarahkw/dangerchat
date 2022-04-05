@@ -11,6 +11,7 @@ import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
 import { menuCalculateSelf, MenuContinuation, menuCalculateNext } from './menu-continuation';
+import { OnSubMenuClose } from './menu-host/menu-host.component';
 import { MenuTemplateDirective } from './menu-template.directive';
 
 @Component({
@@ -109,7 +110,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
 
-  appendMenuHelper(menuContext: MenuContext, fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective) {
+  appendMenuHelper(menuContext: MenuContext, fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
     // asking caller for menuContext for consistency at call site
 
     const myCalculationsShared$ = this.myCalculationsShared$;
@@ -124,7 +125,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     menuContext.appendMenu(
       toOpenTemplate,
       myCalculationsShared$.pipe(menuCalculateNext(this.elemRuler.nativeElement, menuContext.mlsoContext)),
-      menuContext.mlsoContext);
+      menuContext.mlsoContext,
+      onSubMenuClose);
   }
 
   static readonly PID = new class implements PixelImageDrawer {
