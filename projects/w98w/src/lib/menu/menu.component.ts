@@ -109,11 +109,12 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
 
-  inlineSubMenuOpen(fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective) {
-    const menuContext = this.menuContext;
+  appendMenuHelper(menuContext: MenuContext, fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective) {
+    // asking caller for menuContext for consistency at call site
+
     const myCalculationsShared$ = this.myCalculationsShared$;
 
-    if (!menuContext || !myCalculationsShared$) {
+    if (!myCalculationsShared$) {
       console.debug('cannot open, missing inputs');
       return;
     }
