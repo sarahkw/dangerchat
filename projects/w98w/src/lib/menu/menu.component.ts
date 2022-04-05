@@ -33,7 +33,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
   @HostBinding('class.menu-host-child') get hbcMHC() {
-    return this.menuContext?.menuHostChildStyles();
+    // this is only to support debug view where we show the menu standalone
+    return !!this.menuContext;
   }
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
@@ -144,9 +145,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       get mlsoContext(): MlsoMenuContext {
         return menuContext.mlsoContext;
-      }
-      menuHostChildStyles(): boolean {
-        return false;
       }
       parent(): MenuComponent | undefined {
         return thiz;

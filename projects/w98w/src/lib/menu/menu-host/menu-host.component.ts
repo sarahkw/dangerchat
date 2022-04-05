@@ -168,9 +168,6 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             get mlsoContext(): MlsoMenuContext {
               return mlsoContext;
             }
-            menuHostChildStyles(): boolean {
-              return true;
-            }
             parent(): MenuComponent | undefined {
               return undefined;  // no parent for root menu
             }

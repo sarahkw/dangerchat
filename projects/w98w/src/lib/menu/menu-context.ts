@@ -8,7 +8,6 @@ import { MenuComponent } from "./menu.component";
 export interface MenuContext {
     get menuContinuation$(): Observable<MenuContinuation>;
     get mlsoContext(): MlsoMenuContext;
-    menuHostChildStyles(): boolean;
     parent(): MenuComponent | undefined;
 
     appendMenu(template: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose): void;
