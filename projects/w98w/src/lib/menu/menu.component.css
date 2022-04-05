@@ -10,7 +10,9 @@
     margin-left: var(--menu-ip-offset-h);
     margin-top: var(--menu-ip-offset-v);
 
+     /* overlay layer will be on top of everything, which would disable pointer events. clearly this menu should take pointer events. */
     pointer-events: auto;
+
     max-height: var(--menu-ip-fixed-h);
     overflow-y: auto;
 }
