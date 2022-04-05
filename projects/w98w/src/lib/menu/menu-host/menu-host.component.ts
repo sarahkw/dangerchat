@@ -77,6 +77,74 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
     this.checkRootAnchor();
   }
 
+  private static rootMenuContinuation(
+    distinctRootAnchorDims$: Observable<Dim | undefined>,
+    resizeUpdates$: Observable<ResizeUpdates>,
+    checkRootAnchor: () => void) {
+
+    return new Observable<MenuContinuation>(subscriber => {
+
+      let currentRootAnchorDims: Dim | undefined;
+      let currentResizeUpdates: ResizeUpdates | undefined;
+
+      function nextIfAble() {
+        if (currentRootAnchorDims) {
+          subscriber.next({
+            bodyOffsetVertical: 0, // TODO XXX TEMP DISABLE currentRootAnchorDims.y,
+            bodyOffsetHorizontal: currentRootAnchorDims.x,
+            updates: currentResizeUpdates
+          });
+        }
+      }
+
+      let subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
+        next(value: Dim | undefined): void {
+          currentRootAnchorDims = value;
+          nextIfAble();
+        }
+        error(err: any): void {
+          subscriber.error(err);
+        }
+        complete(): void {
+          subscriber.complete();
+        }
+      });
+
+      // if distinctRootAnchorDims$ completes, the other subscription we add to its subscription
+      // will also get torn down.
+
+      subscription.add(resizeUpdates$.subscribe(new class implements Observer<ResizeUpdates> {
+        next(value: ResizeUpdates): void {
+          currentResizeUpdates = value;
+
+          if (value.root) {
+            // checkRootAnchor because it's possible the root anchor moved due to resize of root.
+            // for example, if it's aligned to the bottom of the root.
+            //
+            // checkRootAnchor would have next'ed itself so we shouldn't duplicate
+            const old = currentRootAnchorDims;
+            checkRootAnchor();
+            if (old == currentRootAnchorDims) {
+              nextIfAble();
+            }
+          } else {
+            nextIfAble();
+          }
+        }
+        error(err: any): void {
+          subscriber.error(err);
+          subscription.unsubscribe(); // the other one
+        }
+        complete(): void {
+          subscriber.complete();
+          subscription.unsubscribe(); // the other one
+        }
+      }));
+
+      return subscription;
+    });
+  }
+
   ngOnInit(): void {
     this.rootMenuSubscription = this.menuService.activeRootMenu$.subscribe(newMenu => {
       if (newMenu) {
@@ -87,66 +155,8 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
         const {context: mlsoContext, resizeUpdates$} = this.menuLayoutSizeObserver.generate();
 
-        const menuContinuation$ = new Observable<MenuContinuation>(subscriber => {
-
-          let currentRootAnchorDims: Dim | undefined;
-          let currentResizeUpdates: ResizeUpdates | undefined;
-
-          function nextIfAble() {
-            if (currentRootAnchorDims) {
-              subscriber.next({
-                bodyOffsetVertical: 0, // TODO XXX TEMP DISABLE currentRootAnchorDims.y,
-                bodyOffsetHorizontal: currentRootAnchorDims.x,
-                updates: currentResizeUpdates
-              });
-            }
-          }
-
-          let subscription = this.distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
-            next(value: Dim | undefined): void {
-              currentRootAnchorDims = value;
-              nextIfAble();
-            }
-            error(err: any): void {
-              subscriber.error(err);
-            }
-            complete(): void {
-              subscriber.complete();
-            }
-          });
-
-          // if distinctRootAnchorDims$ completes, the other subscription we add to its subscription
-          // will also get torn down.
-
-          subscription.add(resizeUpdates$.subscribe(new class implements Observer<ResizeUpdates> {
-            next(value: ResizeUpdates): void {
-              currentResizeUpdates = value;
-
-              if (value.root) {
-                // checkRootAnchor because it's possible the root anchor moved due to resize of root.
-                // for example, if it's aligned to the bottom of the root.
-                //
-                // checkRootAnchor would have next'ed itself so we shouldn't duplicate
-                const old = currentRootAnchorDims;
-                thiz.checkRootAnchor();
-                if (old == currentRootAnchorDims) {
-                  nextIfAble();
-                }
-              } else {
-                nextIfAble();
-              }
-            }
-            error(err: any): void {
-              subscriber.error(err);
-              subscription.unsubscribe(); // the other one
-            }
-            complete(): void {
-              subscriber.complete();
-              subscription.unsubscribe(); // the other one
-            }
-          }));
-
-          return subscription;
+        const menuContinuation$ = MenuHostComponent.rootMenuContinuation(this.distinctRootAnchorDims$, resizeUpdates$, () => {
+          this.checkRootAnchor();
         });
 
         const menuInstance: MenuInstance = {
