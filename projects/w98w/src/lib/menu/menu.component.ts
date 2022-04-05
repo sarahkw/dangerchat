@@ -37,7 +37,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
   @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
 
-  // These are the new ones for the grid "cartridge"
   @HostBinding('style.--menu-border-padding') hbMBP = `${Bevels.MENU.getPadding()}px`;
   @HostBinding('style.--menu-n') get hbMN() {
     return this.childItems.length;
@@ -108,32 +107,24 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     return 0;
   }
 
-  //#region Inline Sub Menu
-
-
   @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
 
-  inlineSubMenuOpen(instance: MenuItemComponent, template: MenuTemplateDirective) {
+  inlineSubMenuOpen(fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective) {
     const menuContext = this.menuContext;
-    if (!menuContext) {
-      console.debug('missing menu context');
-      return;
-    }
-
     const myCalculationsShared$ = this.myCalculationsShared$;
-    if (!myCalculationsShared$) {
-      console.debug('missing calcs');
+
+    if (!menuContext || !myCalculationsShared$) {
+      console.debug('cannot open, missing inputs');
       return;
     }
 
-    const nextContinuation$ =
-      myCalculationsShared$.pipe(menuCalculateNext(this.elemRuler.nativeElement, menuContext.mlsoContext));
-    this.hbRulerGridIndex = this.getChildGridIndex(instance);
+    this.hbRulerGridIndex = this.getChildGridIndex(fromItem);
 
-    menuContext.appendMenu(template, nextContinuation$, menuContext.mlsoContext);
+    menuContext.appendMenu(
+      toOpenTemplate,
+      myCalculationsShared$.pipe(menuCalculateNext(this.elemRuler.nativeElement, menuContext.mlsoContext)),
+      menuContext.mlsoContext);
   }
-
-  //#endregion
 
   static readonly PID = new class implements PixelImageDrawer {
     private styleInjector = new StyleInjector();
