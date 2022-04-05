@@ -77,7 +77,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
     this.checkRootAnchor();
   }
 
-  private static rootMenuContinuation(
+  private static rootMenuContinuation$(
     distinctRootAnchorDims$: Observable<Dim | undefined>,
     resizeUpdates$: Observable<ResizeUpdates>,
     checkRootAnchor: () => void) {
@@ -155,7 +155,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
         const {context: mlsoContext, resizeUpdates$} = this.menuLayoutSizeObserver.generate();
 
-        const menuContinuation$ = MenuHostComponent.rootMenuContinuation(this.distinctRootAnchorDims$, resizeUpdates$, () => {
+        const menuContinuation$ = MenuHostComponent.rootMenuContinuation$(this.distinctRootAnchorDims$, resizeUpdates$, () => {
           this.checkRootAnchor();
         });
 
