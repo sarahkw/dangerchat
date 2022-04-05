@@ -7,6 +7,9 @@
     border: 0;
     text-align: left;
     margin: 0; /* safari ipados */
+
+    /* don't let long text force this button to be wider */
+    overflow: hidden;
 }
 
 /* Make disabled button bodies look disabled */

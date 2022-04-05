@@ -251,14 +251,13 @@ Bevel and focus ants will work. It can take a body to put something into its con
         <td>Div, text, flex children, equal width</td>
         <td>
             <div style="width: 400px; background-color: green; padding: 10px; overflow: auto; resize: horizontal; margin-top: 2px; display: flex;">
-                <button w98w-wbutton [extraLabel]="longText" [style.flex]="1" [style.width.px]="0">
+                <button w98w-wbutton [extraLabel]="longText" style="flex: 1 1 0;">
                     <div wbuttonBody style="background-color: red; width: 25px; height: 25px;"></div>
                 </button>
-                <button w98w-wbutton extraLabel="this text isn't that long" [style.flex]="1">
+                <button w98w-wbutton extraLabel="this text isn't that long" style="flex: 1 1 0;">
                     <div wbuttonBody style="background-color: red; width: 25px; height: 25px;"></div>
                 </button>
             </div>
-            <p>use trick to set width = 0, flex = 1, and let flexbox handle it. otherwise, it'll make the width explode</p>
         </td>
     </tr>
     <tr>
@@ -273,14 +272,6 @@ Bevel and focus ants will work. It can take a body to put something into its con
                 </button>
             </div>
             <p>horizontal taskbar would do this</p>
-        </td>
-    </tr>
-    <tr>
-        <td>unsolved mystery</td>
-        <td>
-            <p>have the button as a flex child, if it doesn't overflow, let it keep its normal width.</p>
-
-            <p>if it does overflow, have it shrink in order to not push the later items off.</p>
         </td>
     </tr>
 </table>
