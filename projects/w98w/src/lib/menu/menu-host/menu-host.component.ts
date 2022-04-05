@@ -6,8 +6,6 @@ import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from 
 import { MenuTemplateDirective } from '../menu-template.directive';
 import { MenuService } from '../menu.service';
 
-//#region Migrate from MenuService
-
 export interface OnSubMenuClose {
   onSubMenuClose(): void;
 }
@@ -17,14 +15,11 @@ export type MenuInstance = {
   context: MenuContext,
   onSubMenuClose?: OnSubMenuClose
 };
-type MaybeMenu = MenuInstance[] | undefined;
 
 export type RootMenuDescriptor = {
   template: MenuTemplateDirective;
   anchor: HTMLElement;
 };
-
-//#endregion
 
 type Dim = {x: number, y: number};
 
@@ -35,7 +30,7 @@ type Dim = {x: number, y: number};
 })
 export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
-  renderedMenu$: BehaviorSubject<MaybeMenu> = new BehaviorSubject(undefined as MaybeMenu);
+  renderedMenu$: BehaviorSubject<MenuInstance[] | undefined> = new BehaviorSubject(undefined as any);
   private rootMenuSubscription?: Subscription;
 
   private rootAnchor: Element | undefined;
@@ -267,12 +262,11 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
     if (oldval) {
       const idx = oldval.indexOf(afterInstance);
-      let newval: MaybeMenu;
       if (idx == -1) {
         return;  // unexpected situation, why a menu that doesn't exist want to close its children?
       } else {
         const KEEP_CURRENT = 1;
-        newval = oldval.slice(0, idx + KEEP_CURRENT);
+        let newval = oldval.slice(0, idx + KEEP_CURRENT);
 
         let hasClosed = false;
         for (let i = idx + KEEP_CURRENT; i < oldval.length; ++i) {
