@@ -10,9 +10,7 @@ import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
 import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
-import { menuCalculate, MenuContinuation, menuNext } from './menu-continuation';
-import { OnSubMenuClose } from './menu-host/menu-host.component';
-import { MlsoMenuContext } from './menu-layout-size-observer.directive';
+import { menuCalculateSelf, MenuContinuation, menuCalculateNext } from './menu-continuation';
 import { MenuTemplateDirective } from './menu-template.directive';
 
 @Component({
@@ -77,7 +75,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.menuContext) {
       this.myCalculationsShared$ =
         this.menuContext.menuContinuation$.pipe(
-          menuCalculate(this.elemBevel.nativeElement, this.menuContext.mlsoContext),
+          menuCalculateSelf(this.elemBevel.nativeElement, this.menuContext.mlsoContext),
           share());
 
       this.menuRenderSubscription = this.myCalculationsShared$
@@ -129,7 +127,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const nextContinuation$ =
-      myCalculationsShared$.pipe(menuNext(this.elemRuler.nativeElement, menuContext.mlsoContext));
+      myCalculationsShared$.pipe(menuCalculateNext(this.elemRuler.nativeElement, menuContext.mlsoContext));
     this.hbRulerGridIndex = this.getChildGridIndex(instance);
 
     menuContext.appendMenu(template, nextContinuation$, menuContext.mlsoContext);
