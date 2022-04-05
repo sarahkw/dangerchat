@@ -10,11 +10,15 @@
     margin-left: var(--menu-calcs-offset-h);
     margin-top: var(--menu-calcs-offset-v);
 
-     /* overlay layer will be on top of everything, which would disable pointer events. clearly this menu should take pointer events. */
+    /* overlay layer will be on top of everything, which would disable pointer events. clearly this menu should take pointer events. */
     pointer-events: auto;
 
     max-height: var(--menu-calcs-fixed-h);
     overflow: hidden auto;
+
+    /* don't want that extra space at the bottom like it was drawing text. not using flex otherwise. */
+    /* TODO: is there a better way to do this? i don't want to set font-size to 0 that seems like a worse hack than using flex */
+    display: flex;
 }
 
 div.container {
