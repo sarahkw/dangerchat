@@ -4,9 +4,8 @@ import { reduceUntilThenPassthrough } from "../rx/reduce-until-then-passthrough"
 import { ResizeUpdates, MlsoMenuContext } from "./menu-layout-size-observer.directive";
 
 export type MenuContinuation = {
-    // these will always have data, we'll wait if we have to
-    bodyOffsetVertical: number;
-    bodyOffsetHorizontal: number | null;  // null means no horizontal offset
+    offsetVertical: number;
+    offsetHorizontal: number | null;  // null means no horizontal offset
 
     updates: ResizeUpdates | undefined;  // undefined means there's no data to update
 };
@@ -32,13 +31,13 @@ export function menuCalculateSelf(
                         console.assert(!!rootDim && !!bodyDim);
 
                         const mc: MenuContinuation = {
-                            bodyOffsetHorizontal: value.bodyOffsetHorizontal,
-                            bodyOffsetVertical: value.bodyOffsetVertical,
+                            offsetHorizontal: value.offsetHorizontal,
+                            offsetVertical: value.offsetVertical,
                             updates: value.updates
                         };
 
-                        if (mc.bodyOffsetVertical + bodyDim!.height > rootDim!.height) {
-                            mc.bodyOffsetVertical = rootDim!.height - bodyDim!.height;
+                        if (mc.offsetVertical + bodyDim!.height > rootDim!.height) {
+                            mc.offsetVertical = rootDim!.height - bodyDim!.height;
                         }
 
                         subscription.next(mc);
@@ -75,8 +74,8 @@ export function menuCalculateNext(
                     console.assert(!!rootDim && !!rulerDim);
 
                     const mc: MenuContinuation = {
-                        bodyOffsetHorizontal: null,  // original menu can have horizontal offset, but subsequent menus are just side by side
-                        bodyOffsetVertical: value.bodyOffsetVertical + rulerDim!.height,
+                        offsetHorizontal: null,  // original menu can have horizontal offset, but subsequent menus are just side by side
+                        offsetVertical: value.offsetVertical + rulerDim!.height,
                         updates: value.updates
                     };
 
@@ -99,8 +98,8 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
     }
 
     return {
-        bodyOffsetVertical: curr.bodyOffsetVertical,
-        bodyOffsetHorizontal: curr.bodyOffsetHorizontal,
+        offsetVertical: curr.offsetVertical,
+        offsetHorizontal: curr.offsetHorizontal,
         updates: (!!prev.updates && !!curr.updates) ? ResizeUpdates.accumulateNewerData(prev.updates, curr.updates) : (curr.updates || prev.updates)
     };
 }

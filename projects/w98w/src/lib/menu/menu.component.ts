@@ -82,8 +82,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(value => {
           if (value) {
               this.setStyleMIOVAndH(
-                `${value.bodyOffsetVertical}px`,
-                value.bodyOffsetHorizontal ? `${value.bodyOffsetHorizontal}px` : undefined);
+                `${value.offsetVertical}px`,
+                value.offsetHorizontal ? `${value.offsetHorizontal}px` : undefined);
           }
         });
     }
