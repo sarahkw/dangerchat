@@ -21,9 +21,10 @@ import { MenuTemplateDirective } from './menu-template.directive';
 })
 export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private setStyleMIOVAndH(miov: any, mioh: any) {
+  private setStyleMIOVAndH(miov: any, mioh: any, fixedHeight: any) {
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-v', miov || 'initial', RendererStyleFlags2.DashCase);
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-offset-h', mioh || 'initial', RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.elementRef.nativeElement, '--menu-ip-fixed-h', fixedHeight || 'initial', RendererStyleFlags2.DashCase);
   }
 
 
@@ -53,7 +54,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2) {
 
-    this.setStyleMIOVAndH(undefined, undefined);
+    this.setStyleMIOVAndH(undefined, undefined, undefined);
   }
 
   ngOnInit(): void {
@@ -84,7 +85,8 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
           if (value) {
               this.setStyleMIOVAndH(
                 `${value.offsetVertical}px`,
-                value.offsetHorizontal ? `${value.offsetHorizontal}px` : undefined);
+                value.offsetHorizontal ? `${value.offsetHorizontal}px` : undefined,
+                value.fixedHeight ? `${value.fixedHeight}px` : undefined);
           }
         });
     }

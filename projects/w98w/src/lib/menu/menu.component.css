@@ -1,4 +1,21 @@
 :host {
+    /* remove user-agent styles for <menu> */
+    margin: 0;
+    padding: 0;
+
+    /* i need this to create a stacking context, otherwise the labels of the submenus will be on top of us */
+    /* note: this was for when submenus were siblings instead of children. but this might still be needed we'll see */
+    z-index: 0;
+
+    margin-left: var(--menu-ip-offset-h);
+    margin-top: var(--menu-ip-offset-v);
+
+    pointer-events: auto;
+    max-height: var(--menu-ip-fixed-h);
+    overflow-y: auto;
+}
+
+div.container {
     display: inline-grid;
     box-sizing: border-box;
 
@@ -7,14 +24,6 @@
     color: var(--menu-text-color);
 
     user-select: none;
-
-    /* i need this to create a stacking context, otherwise the labels of the submenus will be on top of us */
-    /* note: this was for when submenus were siblings instead of children. but this might still be needed we'll see */
-    z-index: 0;
-
-    /* remove user-agent styles */
-    margin: 0;
-    padding: 0;
 
     grid-template-rows:
         [bevel-start] var(--menu-border-padding)
@@ -27,18 +36,12 @@
         auto
         [item-end] var(--menu-border-padding) [bevel-end]
         ;
-
-    margin-left: var(--menu-ip-offset-h);
-    margin-top: var(--menu-ip-offset-v);
 }
 
 .bevel {
     grid-area: bevel;
 
     background-color: var(--menu-bg-color);
-
-    /* don't let clicks "fall through", that would be weird behavior */
-    pointer-events: auto;
 
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
