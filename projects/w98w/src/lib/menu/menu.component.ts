@@ -27,13 +27,17 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       let fixedHeight = 'initial';
 
     if (calcs) {
-      offsetV = `${calcs.offsetVertical}px`;
+      console.assert(!!calcs.current);
+    }
 
-      if (calcs.offsetHorizontal !== null)
-        offsetH = `${calcs.offsetHorizontal}px`;
+    if (calcs && calcs.current) {
+      offsetV = `${calcs.current.offsetVertical}px`;
 
-      if (calcs.fixedHeight !== null)
-        fixedHeight = `${calcs.fixedHeight}px`;
+      if (calcs.current.offsetHorizontal !== null)
+        offsetH = `${calcs.current.offsetHorizontal}px`;
+
+      if (calcs.current.fixedHeight !== null)
+        fixedHeight = `${calcs.current.fixedHeight}px`;
     }
 
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-v', offsetV, RendererStyleFlags2.DashCase);
