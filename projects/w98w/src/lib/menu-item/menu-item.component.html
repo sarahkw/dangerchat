@@ -1,6 +1,9 @@
 <button
     [class]="buttonClass"
     >
+    <div class="icon">
+        <img *ngIf="iconImgSrc" [src]="iconImgSrc">
+    </div>
     <div class="label">{{ label }}</div>
     <div class="submenu" [style.width.px]="arrowSize" [style.height.px]="arrowSize">
         <div class="submenu-draw" *ngIf="subMenu || debugShowSubMenuIndicator" [w98w-pixel-image-css-var]="[

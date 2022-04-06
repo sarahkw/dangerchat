@@ -66,6 +66,13 @@ button.can-hover:hover, button.sub-opened, button.cannot-hover:active {
     background-repeat: no-repeat;
 }
 
+div.icon {
+    width: 1em;
+    height: 1em;
+
+    display: flex;
+}
+
 div.label {
     flex: 1;
 

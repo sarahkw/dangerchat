@@ -16,6 +16,8 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   @Input('w98w-menu-item') label!: string;
 
   @Input() explicitSubMenu: MenuTemplateDirective | undefined;
+  @Input() iconImgSrc: string | undefined;
+
   @Input() debugShowSubMenuIndicator = false;
 
   @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;

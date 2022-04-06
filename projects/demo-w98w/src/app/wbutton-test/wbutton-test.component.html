@@ -384,18 +384,14 @@ Bevel and focus ants will work. It can take a body to put something into its con
     <tr>
         <td>Menu item, icon, no width</td>
         <td>
-            <button w98w-wbutton extraLabel="Programs">
-                <img class="w98w-pixelimg" src="/assets/w98w/vbicon.png" wbuttonBody>
-            </button>
+            <li w98w-menu-item="Programs" [debugShowSubMenuIndicator]="true" iconImgSrc="/assets/w98w/vbicon.png"></li>
         </td>
     </tr>
     <tr>
         <td>Menu item, icon, given width</td>
         <td>
             <div style="width: 200px; background-color: green; padding: 10px; overflow: auto; resize: horizontal; margin-top: 2px;">
-                <button w98w-wbutton [style.width.%]="100" extraLabel="Accessories">
-                    <img class="w98w-pixelimg" src="/assets/w98w/vbicon.png" wbuttonBody>
-                </button>
+                <li w98w-menu-item="Accessories" [debugShowSubMenuIndicator]="true" iconImgSrc="/assets/w98w/vbicon.png" [style.width.%]="100"></li>
             </div>
         </td>
     </tr>
