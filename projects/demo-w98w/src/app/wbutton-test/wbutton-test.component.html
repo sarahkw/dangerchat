@@ -355,3 +355,56 @@ Bevel and focus ants will work. It can take a body to put something into its con
         </td>
     </tr>
 </table>
+
+<h3>For use in menus</h3>
+
+<div>
+    <input type="checkbox" id="chkHasSubmenu" checked="1">
+    <label for="chkHasSubmenu">Has submenu?</label>
+</div>
+
+<table border="1">
+    <tr>
+        <td>Menu item, no width</td>
+        <td>
+            <button w98w-wbutton>Programs</button>
+        </td>
+    </tr>
+    <tr>
+        <td>Menu item, given width</td>
+        <td>
+            <div style="width: 200px; background-color: green; padding: 10px; overflow: auto; resize: horizontal; margin-top: 2px;">
+                <button w98w-wbutton [style.width.%]="100">
+                    Accessories
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Menu item, icon, no width</td>
+        <td>
+            <button w98w-wbutton extraLabel="Programs">
+                <img class="w98w-pixelimg" src="/assets/w98w/vbicon.png" wbuttonBody>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>Menu item, icon, given width</td>
+        <td>
+            <div style="width: 200px; background-color: green; padding: 10px; overflow: auto; resize: horizontal; margin-top: 2px;">
+                <button w98w-wbutton [style.width.%]="100" extraLabel="Accessories">
+                    <img class="w98w-pixelimg" src="/assets/w98w/vbicon.png" wbuttonBody>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Menu bar item</td>
+        <td style="display: flex;">
+            <button w98w-wbutton>File</button>
+            <button w98w-wbutton>Edit</button>
+            <button w98w-wbutton>View</button>
+            <button w98w-wbutton>Help</button>
+        </td>
+    </tr>
+</table>
