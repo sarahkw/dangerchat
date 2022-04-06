@@ -20,6 +20,7 @@ import { SlidingScreenMainContentDirective } from './ss/sliding-screen-main-cont
 import { SlidingScreenOverlayDirective } from './ss/sliding-screen-overlay.directive';
 import { MenuAnchorDirective } from './menu/menu-anchor.directive';
 import { MenuLayoutSizeObserverDirective } from './menu/menu-layout-size-observer.directive';
+import { RootCssVarsDirective } from './root-css-vars.directive';
 
 
 
@@ -45,7 +46,8 @@ import { MenuLayoutSizeObserverDirective } from './menu/menu-layout-size-observe
     SlidingScreenOverlayDirective,
     PixelImageCssVarDirective,
     MenuAnchorDirective,
-    MenuLayoutSizeObserverDirective
+    MenuLayoutSizeObserverDirective,
+    RootCssVarsDirective
   ],
   imports: [
     CommonModule
@@ -69,7 +71,8 @@ import { MenuLayoutSizeObserverDirective } from './menu/menu-layout-size-observe
     SlidingScreenMainContentDirective,
     SlidingScreenOverlayDirective,
     MenuAnchorDirective,
-    MenuLayoutSizeObserverDirective
+    MenuLayoutSizeObserverDirective,
+    RootCssVarsDirective
   ]
 })
 export class W98wModule { }
