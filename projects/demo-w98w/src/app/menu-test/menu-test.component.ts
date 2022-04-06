@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Colors } from 'projects/w98w/src/lib/colors';
 import { MenuService } from 'projects/w98w/src/lib/menu/menu.service';
+import { RootCssVarsDirective } from 'projects/w98w/src/lib/root-css-vars.directive';
 
 @Component({
   selector: 'app-menu-test',
@@ -10,7 +10,7 @@ import { MenuService } from 'projects/w98w/src/lib/menu/menu.service';
 })
 export class MenuTestComponent implements OnInit {
 
-  readonly desktopColor = Colors.DESKTOP;
+  readonly ROOTVARS = RootCssVarsDirective.ROOTVARS;
 
   constructor(public menuService: MenuService) { }
 
