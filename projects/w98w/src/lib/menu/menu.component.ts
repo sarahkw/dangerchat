@@ -56,10 +56,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
 
-  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
+  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
-  @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
-  @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
+  @HostBinding('style.--menu-bg-color') hbMBC = Colors.WIDGET_BG;
 
   static readonly borderPadding = Bevels.MENU.getPadding();
   @HostBinding('style.--menu-border-padding') hbMBP = `${MenuComponent.borderPadding}px`;

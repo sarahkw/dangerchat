@@ -9,9 +9,9 @@ import { W98wStyles } from '../w98w-styles';
 })
 export class MenuBarComponent implements OnInit {
 
-  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
+  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
-  @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
+  @HostBinding('style.--menu-bg-color') hbMBC = Colors.WIDGET_BG;
 
   constructor() { }
 

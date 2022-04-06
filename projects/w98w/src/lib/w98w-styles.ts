@@ -62,7 +62,4 @@ export abstract class W98wStyles {
     // bar height. definitely hardcode this instead of auto-sizing based on button contents. the icon can
     // be stretched in CSS to fit.
     static readonly taskBarBtnHeight = W98wStyles.titleBarHeight + 4;
-
-    // TODO i'm just guessing at these bc i'd rather not work on getting real values right now.
-    static readonly menuFontSize = W98wStyles.labelFontSize;
 };

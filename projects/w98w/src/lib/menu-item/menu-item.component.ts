@@ -20,10 +20,9 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   @Input() debugShowSubMenuIndicator = false;
 
-  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
+  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
-  @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
-  @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
+  @HostBinding('style.--menu-bg-color') hbMBC = Colors.WIDGET_BG;
 
   @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
@@ -45,7 +44,7 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   }
 
   arrowSize = (function () {
-    const desiredSize = W98wStyles.menuFontSize - 4;
+    const desiredSize = W98wStyles.labelFontSize - 4;
     if (desiredSize % 2 == 0) {
       return desiredSize + 1;
     } else {
@@ -53,7 +52,7 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
     }
   })();
 
-  arrowImg = GenImg.ARROW_RIGHT(Colors.MENU_TEXT);
+  arrowImg = GenImg.ARROW_RIGHT(Colors.WIDGET_TEXT);
   arrowImgSelected = GenImg.ARROW_RIGHT(Colors.MENU_SELECTED_TEXT);
 
   constructor(@Optional() private menu: MenuComponent | null) { }

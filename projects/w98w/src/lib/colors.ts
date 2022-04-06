@@ -12,8 +12,6 @@ export abstract class Colors {
     static readonly TITLEBAR_INACTIVE = "#808080" as Color;
     static readonly TITLEBAR_TEXT = "#ffffff" as Color;
 
-    static readonly MENU_TEXT = Colors.WIDGET_TEXT; // technically this can be different, but no thanks
-    static readonly MENU_BG = Colors.WIDGET_BG; // technically this can be different, but no thanks
     static readonly MENU_SELECTED_TEXT = "#ffffff" as Color;
     static readonly MENU_SELECTED_BG = "#000080" as Color;
 

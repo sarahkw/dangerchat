@@ -25,7 +25,6 @@ div.container {
 
     font-size: var(--menu-text-size);
     font-family: var(--menu-text-font);
-    color: var(--menu-text-color);
 
     user-select: none;
 
