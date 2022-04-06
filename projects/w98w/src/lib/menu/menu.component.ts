@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       // TODO do something more reasonable here than hardcode the value haha
-      maxWidth = `${calcs.current.rootWidth - 100}px`;
+      maxWidth = `${calcs.current.rootWidth - 150}px`;
     }
 
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-offset-v', offsetV, RendererStyleFlags2.DashCase);
