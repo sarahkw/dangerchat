@@ -6,6 +6,9 @@
     "demo-w98w": {
       "projectType": "application",
       "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -22,12 +25,13 @@
             "main": "projects/demo-w98w/src/main.ts",
             "polyfills": "projects/demo-w98w/src/polyfills.ts",
             "tsConfig": "projects/demo-w98w/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "projects/demo-w98w/src/favicon.ico",
               "projects/demo-w98w/src/assets"
             ],
             "styles": [
-              "projects/demo-w98w/src/styles.css"
+              "projects/demo-w98w/src/styles.scss"
             ],
             "scripts": []
           },
@@ -89,12 +93,13 @@
             "polyfills": "projects/demo-w98w/src/polyfills.ts",
             "tsConfig": "projects/demo-w98w/tsconfig.spec.json",
             "karmaConfig": "projects/demo-w98w/karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "projects/demo-w98w/src/favicon.ico",
               "projects/demo-w98w/src/assets"
             ],
             "styles": [
-              "projects/demo-w98w/src/styles.css"
+              "projects/demo-w98w/src/styles.scss"
             ],
             "scripts": []
           }
