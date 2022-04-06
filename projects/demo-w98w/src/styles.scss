@@ -27,6 +27,8 @@ body {
 }
 
 %button-base {
+    @extend %widget-base;
+
     /* override user agent styles for <button> */
     border: 0;
     text-align: left;
