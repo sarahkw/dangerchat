@@ -33,16 +33,53 @@ function WRAP(fn: () => void): Descriptor {
 })
 export class RootCssVarsDirective {
 
+    /*
+      // SHAMEFUL. I TRIED BUT IT'S GOING TO TAKE TOO LONG.
+
+      (let* ((get-region
+              (lambda ()
+                (save-excursion
+                  (let ((tmp-begin nil))
+                    (search-forward "{")
+                    (setq tmp-begin (point))
+                    (backward-char)
+                    (forward-sexp)
+                    (backward-char)
+                    (buffer-substring-no-properties tmp-begin (point))
+                    ))))
+             (source-str (funcall get-region))
+             (new-str
+              (with-temp-buffer
+                (insert source-str)
+                (beginning-of-buffer)
+                (keep-lines ":" nil nil t)
+                (buffer-string))))
+
+        (insert new-str))
+    */
+
   static readonly ROOTVARS = {
-    colorDesktop: WRAP(() => Colors.DESKTOP),
+      colorDesktop: WRAP(() => Colors.DESKTOP),
   };
 
+  /*
+  --w98w-root-color-desktop
+  */
+
   private refresh() {
+    let DEV: string[] | undefined;
     Object.entries(RootCssVarsDirective.ROOTVARS).forEach(([k, v]) => {
       const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
       this.renderer.setStyle(this.elementRef.nativeElement, styleName, v._getter(), RendererStyleFlags2.DashCase);
       v.var = `var(${styleName})`;
+      if (DEV) {
+        DEV.push(styleName);
+      }
     });
+
+    if (DEV) {
+      console.debug(DEV.join("\n"));
+    }
   }
 
   constructor(private elementRef: ElementRef<HTMLElement>, private renderer: Renderer2) {
