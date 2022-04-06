@@ -28,15 +28,6 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
 
-  @HostBinding('style.color') get hbSC() {
-    /*
-    if (this.disabled) {
-      return Colors.WIDGET_TEXT_DISABLED;
-    } else {*/
-      return Colors.WIDGET_TEXT;
-    /*}*/
-  }
-
   @HostBinding('style.--menu-item-index') get hbMII() {
     return this.menu?.getChildGridIndex(this);
   }

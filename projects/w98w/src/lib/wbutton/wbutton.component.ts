@@ -96,16 +96,12 @@ export class WButtonComponent implements OnInit, OnDestroy {
   @HostBinding('class.w98w-wbutton-normal') get hbcNormal() { return !this.pressed; }
   @HostBinding('class.w98w-wbutton-externalFocus') get hbcExternalFocus() { return this.externalFocus; }
 
+  @HostBinding('class.w98w-disabled') get hbcDisabled() { return this.disabled; }
+
   @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
   @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
-  @HostBinding('style.color') get hbSC() {
-    if (this.disabled) {
-      return Colors.WIDGET_TEXT_DISABLED;
-    } else {
-      return Colors.WIDGET_TEXT;
-    }
-  }
+
   @HostBinding('style.padding') get hbSP() {
     return `${this.offsets.content}px`;
   }

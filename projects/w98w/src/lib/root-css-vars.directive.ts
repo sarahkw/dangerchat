@@ -60,10 +60,15 @@ export class RootCssVarsDirective {
 
   static readonly ROOTVARS = {
       colorDesktop: WRAP(() => Colors.DESKTOP),
+
+      colorText: WRAP(() => Colors.WIDGET_TEXT),
+      colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED)
   };
 
   /*
   --w98w-root-color-desktop
+  --w98w-root-color-text
+  --w98w-root-color-text-disabled
   */
 
   private refresh() {

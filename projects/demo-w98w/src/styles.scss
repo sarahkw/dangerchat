@@ -18,6 +18,14 @@ body {
     image-rendering: crisp-edges;
 }
 
+%widget-base {
+    color: var(--w98w-root-color-text);
+}
+
+%widget-base.w98w-disabled {
+    color: var(--w98w-root-color-text-disabled);
+}
+
 %button-base {
     /* override user agent styles for <button> */
     border: 0;
