@@ -22,7 +22,7 @@ button {
     text-align: left;
     margin: 0; /* safari ipados */
 
-    --mi-fb-gap: 2px;
+    --mi-fb-gap: 5px;
     gap: var(--mi-fb-gap);
 
     font-size: var(--menu-text-size);
