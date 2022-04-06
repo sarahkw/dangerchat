@@ -17,8 +17,18 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   @Input() explicitSubMenu: MenuTemplateDirective | undefined;
 
+  @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
   @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
+
+  @HostBinding('style.color') get hbSC() {
+    /*
+    if (this.disabled) {
+      return Colors.WIDGET_TEXT_DISABLED;
+    } else {*/
+      return Colors.WIDGET_TEXT;
+    /*}*/
+  }
 
   @HostBinding('style.--menu-item-index') get hbMII() {
     return this.menu?.getChildGridIndex(this);
@@ -26,10 +36,15 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
-  @HostBinding('class.sub-opened') get hbcSubOpened() { return this.menu?.openedChild === this }
-  @HostBinding('class.can-hover') get hbcCanHover() { return !this.menu?.openedChild; }
-  @HostBinding('class.cannot-hover') get hbcCannotHover() { return !this.hbcCanHover; }
-
+  get buttonClass() {
+    if (this.menu?.openedChild === this) {
+      return 'sub-opened';
+    } else if (!(this.menu?.openedChild)) {  // i dunno if ? does something weird with precedence
+      return 'can-hover';
+    } else {
+      return 'cannot-hover'
+    }
+  }
 
   arrowSize = (function () {
     const desiredSize = W98wStyles.menuFontSize - 4;

@@ -1,18 +1,22 @@
-<div class="label">{{ label }}</div>
-<div class="submenu" [style.width.px]="arrowSize" [style.height.px]="arrowSize">
-    <div class="submenu-draw" *ngIf="subMenu" [w98w-pixel-image-css-var]="[
-            {
-                genImg: arrowImg,
-                varPrefix: 'normal',
-                cssWidth: arrowSize,
-                cssHeight: arrowSize
-            },
-            {
-                genImg: arrowImgSelected,
-                varPrefix: 'selected',
-                cssWidth: arrowSize,
-                cssHeight: arrowSize
-            }
-            ]">
+<button
+    [class]="buttonClass"
+    >
+    <div class="label">{{ label }}</div>
+    <div class="submenu" [style.width.px]="arrowSize" [style.height.px]="arrowSize">
+        <div class="submenu-draw" *ngIf="subMenu" [w98w-pixel-image-css-var]="[
+                {
+                    genImg: arrowImg,
+                    varPrefix: 'normal',
+                    cssWidth: arrowSize,
+                    cssHeight: arrowSize
+                },
+                {
+                    genImg: arrowImgSelected,
+                    varPrefix: 'selected',
+                    cssWidth: arrowSize,
+                    cssHeight: arrowSize
+                }
+                ]">
+        </div>
     </div>
-</div>
+</button>
