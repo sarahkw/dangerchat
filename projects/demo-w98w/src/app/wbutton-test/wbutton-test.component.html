@@ -366,25 +366,18 @@ Bevel and focus ants will work. It can take a body to put something into its con
 
 <h3>For use in menus</h3>
 
-<div>
-    <input type="checkbox" id="chkHasSubmenu" checked="1">
-    <label for="chkHasSubmenu">Has submenu?</label>
-</div>
-
 <table border="1">
     <tr>
         <td>Menu item, no width</td>
         <td>
-            <li w98w-menu-item="Programs"></li>
+            <li w98w-menu-item="Programs" [debugShowSubMenuIndicator]="true"></li>
         </td>
     </tr>
     <tr>
         <td>Menu item, given width</td>
         <td>
             <div style="width: 200px; background-color: green; padding: 10px; overflow: auto; resize: horizontal; margin-top: 2px;">
-                <button w98w-wbutton [style.width.%]="100">
-                    Accessories
-                </button>
+                <li w98w-menu-item="Accessories" [debugShowSubMenuIndicator]="true" [style.width.%]="100"></li>
             </div>
         </td>
     </tr>
