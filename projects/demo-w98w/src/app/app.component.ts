@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DprService } from 'projects/w98w/src/lib/dpr.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +8,7 @@ import { DprService } from 'projects/w98w/src/lib/dpr.service';
 export class AppComponent implements OnInit {
   title = 'demo-w98w';
 
-  constructor(public dprService: DprService) {}
+  constructor() {}
 
   ngOnInit(): void {
   }
