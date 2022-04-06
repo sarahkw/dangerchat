@@ -3,12 +3,6 @@
     position: relative;
     box-sizing: border-box;
 
-    /* TODO: this is copied and pasted many places */
-    /* override user agent styles for <button> */
-    border: 0;
-    text-align: left;
-    margin: 0; /* safari ipados */
-
     /* don't let long text force this button to be wider */
     overflow: hidden;
 }

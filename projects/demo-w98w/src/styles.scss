@@ -18,3 +18,17 @@ body {
     image-rendering: crisp-edges;
 }
 
+%button-base {
+    /* override user agent styles for <button> */
+    border: 0;
+    text-align: left;
+    margin: 0; /* safari ipados */
+}
+
+button.w98w-wbutton {
+    @extend %button-base;
+}
+
+li[w98w-menu-item] > button {
+    @extend %button-base;
+}
