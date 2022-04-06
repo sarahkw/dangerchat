@@ -19,7 +19,9 @@ button {
 
     gap: 10px;
 
-    color: unset;
+    font-size: var(--menu-text-size);
+    font-family: var(--menu-text-font);
+    color: var(--menu-text-color);
     background-color: var(--menu-bg-color);
 
     /* we'll be drawn over a div that's overlayed on top, which would disable pointer events. */

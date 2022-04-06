@@ -17,7 +17,11 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   @Input() explicitSubMenu: MenuTemplateDirective | undefined;
 
+  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.menuFontSize}px`;
+  @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
+  @HostBinding('style.--menu-text-color') hbMTC = Colors.MENU_TEXT;
   @HostBinding('style.--menu-bg-color') hbMBC = Colors.MENU_BG;
+
   @HostBinding('style.--menu-sel-text-color') hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
 
