@@ -6,10 +6,15 @@ button {
     flex: 1;
     display: inline-flex;
 
-    padding-left: 5px;
-    padding-right: 3px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    --mi-padding-left: 5px;
+    --mi-padding-right: 3px;
+    --mi-padding-top: 5px;
+    --mi-padding-bottom: 5px;
+
+    padding-left: var(--mi-padding-left);
+    padding-right: var(--mi-padding-right);
+    padding-top: var(--mi-padding-top);
+    padding-bottom: var(--mi-padding-bottom);
 
     /* TODO: this is copied and pasted many places */
     /* override user agent styles for <button> */
@@ -17,7 +22,8 @@ button {
     text-align: left;
     margin: 0; /* safari ipados */
 
-    gap: 10px;
+    --mi-fb-gap: 2px;
+    gap: var(--mi-fb-gap);
 
     font-size: var(--menu-text-size);
     font-family: var(--menu-text-font);
@@ -67,10 +73,18 @@ button.can-hover:hover, button.sub-opened, button.cannot-hover:active {
 }
 
 div.icon {
-    width: 1em;
-    height: 1em;
+
+    margin-top   : calc(0px - var(--mi-padding-top));
+    margin-bottom: calc(0px - var(--mi-padding-bottom));
+
+    height: calc(1em + var(--mi-padding-top) + var(--mi-padding-bottom));
+    width: calc(1em + var(--mi-padding-top) + var(--mi-padding-bottom));
 
     display: flex;
+}
+
+div.icon > img {
+    pointer-events: none;
 }
 
 div.label {
@@ -84,5 +98,6 @@ div.label {
 }
 
 div.submenu {
+    margin-left: calc(10px - var(--mi-fb-gap));
     align-self: center;
 }
