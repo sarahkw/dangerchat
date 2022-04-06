@@ -91,18 +91,11 @@ export class WButtonComponent implements OnInit, OnDestroy {
     return WButtonComponent.calculateOffsets(this.externalFocus);
   }
 
-  @HostBinding('class') get hbC() {
-    const classes = ['w98w-wbutton'];
-    if (this.pressed) {
-      classes.push('w98w-wbutton-pressed');
-    } else {
-      classes.push('w98w-wbutton-normal');
-    }
-    if (this.externalFocus) {
-      classes.push('w98w-wbutton-externalFocus');
-    }
-    return classes.join(" ");
-  }
+  @HostBinding('class') readonly hbC = 'w98w-wbutton';
+  @HostBinding('class.w98w-wbutton-pressed') get hbcPressed() { return this.pressed; }
+  @HostBinding('class.w98w-wbutton-normal') get hbcNormal() { return !this.pressed; }
+  @HostBinding('class.w98w-wbutton-externalFocus') get hbcExternalFocus() { return this.externalFocus; }
+
   @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
   @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
   @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
