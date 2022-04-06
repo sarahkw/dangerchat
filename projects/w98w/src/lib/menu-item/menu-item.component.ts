@@ -1,4 +1,4 @@
-import { Component, ContentChild, HostBinding, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ContentChild, HostBinding, HostListener, Input, OnInit, Optional } from '@angular/core';
 import { Colors } from '../colors';
 import { GenImg } from '../genimg';
 import { OnSubMenuClose } from '../menu/menu-host/menu-host.component';
@@ -21,20 +21,15 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   @HostBinding('style.--menu-sel-bg-color') hbSBC = Colors.MENU_SELECTED_BG;
 
   @HostBinding('style.--menu-item-index') get hbMII() {
-    return this.menu.getChildGridIndex(this);
+    return this.menu?.getChildGridIndex(this);
   }
 
   @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
-  @HostBinding('class') get hbClass() {
-    if (this.menu.openedChild === this) {
-      return 'sub-opened';
-    } else if (this.menu.openedChild === undefined) {
-      return 'can-hover';
-    } else {
-      return 'cannot-hover'
-    }
-  }
+  @HostBinding('class.sub-opened') get hbcSubOpened() { return this.menu?.openedChild === this }
+  @HostBinding('class.can-hover') get hbcCanHover() { return !this.menu?.openedChild; }
+  @HostBinding('class.cannot-hover') get hbcCannotHover() { return !this.hbcCanHover; }
+
 
   arrowSize = (function () {
     const desiredSize = W98wStyles.menuFontSize - 4;
@@ -48,7 +43,7 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   arrowImg = GenImg.ARROW_RIGHT(Colors.MENU_TEXT);
   arrowImgSelected = GenImg.ARROW_RIGHT(Colors.MENU_SELECTED_TEXT);
 
-  constructor(private menu: MenuComponent) { }
+  constructor(@Optional() private menu: MenuComponent | null) { }
 
   ngOnInit(): void {
   }
@@ -59,13 +54,15 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   // visually prepare to close sibling opened menu.
   @HostListener('mousedown') onMouseDown() {
-    if (this.menu.openedChild !== this) {
-      this.menu.openedChild = undefined;
+    if (this.menu) {
+      if (this.menu.openedChild !== this) {
+        this.menu.openedChild = undefined;
+      }
     }
   }
 
   @HostListener('click') onClick() {
-    if (!this.menu.menuContext) return;
+    if (!this.menu || !this.menu.menuContext) return;
 
     if (this.subMenu) {
       if (this.menu.openedChild === this) {
@@ -80,7 +77,9 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   }
 
   onSubMenuClose(): void {
-    this.menu.openedChild = undefined;
+    if (this.menu) {
+      this.menu.openedChild = undefined;
+    }
   }
 
   get hasSubMenu() {
