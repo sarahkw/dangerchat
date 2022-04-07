@@ -53,7 +53,9 @@ li[w98w-menu-item] > button {
 }
 
 menu[w98w-menu], menu[w98w-menu-bar] {
-    /* remove user-agent styles for <menu> */
-    margin: 0;
-    padding: 0;
+    @extend %menu-base;
+}
+
+menu[w98w-menu-bar] {
+    background-color: var(--w98w-root-widget-background-color);
 }

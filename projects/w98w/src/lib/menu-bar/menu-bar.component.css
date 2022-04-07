@@ -1,9 +1,4 @@
 :host {
     display: flex;
-
     user-select: none;
-
-    font-family: var(--menu-text-font);
-    background-color: var(--menu-bg-color);
-    font-size: var(--menu-text-size);
 }

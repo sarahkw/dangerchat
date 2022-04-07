@@ -1,6 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
-import { Colors } from '../colors';
-import { W98wStyles } from '../w98w-styles';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'menu[w98w-menu-bar]',
@@ -8,10 +6,6 @@ import { W98wStyles } from '../w98w-styles';
   styleUrls: ['./menu-bar.component.css']
 })
 export class MenuBarComponent implements OnInit {
-
-  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.labelFontSize}px`;
-  @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
-  @HostBinding('style.--menu-bg-color') hbMBC = Colors.WIDGET_BG;
 
   constructor() { }
 
