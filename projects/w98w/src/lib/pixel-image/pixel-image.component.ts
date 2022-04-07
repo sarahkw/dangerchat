@@ -1,5 +1,5 @@
-import { Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AfterViewInit, Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges, ViewChild } from '@angular/core';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
@@ -75,6 +75,9 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
           return config.genImg.draw(config.cssWidth, config.cssHeight, pibf);
         }
         pidApplyImages(imgs: DisplayImage): void {
+          // these styles are for the "inside" div, which may be different size from what cssWidth/cssHeight you requested.
+          // so you should still have the outside cssWidth/cssHeight to keep the right size in the layout.
+
           thiz.renderer.setStyle(thiz.eref.nativeElement, `--pi-${config.varPrefix}-width`, `${imgs.cssRequestedWidth}px`, RendererStyleFlags2.DashCase);
           thiz.renderer.setStyle(thiz.eref.nativeElement, `--pi-${config.varPrefix}-height`, `${imgs.cssRequestedHeight}px`, RendererStyleFlags2.DashCase);
           thiz.renderer.setStyle(thiz.eref.nativeElement, `--pi-${config.varPrefix}-background-image`, `url('${imgs.url}')`, RendererStyleFlags2.DashCase);
@@ -91,7 +94,7 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
               `background-image: var(--pi-${config.varPrefix}-background-image);`,
               `background-size: var(--pi-${config.varPrefix}-background-size);`,
               `background-repeat: no-repeat;`
-            ].join(" "));
+            ].join("\n"));
           }
         }
         pidDestroy(): void {
@@ -118,63 +121,50 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
   templateUrl: './pixel-image.component.html',
   styleUrls: ['./pixel-image.component.scss']
 })
-export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelImageDrawer<DisplayImage> {
+export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
   @Input() genImg!: GenImgDescriptor;
   @Input() cssWidth!: number | undefined;
   @Input() cssHeight!: number;
 
+  private currentConfig$: BehaviorSubject<PixelImageCssVarConfig[]> = new BehaviorSubject([] as any);
+  @ViewChild(PixelImageCssVarDirective) private imgCssVarGen!: PixelImageCssVarDirective;
+
   @Input() debugDrawnSize: [number, number] | undefined;
-  debugRequestedSize: number[] | undefined;
+  debugRequestedSize: number[] | undefined;  // output
+  get debugForceWidth() { return this.debugDrawnSize && this.debugDrawnSize[0] }
+  get debugForceHeight() { return this.debugDrawnSize && this.debugDrawnSize[1] }
 
-  style: { [klass: string]: any } = {};
+  private debugImgSubscription: Subscription | undefined;
 
-  constructor(private pixelImageService: PixelImageService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.pixelImageService.pidRegister(this);
+  }
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    this.currentConfig$.next([{
+      genImg: this.genImg,
+      varPrefix: 'only',
+      cssWidth: this.cssWidth === undefined ? this.genImg.heightToWidthFn(this.cssHeight) : this.cssWidth,
+      cssHeight: this.cssHeight
+    }]);
+  }
+
+  ngAfterViewInit(): void {
+    this.currentConfig$.subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
+
+    if (this.debugDrawnSize) {
+      this.debugImgSubscription = this.imgCssVarGen.debugImg$.subscribe(({ imgs }) => {
+        this.debugRequestedSize = [
+          imgs.cssRequestedWidth, imgs.cssRequestedHeight,
+          imgs.cssRequestedWidthCautious, imgs.cssRequestedHeightCautious
+        ];
+      });
+    }
   }
 
   ngOnDestroy(): void {
-    this.pixelImageService.pidUnregister(this);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['genImg'].isFirstChange()) {
-      this.pixelImageService.pidUnregister(this);
-      this.pixelImageService.pidRegister(this);
-    }
-  }
-
-  // TODO: Cache these images
-
-  pidGenerateImages(pibf: PixelImageBuilderFactory): DisplayImage {
-    const assumedWidth = this.cssWidth === undefined ? this.genImg.heightToWidthFn(this.cssHeight) : this.cssWidth;
-    return this.genImg.draw(assumedWidth, this.cssHeight, pibf);
-  }
-
-  pidApplyImages(imgs: DisplayImage): void {
-    this.style = {
-      "width.px": imgs.cssRequestedWidth,
-      "height.px": imgs.cssRequestedHeight,
-      "background-image": `url('${imgs.url}')`,
-      "background-size": `${imgs.cssNextStepWidth}px ${imgs.cssNextStepHeight}px`,
-      "background-repeat": "no-repeat"
-    };
-
-    if (this.debugDrawnSize !== undefined) {
-      this.debugRequestedSize = [
-        imgs.cssRequestedWidth, imgs.cssRequestedHeight,
-        imgs.cssRequestedWidthCautious, imgs.cssRequestedHeightCautious
-      ];
-
-      let [w, h] = this.debugDrawnSize;
-      this.style["width.px"] = w;
-      this.style["height.px"] = h;
-    }
-  }
-
-  pidDestroy(): void {
-    // no-op: we're not reusing this PID
+    this.debugImgSubscription?.unsubscribe();
   }
 }
