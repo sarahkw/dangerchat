@@ -131,17 +131,6 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelI
   }
 
   ngOnInit(): void {
-
-    /*
-    if (this.genImg.desiredCssWidth !== undefined) {
-      this.style["width.px"] = this.genImg.desiredCssWidth;
-    }
-
-    if (this.genImg.desiredCssHeight !== undefined) {
-      this.style["height.px"] = this.genImg.desiredCssHeight;
-    }
-    */
-
     this.pixelImageService.pidRegister(this);
   }
 
