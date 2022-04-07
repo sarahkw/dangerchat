@@ -41,6 +41,10 @@ div.container {
 
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
+
+    /* just went by what looks good */
+    min-width: 50px;
+    min-height: 5px;
 }
 
 .ruler {
