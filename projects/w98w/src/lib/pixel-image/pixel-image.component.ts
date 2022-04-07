@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges, ViewChild } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { asapScheduler, BehaviorSubject, filter, map, Observable, observeOn, Subject } from 'rxjs';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
@@ -22,10 +22,10 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
 
   private currentConfig$ = new Subject<PixelImageCssVarConfig[]>();
 
-  public debugImg$ = new Subject<{
+  public debugImg$ = new BehaviorSubject<{
     config: PixelImageCssVarConfig,
     imgs: DisplayImage
-  }>();
+  } | undefined>(undefined as any);
 
   private pids: (PixelImageDrawer<DisplayImage> & Cleanupable)[] = [];
 
@@ -121,7 +121,7 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
   templateUrl: './pixel-image.component.html',
   styleUrls: ['./pixel-image.component.scss']
 })
-export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() genImg!: GenImgDescriptor;
   @Input() cssWidth!: number | undefined;  // if undefined, ask the image what width it should be based on height
@@ -132,10 +132,9 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, AfterV
 
   // these things are for the size debug test page
   @Input() debugDrawnSize: [number, number] | undefined;
-  debugRequestedSize: number[] | undefined;  // output
+  debugRequestedSize$: Observable<number[]> | undefined;
   get debugForceWidth() { return this.debugDrawnSize && this.debugDrawnSize[0] }
   get debugForceHeight() { return this.debugDrawnSize && this.debugDrawnSize[1] }
-  private debugImgSubscription: Subscription | undefined;
 
   constructor() {}
 
@@ -156,17 +155,16 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, AfterV
   ngAfterViewInit(): void {
     this.currentConfig$.subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
 
-    if (this.debugDrawnSize) {
-      this.debugImgSubscription = this.imgCssVarGen.debugImg$.subscribe(({ imgs }) => {
-        this.debugRequestedSize = [
+    this.debugRequestedSize$ = this.imgCssVarGen.debugImg$.pipe(
+      filter(value => !!value),
+      map(value => {
+        const { imgs } = value!;
+        return [
           imgs.cssRequestedWidth, imgs.cssRequestedHeight,
           imgs.cssRequestedWidthCautious, imgs.cssRequestedHeightCautious
         ];
-      });
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.debugImgSubscription?.unsubscribe();
+      }),
+      observeOn(asapScheduler)  // prevent a change detection race condition, due to having to wait for view init
+    );
   }
 }
