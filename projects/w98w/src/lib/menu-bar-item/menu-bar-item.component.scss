@@ -8,3 +8,12 @@ button {
 
     position: relative; // for 8split
 }
+
+.w98w-menu-bar-item-button > .contents {
+    position: relative; // shiftable
+}
+
+.w98w-menu-bar-item-button:active > .contents {
+    top: 1px;
+    left: 1px;
+}

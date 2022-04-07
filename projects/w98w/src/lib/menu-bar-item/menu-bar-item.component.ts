@@ -20,9 +20,11 @@ export class MenuBarItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.imgService.pidRegister(MenuBarItemComponent.PID_HOVER);
+    this.imgService.pidRegister(MenuBarItemComponent.PID_ACTIVE);
   }
 
   ngOnDestroy(): void {
+    this.imgService.pidUnregister(MenuBarItemComponent.PID_ACTIVE);
     this.imgService.pidUnregister(MenuBarItemComponent.PID_HOVER);
   }
 
@@ -36,7 +38,7 @@ export class MenuBarItemComponent implements OnInit, OnDestroy {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu-bar-item:hover", imgs));
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button:hover", imgs));
     }
 
     pidDestroy(): void {
@@ -44,6 +46,22 @@ export class MenuBarItemComponent implements OnInit, OnDestroy {
     }
   };  // PID_NORMAL
 
-    //#endregion
+  static readonly PID_ACTIVE = new class implements PixelImageDrawer {
+    private styleInjector = new StyleInjector();
+
+    pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
+      return genGenCssInput(ri => Bevels.MENUBAR_ITEM_PRESSED.genImage(ri, pibf));
+    }
+
+    pidApplyImages(imgs: GenCssInput): void {
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button:active", imgs));
+    }
+
+    pidDestroy(): void {
+      this.styleInjector.destroy();
+    }
+  };  // PID_ACTIVE
+
+  //#endregion
 
 }
