@@ -4,7 +4,8 @@
    results by waiting for it to trickle down throughout the hierarchy */
 
 import { Directive, Input } from "@angular/core";
-import { Observable, Subscriber, TeardownLogic, Unsubscribable } from "rxjs";
+import { Observable, Subscriber, Unsubscribable } from "rxjs";
+import { resolveContentRect } from "../rx/resize-observer";
 
 export type Redeliverable<T> = {
    value: T,
@@ -64,15 +65,6 @@ export interface MlsoMenuContext {
    unobserve(caller: any, target: Element): void;
    unobserveAll(caller: any): void;
 }
-
-export function resolveContentRect(entry: ResizeObserverEntry): DOMRectReadOnly {
-   // support firefox ESR, which doesn't give array
-   if (Array.isArray(entry.contentRect)) {
-     return entry.contentRect[0];
-   } else {
-     return entry.contentRect;
-   }
- }
 
 function generate(rootElement_: Element) {
    let subscriber_: Subscriber<ResizeUpdates> | undefined;

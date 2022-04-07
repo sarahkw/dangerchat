@@ -1,6 +1,6 @@
 import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { resolveContentRect } from '../../menu/menu-layout-size-observer.directive';
+import { resolveContentRect } from '../../rx/resize-observer';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
 
 enum State {
