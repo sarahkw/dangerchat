@@ -9,24 +9,30 @@ export type PixelImageCssVarConfig = {
   varPrefix: string,
   cssWidth: number,
   cssHeight: number
-}[];
+};
+
+interface Cleanupable {
+  cleanup(): void;
+}
 
 @Directive({selector: '[w98w-pixel-image-css-var]'})
 export class PixelImageCssVarDirective implements OnInit, OnDestroy {
-  @Input('w98w-pixel-image-css-var') config!: PixelImageCssVarConfig;
+  @Input('w98w-pixel-image-css-var') config!: PixelImageCssVarConfig[];
 
-  private pids: PixelImageDrawer[] = [];
+  private currentConfig$ = new Subject<PixelImageCssVarConfig[]>();
+
+  private pids: (PixelImageDrawer & Cleanupable)[] = [];
 
   constructor(private pixelImageService: PixelImageService,
     private eref: ElementRef,
-    private renderer: Renderer2) {}
+    private renderer: Renderer2) {
+  }
 
   ngOnInit(): void {
     for (let x of this.config) {
       const thiz = this;
 
-      const pid = new class implements PixelImageDrawer {
-
+      const pid = new class implements PixelImageDrawer, Cleanupable {
         pidGenerateImages(pibf: PixelImageBuilderFactory) {
           return x.genImg.draw(x.cssWidth, x.cssHeight, pibf);
         }
@@ -52,6 +58,12 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
           // no-op: not ref counting and applying some global style
         }
 
+        cleanup(): void {
+          thiz.renderer.removeStyle(thiz.eref.nativeElement, `--pi-${x.varPrefix}-width`, RendererStyleFlags2.DashCase);
+          thiz.renderer.removeStyle(thiz.eref.nativeElement, `--pi-${x.varPrefix}-height`, RendererStyleFlags2.DashCase);
+          thiz.renderer.removeStyle(thiz.eref.nativeElement, `--pi-${x.varPrefix}-background-image`, RendererStyleFlags2.DashCase);
+          thiz.renderer.removeStyle(thiz.eref.nativeElement, `--pi-${x.varPrefix}-background-size`, RendererStyleFlags2.DashCase);
+        }
       };
 
       this.pids.push(pid);
@@ -61,14 +73,8 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    for (let x of this.config) {
-      this.renderer.removeStyle(this.eref.nativeElement, `--pi-${x.varPrefix}-width`, RendererStyleFlags2.DashCase);
-      this.renderer.removeStyle(this.eref.nativeElement, `--pi-${x.varPrefix}-height`, RendererStyleFlags2.DashCase);
-      this.renderer.removeStyle(this.eref.nativeElement, `--pi-${x.varPrefix}-background-image`, RendererStyleFlags2.DashCase);
-      this.renderer.removeStyle(this.eref.nativeElement, `--pi-${x.varPrefix}-background-size`, RendererStyleFlags2.DashCase);
-    }
-
     for (let pid of this.pids) {
+      pid.cleanup();
       this.pixelImageService.pidUnregister(pid);
     }
   }
