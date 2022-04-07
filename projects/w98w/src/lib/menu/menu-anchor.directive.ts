@@ -35,7 +35,7 @@ export class MenuAnchorDirective {
   }
 
   constructor(
-    public element: ElementRef<HTMLElement>,
+    private element: ElementRef<HTMLElement>,
     @Optional() private menuService: MenuService, // might be unavailable when on demo app
 
     @Optional() possiblyWButton: WButtonComponent

@@ -31,11 +31,7 @@
         </div>
 
         <div style="position: absolute; left: 20px; bottom: 20px;">
-            <button
-                w98w-wbutton
-                w98w-menu-anchor #ankBtnUp="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, ankBtnUp.element.nativeElement)"
-            >up menu</button>
+            <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">up menu</button>
         </div>
 
         <app-test-menu-lib #library></app-test-menu-lib>

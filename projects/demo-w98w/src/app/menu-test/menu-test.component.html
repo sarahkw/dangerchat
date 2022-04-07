@@ -18,11 +18,7 @@
         <h3 style="margin-top: 0;">Import from other test</h3>
 
         <div>
-            <button
-                w98w-wbutton
-                w98w-menu-anchor #ankBtnDown="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, ankBtnDown.element.nativeElement)"
-                >down menu</button>
+            <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">down menu</button>
         </div>
 
         <h3>Button Trigger</h3>
@@ -118,11 +114,7 @@
         <h3>Import from other test</h3>
 
         <div>
-            <button
-                w98w-wbutton
-                w98w-menu-anchor #ankBtnDown2="menuAnchor"
-                (click)="menuService.beginMenu(library.menuTemp, ankBtnDown2.element.nativeElement)"
-                >down menu</button>
+            <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">down menu</button>
         </div>
 
         <app-test-menu-lib #library></app-test-menu-lib>
