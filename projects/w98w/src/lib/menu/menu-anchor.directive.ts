@@ -1,4 +1,5 @@
-import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnDestroy, Optional } from '@angular/core';
+import { finalize, Subscription } from 'rxjs';
 import { Pressable } from '../pressable';
 import { WButtonComponent } from '../wbutton/wbutton.component';
 import { MenuTemplateDirective } from './menu-template.directive';
@@ -11,23 +12,42 @@ export type AutoMenuType = MenuTemplateDirective | (() => MenuTemplateDirective)
   selector: '[w98w-menu-anchor]',
   exportAs: 'menuAnchor'
 })
-export class MenuAnchorDirective {
+export class MenuAnchorDirective implements OnDestroy {
 
   @Input() autoMenu: AutoMenuType;
 
   @Input() pressable?: Pressable;
 
-  @HostListener('click') onClick() {
-    if (this.menuService) {
-      if (this.autoMenu) {
-        if (this.autoMenu instanceof MenuTemplateDirective) {
-          this.menuService.beginMenu(this.autoMenu, this.element.nativeElement);
-        } else {
-          this.menuService.beginMenu(this.autoMenu(), this.element.nativeElement);
-        }
+  private menuSubscription: Subscription | undefined;
 
-        if (this.pressable) {
-          this.pressable.pressed = true;
+  @HostListener('click') onClick() {
+    if (this.menuSubscription) {
+      this.menuSubscription.unsubscribe();
+      this.menuSubscription = undefined;
+    } else {
+      if (this.menuService) {
+        if (this.autoMenu) {
+          let target: MenuTemplateDirective;
+
+          if (this.autoMenu instanceof MenuTemplateDirective) {
+            target = this.autoMenu;
+          } else {
+            target = this.autoMenu();
+          }
+
+          if (this.pressable) {
+            this.pressable.pressed = true;
+          }
+
+          this.menuSubscription =
+            this.menuService.beginMenu(target, this.element.nativeElement)
+              .pipe(finalize(() => {
+                if (this.pressable) {
+                  this.pressable.pressed = false;
+                }
+                this.menuSubscription = undefined;
+              }))
+              .subscribe();
         }
       }
     }
@@ -42,4 +62,7 @@ export class MenuAnchorDirective {
     this.pressable = possiblyWButton;
   }
 
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
 }
