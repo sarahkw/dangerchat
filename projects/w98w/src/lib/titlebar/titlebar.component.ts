@@ -7,7 +7,7 @@ import { WButtonComponent } from '../wbutton/wbutton.component';
 @Component({
   selector: 'w98w-titlebar',
   templateUrl: './titlebar.component.html',
-  styleUrls: ['./titlebar.component.css']
+  styleUrls: ['./titlebar.component.scss']
 })
 export class TitlebarComponent implements OnInit {
 
