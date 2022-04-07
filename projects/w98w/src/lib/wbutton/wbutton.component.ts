@@ -1,12 +1,10 @@
 import { Component, ContentChild, Directive, ElementRef, HostBinding, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
-import { Colors } from '../colors';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
-import { W98wStyles } from '../w98w-styles';
 
 @Directive({
   selector: '[wbuttonBody]'
