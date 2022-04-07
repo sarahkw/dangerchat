@@ -14,15 +14,9 @@ export class TitlebarTestComponent implements OnInit {
 
   /* these are copied and pasted, good for now i guess */
   btnExternalFocus = true;
-  btnWidth: number = W98wStyles.titleBarBtnWidth;
   btnHeight: number = W98wStyles.titleBarBtnHeight;
 
-  btnImgWidth!: number;
-  btnImgHeight: number = (() => {
-    const wh = WButtonComponent.calculateAvailableBodySize(this.btnWidth, this.btnHeight, this.btnExternalFocus);
-    this.btnImgWidth = wh.width;
-    return wh.height;
-  })();
+  btnImgHeight: number = WButtonComponent.calculateAvailableBodySize(null, this.btnHeight, this.btnExternalFocus).height;
 
   constructor() { }
 

@@ -78,10 +78,10 @@ export class WButtonComponent implements OnInit, OnDestroy, Pressable {
     return { focusAnts, content };
   }
 
-  public static calculateAvailableBodySize(width: number, height: number, externalFocus: boolean) {
+  public static calculateAvailableBodySize(width: number | null, height: number, externalFocus: boolean) {
     const o = WButtonComponent.calculateOffsets(externalFocus);
     return {
-      width: width - 2 * (o.content),
+      width: width !== null ? width - 2 * (o.content) : null,
       height: height - 2 * (o.content)
     };
   }

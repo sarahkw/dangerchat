@@ -1,17 +1,14 @@
 import { DisplayImage, PixelImageBuilderBasic, PixelImageBuilderFactory, VOrigin } from "./pixel-image-builder";
 
+type HeightToWidthFn = (drawCssHeight: number) => number;
+
+const titlebarHTWFn: HeightToWidthFn = (drawCssHeight) => {
+    return drawCssHeight + 2;
+};
+
 export type GenImgDescriptor = {
-
-    /*
-    // the descriptor hints what size they should be in CSS pixels. can be undefined if
-    // the image will just draw for any provided size.
-    desiredCssWidth?: number,
-    desiredCssHeight?: number,
-    */
-
-    // the width and height will be the desired ones if those are available. otherwise,
-    // it'll be what's requested.
     draw: (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory) => DisplayImage;
+    heightToWidthFn: HeightToWidthFn;
 };
 
 function incXincY(until: number, fn: (x: number, y: number) => void) {
@@ -59,7 +56,9 @@ export abstract class GenImg {
             });
 
             return builder.build();
-        }
+        },
+
+        heightToWidthFn: titlebarHTWFn
     }
 
     static readonly DEBUG_BORDER: GenImgDescriptor = {
@@ -75,7 +74,9 @@ export abstract class GenImg {
 
             debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
-        }
+        },
+
+        heightToWidthFn: titlebarHTWFn
     };
 
     private static readonly _tbar_min_draw =
@@ -109,13 +110,15 @@ export abstract class GenImg {
         }
 
     static readonly TBAR_MIN: GenImgDescriptor = {
-        draw: GenImg._tbar_min_draw
+        draw: GenImg._tbar_min_draw,
+        heightToWidthFn: titlebarHTWFn
     };
 
     static readonly TBAR_MIN_DISABLED: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
             return GenImg._tbar_min_draw(drawCssWidth, drawCssHeight, pibf, true);
-        }
+        },
+        heightToWidthFn: titlebarHTWFn
     };
 
     private static readonly _tbar_max_draw_smallwnd =
@@ -191,13 +194,15 @@ export abstract class GenImg {
         };
 
     static readonly TBAR_MAX: GenImgDescriptor = {
-        draw: GenImg._tbar_max_draw
+        draw: GenImg._tbar_max_draw,
+        heightToWidthFn: titlebarHTWFn
     };
 
     static readonly TBAR_MAX_DISABLED: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
             return GenImg._tbar_max_draw(drawCssWidth, drawCssHeight, pibf, true);
-        }
+        },
+        heightToWidthFn: titlebarHTWFn
     };
 
     static readonly TBAR_UNMAX: GenImgDescriptor = {
@@ -242,7 +247,8 @@ export abstract class GenImg {
 
             debug_overdraw(artPixelWidth, artPixelHeight, builder);
             return builder.build();
-        }
+        },
+        heightToWidthFn: titlebarHTWFn
     };
 
     private static readonly _tbar_x_draw =
@@ -297,13 +303,15 @@ export abstract class GenImg {
     static readonly TBAR_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
             return GenImg._tbar_x_draw(drawCssWidth, drawCssHeight, pibf);
-        }
+        },
+        heightToWidthFn: titlebarHTWFn
     }
 
     static readonly TBAR_X_DISABLED: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
             return GenImg._tbar_x_draw(drawCssWidth, drawCssHeight, pibf, true);
-        }
+        },
+        heightToWidthFn: titlebarHTWFn
     }
 
     // XXX don't know if it's inefficient to make a new function so many times
@@ -323,7 +331,8 @@ export abstract class GenImg {
 
                 debug_overdraw(artPixelWidth, artPixelHeight, builder);
                 return builder.build();
-            }
+            },
+            heightToWidthFn: (drawCssHeight) => drawCssHeight // 1:1 aspect ratio for now, maybe to be revisited later
         };
     }
 }

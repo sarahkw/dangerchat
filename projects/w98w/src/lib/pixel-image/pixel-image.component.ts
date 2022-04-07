@@ -82,7 +82,7 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
 export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelImageDrawer {
 
   @Input() genImg!: GenImgDescriptor;
-  @Input() cssWidth!: number;
+  @Input() cssWidth!: number | undefined;
   @Input() cssHeight!: number;
 
   @Input() debugDrawnSize: [number, number] | undefined;
@@ -102,7 +102,8 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelI
   // TODO: Cache these images
 
   pidGenerateImages(pibf: PixelImageBuilderFactory): DisplayImage {
-    return this.genImg.draw(this.cssWidth, this.cssHeight, pibf);
+    const assumedWidth = this.cssWidth === undefined ? this.genImg.heightToWidthFn(this.cssHeight) : this.cssWidth;
+    return this.genImg.draw(assumedWidth, this.cssHeight, pibf);
   }
 
   pidApplyImages(imgs: DisplayImage): void {

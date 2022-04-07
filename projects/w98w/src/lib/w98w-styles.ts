@@ -43,9 +43,6 @@ export abstract class W98wStyles {
     static readonly titleBarFont = 12;
     static readonly titleBarHeight = fontSzToTitleBarSz(W98wStyles.titleBarFont);
 
-    // because width is fixed at (height + 2), don't let CSS stretch height to fill the titlebar body.
-    // because we have to set the width anyway.   unless there's a way in CSS to keep this "proportion" ?
-    static readonly titleBarBtnWidth = W98wStyles.titleBarHeight - 2;
     static readonly titleBarBtnHeight = W98wStyles.titleBarHeight - 4;
 
     static readonly titleBarFlexGap = 2;
