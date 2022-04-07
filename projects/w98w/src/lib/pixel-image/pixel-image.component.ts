@@ -22,6 +22,11 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
 
   private currentConfig$ = new Subject<PixelImageCssVarConfig[]>();
 
+  public debugImg$ = new Subject<{
+    config: PixelImageCssVarConfig,
+    imgs: DisplayImage
+  }>();
+
   private pids: (PixelImageDrawer<DisplayImage> & Cleanupable)[] = [];
 
   constructor(private pixelImageService: PixelImageService,
@@ -63,6 +68,8 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
           thiz.renderer.setStyle(thiz.eref.nativeElement, `--pi-${config.varPrefix}-height`, `${imgs.cssRequestedHeight}px`, RendererStyleFlags2.DashCase);
           thiz.renderer.setStyle(thiz.eref.nativeElement, `--pi-${config.varPrefix}-background-image`, `url('${imgs.url}')`, RendererStyleFlags2.DashCase);
           thiz.renderer.setStyle(thiz.eref.nativeElement, `--pi-${config.varPrefix}-background-size`, `${imgs.cssNextStepWidth}px ${imgs.cssNextStepHeight}px`, RendererStyleFlags2.DashCase);
+
+          thiz.debugImg$.next({config, imgs});
 
           const DEV = false;
           if (DEV) {
