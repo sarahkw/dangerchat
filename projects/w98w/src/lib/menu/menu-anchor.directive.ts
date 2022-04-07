@@ -1,5 +1,4 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
-import { MenuBarItemComponent } from '../menu-bar-item/menu-bar-item.component';
 import { Pressable } from '../pressable';
 import { WButtonComponent } from '../wbutton/wbutton.component';
 import { MenuTemplateDirective } from './menu-template.directive';
