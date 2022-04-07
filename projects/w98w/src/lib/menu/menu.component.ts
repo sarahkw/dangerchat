@@ -8,7 +8,6 @@ import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
 import { StyleInjector } from '../style-injector';
-import { W98wStyles } from '../w98w-styles';
 import { MenuContext } from './menu-context';
 import { menuCalculateSelf, MenuContinuation, menuCalculateNext } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
@@ -55,10 +54,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostBinding('class.w98w-menu') readonly hbcMenu = true;
-
-  @HostBinding('style.--menu-text-size') hbTS = `${W98wStyles.labelFontSize}px`;
-  @HostBinding('style.--menu-text-font') hbTF = W98wStyles.defaultFont;
-  @HostBinding('style.--menu-bg-color') hbMBC = Colors.WIDGET_BG;
 
   static readonly borderPadding = Bevels.MENU.getPadding();
   @HostBinding('style.--menu-border-padding') hbMBP = `${MenuComponent.borderPadding}px`;

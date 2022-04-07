@@ -20,6 +20,9 @@ body {
 
 %widget-base {
     color: var(--w98w-root-color-text);
+    font-size: var(--w98w-root-label-font-size);
+    font-family: var(--w98w-root-label-font-family);
+    background-color: var(--w98w-root-widget-background-color);
 }
 
 %widget-base.w98w-disabled {

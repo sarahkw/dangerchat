@@ -98,10 +98,6 @@ export class WButtonComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.w98w-disabled') get hbcDisabled() { return this.disabled; }
 
-  @HostBinding('style.fontFamily') hbSFF = W98wStyles.defaultFont;
-  @HostBinding('style.fontSize') hbSFS = `${W98wStyles.labelFontSize}px`;
-  @HostBinding('style.backgroundColor') hbSBC = Colors.WIDGET_BG;
-
   @HostBinding('style.padding') get hbSP() {
     return `${this.offsets.content}px`;
   }

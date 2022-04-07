@@ -1,5 +1,6 @@
-import { Directive, ElementRef, HostBinding, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { Directive, ElementRef, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { Colors } from './colors';
+import { W98wStyles } from './w98w-styles';
 
 //#region From Angular
 
@@ -33,42 +34,24 @@ function WRAP(fn: () => void): Descriptor {
 })
 export class RootCssVarsDirective {
 
-    /*
-      // SHAMEFUL. I TRIED BUT IT'S GOING TO TAKE TOO LONG.
-
-      (let* ((get-region
-              (lambda ()
-                (save-excursion
-                  (let ((tmp-begin nil))
-                    (search-forward "{")
-                    (setq tmp-begin (point))
-                    (backward-char)
-                    (forward-sexp)
-                    (backward-char)
-                    (buffer-substring-no-properties tmp-begin (point))
-                    ))))
-             (source-str (funcall get-region))
-             (new-str
-              (with-temp-buffer
-                (insert source-str)
-                (beginning-of-buffer)
-                (keep-lines ":" nil nil t)
-                (buffer-string))))
-
-        (insert new-str))
-    */
-
   static readonly ROOTVARS = {
       colorDesktop: WRAP(() => Colors.DESKTOP),
 
       colorText: WRAP(() => Colors.WIDGET_TEXT),
-      colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED)
+      colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED),
+
+      labelFontSize: WRAP(() => `${W98wStyles.labelFontSize}px`),
+      labelFontFamily: WRAP(() => W98wStyles.defaultFont),
+      widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG)
   };
 
   /*
-  --w98w-root-color-desktop
-  --w98w-root-color-text
-  --w98w-root-color-text-disabled
+--w98w-root-color-desktop
+--w98w-root-color-text
+--w98w-root-color-text-disabled
+--w98w-root-label-font-size
+--w98w-root-label-font-family
+--w98w-root-widget-background-color
   */
 
   private refresh() {

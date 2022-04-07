@@ -23,9 +23,6 @@ div.container {
     display: grid;
     box-sizing: border-box;
 
-    font-size: var(--menu-text-size);
-    font-family: var(--menu-text-font);
-
     user-select: none;
 
     grid-template-rows:
@@ -44,7 +41,7 @@ div.container {
 .bevel {
     grid-area: bevel;
 
-    background-color: var(--menu-bg-color);
+    background-color: var(--w98w-root-widget-background-color);
 
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
