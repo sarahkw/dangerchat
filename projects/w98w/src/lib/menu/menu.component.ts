@@ -2,11 +2,11 @@ import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Inp
 import { Observable, share, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
-import { Colors } from '../colors';
 import { MenuItemComponent } from '../menu-item/menu-item.component';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
+import { RootCssVarsDirective } from '../root-css-vars.directive';
 import { StyleInjector } from '../style-injector';
 import { MenuContext } from './menu-context';
 import { menuCalculateSelf, MenuContinuation, menuCalculateNext } from './menu-continuation';
@@ -19,6 +19,8 @@ import { MenuTemplateDirective } from './menu-template.directive';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  readonly ROOTVARS = RootCssVarsDirective.ROOTVARS;
 
   private applyMenuCalculation(calcs: MenuContinuation | undefined) {
       let offsetV = 'initial';

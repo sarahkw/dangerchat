@@ -41,8 +41,6 @@ div.container {
 .bevel {
     grid-area: bevel;
 
-    background-color: var(--w98w-root-widget-background-color);
-
     /* Bevel8SplitComponent to fill up this container */
     position: relative;
 }
