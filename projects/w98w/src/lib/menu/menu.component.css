@@ -1,14 +1,7 @@
 :host {
-    /* remove user-agent styles for <menu> */
-    margin: 0;
-    padding: 0;
-
     /* i need this to create a stacking context, otherwise the labels of the submenus will be on top of us */
     /* note: this was for when submenus were siblings instead of children. but this might still be needed we'll see */
     z-index: 0;
-
-    margin-left: var(--menu-calcs-offset-h);
-    margin-top: var(--menu-calcs-offset-v);
 
     /* overlay layer will be on top of everything, which would disable pointer events. clearly this menu should take pointer events. */
     pointer-events: auto;
@@ -17,6 +10,11 @@
     /* we have to take 'scroll' from JS instead of using 'auto' because if we use auto, then firefox will try to keep the same width
        and have the scrollbar intrude into us */
     overflow-y: var(--menu-calcs-overflow-y);
+}
+
+:host(menu) { /* be more specific than root styles */
+    margin-left: var(--menu-calcs-offset-h);
+    margin-top: var(--menu-calcs-offset-v);
 }
 
 div.container {

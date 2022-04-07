@@ -38,10 +38,22 @@ body {
     margin: 0; /* safari ipados */
 }
 
+%menu-base {
+    /* remove user-agent styles for <menu> */
+    margin: 0;
+    padding: 0;
+}
+
 button.w98w-wbutton {
     @extend %button-base;
 }
 
 li[w98w-menu-item] > button {
     @extend %button-base;
+}
+
+menu[w98w-menu], menu[w98w-menu-bar] {
+    /* remove user-agent styles for <menu> */
+    margin: 0;
+    padding: 0;
 }
