@@ -55,14 +55,10 @@ export class RootCssVarsDirective {
       const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
       this.renderer.setStyle(this.elementRef.nativeElement, styleName, v._getter(), RendererStyleFlags2.DashCase);
       v.var = `var(${styleName})`;
-      if (DEV) {
-        DEV.push(styleName);
-      }
+      DEV?.push(styleName);
     });
 
-    if (DEV) {
-      console.debug(DEV.join("\n"));
-    }
+    DEV && console.debug(DEV.join("\n"));
   }
 
   constructor(private elementRef: ElementRef<HTMLElement>, private renderer: Renderer2) {
