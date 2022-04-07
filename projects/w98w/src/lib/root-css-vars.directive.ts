@@ -40,6 +40,8 @@ export class RootCssVarsDirective {
       widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG)
   };
 
+  // Design: keep these updated and don't use these besides in styles.scss
+
   /*
 --w98w-root-color-desktop
 --w98w-root-color-text
