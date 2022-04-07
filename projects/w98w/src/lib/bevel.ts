@@ -124,6 +124,8 @@ export abstract class Bevels {
     // note: fixed height, can optimize and use fewer slices
     static readonly GRAB_HANDLE_H = new SlantRectBevel([Colors.BEV_WHITE], [Colors.BEV_DARKGRAY]);
 
+    static readonly MENUBAR_ITEM_HOVER = Bevels.GRAB_HANDLE_H;
+
     // systray.  just like FRAME but with 1 pixel instead of 2
     static readonly LIGHTFRAME = new SlantRectBevel([Colors.BEV_DARKGRAY], [Colors.BEV_WHITE]);
 }

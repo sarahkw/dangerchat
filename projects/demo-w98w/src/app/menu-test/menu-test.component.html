@@ -61,9 +61,9 @@
         <p>Help is empty in order to test not having a menu and it still working.</p>
 
         <menu w98w-menu-bar>
-            <li w98w-menu-bar-item w98w-menu-anchor #ankMbiFile="menuAnchor" (click)="menuService.beginMenu(library.menuTemp, ankMbiFile.element.nativeElement)">File</li>
-            <li w98w-menu-bar-item w98w-menu-anchor #ankMbiEdit="menuAnchor" (click)="menuService.beginMenu(library.menuTemp, ankMbiEdit.element.nativeElement)">Edit</li>
-            <li w98w-menu-bar-item w98w-menu-anchor #ankMbiHelp="menuAnchor" (click)="menuService.beginMenu(library.menuTemp, ankMbiHelp.element.nativeElement)">Help</li>
+            <li w98w-menu-bar-item #mbiFile (click)="menuService.beginMenu(library.menuTemp, mbiFile.anchor.element.nativeElement)">File</li>
+            <li w98w-menu-bar-item #mbiEdit (click)="menuService.beginMenu(library.menuTemp, mbiEdit.anchor.element.nativeElement)">Edit</li>
+            <li w98w-menu-bar-item #mbiHelp (click)="menuService.beginMenu(library.menuTemp, mbiHelp.anchor.element.nativeElement)">Help</li>
         </menu>
 
         <menu w98w-menu>
