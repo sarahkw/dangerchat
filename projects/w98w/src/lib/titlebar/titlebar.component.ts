@@ -17,8 +17,6 @@ export class TitlebarComponent implements OnInit {
 
   @Input() iconSrc!: string;
 
-  @Input() debugMode = false;
-
   btnExternalFocus = true;
   btnWidth: number = W98wStyles.titleBarBtnWidth;
   btnHeight: number = W98wStyles.titleBarBtnHeight;
