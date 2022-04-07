@@ -105,7 +105,7 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
 @Component({
   selector: 'w98w-pixel-image',
   templateUrl: './pixel-image.component.html',
-  styleUrls: ['./pixel-image.component.css']
+  styleUrls: ['./pixel-image.component.scss']
 })
 export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelImageDrawer<DisplayImage> {
 
