@@ -1,6 +1,12 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
+import { MenuBarItemComponent } from '../menu-bar-item/menu-bar-item.component';
+import { Pressable } from '../pressable';
+import { WButtonComponent } from '../wbutton/wbutton.component';
 import { MenuTemplateDirective } from './menu-template.directive';
 import { MenuService } from './menu.service';
+
+// also take a fn so that we can take ViewChild params as input, as ViewChild is resolved after inputs are
+export type AutoMenuType = MenuTemplateDirective | (() => MenuTemplateDirective) | undefined;
 
 @Directive({
   selector: '[w98w-menu-anchor]',
@@ -8,8 +14,9 @@ import { MenuService } from './menu.service';
 })
 export class MenuAnchorDirective {
 
-  // also take a fn so that we can take ViewChild params as input, as ViewChild is resolved after inputs are
-  @Input() autoMenu: MenuTemplateDirective | (() => MenuTemplateDirective) | undefined;
+  @Input() autoMenu: AutoMenuType;
+
+  @Input() pressable?: Pressable;
 
   @HostListener('click') onClick() {
     if (this.menuService) {
@@ -19,13 +26,21 @@ export class MenuAnchorDirective {
         } else {
           this.menuService.beginMenu(this.autoMenu(), this.element.nativeElement);
         }
+
+        if (this.pressable) {
+          this.pressable.pressed = true;
+        }
       }
     }
   }
 
   constructor(
     public element: ElementRef<HTMLElement>,
-    @Optional() private menuService: MenuService // might be unavailable when on demo app
-  ) { }
+    @Optional() private menuService: MenuService, // might be unavailable when on demo app
+
+    @Optional() possiblyWButton: WButtonComponent
+  ) {
+    this.pressable = possiblyWButton;
+  }
 
 }

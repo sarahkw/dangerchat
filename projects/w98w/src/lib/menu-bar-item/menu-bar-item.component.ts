@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
-import { MenuAnchorDirective } from '../menu/menu-anchor.directive';
+import { AutoMenuType, MenuAnchorDirective } from '../menu/menu-anchor.directive';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
+import { Pressable } from '../pressable';
 import { StyleInjector } from '../style-injector';
 
 @Component({
@@ -12,7 +13,10 @@ import { StyleInjector } from '../style-injector';
   templateUrl: './menu-bar-item.component.html',
   styleUrls: ['./menu-bar-item.component.scss']
 })
-export class MenuBarItemComponent implements OnInit, OnDestroy {
+export class MenuBarItemComponent implements OnInit, OnDestroy, Pressable {
+
+  // pass along to MenuAnchorDirective
+  @Input() autoMenu: AutoMenuType;
 
   @ViewChild(MenuAnchorDirective) anchor!: MenuAnchorDirective;
 
