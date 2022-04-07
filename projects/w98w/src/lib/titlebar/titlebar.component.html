@@ -44,9 +44,7 @@
     [style.gap.px]="STYLES.titleBarFlexGap"
     >
 
-    <!-- deviation: in win98, icons aren't padded by the 2 px on the left, top, bottom. but
-         i don't think that's worth keeping. nobody's going to notice. :)  they're padded by 1 px there instead -->
-    <img [src]="debugMode ? '/assets/w98w/greenbox.png' : iconSrc" class="icon" />
+    <img [src]="iconSrc" class="icon" />
     <span class="label w98w-font-ss"><ng-content></ng-content></span>
 
     <div class="controls">
