@@ -52,6 +52,10 @@ li[w98w-menu-item] > button {
     @extend %button-base;
 }
 
+li[w98w-menu-bar-item] > button {
+    @extend %button-base;
+}
+
 menu[w98w-menu], menu[w98w-menu-bar] {
     @extend %menu-base;
 }
