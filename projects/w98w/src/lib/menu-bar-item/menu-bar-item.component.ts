@@ -56,8 +56,12 @@ export class MenuBarItemComponent implements OnInit, OnDestroy {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button:active", imgs));
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button.pressed", imgs));
+      this.styleInjector.replaceStyle(
+          [
+              Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button:active", imgs),
+              Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button.pressed", imgs)
+          ].join("\n")
+      );
     }
 
     pidDestroy(): void {
