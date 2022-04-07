@@ -1,4 +1,5 @@
 import { Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges } from '@angular/core';
+import { Subject } from 'rxjs';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
@@ -26,10 +27,31 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
   constructor(private pixelImageService: PixelImageService,
     private eref: ElementRef,
     private renderer: Renderer2) {
+
+    // quite sure it's ok not to unsubscribe to a subject we own
+    this.currentConfig$.subscribe(this.onNewConfig.bind(this));
   }
 
   ngOnInit(): void {
-    for (let x of this.config) {
+    this.currentConfig$.next(this.config);
+  }
+
+  ngOnDestroy(): void {
+    this.resetPids();
+  }
+
+  private resetPids() {
+    for (let pid of this.pids) {
+      pid.cleanup();
+      this.pixelImageService.pidUnregister(pid);
+    }
+    this.pids = [];
+  }
+
+  private onNewConfig(nextConfig: PixelImageCssVarConfig[]) {
+    this.resetPids();
+
+    for (let x of nextConfig) {
       const thiz = this;
 
       const pid = new class implements PixelImageDrawer, Cleanupable {
@@ -69,13 +91,6 @@ export class PixelImageCssVarDirective implements OnInit, OnDestroy {
       this.pids.push(pid);
 
       this.pixelImageService.pidRegister(pid);
-    }
-  }
-
-  ngOnDestroy(): void {
-    for (let pid of this.pids) {
-      pid.cleanup();
-      this.pixelImageService.pidUnregister(pid);
     }
   }
 }
