@@ -12,7 +12,7 @@ export class MenuService {
 
   constructor() { }
 
-  beginMenu(template: MenuTemplateDirective, anchor: HTMLElement): Observable<null> {
+  beginMenu$(template: MenuTemplateDirective, anchor: HTMLElement): Observable<null> {
     return new Observable<null>(subscriber => {
       if (this.currentCancel) {
         this.currentCancel();

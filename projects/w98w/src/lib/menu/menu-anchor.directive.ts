@@ -40,7 +40,7 @@ export class MenuAnchorDirective implements OnDestroy {
           }
 
           this.menuSubscription =
-            this.menuService.beginMenu(target, this.element.nativeElement)
+            this.menuService.beginMenu$(target, this.element.nativeElement)
               .pipe(finalize(() => {
                 if (this.pressable) {
                   this.pressable.pressed = false;
