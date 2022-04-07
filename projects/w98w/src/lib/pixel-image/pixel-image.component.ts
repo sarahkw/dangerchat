@@ -132,7 +132,7 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit {
 
   // these things are for the size debug test page
   @Input() debugDrawnSize: [number, number] | undefined;
-  debugRequestedSize$: Observable<number[]> | undefined;
+  debugGenImgSize$: Observable<number[]> | undefined;
   get debugForceWidth() { return this.debugDrawnSize && this.debugDrawnSize[0] }
   get debugForceHeight() { return this.debugDrawnSize && this.debugDrawnSize[1] }
 
@@ -155,7 +155,7 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     this.currentConfig$.subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
 
-    this.debugRequestedSize$ = this.imgCssVarGen.debugImg$.pipe(
+    this.debugGenImgSize$ = this.imgCssVarGen.debugImg$.pipe(
       filter(value => !!value),
       map(value => {
         const { imgs } = value!;
