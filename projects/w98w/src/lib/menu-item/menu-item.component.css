@@ -23,10 +23,6 @@ button {
     pointer-events: auto;
 }
 
-button:focus {
-    outline: none;
-}
-
 :host-context(.w98w-menu) {
     /* FU CSS ... can't (grid-row: item N;) */
     grid-row-start: item-start var(--menu-item-index);
