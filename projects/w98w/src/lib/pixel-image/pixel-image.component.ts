@@ -124,17 +124,17 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
 export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
   @Input() genImg!: GenImgDescriptor;
-  @Input() cssWidth!: number | undefined;
+  @Input() cssWidth!: number | undefined;  // if undefined, ask the image what width it should be based on height
   @Input() cssHeight!: number;
 
   private currentConfig$: BehaviorSubject<PixelImageCssVarConfig[]> = new BehaviorSubject([] as any);
   @ViewChild(PixelImageCssVarDirective) private imgCssVarGen!: PixelImageCssVarDirective;
 
+  // these things are for the size debug test page
   @Input() debugDrawnSize: [number, number] | undefined;
   debugRequestedSize: number[] | undefined;  // output
   get debugForceWidth() { return this.debugDrawnSize && this.debugDrawnSize[0] }
   get debugForceHeight() { return this.debugDrawnSize && this.debugDrawnSize[1] }
-
   private debugImgSubscription: Subscription | undefined;
 
   constructor() {}
