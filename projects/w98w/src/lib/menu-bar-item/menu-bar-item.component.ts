@@ -44,7 +44,7 @@ export class MenuBarItemComponent implements OnInit, OnDestroy, Pressable {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu-bar-item-button:hover", imgs));
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".menu-item-can-hover .w98w-menu-bar-item-button:hover", imgs));
     }
 
     pidDestroy(): void {

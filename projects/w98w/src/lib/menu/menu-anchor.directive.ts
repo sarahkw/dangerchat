@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Input, OnDestroy, Optional } from '@angular/core';
 import { finalize, Subscription } from 'rxjs';
+import { MenuBarComponent } from '../menu-bar/menu-bar.component';
 import { Pressable } from '../pressable';
 import { WButtonComponent } from '../wbutton/wbutton.component';
 import { MenuTemplateDirective } from './menu-template.directive';
@@ -48,6 +49,10 @@ export class MenuAnchorDirective implements OnDestroy {
                 this.menuSubscription = undefined;
               }))
               .subscribe();
+
+          if (this.possiblyMenuBar) {
+            this.menuSubscription.add(this.possiblyMenuBar.childCannotHoverToken$.subscribe());
+          }
         }
       }
     }
@@ -57,7 +62,9 @@ export class MenuAnchorDirective implements OnDestroy {
     private element: ElementRef<HTMLElement>,
     @Optional() private menuService: MenuService, // might be unavailable when on demo app
 
-    @Optional() possiblyWButton: WButtonComponent
+    @Optional() possiblyWButton: WButtonComponent,
+
+    @Optional() private possiblyMenuBar: MenuBarComponent
   ) {
     this.pressable = possiblyWButton;
   }
