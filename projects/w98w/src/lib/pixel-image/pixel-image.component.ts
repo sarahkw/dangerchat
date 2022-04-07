@@ -142,13 +142,15 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, AfterV
   ngOnInit(): void {
   }
 
-  ngOnChanges(_changes: SimpleChanges): void {
-    this.currentConfig$.next([{
-      genImg: this.genImg,
-      varPrefix: 'only',
-      cssWidth: this.cssWidth === undefined ? this.genImg.heightToWidthFn(this.cssHeight) : this.cssWidth,
-      cssHeight: this.cssHeight
-    }]);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['genImg'] || changes['cssWidth'] || changes['cssHeight']) {
+      this.currentConfig$.next([{
+        genImg: this.genImg,
+        varPrefix: 'only',
+        cssWidth: this.cssWidth === undefined ? this.genImg.heightToWidthFn(this.cssHeight) : this.cssWidth,
+        cssHeight: this.cssHeight
+      }]);
+    }
   }
 
   ngAfterViewInit(): void {
