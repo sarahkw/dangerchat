@@ -10,6 +10,11 @@ export class TestMenuLibComponent implements OnInit {
 
   @ViewChild('menuTemp') menuTemp!: MenuTemplateDirective;
 
+  // workaround to be able to use the value as an input param, as views are resolved after inputs are
+  menuTempDeferred = (function (this: TestMenuLibComponent) {
+    return this.menuTemp;
+  }).bind(this);
+
   constructor() { }
 
   ngOnInit(): void {
