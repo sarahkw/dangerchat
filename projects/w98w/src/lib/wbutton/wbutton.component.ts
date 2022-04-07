@@ -4,6 +4,7 @@ import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8spl
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
+import { Pressable } from '../pressable';
 import { StyleInjector } from '../style-injector';
 
 @Directive({
@@ -51,7 +52,7 @@ export class WButtonBodyDirective implements OnInit {
   styleUrls: ['./wbutton.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class WButtonComponent implements OnInit, OnDestroy {
+export class WButtonComponent implements OnInit, OnDestroy, Pressable {
 
   @Input() pressed: boolean = false;
   @Input() extraLabel: string | undefined;
