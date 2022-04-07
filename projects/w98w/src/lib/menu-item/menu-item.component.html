@@ -6,7 +6,7 @@
     </div>
     <div class="label">{{ label }}</div>
     <div class="submenu" [style.width.px]="arrowSize" [style.height.px]="arrowSize">
-        <div class="submenu-draw" *ngIf="subMenu || debugShowSubMenuIndicator" [w98w-pixel-image-css-var]="[
+        <div class="submenu-draw" *ngIf="subMenu || debugShowSubMenuIndicator" w98w-pixel-image-css-var [pixelImageConfig]="[
                 {
                     genImg: arrowImg,
                     varPrefix: 'normal',

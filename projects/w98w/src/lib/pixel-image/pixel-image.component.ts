@@ -18,7 +18,7 @@ interface Cleanupable {
 
 @Directive({selector: '[w98w-pixel-image-css-var]'})
 export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
-  @Input('w98w-pixel-image-css-var') config: PixelImageCssVarConfig[] = [];
+  @Input() pixelImageConfig: PixelImageCssVarConfig[] = [];
 
   private currentConfig$ = new Subject<PixelImageCssVarConfig[]>();
 
@@ -46,7 +46,7 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const configChanges = changes['config'];
+    const configChanges = changes['pixelImageConfig'];
     if (configChanges) {
       this.currentConfig$.next(configChanges.currentValue);
     }
