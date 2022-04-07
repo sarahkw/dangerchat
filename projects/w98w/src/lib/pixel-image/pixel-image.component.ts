@@ -92,6 +92,14 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelI
 
   constructor(private pixelImageService: PixelImageService) {}
 
+  ngOnInit(): void {
+    this.pixelImageService.pidRegister(this);
+  }
+
+  ngOnDestroy(): void {
+    this.pixelImageService.pidUnregister(this);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['genImg'].isFirstChange()) {
       this.pixelImageService.pidUnregister(this);
@@ -129,13 +137,5 @@ export class PixelImageComponent implements OnInit, OnDestroy, OnChanges, PixelI
 
   pidDestroy(): void {
     // no-op: we're not reusing this PID
-  }
-
-  ngOnInit(): void {
-    this.pixelImageService.pidRegister(this);
-  }
-
-  ngOnDestroy(): void {
-    this.pixelImageService.pidUnregister(this);
   }
 }
