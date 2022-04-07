@@ -1,11 +1,9 @@
 import { PixelImageBuilderFactory } from "./pixel-image-builder";
 
-type ImgParcel = any;
+export interface PixelImageDrawer<T> {
 
-export interface PixelImageDrawer {
-
-    pidGenerateImages(pibf: PixelImageBuilderFactory): ImgParcel;
-    pidApplyImages(imgs: ImgParcel): void;
+    pidGenerateImages(pibf: PixelImageBuilderFactory): T;
+    pidApplyImages(imgs: T): void;
     pidDestroy(): void;
 
 }

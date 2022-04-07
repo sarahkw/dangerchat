@@ -36,7 +36,7 @@ export class MenuBarItemComponent implements OnInit, OnDestroy, Pressable {
 
   //#region PIDs
 
-  static readonly PID_HOVER = new class implements PixelImageDrawer {
+  static readonly PID_HOVER = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
     pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
@@ -52,7 +52,7 @@ export class MenuBarItemComponent implements OnInit, OnDestroy, Pressable {
     }
   };  // PID_NORMAL
 
-  static readonly PID_ACTIVE = new class implements PixelImageDrawer {
+  static readonly PID_ACTIVE = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
     pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {

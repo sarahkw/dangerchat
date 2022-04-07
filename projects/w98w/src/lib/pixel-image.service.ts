@@ -54,7 +54,7 @@ export class PixelImageService {
 
   pixelDrawConfig$: Observable<PixelDrawConfig>;
 
-  pids: Map<PixelImageDrawer, {refcount: number, subscription: Subscription}> = new Map();
+  pids: Map<PixelImageDrawer<any>, {refcount: number, subscription: Subscription}> = new Map();
 
   constructor(dprService: DprService) {
     this.pixelDrawConfig$ = dprService.value$.pipe(
@@ -65,7 +65,7 @@ export class PixelImageService {
 
   // if registering the same pid multiple times, we don't make it draw again, we just
   // increase the refcount.
-  pidRegister(pid: PixelImageDrawer) {
+  pidRegister(pid: PixelImageDrawer<any>) {
     if (this.pids.has(pid)) {
       this.pids.get(pid)!.refcount += 1;
       return;
@@ -79,7 +79,7 @@ export class PixelImageService {
     });
   }
 
-  pidUnregister(pid: PixelImageDrawer) {
+  pidUnregister(pid: PixelImageDrawer<any>) {
     let pidState = this.pids.get(pid);
     if (pidState === undefined) {
       console.error('tried to unregister unknown pid');

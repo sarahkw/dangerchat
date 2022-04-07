@@ -130,7 +130,7 @@ export class WButtonComponent implements OnInit, OnDestroy, Pressable {
 
    */
 
-  static readonly PID_NORMAL = new class implements PixelImageDrawer {
+  static readonly PID_NORMAL = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
     pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
@@ -146,7 +146,7 @@ export class WButtonComponent implements OnInit, OnDestroy, Pressable {
     }
   };  // PID_NORMAL
 
-  static readonly PID_PRESSED = new class implements PixelImageDrawer {
+  static readonly PID_PRESSED = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
     pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {

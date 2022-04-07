@@ -145,7 +145,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       onSubMenuClose);
   }
 
-  static readonly PID = new class implements PixelImageDrawer {
+  static readonly PID = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
     pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
