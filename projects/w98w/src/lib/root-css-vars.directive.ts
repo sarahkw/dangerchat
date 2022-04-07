@@ -5,14 +5,9 @@ import { W98wStyles } from './w98w-styles';
 //#region From Angular
 
 const CAMEL_CASE_REGEXP = /([A-Z])/g;
-const DASH_CASE_REGEXP = /-([a-z])/g;
 
 function camelCaseToDashCase(input: string): string {
   return input.replace(CAMEL_CASE_REGEXP, (...m: string[]) => '-' + m[1].toLowerCase());
-}
-
-function dashCaseToCamelCase(input: string): string {
-  return input.replace(DASH_CASE_REGEXP, (...m: string[]) => m[1].toUpperCase());
 }
 
 //#endregion
