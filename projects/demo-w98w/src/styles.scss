@@ -124,6 +124,6 @@ w98w-titlebar > img.w98w-icon {
     pointer-events: none;  // in the future we're going to have a context menu, don't want img to eat the event
 }
 
-w98w-titlebar > button.w98w-titlebar-control {
+w98w-titlebar > div.controlarea {
     @extend %w98w-titlebar-em-height;
 }

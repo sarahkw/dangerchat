@@ -1,16 +1,18 @@
 <img [src]="iconSrc" class="w98w-icon" />
 <span class="w98w-label">{{ label }}</span>
 
-<button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
-    <w98w-pixel-image [genImg]="GENIMG.TBAR_MIN" cssWidth="auto" cssHeight="auto" style="height: 100%;" wbuttonBody>
-    </w98w-pixel-image>
-</button>
-<button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
-    <w98w-pixel-image [genImg]="GENIMG.TBAR_MAX" cssWidth="auto" cssHeight="auto" style="height: 100%;" wbuttonBody>
-    </w98w-pixel-image>
-</button>
-<div [style.width.px]="2"></div>
-<button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
-    <w98w-pixel-image [genImg]="GENIMG.TBAR_X" cssWidth="auto" cssHeight="auto" style="height: 100%;" wbuttonBody>
-    </w98w-pixel-image>
-</button>
+<div class="controlarea">
+    <button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
+        <w98w-pixel-image [genImg]="GENIMG.TBAR_MIN" cssWidth="auto" cssHeight="auto" style="height: 100%;" wbuttonBody>
+        </w98w-pixel-image>
+    </button>
+    <button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
+        <w98w-pixel-image [genImg]="GENIMG.TBAR_MAX" cssWidth="auto" cssHeight="auto" style="height: 100%;" wbuttonBody>
+        </w98w-pixel-image>
+    </button>
+    <div [style.width.px]="2"></div>
+    <button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
+        <w98w-pixel-image [genImg]="GENIMG.TBAR_X" cssWidth="auto" cssHeight="auto" style="height: 100%;" wbuttonBody>
+        </w98w-pixel-image>
+    </button>
+</div>
