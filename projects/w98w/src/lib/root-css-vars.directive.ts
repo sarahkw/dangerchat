@@ -13,12 +13,14 @@ function camelCaseToDashCase(input: string): string {
 
 type Descriptor = {
   _getter: () => void,
+  _styleName: string,
   var: string
 };
 
 function WRAP(fn: () => void): Descriptor {
   return {
     _getter: fn,
+    _styleName: undefined as any,
     var: undefined as any
   }
 }
@@ -38,11 +40,27 @@ export const ROOTVARS = {
   titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT)
 };
 
-// Design: keep these updated and don't use these besides in styles.scss
+(function (generate: boolean) {
+  const accumulate = generate ? <string[]>[] : undefined;
 
+  Object.entries(ROOTVARS).forEach(([k, v]) => {
+    const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
+    v._styleName = styleName;
+    v.var = `var(${styleName})`;
+    accumulate?.push(styleName);
+  });
+
+  accumulate && console.debug(accumulate.join("\n"));
+})(false);
+
+// ROOT CSS VARS DIRECT ACCESS
+//
+// Design: keep these updated and don't use these besides in styles.scss
+//         read `.var` to use otherwise, so TS can verify
+//
 // DIRTY FLAG: Set to YES if you've edited the dict without updating below. Tsk tsk.
 //
-// YES
+//             YES
 
 /*
 --w98w-root-color-desktop
@@ -61,15 +79,9 @@ export const ROOTVARS = {
 export class RootCssVarsDirective {
 
   private refresh() {
-    let DEV: string[] | undefined;
-    Object.entries(ROOTVARS).forEach(([k, v]) => {
-      const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
-      this.renderer.setStyle(this.elementRef.nativeElement, styleName, v._getter(), RendererStyleFlags2.DashCase);
-      v.var = `var(${styleName})`;
-      DEV?.push(styleName);
+    Object.values(ROOTVARS).forEach(v => {
+      this.renderer.setStyle(this.elementRef.nativeElement, v._styleName, v._getter(), RendererStyleFlags2.DashCase);
     });
-
-    DEV && console.debug(DEV.join("\n"));
   }
 
   constructor(private elementRef: ElementRef<HTMLElement>, private renderer: Renderer2) {
