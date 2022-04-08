@@ -1,14 +1,8 @@
 :host {
-    display: flex; // [1]
-    flex-direction: column; // [1]
+    display: block;
 }
 
 div.sliding-screen {
-    flex: 1 0 auto; // [1]
     height: 100%;
     width: 100%;
 }
-
-
-// [1]: Do it this way so that you can set min-height on screen component, and have the
-//      sliding screen actually fill the height.
