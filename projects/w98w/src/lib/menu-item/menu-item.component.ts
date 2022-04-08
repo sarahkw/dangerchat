@@ -4,7 +4,6 @@ import { GenImg } from '../genimg';
 import { OnSubMenuClose } from '../menu/menu-host/menu-host.component';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { MenuComponent } from '../menu/menu.component';
-import { W98wStyles } from '../w98w-styles';
 
 @Component({
   selector: 'li[w98w-menu-item]',
@@ -40,7 +39,7 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   }
 
   arrowSize = (function () {
-    const desiredSize = W98wStyles.labelFontSize - 4;
+    const desiredSize = Colors.labelFontSize - 4;
     if (desiredSize % 2 == 0) {
       return desiredSize + 1;
     } else {

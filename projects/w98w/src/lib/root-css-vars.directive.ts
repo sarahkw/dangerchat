@@ -1,6 +1,5 @@
 import { Directive, ElementRef, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { Colors } from './colors';
-import { W98wStyles } from './w98w-styles';
 
 //#region From Angular
 
@@ -35,8 +34,8 @@ export class RootCssVarsDirective {
       colorText: WRAP(() => Colors.WIDGET_TEXT),
       colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED),
 
-      labelFontSize: WRAP(() => `${W98wStyles.labelFontSize}px`),
-      labelFontFamily: WRAP(() => W98wStyles.defaultFont),
+      labelFontSize: WRAP(() => `${Colors.labelFontSize}px`),
+      labelFontFamily: WRAP(() => Colors.defaultFont),
       widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG),
 
       titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
