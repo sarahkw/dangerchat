@@ -12,9 +12,9 @@ function camelCaseToDashCase(input: string): string {
 //#endregion
 
 type Descriptor = {
-  _getter: () => void,
-  _styleName: string,
-  var: string
+  readonly _getter: () => void,
+  readonly _styleName: string,
+  readonly var: string
 };
 
 function WRAP(fn: () => void): Descriptor {
@@ -45,8 +45,8 @@ export const ROOTVARS = {
 
   Object.entries(ROOTVARS).forEach(([k, v]) => {
     const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
-    v._styleName = styleName;
-    v.var = `var(${styleName})`;
+    (v as any)._styleName = styleName;
+    (v as any).var = `var(${styleName})`;
     accumulate?.push(styleName);
   });
 
