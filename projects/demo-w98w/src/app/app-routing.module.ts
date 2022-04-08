@@ -11,6 +11,7 @@ import { PopupTestComponent } from './popup-test/popup-test.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
 import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
+import { WindowTestComponent } from './window-test/window-test.component';
 
 const routes: Routes = [
   { path: 'desktop', component: DesktopTestComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
       { path: 'titlebar-test', component: TitlebarTestComponent },
       { path: 'screen-test', component: ScreenTestComponent },
       { path: 'menu-test', component: MenuTestComponent },
-      { path: 'popup-test', component: PopupTestComponent }
+      { path: 'popup-test', component: PopupTestComponent },
+      { path: 'window-test', component: WindowTestComponent }
     ]
   },
 ];

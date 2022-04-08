@@ -18,6 +18,7 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { MenuTestComponent } from './menu-test/menu-test.component';
 import { PopupTestComponent } from './popup-test/popup-test.component';
 import { TestMenuLibComponent } from './test-menu-lib/test-menu-lib.component';
+import { WindowTestComponent } from './window-test/window-test.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TestMenuLibComponent } from './test-menu-lib/test-menu-lib.component';
     ScreenTestComponent,
     MenuTestComponent,
     PopupTestComponent,
-    TestMenuLibComponent
+    TestMenuLibComponent,
+    WindowTestComponent
   ],
   imports: [
     BrowserModule,
