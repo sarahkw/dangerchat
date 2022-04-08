@@ -57,7 +57,7 @@ export class RootCssVarsDirective {
   */
 
   private refresh() {
-    let DEV: string[] | undefined = [];
+    let DEV: string[] | undefined;
     Object.entries(RootCssVarsDirective.ROOTVARS).forEach(([k, v]) => {
       const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
       this.renderer.setStyle(this.elementRef.nativeElement, styleName, v._getter(), RendererStyleFlags2.DashCase);
