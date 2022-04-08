@@ -1,5 +1,17 @@
 <h2>Window Test</h2>
 
-<w98w-window>
-    <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
-</w98w-window>
+<w98w-screen
+    [unfixedHeight]="true"
+    style="min-height: 400px;">
+
+    <h3 style="margin-top: 0;">Draw Frame</h3>
+    <w98w-window [drawFrame]="true">
+        <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
+    </w98w-window>
+
+    <h3>No Frame</h3>
+    <w98w-window [drawFrame]="false">
+        <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
+    </w98w-window>
+
+</w98w-screen>
