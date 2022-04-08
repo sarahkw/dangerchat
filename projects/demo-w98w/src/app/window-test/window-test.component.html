@@ -2,7 +2,8 @@
 
 <w98w-screen
     [unfixedHeight]="true"
-    style="min-height: 400px;">
+    [slidingScreenMainContentStyle]="{minHeight: 'min(600px, 90vh)', backgroundColor: ROOTVARS.colorDesktopDebug.var}"
+    >
 
     <h3 style="margin-top: 0;">Draw Frame</h3>
     <w98w-window [drawFrame]="true">

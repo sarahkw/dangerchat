@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ROOTVARS } from 'projects/w98w/src/lib/root-css-vars.directive';
 
 @Component({
   selector: 'app-window-test',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./window-test.component.scss']
 })
 export class WindowTestComponent implements OnInit {
+
+  readonly ROOTVARS = ROOTVARS;
 
   constructor() { }
 
