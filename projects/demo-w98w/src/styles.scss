@@ -18,10 +18,16 @@ body {
     image-rendering: crisp-edges;
 }
 
-%widget-base {
-    color: var(--w98w-root-color-text);
+// don't want to set these globally because i don't want to override user agent styles.
+// use case is maybe we have a webbrowser inside the 'universe'
+%base {
     font-size: var(--w98w-root-label-font-size);
     font-family: var(--w98w-root-label-font-family);
+}
+
+%widget-base {
+    @extend %base;
+    color: var(--w98w-root-color-text);
     background-color: var(--w98w-root-widget-background-color);
 }
 
@@ -62,4 +68,62 @@ menu[w98w-menu], menu[w98w-menu-bar] {
 
 menu[w98w-menu-bar] {
     background-color: var(--w98w-root-widget-background-color);
+}
+
+%unwrappable-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+$titlebar-text-margin-v: 5px;
+$titlebar-padding-h: 2px;
+$titlebar-image-padding-v: 1px;
+
+w98w-titlebar {
+    @extend %base;
+
+    background-color: var(--w98w-root-title-bar-active-color);
+    color: var(--w98w-root-title-bar-text-color);
+
+    font-weight: bold;
+
+    padding-left: $titlebar-padding-h;
+    padding-right: $titlebar-padding-h;
+
+    display: flex;
+    align-items: center;
+
+    user-select: none;
+
+    gap: 2px;
+}
+
+w98w-titlebar > span.w98w-label {
+    @extend %unwrappable-text;
+
+    margin-top: $titlebar-text-margin-v;
+    margin-bottom: $titlebar-text-margin-v;
+
+    flex: 1;
+}
+
+@mixin em-height($text-margin-v, $my-margin-v) {
+    margin-top: $my-margin-v;
+    margin-bottom: $my-margin-v;
+
+    height: calc(1em + 2 * $text-margin-v - 2 * $my-margin-v);
+}
+
+%w98w-titlebar-em-height {
+    @include em-height($titlebar-text-margin-v, $titlebar-image-padding-v);
+}
+
+w98w-titlebar > img.w98w-icon {
+    @extend %w98w-titlebar-em-height;
+    pointer-events: none;  // in the future we're going to have a context menu, don't want img to eat the event
+}
+
+w98w-titlebar > button.w98w-titlebar-control {
+    @extend %w98w-titlebar-em-height;
 }

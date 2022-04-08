@@ -1,8 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Colors } from '../colors';
-import { GenImg } from '../genimg';
-import { W98wStyles } from '../w98w-styles';
-import { WButtonComponent } from '../wbutton/wbutton.component';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'w98w-titlebar',
@@ -11,15 +7,10 @@ import { WButtonComponent } from '../wbutton/wbutton.component';
 })
 export class TitlebarComponent implements OnInit {
 
-  readonly COLORS = Colors;
-  readonly STYLES = W98wStyles;
-  readonly GENIMG = GenImg;
-
   @Input() iconSrc!: string;
+  @Input() label = "";
 
-  btnExternalFocus = true;
-  btnHeight: number = W98wStyles.titleBarBtnHeight;
-  btnImgHeight: number = WButtonComponent.calculateAvailableBodySize(null, this.btnHeight, this.btnExternalFocus).height;
+  @HostBinding('class') hbClass = "w98w-titlebar";
 
   constructor() { }
 

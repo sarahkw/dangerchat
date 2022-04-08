@@ -37,7 +37,10 @@ export class RootCssVarsDirective {
 
       labelFontSize: WRAP(() => `${W98wStyles.labelFontSize}px`),
       labelFontFamily: WRAP(() => W98wStyles.defaultFont),
-      widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG)
+      widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG),
+
+      titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
+      titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT)
   };
 
   // Design: keep these updated and don't use these besides in styles.scss
@@ -49,10 +52,12 @@ export class RootCssVarsDirective {
 --w98w-root-label-font-size
 --w98w-root-label-font-family
 --w98w-root-widget-background-color
+--w98w-root-title-bar-active-color
+--w98w-root-title-bar-text-color
   */
 
   private refresh() {
-    let DEV: string[] | undefined;
+    let DEV: string[] | undefined = [];
     Object.entries(RootCssVarsDirective.ROOTVARS).forEach(([k, v]) => {
       const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
       this.renderer.setStyle(this.elementRef.nativeElement, styleName, v._getter(), RendererStyleFlags2.DashCase);

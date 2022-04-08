@@ -1,64 +1,16 @@
-<style>
-    .titlebar {
-        width: 100%;
-        font-weight: bold;
-        overflow: hidden;
-        display: flex;
-        box-sizing: border-box;
-        align-items: center;
-    }
+<img [src]="iconSrc" class="w98w-icon" />
+<span class="w98w-label">{{ label }}</span>
 
-    .titlebar .icon {
-        /* for Safari, we don't use  align-self: stretch, because that breaks the aspect ratio. */
-        align-self: center;
-        height: 100%;
-    }
-
-    .titlebar .label {
-        flex: 1;
-
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
-    .titlebar .controls {
-        white-space: nowrap;
-
-        /* don't let alignment get messed up due to "text" */
-        display: flex;
-    }
-
-    .titlebar .controls .x-space {
-        display: inline-block;
-    }
-</style>
-
-<div class="titlebar"
-    [style.backgroundColor]="COLORS.TITLEBAR_ACTIVE"
-    [style.color]="COLORS.TITLEBAR_TEXT"
-    [style.fontSize.px]="STYLES.titleBarFont"
-    [style.height.px]="STYLES.titleBarHeight"
-    [style.padding.px]="STYLES.titleBarPadding"
-    [style.gap.px]="STYLES.titleBarFlexGap"
-    >
-
-    <img [src]="iconSrc" class="icon" />
-    <span class="label w98w-font-ss"><ng-content></ng-content></span>
-
-    <div class="controls">
-        <button w98w-wbutton [style.height.px]="btnHeight" [externalFocus]="btnExternalFocus">
-            <w98w-pixel-image [genImg]="GENIMG.TBAR_MIN" [cssHeight]="btnImgHeight" wbuttonBody>
-            </w98w-pixel-image>
-        </button>
-        <button w98w-wbutton [style.height.px]="btnHeight" [externalFocus]="btnExternalFocus">
-            <w98w-pixel-image [genImg]="GENIMG.TBAR_MAX" [cssHeight]="btnImgHeight" wbuttonBody>
-            </w98w-pixel-image>
-        </button>
-        <div class="x-space" [style.width.px]="2"></div>
-        <button w98w-wbutton [style.height.px]="btnHeight" [externalFocus]="btnExternalFocus">
-            <w98w-pixel-image [genImg]="GENIMG.TBAR_X" [cssHeight]="btnImgHeight" wbuttonBody>
-            </w98w-pixel-image>
-        </button>
-    </div>
-</div>
+<button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
+    <!-- <w98w-pixel-image [genImg]="GENIMG.TBAR_MIN" [cssHeight]="btnImgHeight" wbuttonBody>
+    </w98w-pixel-image> -->
+</button>
+<button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
+    <!-- <w98w-pixel-image [genImg]="GENIMG.TBAR_MAX" [cssHeight]="btnImgHeight" wbuttonBody>
+    </w98w-pixel-image> -->
+</button>
+<div [style.width.px]="2"></div>
+<button class="w98w-titlebar-control" w98w-wbutton [externalFocus]="true">
+    <!-- <w98w-pixel-image [genImg]="GENIMG.TBAR_X" [cssHeight]="btnImgHeight" wbuttonBody>
+    </w98w-pixel-image> -->
+</button>
