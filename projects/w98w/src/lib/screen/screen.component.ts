@@ -14,8 +14,8 @@ export class ScreenComponent implements OnInit {
   // pass to sliding screen
   @Input() unfixedHeight = false;
 
-  @Input() slidingScreenStyles: Style = null;
-  @Input() slidingScreenMainContentStyles: Style = null;
+  @Input() slidingScreenStyle: Style = null;
+  @Input() slidingScreenMainContentStyle: Style = null;
 
   constructor(public menuService: MenuService) { }
 

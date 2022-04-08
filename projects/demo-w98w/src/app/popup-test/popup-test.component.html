@@ -11,8 +11,8 @@
 <h3>Menu</h3>
 
 <w98w-screen
-    slidingScreenStyles="height: 400px; max-height: calc(100vh - 10px); background-color: lightgray; resize: vertical;"
-    slidingScreenMainContentStyles="background-color: #0e8585;">
+    [slidingScreenStyle]="'height: 400px; max-height: calc(100vh - 10px); background-color: lightgray; resize: vertical;'"
+    [slidingScreenMainContentStyle]="'background-color: #0e8585;'">
 
     <!-- TODO: can't add border on the side because the content width gets misaligned. i think it's because we measure the sliding screen
                 and apply its size to the inside. maybe a concession is that if you want a wrapping border, put sliding screen in a div
