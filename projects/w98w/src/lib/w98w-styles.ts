@@ -42,21 +42,5 @@ export abstract class W98wStyles {
 
     static readonly titleBarFont = 12;
     static readonly titleBarHeight = fontSzToTitleBarSz(W98wStyles.titleBarFont);
-
     static readonly titleBarBtnHeight = W98wStyles.titleBarHeight - 4;
-
-    static readonly titleBarFlexGap = 2;
-
-    // [ _ ][ o ] [ x ]
-    //           ^-        2
-    static readonly titleBarXButtonLeftMargin = 2;
-
-    // basically how much of the title bar bg wraps around the content.
-    static readonly titleBarPadding = 2;
-    static readonly titleBarPaddingForIcon = 1;  // icons display differently
-
-    // i guess this keeps the button body (button without the bezels) at the same size as the title
-    // bar height. definitely hardcode this instead of auto-sizing based on button contents. the icon can
-    // be stretched in CSS to fit.
-    static readonly taskBarBtnHeight = W98wStyles.titleBarHeight + 4;
 };
