@@ -165,17 +165,17 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
 
   ngAfterViewInit(): void {
     this.subscription = this.currentConfig$.pipe(
-      switchMap(configValue => {
-        if (configValue.cssHeight == 'auto') {
+      switchMap(rawConfig => {
+        if (rawConfig.cssHeight == 'auto') {
 
           // TODO would resub on config change even if we don't need to (can use the same resizeobserver)
           return resizeObserver([this.elementRef.nativeElement]).pipe(
             map(entriesValue => entriesValue.resolveContentRect(entriesValue.entries[0]).height),
             distinctUntilChanged(), // we'll get a resize update when the width changes, ignore that
-            map(height => ({ ...configValue, cssHeight: height }))
+            map(height => ({ ...rawConfig, cssHeight: height }))
           );
         } else {
-          return of(configValue);
+          return of(rawConfig);
         }
       }),
       map((rawConfig): PixelImageCssVarConfig[] => {
