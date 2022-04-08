@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges, ViewChild } from '@angular/core';
-import { asapScheduler, BehaviorSubject, filter, map, Observable, observeOn, Subject } from 'rxjs';
+import { asapScheduler, BehaviorSubject, filter, map, Observable, observeOn, of, ReplaySubject, Subject, Subscription, switchMap } from 'rxjs';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
+import { resizeObserver } from '../rx/resize-observer';
 
 export type PixelImageCssVarConfig = {
   genImg: GenImgDescriptor,
@@ -116,18 +117,24 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
   }
 }
 
+type RawConfig = {
+  genImg: GenImgDescriptor,
+  cssWidth: number | 'auto',
+  cssHeight: number | 'auto'
+};
+
 @Component({
   selector: 'w98w-pixel-image',
   templateUrl: './pixel-image.component.html',
   styleUrls: ['./pixel-image.component.scss']
 })
-export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit {
+export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
-  @Input() genImg!: GenImgDescriptor;
-  @Input() cssWidth!: number | undefined;  // if undefined, ask the image what width it should be based on height
-  @Input() cssHeight!: number;
+  @Input() genImg?: GenImgDescriptor;
+  @Input() cssWidth?: number | 'auto';  // if auto, ask the image what width it should be based on height
+  @Input() cssHeight?: number | 'auto';  // if auto, use resizeobserver on our template
 
-  private currentConfig$: BehaviorSubject<PixelImageCssVarConfig[]> = new BehaviorSubject([] as any);
+  private currentConfig$: ReplaySubject<RawConfig> = new ReplaySubject(1);
   @ViewChild(PixelImageCssVarDirective) private imgCssVarGen!: PixelImageCssVarDirective;
 
   // these things are for the size debug test page
@@ -136,24 +143,59 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit {
   get debugForceWidth() { return this.debugDrawnSize && this.debugDrawnSize[0] }
   get debugForceHeight() { return this.debugDrawnSize && this.debugDrawnSize[1] }
 
-  constructor() {}
+  private subscription: Subscription | undefined;
+
+  constructor(private elementRef: ElementRef<HTMLElement>) {}
 
   ngOnInit(): void {
+    console.assert(!!(this.genImg && this.cssWidth && this.cssHeight));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['genImg'] || changes['cssWidth'] || changes['cssHeight']) {
-      this.currentConfig$.next([{
-        genImg: this.genImg,
-        varPrefix: 'only',
-        cssWidth: this.cssWidth === undefined ? this.genImg.heightToWidthFn(this.cssHeight) : this.cssWidth,
-        cssHeight: this.cssHeight
-      }]);
+      if (this.genImg && this.cssWidth && this.cssHeight) {
+        this.currentConfig$.next({
+          genImg: this.genImg,
+          cssWidth: this.cssWidth,
+          cssHeight: this.cssHeight
+        });
+      }
     }
   }
 
   ngAfterViewInit(): void {
-    this.currentConfig$.subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
+    this.subscription = this.currentConfig$.pipe(
+      switchMap(configValue => {
+        if (configValue.cssHeight == 'auto') {
+
+          // TODO would resub on config change even if we don't need to (can use the same resizeobserver)
+          return resizeObserver([this.elementRef.nativeElement]).pipe(
+            map(entriesValue => {
+              const contentRect = entriesValue.resolveContentRect(entriesValue.entries[0]);
+              return {
+                ...configValue,
+                cssHeight: contentRect.height
+              }
+            })
+          );
+        } else {
+          return of(configValue);
+        }
+      }),
+      map((rawConfig): PixelImageCssVarConfig[] => {
+        if (rawConfig.cssHeight != 'auto') {
+          return [{
+            genImg: rawConfig.genImg,
+            varPrefix: 'only',
+            cssWidth: rawConfig.cssWidth == 'auto' ? rawConfig.genImg.heightToWidthFn(rawConfig.cssHeight) : rawConfig.cssWidth,
+            cssHeight: rawConfig.cssHeight
+          }]
+        } else {
+          throw Error();
+        }
+      })
+    )
+    .subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
 
     this.debugGenImgSize$ = this.imgCssVarGen.debugImg$.pipe(
       filter(value => !!value),
@@ -167,4 +209,9 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit {
       observeOn(asapScheduler)  // prevent a change detection race condition, due to having to wait for view init
     );
   }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
 }

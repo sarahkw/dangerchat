@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { GenImg } from '../genimg';
 
 @Component({
   selector: 'w98w-titlebar',
@@ -6,6 +7,8 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
   styleUrls: ['./titlebar.component.scss']
 })
 export class TitlebarComponent implements OnInit {
+
+  readonly GENIMG = GenImg;
 
   @Input() iconSrc!: string;
   @Input() label = "";
