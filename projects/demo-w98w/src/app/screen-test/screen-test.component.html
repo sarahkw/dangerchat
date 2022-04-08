@@ -1,4 +1,17 @@
 <h2>Screen Test</h2>
 
-<w98w-screen>
+<h3>Fixed Height</h3>
+
+<w98w-screen
+    style="height: 200px;"
+    [slidingScreenMainContentStyles]="{'backgroundColor': ROOTVARS.colorDesktopDebug.var}">
+    Hello World!
+</w98w-screen>
+
+<h3>Unfixed Height</h3>
+
+<w98w-screen
+    [unfixedHeight]="true"
+    [slidingScreenMainContentStyles]="{'backgroundColor': ROOTVARS.colorDesktopDebug.var}">
+    Hello World!
 </w98w-screen>

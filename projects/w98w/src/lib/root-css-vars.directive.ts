@@ -25,6 +25,7 @@ function WRAP(fn: () => void): Descriptor {
 
 export const ROOTVARS = {
   colorDesktop: WRAP(() => Colors.DESKTOP),
+  colorDesktopDebug: WRAP(() => '#0e8585'),  // Like desktop, but if placed onto a desktop you'd be able to slightly see the difference
 
   colorText: WRAP(() => Colors.WIDGET_TEXT),
   colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED),
@@ -38,6 +39,10 @@ export const ROOTVARS = {
 };
 
 // Design: keep these updated and don't use these besides in styles.scss
+
+// DIRTY FLAG: Set to YES if you've edited the dict without updating below. Tsk tsk.
+//
+// YES
 
 /*
 --w98w-root-color-desktop

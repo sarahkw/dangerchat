@@ -7,97 +7,91 @@
     }
 </style>
 
-<div
-    w98w-sliding-screen
+<w98w-screen
     [unfixedHeight]="true"
-    style="background-color: lightgray; width: 100%;"
-    >
 
-    <div w98w-sliding-screen-main-content style="overflow-x: auto;" [style.backgroundColor]="ROOTVARS.colorDesktop.var" #dirSSMC="ssMainContent">
+    slidingScreenStyles="background-color: lightgray; width: 100%;"
+    [slidingScreenMainContentStyles]="{overflowX: 'auto', backgroundColor: ROOTVARS.colorDesktop.var}">
+    <!-- TODO: i don't remember why overflowX is needed -->
 
-        <h3 style="margin-top: 0;">Import from other test</h3>
+    <h3 style="margin-top: 0;">Import from other test</h3>
 
-        <div>
-            <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">down menu</button>
-        </div>
-
-        <h3>Empty Menu</h3>
-
-        <menu w98w-menu>
-        </menu>
-
-        <h3>Menu Bar</h3>
-
-        <menu w98w-menu-bar>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">File</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Edit</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Help</li>
-        </menu>
-
-        <p>Now test overflowing onto the next line</p>
-
-        <menu w98w-menu-bar>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">File</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Edit</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Help</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">How much wood would the</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">woodchuck chuck if the</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">woodchuck could chuck</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">wood?</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">A woodchuck would chuck as</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">much wood as a woodchuck</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">could chuck if a</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">woodchuck could chuck</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">wood.</li>
-        </menu>
-
-        <h3>Context Menu</h3>
-
-        <p>Context menu active inside green div</p>
-
-        <div style="width: 800px; max-width: 80%; height: 400px; max-height: 80%; background-color: green; border: 1px solid black;">
-        </div>
-
-        <menu w98w-menu>
-            <li w98w-menu-item="Arrange Icons"></li>
-            <li w98w-menu-item="Display Properties"></li>
-        </menu>
-
-        <h3>Scrollable Menu</h3>
-
-        <p>Not looking that great yet obviously</p>
-
-        <div style="max-height: 5em; overflow-y: scroll; display: inline-block;">
-            <menu w98w-menu>
-                <li w98w-menu-item="Cut"></li>
-                <li w98w-menu-item="Copy"></li>
-                <li w98w-menu-item="Paste"></li>
-                <li w98w-menu-item="Insert"></li>
-                <li w98w-menu-item="Delete"></li>
-                <li w98w-menu-item="Replace"></li>
-                <li w98w-menu-item="Push"></li>
-                <li w98w-menu-item="Pop"></li>
-                <li w98w-menu-item="Clear"></li>
-                <li w98w-menu-item="Under"></li>
-                <li w98w-menu-item="Over"></li>
-                <li w98w-menu-item="Top"></li>
-                <li w98w-menu-item="Right"></li>
-                <li w98w-menu-item="Bottom"></li>
-                <li w98w-menu-item="Left"></li>
-            </menu>
-        </div>
-
-        <h3>Import from other test</h3>
-
-        <div>
-            <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">down menu</button>
-        </div>
-
-        <app-test-menu-lib #library></app-test-menu-lib>
+    <div>
+        <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">down menu</button>
     </div>
 
-    <w98w-menu-host *ngIf="menuService.activeRootMenu$ | async"
-        w98w-menu-layout-size-observer [rootElement]="dirSSMC.element.nativeElement"
-        w98w-sliding-screen-overlay style="height: 100%;"
-    ></w98w-menu-host>
-</div>
+    <h3>Empty Menu</h3>
+
+    <menu w98w-menu>
+    </menu>
+
+    <h3>Menu Bar</h3>
+
+    <menu w98w-menu-bar>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">File</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Edit</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Help</li>
+    </menu>
+
+    <p>Now test overflowing onto the next line</p>
+
+    <menu w98w-menu-bar>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">File</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Edit</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Help</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">How much wood would the</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">woodchuck chuck if the</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">woodchuck could chuck</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">wood?</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">A woodchuck would chuck as</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">much wood as a woodchuck</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">could chuck if a</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">woodchuck could chuck</li>
+        <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">wood.</li>
+    </menu>
+
+    <h3>Context Menu</h3>
+
+    <p>Context menu active inside green div</p>
+
+    <div style="width: 800px; max-width: 80%; height: 400px; max-height: 80%; background-color: green; border: 1px solid black;">
+    </div>
+
+    <menu w98w-menu>
+        <li w98w-menu-item="Arrange Icons"></li>
+        <li w98w-menu-item="Display Properties"></li>
+    </menu>
+
+    <h3>Scrollable Menu</h3>
+
+    <p>Not looking that great yet obviously</p>
+
+    <div style="max-height: 5em; overflow-y: scroll; display: inline-block;">
+        <menu w98w-menu>
+            <li w98w-menu-item="Cut"></li>
+            <li w98w-menu-item="Copy"></li>
+            <li w98w-menu-item="Paste"></li>
+            <li w98w-menu-item="Insert"></li>
+            <li w98w-menu-item="Delete"></li>
+            <li w98w-menu-item="Replace"></li>
+            <li w98w-menu-item="Push"></li>
+            <li w98w-menu-item="Pop"></li>
+            <li w98w-menu-item="Clear"></li>
+            <li w98w-menu-item="Under"></li>
+            <li w98w-menu-item="Over"></li>
+            <li w98w-menu-item="Top"></li>
+            <li w98w-menu-item="Right"></li>
+            <li w98w-menu-item="Bottom"></li>
+            <li w98w-menu-item="Left"></li>
+        </menu>
+    </div>
+
+    <h3>Import from other test</h3>
+
+    <div>
+        <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">down menu</button>
+    </div>
+
+    <app-test-menu-lib #library></app-test-menu-lib>
+
+</w98w-screen>
