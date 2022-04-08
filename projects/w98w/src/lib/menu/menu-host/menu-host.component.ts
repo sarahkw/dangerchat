@@ -263,7 +263,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
       this.renderedMenu$.next(newMenu);
   }
 
-  endMenu() {
+  private endMenu() {
     this.renderedMenu$.next(undefined);
 
     this.rootAnchor = undefined;
