@@ -49,7 +49,7 @@ export class WButtonBodyDirective implements OnInit {
 @Component({
   selector: 'button[w98w-wbutton]',
   templateUrl: './wbutton.component.html',
-  styleUrls: ['./wbutton.component.css'],
+  styleUrls: ['./wbutton.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class WButtonComponent implements OnInit, OnDestroy, Pressable {
