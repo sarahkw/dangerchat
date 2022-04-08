@@ -8,11 +8,26 @@
     <h3 style="margin-top: 0;">Draw Frame</h3>
     <w98w-window [drawFrame]="true">
         <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">File</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Edit</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Help</li>
+        </menu>
+
     </w98w-window>
 
     <h3>No Frame</h3>
     <w98w-window [drawFrame]="false">
         <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">File</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Edit</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTempDeferred">Help</li>
+        </menu>
+
+
     </w98w-window>
 
 </w98w-screen>
+
+<app-test-menu-lib #library></app-test-menu-lib>
