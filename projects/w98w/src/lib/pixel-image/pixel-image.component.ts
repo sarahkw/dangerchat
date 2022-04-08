@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges, ViewChild } from '@angular/core';
-import { asapScheduler, BehaviorSubject, filter, map, Observable, observeOn, of, ReplaySubject, Subject, Subscription, switchMap } from 'rxjs';
+import { asapScheduler, BehaviorSubject, distinctUntilChanged, filter, map, Observable, observeOn, of, ReplaySubject, Subject, Subscription, switchMap } from 'rxjs';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
@@ -170,13 +170,9 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
 
           // TODO would resub on config change even if we don't need to (can use the same resizeobserver)
           return resizeObserver([this.elementRef.nativeElement]).pipe(
-            map(entriesValue => {
-              const contentRect = entriesValue.resolveContentRect(entriesValue.entries[0]);
-              return {
-                ...configValue,
-                cssHeight: contentRect.height
-              }
-            })
+            map(entriesValue => entriesValue.resolveContentRect(entriesValue.entries[0]).height),
+            distinctUntilChanged(), // we'll get a resize update when the width changes, ignore that
+            map(height => ({ ...configValue, cssHeight: height }))
           );
         } else {
           return of(configValue);
