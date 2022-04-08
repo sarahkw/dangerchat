@@ -45,19 +45,36 @@
 
 <p></p>
 
-<div [style.maxWidth.px]="500">
+<div [style.maxWidth.px]="500" style="display: flex; align-items: center; gap: 2px;">
+    <button w98w-wbutton>a button for comparison</button>
     <w98w-titlebar
-        label="Control Panel - Add and Remove Programs"
-        iconSrc="/assets/w98w/vbicon.png">
+        label="Form1"
+        iconSrc="/assets/w98w/vbicon.png"
+        style="flex: 1;"
+        >
     </w98w-titlebar>
 </div>
 
 <p></p>
 
 <div [style.maxWidth.px]="500" style="display: flex; align-items: center; gap: 2px;">
-    <button w98w-wbutton>a button for comparison</button>
+    <button w98w-wbutton extraLabel="hello">
+        <img src="/assets/w98w/vbicon.png" wbuttonBody style="height: 1em;">
+    </button>
     <w98w-titlebar
-        label="Form1"
+        label="NCK"
+        iconSrc="/assets/w98w/vbicon.png"
+        style="flex: 1;"
+        >
+    </w98w-titlebar>
+</div>
+
+<p></p>
+
+<div [style.maxWidth.px]="500" style="display: flex; align-items: center; gap: 2px;">
+    <li w98w-menu-item="Programs" [debugShowSubMenuIndicator]="true" iconImgSrc="/assets/w98w/vbicon.png"></li>
+    <w98w-titlebar
+        label="Yeet"
         iconSrc="/assets/w98w/vbicon.png"
         style="flex: 1;"
         >
