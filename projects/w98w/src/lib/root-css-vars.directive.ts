@@ -23,28 +23,23 @@ function WRAP(fn: () => void): Descriptor {
   }
 }
 
-@Directive({
-  selector: '[w98w-root-css-vars]'
-})
-export class RootCssVarsDirective {
+export const ROOTVARS = {
+  colorDesktop: WRAP(() => Colors.DESKTOP),
 
-  static readonly ROOTVARS = {
-      colorDesktop: WRAP(() => Colors.DESKTOP),
+  colorText: WRAP(() => Colors.WIDGET_TEXT),
+  colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED),
 
-      colorText: WRAP(() => Colors.WIDGET_TEXT),
-      colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED),
+  labelFontSize: WRAP(() => `${Colors.labelFontSize}px`),
+  labelFontFamily: WRAP(() => Colors.defaultFont),
+  widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG),
 
-      labelFontSize: WRAP(() => `${Colors.labelFontSize}px`),
-      labelFontFamily: WRAP(() => Colors.defaultFont),
-      widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG),
+  titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
+  titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT)
+};
 
-      titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
-      titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT)
-  };
+// Design: keep these updated and don't use these besides in styles.scss
 
-  // Design: keep these updated and don't use these besides in styles.scss
-
-  /*
+/*
 --w98w-root-color-desktop
 --w98w-root-color-text
 --w98w-root-color-text-disabled
@@ -53,11 +48,16 @@ export class RootCssVarsDirective {
 --w98w-root-widget-background-color
 --w98w-root-title-bar-active-color
 --w98w-root-title-bar-text-color
-  */
+*/
+
+@Directive({
+  selector: '[w98w-root-css-vars]'
+})
+export class RootCssVarsDirective {
 
   private refresh() {
     let DEV: string[] | undefined;
-    Object.entries(RootCssVarsDirective.ROOTVARS).forEach(([k, v]) => {
+    Object.entries(ROOTVARS).forEach(([k, v]) => {
       const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
       this.renderer.setStyle(this.elementRef.nativeElement, styleName, v._getter(), RendererStyleFlags2.DashCase);
       v.var = `var(${styleName})`;
