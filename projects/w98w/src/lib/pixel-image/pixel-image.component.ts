@@ -134,7 +134,8 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() cssWidth?: number | 'auto';  // if auto, ask the image what width it should be based on height
   @Input() cssHeight?: number | 'auto';  // if auto, use resizeobserver on our template
 
-  private currentConfig$: ReplaySubject<RawConfig> = new ReplaySubject(1);
+  private currentRawConfig$: ReplaySubject<RawConfig> = new ReplaySubject(1);
+
   @ViewChild(PixelImageCssVarDirective) private imgCssVarGen!: PixelImageCssVarDirective;
 
   // these things are for the size debug test page
@@ -143,7 +144,7 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
   get debugForceWidth() { return this.debugDrawnSize && this.debugDrawnSize[0] }
   get debugForceHeight() { return this.debugDrawnSize && this.debugDrawnSize[1] }
 
-  private subscription: Subscription | undefined;
+  private actualConfigSubscription: Subscription | undefined;
 
   constructor(private elementRef: ElementRef<HTMLElement>) {}
 
@@ -154,7 +155,7 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['genImg'] || changes['cssWidth'] || changes['cssHeight']) {
       if (this.genImg && this.cssWidth && this.cssHeight) {
-        this.currentConfig$.next({
+        this.currentRawConfig$.next({
           genImg: this.genImg,
           cssWidth: this.cssWidth,
           cssHeight: this.cssHeight
@@ -164,34 +165,7 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngAfterViewInit(): void {
-    this.subscription = this.currentConfig$.pipe(
-      switchMap(rawConfig => {
-        if (rawConfig.cssHeight == 'auto') {
-
-          // TODO would resub on config change even if we don't need to (can use the same resizeobserver)
-          return resizeObserver([this.elementRef.nativeElement]).pipe(
-            map(entriesValue => entriesValue.resolveContentRect(entriesValue.entries[0]).height),
-            distinctUntilChanged(), // we'll get a resize update when the width changes, ignore that
-            map(height => ({ ...rawConfig, cssHeight: height }))
-          );
-        } else {
-          return of(rawConfig);
-        }
-      }),
-      map((rawConfig): PixelImageCssVarConfig[] => {
-        if (rawConfig.cssHeight != 'auto') {
-          return [{
-            genImg: rawConfig.genImg,
-            varPrefix: 'only',
-            cssWidth: rawConfig.cssWidth == 'auto' ? rawConfig.genImg.heightToWidthFn(rawConfig.cssHeight) : rawConfig.cssWidth,
-            cssHeight: rawConfig.cssHeight
-          }]
-        } else {
-          throw Error();
-        }
-      })
-    )
-    .subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
+    this.actualConfigSubscription = this.currentActualConfig$.subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
 
     this.debugGenImgSize$ = this.imgCssVarGen.debugImg$.pipe(
       filter(value => !!value),
@@ -207,7 +181,34 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.actualConfigSubscription?.unsubscribe();
   }
 
+  private currentActualConfig$ = this.currentRawConfig$.pipe(
+    switchMap(rawConfig => {
+      if (rawConfig.cssHeight == 'auto') {
+
+        // TODO would resub on config change even if we don't need to (can use the same resizeobserver)
+        return resizeObserver([this.elementRef.nativeElement]).pipe(
+          map(entriesValue => entriesValue.resolveContentRect(entriesValue.entries[0]).height),
+          distinctUntilChanged(), // we'll get a resize update when the width changes, ignore that
+          map(height => ({ ...rawConfig, cssHeight: height }))
+        );
+      } else {
+        return of(rawConfig);
+      }
+    }),
+    map((rawConfig): PixelImageCssVarConfig[] => {
+      if (rawConfig.cssHeight != 'auto') {
+        return [{
+          genImg: rawConfig.genImg,
+          varPrefix: 'only',
+          cssWidth: rawConfig.cssWidth == 'auto' ? rawConfig.genImg.heightToWidthFn(rawConfig.cssHeight) : rawConfig.cssWidth,
+          cssHeight: rawConfig.cssHeight
+        }]
+      } else {
+        throw Error();
+      }
+    })
+  );
 }
