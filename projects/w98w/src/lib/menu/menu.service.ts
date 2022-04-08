@@ -6,7 +6,8 @@ import { MenuTemplateDirective } from './menu-template.directive';
 @Injectable()
 export class MenuService {
 
-  activeRootMenu$: BehaviorSubject<RootMenuDescriptor | undefined> = new BehaviorSubject(undefined as any);
+  // null means no menu, and is also how we cancel
+  activeRootMenu$: BehaviorSubject<RootMenuDescriptor | null> = new BehaviorSubject(null as any);
 
   currentCancel: (() => void) | undefined;
 
@@ -27,7 +28,7 @@ export class MenuService {
       return new class implements Unsubscribable {
         unsubscribe(): void {
           if (thiz.activeRootMenu$.value == menuIdentity) {  // probably don't need to check because if we complete we shouldn't get unsubscribe called
-            thiz.activeRootMenu$.next(undefined);
+            thiz.activeRootMenu$.next(null);
             thiz.currentCancel = undefined;
           }
         }
@@ -36,7 +37,7 @@ export class MenuService {
   }
 
   endMenu() {
-    this.activeRootMenu$.next(undefined);
+    this.activeRootMenu$.next(null);
 
     if (this.currentCancel) {
       this.currentCancel();
