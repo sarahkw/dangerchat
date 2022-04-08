@@ -13,14 +13,31 @@ import { StyleInjector } from '../style-injector';
 export class WButtonBodyDirective implements OnInit {
 
   @Input() stretchImg: boolean = false;
+  @Input() emHeightImg: boolean = false;
   @Input() allowShrinking: boolean = false;
   @Input() showDisabledEffect: boolean = true;
 
+  @HostBinding('style') get hbStyleEmHeightImg() {
+    if (this.emHeightImg) {
+      const val = this.buttonComponent.offsets.emHeightImgTakeBackPadding;
+      return {
+        height: `calc(1em + ${val}px)`,
+        marginTop: `-${val}px`,
+        marginBottom: `-${val}px`
+      };
+    } else {
+      return null;
+    }
+  }
+
   constructor(
     private elementRef: ElementRef,
-    private renderer: Renderer2) {}
+    private renderer: Renderer2,
+    private buttonComponent: WButtonComponent) {}
 
   ngOnInit(): void {
+    console.assert(!(this.stretchImg && this.emHeightImg));
+
     // keep this for horizontal centering, do it this way because we
     // easily cancel it by adding a sibling. if we use justify-content
     // instead, then we have to disable them when we add a sibling.
@@ -62,20 +79,23 @@ export class WButtonComponent implements OnInit, OnDestroy, Pressable {
   private static calculateOffsets(externalFocus: boolean) {
     let focusAnts;
     let content;
+    let emHeightImgTakeBackPadding;
 
     if (externalFocus) {
       focusAnts = 0;
       content = Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
                    0 /* against the bevels, if you want external focus it's because you want all the space available */;
+      emHeightImgTakeBackPadding = 0;
     } else {
       focusAnts = Math.max(Bevels.BUTTON.getPadding(), Bevels.BUTTON_PRESSED.getPadding()) +
                    1 /* not flush against the bevels */;
       content = focusAnts +
                  1 /* the focus ants */ +
                  1 /* not flush against the ants */;
+      emHeightImgTakeBackPadding = 3;  // brush up right against the bevels
     }
 
-    return { focusAnts, content };
+    return { focusAnts, content, emHeightImgTakeBackPadding };
   }
 
   public static calculateAvailableBodySize(width: number | null, height: number, externalFocus: boolean) {

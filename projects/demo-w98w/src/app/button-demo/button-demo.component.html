@@ -58,8 +58,11 @@
 <p></p>
 
 <div [style.maxWidth.px]="500" style="display: flex; align-items: center; gap: 2px;">
+    <button w98w-wbutton extraLabel="Start">
+        <img src="/assets/w98w/start-win.png" wbuttonBody [emHeightImg]="true">
+    </button>
     <button w98w-wbutton extraLabel="hello">
-        <img src="/assets/w98w/vbicon.png" wbuttonBody style="height: 1em;">
+        <img src="/assets/w98w/greenbox.png" wbuttonBody [emHeightImg]="true">
     </button>
     <w98w-titlebar
         label="NCK"
@@ -73,6 +76,7 @@
 
 <div [style.maxWidth.px]="500" style="display: flex; align-items: center; gap: 2px;">
     <li w98w-menu-item="Programs" [debugShowSubMenuIndicator]="true" iconImgSrc="/assets/w98w/vbicon.png"></li>
+    <li w98w-menu-item="Help" [debugShowSubMenuIndicator]="true" iconImgSrc="/assets/w98w/greenbox.png"></li>
     <w98w-titlebar
         label="Yeet"
         iconSrc="/assets/w98w/vbicon.png"

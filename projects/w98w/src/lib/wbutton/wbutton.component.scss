@@ -52,7 +52,15 @@
     display: flex;
 
     align-items: center;
-    overflow: hidden;
+
+    // NOT doing this because an em-height image will try to overflow a bit.
+    // i guess it'll just look a bit strange when multi-line text tries to
+    // overflow.
+    //
+    // TODO maybe find a different way to handle overflow on multi-line text
+    //      with set height.
+    //
+    //overflow: hidden;
 
     gap: 2px;
 }
