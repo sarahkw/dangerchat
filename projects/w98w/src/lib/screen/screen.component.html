@@ -1,6 +1,7 @@
 <div w98w-sliding-screen [unfixedHeight]="unfixedHeight" class="sliding-screen" [style]="slidingScreenStyles">
 
-    <!-- TODO: i don't remember why (position: relative), figure out why and explain -->
+    <!-- TODO: i don't remember why (position: relative), figure out why and explain.
+               if i were to guess it's possibly so that absolute positioned stuff inside the screen doesn't break out of it. -->
     <div w98w-sliding-screen-main-content style="position: relative;" #dirSSMC="ssMainContent" class="sliding-screen-main-content" [style]="slidingScreenMainContentStyles">
         <ng-content></ng-content>
     </div>
