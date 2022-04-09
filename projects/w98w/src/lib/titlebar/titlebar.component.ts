@@ -18,9 +18,7 @@ export class TitlebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if (!this.iconSrc) {
-      throw new Error('no icon not supported');
-    }
+    console.assert(!!this.iconSrc);
   }
 
 }
