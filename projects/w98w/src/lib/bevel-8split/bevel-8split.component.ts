@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RectImage } from '../bevel';
 import { DisplayImage } from '../pixel-image-builder';
 
@@ -80,7 +80,7 @@ export class Bevel8SplitComponent implements OnInit {
       const w = PROVIDE_CONTAINER_W[i] ? `width: ${input[s].cssRequestedWidthCautious}px; ` : '';
       const h = PROVIDE_CONTAINER_H[i] ? `height: ${input[s].cssRequestedHeightCautious}px; ` : '';
 
-      return `${prefix} ${CLASSES[i]} { background-image: url('${input[s].url}'); background-size: ${input[s].cssNextStepWidth}px ${input[s].cssNextStepHeight}px; ${w}${h} }`;
+      return `${prefix} > w98w-bevel-8split > ${CLASSES[i]} { background-image: url('${input[s].url}'); background-size: ${input[s].cssNextStepWidth}px ${input[s].cssNextStepHeight}px; ${w}${h} }`;
     }).join("\n");
   }
 

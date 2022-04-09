@@ -153,7 +153,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu", imgs));
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-menu > .container > .bevel", imgs));
     }
 
     pidDestroy(): void {
