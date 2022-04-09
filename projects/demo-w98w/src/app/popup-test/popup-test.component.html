@@ -31,6 +31,8 @@
         <button w98w-wbutton w98w-menu-anchor [autoMenu]="library.menuTempDeferred">up menu</button>
     </div>
 
+    <ng-container *ngTemplateOutlet="library.overflowWndTempDeferred$ | async"></ng-container>
+
     <app-test-menu-lib #library></app-test-menu-lib>
 </w98w-screen>
 

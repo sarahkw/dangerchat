@@ -89,3 +89,26 @@
         </li>
     </menu>
 </ng-template>
+
+<ng-template #overflowWndTemp>
+    <!-- need overflow hidden so that scrollbars aren't drawn here. scrollbars need to be drawn inside. -->
+    <w98w-window [drawFrame]="true" style="overflow: hidden; resize: both;">
+        <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+            <li w98w-menu-bar-item [autoMenu]="menuTempDeferred">File</li>
+            <li w98w-menu-bar-item [autoMenu]="menuTempDeferred">Edit</li>
+            <li w98w-menu-bar-item [autoMenu]="menuTempDeferred">Help</li>
+        </menu>
+        <p style="white-space: nowrap;">this is some relatively long text in order to demonstrate the overflow-x behavior.</p>
+
+        <p style="white-space: nowrap;">here's a few short lines</p>
+
+        <p style="white-space: nowrap;">to demonstrate</p>
+
+        <p style="white-space: nowrap;">overflow-y</p>
+
+        <p style="white-space: nowrap;">behavior</p>
+    </w98w-window>
+
+    <p style="border: 2px solid black; text-align: center;">I shouldn't be wider than the screen.</p>
+</ng-template>
