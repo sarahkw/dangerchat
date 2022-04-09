@@ -1,3 +1,8 @@
+// DESIGN
+//
+// The styles in here are only for theme. Like colors, spacing, fonts.
+// Keep all "functional" styles in components.
+
 body {
     background-color: #008080;
 }
@@ -119,12 +124,9 @@ w98w-titlebar > div.controlarea {
     @extend %w98w-titlebar-em-height;
 }
 
-
 w98w-window {
     // not a widget-base. don't want text styles, because i want to be able to make a 'webview' window
     // which isn't styled like w98w.
-
-    display: block;
 
     background-color: var(--w98w-root-widget-background-color);
 }
