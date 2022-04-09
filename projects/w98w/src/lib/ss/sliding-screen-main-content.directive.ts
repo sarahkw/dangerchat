@@ -10,6 +10,9 @@ export class SlidingScreenMainContentDirective implements OnDestroy {
   @HostBinding('style.gridRow') hbGR = 1;
   @HostBinding('style.gridColumn') hbGC = 1;
 
+  // Thanks, Grid. If I don't do this then things that go off screen force the width.
+  @HostBinding('style.minWidth.px') hbsMW = 0;
+
   private setWidthHeight(width: string | null, height: string | null) {
     this.renderer.setStyle(this.element.nativeElement, 'width', width || '100%');
     this.renderer.setStyle(this.element.nativeElement, 'height', height || '100%');
