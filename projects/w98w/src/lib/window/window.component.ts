@@ -8,12 +8,12 @@ import { StyleInjector } from '../style-injector';
 
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
-  @HostBinding('class') hbClass = 'w98w-window-title-bar';
+  @HostBinding('class') readonly hbClass = 'w98w-window-title-bar';
 }
 
 @Directive({ selector: '[w98w-window-menu-bar]'})
 export class WindowMenuBarDirective {
-  @HostBinding('class') hbClass = 'w98w-window-menu-bar';
+  @HostBinding('class') readonly hbClass = 'w98w-window-menu-bar';
 }
 
 @Component({
