@@ -109,9 +109,7 @@ export class WButtonComponent implements OnInit, OnDestroy, Pressable {
 
   @HostBinding('class.w98w-disabled') get hbcDisabled() { return this.disabled; }
 
-  @HostBinding('style.padding') get hbSP() {
-    return `${this.offsets.content}px`;
-  }
+  @HostBinding('style.padding.px') get hbSP() { return this.offsets.content; }
 
   @ContentChild(WButtonBodyDirective) buttonBody: WButtonBodyDirective | undefined;
 

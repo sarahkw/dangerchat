@@ -25,7 +25,7 @@ export class WindowComponent implements OnInit, OnDestroy {
 
   @Input() drawFrame = true;  // if maximized this will be false
 
-  @HostBinding('class') hbc = 'w98w-window';
+  @HostBinding('class') readonly hbc = 'w98w-window';
 
   @HostBinding('style.padding.px') get hbsPadding() {
     // 2 extra pixels spacing, as seen in screenshot

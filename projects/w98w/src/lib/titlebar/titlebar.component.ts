@@ -13,7 +13,7 @@ export class TitlebarComponent implements OnInit {
   @Input() iconSrc!: string;
   @Input() label = "";
 
-  @HostBinding('class') hbClass = "w98w-titlebar";
+  @HostBinding('class') readonly hbClass = "w98w-titlebar";
 
   constructor() { }
 

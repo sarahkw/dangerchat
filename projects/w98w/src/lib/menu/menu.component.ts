@@ -55,10 +55,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.renderer.setStyle(this.elementRef.nativeElement, '--menu-calcs-max-w', maxWidth, RendererStyleFlags2.DashCase);
   }
 
-  @HostBinding('class.w98w-menu') readonly hbcMenu = true;
+  @HostBinding('class') hbClass = 'w98w-menu';
 
   static readonly borderPadding = Bevels.MENU.getPadding();
-  @HostBinding('style.--menu-border-padding') hbMBP = `${MenuComponent.borderPadding}px`;
+  @HostBinding('style.--menu-border-padding.px') hbMBP = MenuComponent.borderPadding;
   @HostBinding('style.--menu-n') get hbMN() {
     return this.childItems.length;
   }
