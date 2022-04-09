@@ -14,7 +14,7 @@ type InitialObservationMap = Map<Element, ResizeObserverEntry>;
 @Component({
   selector: 'div[w98w-sliding-screen]',
   templateUrl: './sliding-screen.component.html',
-  styleUrls: ['./sliding-screen.component.css']
+  styleUrls: ['./sliding-screen.component.scss']
 })
 export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentChecked {
 
