@@ -20,7 +20,7 @@ export class SlidingScreenMainContentDirective implements OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private ss: SlidingScreenComponent, public element: ElementRef<HTMLElement>, private renderer: Renderer2) {
+  constructor(ss: SlidingScreenComponent, public element: ElementRef<HTMLElement>, private renderer: Renderer2) {
 
     // screen should have its own stacking context because we don't want anything on the screen to draw
     // above any overlays
