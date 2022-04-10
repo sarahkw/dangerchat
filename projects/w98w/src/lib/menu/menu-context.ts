@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { MenuContinuation } from "./menu-continuation";
+import { MenuContinuation } from "./menu-calculation";
 import { OnSubMenuClose } from "./menu-host/menu-host.component";
 import { MlsoMenuContext } from "./menu-layout-size-observer.directive";
 import { MenuTemplateDirective } from "./menu-template.directive";

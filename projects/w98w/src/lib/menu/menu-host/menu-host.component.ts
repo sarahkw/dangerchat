@@ -1,7 +1,7 @@
 import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, Observable, Observer, Subscriber, Subscription } from 'rxjs';
 import { MenuContext } from '../menu-context';
-import { MenuContinuation } from '../menu-continuation';
+import { MenuContinuation } from '../menu-calculation';
 import { MenuLayoutSizeObserverDirective, MlsoMenuContext, ResizeUpdates } from '../menu-layout-size-observer.directive';
 import { MenuTemplateDirective } from '../menu-template.directive';
 import { MenuService } from '../menu.service';
