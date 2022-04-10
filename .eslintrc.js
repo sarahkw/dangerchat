@@ -16,5 +16,11 @@ module.exports = {
         '@typescript-eslint'
     ],
     'rules': {
+        "@typescript-eslint/no-this-alias": [
+            "error",
+            {
+                "allowedNames": ["thiz"]
+            }
+        ]
     }
 };
