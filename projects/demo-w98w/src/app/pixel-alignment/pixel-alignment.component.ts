@@ -29,7 +29,11 @@ export class PixelAlignmentComponent {
     const oCanvas = document.createElement('canvas');
     oCanvas.width = this.canvaswidth;
     oCanvas.height = this.canvasheight;
-    const oCtx = oCanvas.getContext('2d')!;
+    const oCtx = oCanvas.getContext('2d');
+    if (!oCtx) {
+        console.assert(!!oCtx);
+        return;
+    }
 
     const colors = ['black', '#808080'];
     let pos = 0;
