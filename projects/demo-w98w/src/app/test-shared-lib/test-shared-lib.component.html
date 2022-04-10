@@ -90,12 +90,6 @@
     </menu>
 </ng-template>
 
-<ng-template w98w-menu-template #menuDelayedChildren="menuTemplate" let-context>
-    <menu w98w-menu [menuContext]="context">
-        <li *ngFor="let number of numbers" w98w-menu-item="{{ number }}"></li>
-    </menu>
-</ng-template>
-
 <ng-template w98w-menu-template #menuDancingChildren="menuTemplate" let-context>
     <menu w98w-menu [menuContext]="context">
         <li *ngFor="let number of (dancing$ | async)" w98w-menu-item="{{ number + 1 }}"></li>

@@ -16,11 +16,6 @@ export class TestSharedLibComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild('overflowWndTemp') private overflowWndTemp!: TemplateRef<any>;
   readonly overflowWndTempAsap = templateViewChildAsap(() => this.overflowWndTemp);
 
-  readonly numbers = [...Array(10).keys()];
-
-  @ViewChild('menuDelayedChildren') private menuDelayedChildren!: MenuTemplateDirective;
-  menuDelayedChildrenDeferred = () => this.menuDelayedChildren;
-
   readonly dancing$ = interval(500).pipe(map(value => [...Array(value % 5).keys()]));
 
   @ViewChild('menuDancingChildren') private menuDancingChildren!: MenuTemplateDirective;
