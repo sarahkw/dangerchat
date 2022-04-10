@@ -10,14 +10,20 @@ import { StyleInjector } from '../style-injector';
 export class WindowTitleBarDirective {
   @HostBinding('class') readonly hbClass = 'w98w-window-title-bar';
 
-  @HostBinding('style.gridArea') readonly hbsGA = 'titlebar';
+  @HostBinding('style') readonly hbs = {
+    gridArea: 'titlebar',
+    minWidth: 0
+  };
 }
 
 @Directive({ selector: '[w98w-window-menu-bar]'})
 export class WindowMenuBarDirective {
   @HostBinding('class') readonly hbClass = 'w98w-window-menu-bar';
 
-  @HostBinding('style.gridArea') readonly hbsGA = 'menubar';
+  @HostBinding('style') readonly hbs = {
+    gridArea: 'menubar',
+    minWidth: 0
+  };
 }
 
 @Component({
