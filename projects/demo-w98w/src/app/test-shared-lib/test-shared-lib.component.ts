@@ -9,8 +9,7 @@ import { interval, map } from 'rxjs';
 })
 export class TestSharedLibComponent {
 
-  @ViewChild('menuTemp') private menuTemp!: MenuTemplateDirective;
-  readonly menuTempDeferred = () => this.menuTemp;  // view init happens after input is processed
+  @ViewChild('menuTemp', { static: true }) menuTemp!: MenuTemplateDirective;
 
   @ViewChild('overflowWndTemp', { static: true }) overflowWndTemp!: TemplateRef<any>;
 
