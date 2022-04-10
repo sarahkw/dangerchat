@@ -243,24 +243,24 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
         onSubMenuClose
       };
 
-      const currentMenu = this.renderedMenu$.value;
-      if (!currentMenu) {
+      const currentRender = this.renderedMenu$.value;
+      if (!currentRender) {
         console.debug('missing current menu');
         return;
       }
 
-      const callerPosition = currentMenu.indexOf(caller);
+      const callerPosition = currentRender.indexOf(caller);
       if (callerPosition == -1) {
         console.debug('who called?');
         return;
       }
 
-      const newMenu = currentMenu.slice(0, callerPosition + 1); // don't lose who's requesting the submenu open!
-      newMenu.push(menuInstance);
+      const newRender = currentRender.slice(0, callerPosition + 1); // don't lose who's requesting the submenu open!
+      newRender.push(menuInstance);
 
       // XXX not currently calling the 'closed' callbacks even though we should.
 
-      this.renderedMenu$.next(newMenu);
+      this.renderedMenu$.next(newRender);
   }
 
   private endMenu() {
