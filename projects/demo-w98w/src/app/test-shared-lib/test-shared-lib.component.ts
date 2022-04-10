@@ -9,13 +9,12 @@ import { interval, map } from 'rxjs';
 })
 export class TestSharedLibComponent {
 
-  @ViewChild('menuTemp', { static: true }) menuTemp!: MenuTemplateDirective;
+  @ViewChild('menuTemp', { static: true }) readonly menuTemp!: MenuTemplateDirective;
 
-  @ViewChild('overflowWndTemp', { static: true }) overflowWndTemp!: TemplateRef<any>;
+  @ViewChild('overflowWndTemp', { static: true }) readonly overflowWndTemp!: TemplateRef<any>;
 
   readonly dancing$ = interval(500).pipe(map(value => [...Array(value % 5).keys()]));
 
-  @ViewChild('menuDancingChildren') private menuDancingChildren!: MenuTemplateDirective;
-  menuDancingChildrenDeferred = () => this.menuDancingChildren;
+  @ViewChild('menuDancingChildren', { static: true }) readonly menuDancingChildren!: MenuTemplateDirective;
 
 }
