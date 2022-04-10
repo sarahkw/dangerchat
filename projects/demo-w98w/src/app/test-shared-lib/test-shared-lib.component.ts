@@ -11,7 +11,7 @@ export class TestSharedLibComponent {
 
   @ViewChild('menuTemp', { static: true }) readonly menuTemp!: MenuTemplateDirective;
 
-  @ViewChild('overflowWndTemp', { static: true }) readonly overflowWndTemp!: TemplateRef<any>;
+  @ViewChild('overflowWndTemp', { static: true }) readonly overflowWndTemp!: TemplateRef<unknown>;
 
   readonly dancing$ = interval(500).pipe(map(value => [...Array(value % 5).keys()]));
 
