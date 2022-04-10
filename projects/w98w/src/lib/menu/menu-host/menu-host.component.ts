@@ -21,7 +21,7 @@ export type RootMenuDescriptor = {
   anchor: HTMLElement;
 };
 
-type Dim = {x: number, y: number};
+type Dim = {x: number, y: number, width: number};
 
 @Component({
   selector: 'w98w-menu-host',
@@ -58,7 +58,8 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 
       const dims = {
         x: rootAnchorBCR.x - viewportBCR.x,
-        y: rootAnchorBCR.bottom - viewportBCR.y
+        y: rootAnchorBCR.bottom - viewportBCR.y,
+        width: rootAnchorBCR.width
       };
 
       this.rootAnchorDims$.next(dims);
@@ -86,7 +87,8 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
         current: undefined,
         next: {
           offsetVertical: currentRootAnchorDims.y,
-          offsetHorizontal: currentRootAnchorDims.x
+          offsetHorizontal: currentRootAnchorDims.x,
+          canAlignRightWidth: currentRootAnchorDims.width
         },
         passthrough: {
           updates: resizeUpdates

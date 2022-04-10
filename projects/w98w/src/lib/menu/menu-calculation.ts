@@ -17,6 +17,8 @@ export type MenuContinuation = {
     next: {
         offsetVertical: number,
         offsetHorizontal: number | null;  // null means no horizontal offset
+
+        canAlignRightWidth: number | null;  // if given, the menu can align its right border on the right border of this.
     } | undefined,
 
     // data that just flows through the menus. the menu doesn't have to propagate this data themselves, just pass it through.
@@ -76,6 +78,17 @@ export function menuCalculateSelf(
                             current.offsetVertical = rootDim.height - bodyDim.height;
                         }
 
+                        // attempt to be flush right against the provided anchor
+                        if (nextFromLast.canAlignRightWidth !== null && current.offsetHorizontal) {
+                            if (current.offsetHorizontal + bodyDim.width > rootDim.width) {
+                                const attemptFlushRightAt = current.offsetHorizontal + nextFromLast.canAlignRightWidth;
+                                const attemptOffsetHorizontal = attemptFlushRightAt - bodyDim.width;
+                                if (attemptOffsetHorizontal >= 0) {
+                                    current.offsetHorizontal = attemptOffsetHorizontal;
+                                }
+                            }
+                        }
+
                         subscription.next(mc);
                     }
                     error(err: any): void {
@@ -121,6 +134,9 @@ export function menuCalculateNext(
                             offsetHorizontal: current.fixedHeight !== null ? 0 : -3,
 
                             offsetVertical: current.offsetVertical + rulerDim.height - borderPadding,
+
+                            // submenu must push rightwards
+                            canAlignRightWidth: null
                         },
 
                         passthrough: value.passthrough
