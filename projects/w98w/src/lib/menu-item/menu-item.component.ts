@@ -29,9 +29,9 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
   @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
   get buttonClass() {
-    if (this.parentMenu?.openedChild === this) {
+    if (this.parentMenu?.childWhoHasOpenedSubMenu === this) {
       return 'sub-opened';
-    } else if (!(this.parentMenu?.openedChild)) {  // i dunno if ? does something weird with precedence
+    } else if (!(this.parentMenu?.childWhoHasOpenedSubMenu)) {  // i dunno if ? does something weird with precedence
       return 'can-hover';
     } else {
       return 'cannot-hover'
@@ -78,8 +78,8 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
   // visually prepare to close sibling opened menu.
   @HostListener('mousedown') onMouseDown() {
     if (this.parentMenu) {
-      if (this.parentMenu.openedChild !== this) {
-        this.parentMenu.openedChild = undefined;
+      if (this.parentMenu.childWhoHasOpenedSubMenu !== this) {
+        this.parentMenu.childWhoHasOpenedSubMenu = undefined;
       }
     }
   }
@@ -88,11 +88,11 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
     if (!this.parentMenu || !this.parentMenu.menuContext) return;
 
     if (this.subMenu) {
-      if (this.parentMenu.openedChild === this) {
+      if (this.parentMenu.childWhoHasOpenedSubMenu === this) {
         this.parentMenu.menuContext.closeChildren();
       } else {
         this.parentMenu.childMenuItemWantsAppendMenu(this.parentMenu.menuContext, this, this.subMenu, this /* OnSubMenuClose */);
-        this.parentMenu.openedChild = this;
+        this.parentMenu.childWhoHasOpenedSubMenu = this;
       }
     } else {
       this.parentMenu.menuContext?.endMenu();
@@ -101,7 +101,7 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
 
   onSubMenuClose(): void {
     if (this.parentMenu) {
-      this.parentMenu.openedChild = undefined;
+      this.parentMenu.childWhoHasOpenedSubMenu = undefined;
     }
   }
 

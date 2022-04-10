@@ -65,7 +65,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
     return this.childItems?.length;
   }
 
-  openedChild?: MenuItemComponent;
+  childWhoHasOpenedSubMenu?: MenuItemComponent;
 
   @ContentChildren(MenuItemComponent) private childItems?: QueryList<MenuItemComponent>; // maybe not yet set so can be undefined
   private childItemsSubscription?: Subscription;
