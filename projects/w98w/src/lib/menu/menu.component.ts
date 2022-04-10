@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
-import { map, Observable, ReplaySubject, share, Subscription } from 'rxjs';
+import { map, Observable, ReplaySubject, share, shareReplay, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { MenuItemComponent } from '../menu-item/menu-item.component';
@@ -68,8 +68,18 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
   childWhoHasOpenedSubMenu?: MenuItemComponent;
 
   @ContentChildren(MenuItemComponent) private childItems?: QueryList<MenuItemComponent>; // maybe not yet set so can be undefined
-  private childItemsSubscription?: Subscription;
-  childCssIndexes$: ReplaySubject<Map<MenuItemComponent, number>> = new ReplaySubject(1);
+  private childItemsSubject$ = new ReplaySubject<QueryList<MenuItemComponent>>(1);
+  private childItemsChangesSubscription?: Subscription;
+
+  // For our menu items to know what index they are
+  readonly childCssIndexes$ = this.childItemsSubject$.pipe(
+    map(value => {
+      const ret: Map<MenuItemComponent, number> = new Map();
+      value.forEach((item, index) => ret.set(item, index + 1)); // CSS counts from 1
+      return ret;
+    }),
+    shareReplay()  // build the map once for each update
+  );
 
   constructor(
     private imgService: PixelImageService,
@@ -110,22 +120,16 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
   }
 
   ngAfterContentInit(): void {
-    function mapper(value: QueryList<MenuItemComponent>) {
-      const ret: Map<MenuItemComponent, number> = new Map();
-      value.forEach((item, index) => ret.set(item, index + 1)); // CSS counts from 1
-      return ret;
-    }
-
     console.assert(!!this.childItems);
     if (this.childItems) {
-      this.childCssIndexes$.next(mapper(this.childItems));
-      console.assert(!this.childItemsSubscription);
-      this.childItemsSubscription = this.childItems.changes.pipe(map(mapper)).subscribe(this.childCssIndexes$);
+      this.childItemsSubject$.next(this.childItems);
+      console.assert(!this.childItemsChangesSubscription);
+      this.childItemsChangesSubscription = this.childItems.changes.subscribe(this.childItemsSubject$);
     }
   }
 
   ngOnDestroy(): void {
-    this.childItemsSubscription?.unsubscribe();
+    this.childItemsChangesSubscription?.unsubscribe();
     this.menuRenderSubscription?.unsubscribe();
     this.nextMenuSubscription?.unsubscribe();
 
