@@ -128,7 +128,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
 
-  appendMenuHelper(menuContext: MenuContext, fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
+  childMenuItemWantsAppendMenu(menuContext: MenuContext, fromItem: MenuItemComponent, toOpenTemplate: MenuTemplateDirective, onSubMenuClose?: OnSubMenuClose) {
     // asking caller for menuContext for consistency at call site
 
     const myCalculationsShared$ = this.myCalculationsShared$;

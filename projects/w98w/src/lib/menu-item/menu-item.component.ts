@@ -75,7 +75,7 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
       if (this.menu.openedChild === this) {
         this.menu.menuContext.closeChildren();
       } else {
-        this.menu.appendMenuHelper(this.menu.menuContext, this, this.subMenu, this /* OnSubMenuClose */);
+        this.menu.childMenuItemWantsAppendMenu(this.menu.menuContext, this, this.subMenu, this /* OnSubMenuClose */);
         this.menu.openedChild = this;
       }
     } else {
