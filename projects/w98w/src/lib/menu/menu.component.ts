@@ -110,14 +110,14 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
   }
 
   ngAfterContentInit(): void {
+    function mapper(value: QueryList<MenuItemComponent>) {
+      const ret: Map<MenuItemComponent, number> = new Map();
+      value.forEach((item, index) => ret.set(item, index + 1)); // CSS counts from 1
+      return ret;
+    }
+
     console.assert(!!this.childItems);
     if (this.childItems) {
-      function mapper(value: QueryList<MenuItemComponent>) {
-        const ret: Map<MenuItemComponent, number> = new Map();
-        value.forEach((item, index) => ret.set(item, index + 1)); // CSS counts from 1
-        return ret;
-      }
-
       this.childCssIndexes$.next(mapper(this.childItems));
       console.assert(!this.childItemsSubscription);
       this.childItemsSubscription = this.childItems.changes.pipe(map(mapper)).subscribe(this.childCssIndexes$);
