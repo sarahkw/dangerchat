@@ -29,9 +29,9 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
   @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
   get buttonClass() {
-    if (this.menu?.openedChild === this) {
+    if (this.parentMenu?.openedChild === this) {
       return 'sub-opened';
-    } else if (!(this.menu?.openedChild)) {  // i dunno if ? does something weird with precedence
+    } else if (!(this.parentMenu?.openedChild)) {  // i dunno if ? does something weird with precedence
       return 'can-hover';
     } else {
       return 'cannot-hover'
@@ -52,12 +52,12 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
 
   childItemsSubscription?: Subscription;
 
-  constructor(@Optional() private menu: MenuComponent | null,
+  constructor(@Optional() private parentMenu: MenuComponent | null,
     elementRef: ElementRef<HTMLElement>,
     renderer: Renderer2) {
 
-    if (menu) {
-      this.childItemsSubscription = menu.childCssIndexes$.subscribe(value => {
+    if (parentMenu) {
+      this.childItemsSubscription = parentMenu.childCssIndexes$.subscribe(value => {
         renderer.setStyle(elementRef.nativeElement, '--menu-item-index', value.get(this), RendererStyleFlags2.DashCase);
       });
     }
@@ -77,31 +77,31 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
 
   // visually prepare to close sibling opened menu.
   @HostListener('mousedown') onMouseDown() {
-    if (this.menu) {
-      if (this.menu.openedChild !== this) {
-        this.menu.openedChild = undefined;
+    if (this.parentMenu) {
+      if (this.parentMenu.openedChild !== this) {
+        this.parentMenu.openedChild = undefined;
       }
     }
   }
 
   @HostListener('click') onClick() {
-    if (!this.menu || !this.menu.menuContext) return;
+    if (!this.parentMenu || !this.parentMenu.menuContext) return;
 
     if (this.subMenu) {
-      if (this.menu.openedChild === this) {
-        this.menu.menuContext.closeChildren();
+      if (this.parentMenu.openedChild === this) {
+        this.parentMenu.menuContext.closeChildren();
       } else {
-        this.menu.childMenuItemWantsAppendMenu(this.menu.menuContext, this, this.subMenu, this /* OnSubMenuClose */);
-        this.menu.openedChild = this;
+        this.parentMenu.childMenuItemWantsAppendMenu(this.parentMenu.menuContext, this, this.subMenu, this /* OnSubMenuClose */);
+        this.parentMenu.openedChild = this;
       }
     } else {
-      this.menu.menuContext?.endMenu();
+      this.parentMenu.menuContext?.endMenu();
     }
   }
 
   onSubMenuClose(): void {
-    if (this.menu) {
-      this.menu.openedChild = undefined;
+    if (this.parentMenu) {
+      this.parentMenu.openedChild = undefined;
     }
   }
 
