@@ -6,8 +6,7 @@ import { WButtonComponent } from '../wbutton/wbutton.component';
 import { MenuTemplateDirective } from './menu-template.directive';
 import { MenuService } from './menu.service';
 
-// also take a fn so that we can take ViewChild params as input, as ViewChild is resolved after inputs are
-export type AutoMenuType = MenuTemplateDirective | (() => MenuTemplateDirective) | undefined;
+export type AutoMenuType = MenuTemplateDirective | undefined;
 
 @Directive({
   selector: '[w98w-menu-anchor]',
@@ -28,20 +27,12 @@ export class MenuAnchorDirective implements OnDestroy {
     } else {
       if (this.menuService) {
         if (this.autoMenu) {
-          let target: MenuTemplateDirective;
-
-          if (this.autoMenu instanceof MenuTemplateDirective) {
-            target = this.autoMenu;
-          } else {
-            target = this.autoMenu();
-          }
-
           if (this.pressable) {
             this.pressable.pressed = true;
           }
 
           this.menuSubscription =
-            this.menuService.beginMenu$(target, this.element.nativeElement)
+            this.menuService.beginMenu$(this.autoMenu, this.element.nativeElement)
               .pipe(finalize(() => {
                 if (this.pressable) {
                   this.pressable.pressed = false;
