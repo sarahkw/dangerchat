@@ -1,5 +1,6 @@
 <button
     [class]="buttonClass"
+    (click)="activate.emit(null)"
     >
     <div class="icon">
         <img *ngIf="iconImgSrc" [src]="iconImgSrc">

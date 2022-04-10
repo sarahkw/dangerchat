@@ -7,7 +7,7 @@
 
 <ng-template w98w-menu-template #menuWindow="menuTemplate" let-context>
     <menu w98w-menu [menuContext]="context">
-        <li w98w-menu-item="Move / Resize"></li>
+        <li w98w-menu-item="Move / Resize" (activate)="toggleMoveResize()"></li>
         <li w98w-menu-item="Hide Menu"></li>
     </menu>
 </ng-template>

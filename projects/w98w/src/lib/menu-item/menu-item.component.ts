@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, HostBinding, HostListener, Input, OnDestroy, Optional, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { Component, ContentChild, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, Optional, Output, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Colors } from '../colors';
 import { GenImg } from '../genimg';
@@ -19,6 +19,8 @@ export class MenuItemComponent implements OnDestroy, OnSubMenuClose {
   @Input() iconImgSrc: string | undefined;
 
   @Input() debugShowSubMenuIndicator = false;
+
+  @Output() activate = new EventEmitter<null>();
 
   // TODO using class is workaround for angular bug, where *ngFor drops the attribute
   @HostBinding('class') readonly hbc = 'w98w-menu-item';
