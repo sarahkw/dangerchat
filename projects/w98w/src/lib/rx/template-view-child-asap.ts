@@ -1,6 +1,9 @@
 import { EventEmitter } from "@angular/core";
 import { Observable, observeOn, asapScheduler } from "rxjs";
 
+//   DEPRECATED
+// I just realized that "static" in the query solves this issue.
+
 // This solves the issue where you have a component which is a library of templates that you
 // want to use with ngTemplateOutlet. The problem is that ngTemplateOutlet takes the template from
 // an input variable which gets resolved before the view children are set.
