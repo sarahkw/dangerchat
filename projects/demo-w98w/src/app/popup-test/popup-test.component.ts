@@ -7,12 +7,9 @@ import { PopupService } from 'projects/w98w/src/lib/popup/popup.service';
   styleUrls: ['./popup-test.component.scss'],
   providers: [PopupService]
 })
-export class PopupTestComponent implements OnInit {
+export class PopupTestComponent {
 
   constructor(
     public popupService: PopupService) { }
-
-  ngOnInit(): void {
-  }
 
 }

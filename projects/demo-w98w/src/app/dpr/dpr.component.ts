@@ -12,16 +12,13 @@ import Fraction from 'fraction.js';
   styleUrls: ['./dpr.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DprComponent implements OnInit {
+export class DprComponent {
 
-  range$ = range(1, 100).pipe(toArray());
+  readonly range$ = range(1, 100).pipe(toArray());
 
   constructor(public dprService: DprService) { }
 
-  ngOnInit(): void {
-  }
-
-  fraction = DprComponent.fraction;
+  readonly fraction = DprComponent.fraction;
   static fraction(dpr: number, simplify?: number) {
     const f = new Fraction(dpr);
     const finv = f.inverse();
@@ -32,13 +29,13 @@ export class DprComponent implements OnInit {
     return result;
   }
 
-  fractionStr = DprComponent.fractionStr;
+  readonly fractionStr = DprComponent.fractionStr;
   static fractionStr(dpr: number, simplify?: number) {
     const result = DprComponent.fraction(dpr, simplify);
     return `${result.n} / ${result.d}`;
   }
 
-  toPixelDrawConfig = DprComponent.toPixelDrawConfig;
+  readonly toPixelDrawConfig = DprComponent.toPixelDrawConfig;
   static toPixelDrawConfig(dpr: number) {
     return new PixelDrawConfig(dpr);
   }

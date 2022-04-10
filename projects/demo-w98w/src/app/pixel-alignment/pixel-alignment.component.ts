@@ -8,7 +8,7 @@ import { PixelDrawConfig } from 'projects/w98w/src/lib/pixel-image.service';
   templateUrl: './pixel-alignment.component.html',
   styleUrls: ['./pixel-alignment.component.scss']
 })
-export class PixelAlignmentComponent implements OnInit {
+export class PixelAlignmentComponent {
 
   directions = ["top", "bottom", "left", "right"];
 
@@ -23,9 +23,6 @@ export class PixelAlignmentComponent implements OnInit {
   drawTargetStyle = {};
 
   constructor(private dprService: DprService) { }
-
-  ngOnInit(): void {
-  }
 
   onSubmit(): void {
 

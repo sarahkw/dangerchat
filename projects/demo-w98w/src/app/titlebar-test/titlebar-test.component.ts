@@ -6,15 +6,11 @@ import { GenImg } from 'projects/w98w/src/lib/genimg';
   templateUrl: './titlebar-test.component.html',
   styleUrls: ['./titlebar-test.component.scss']
 })
-export class TitlebarTestComponent implements OnInit {
+export class TitlebarTestComponent {
 
   readonly GENIMG = GenImg;
 
-  btnExternalFocus = true;
-  btnImgHeight = 14;
+  readonly btnExternalFocus = true;
+  readonly btnImgHeight = 14;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 }

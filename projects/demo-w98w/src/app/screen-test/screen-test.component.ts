@@ -6,13 +6,8 @@ import { ROOTVARS } from 'projects/w98w/src/lib/root-css-vars.directive';
   templateUrl: './screen-test.component.html',
   styleUrls: ['./screen-test.component.scss']
 })
-export class ScreenTestComponent implements OnInit {
+export class ScreenTestComponent {
 
   readonly ROOTVARS = ROOTVARS;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -6,13 +6,8 @@ import { ROOTVARS } from 'projects/w98w/src/lib/root-css-vars.directive';
   templateUrl: './menu-test.component.html',
   styleUrls: ['./menu-test.component.scss']
 })
-export class MenuTestComponent implements OnInit {
+export class MenuTestComponent {
 
   readonly ROOTVARS = ROOTVARS;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

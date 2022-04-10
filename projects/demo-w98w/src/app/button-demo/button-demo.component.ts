@@ -5,12 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './button-demo.component.html',
   styleUrls: ['./button-demo.component.scss']
 })
-export class ButtonDemoComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class ButtonDemoComponent {
 
   readonly colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
   colorIdx = 0;

@@ -8,7 +8,7 @@ import { interval, map } from 'rxjs';
   templateUrl: './test-shared-lib.component.html',
   styleUrls: ['./test-shared-lib.component.scss']
 })
-export class TestSharedLibComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TestSharedLibComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('menuTemp') private menuTemp!: MenuTemplateDirective;
   readonly menuTempDeferred = () => this.menuTemp;  // view init happens after input is processed
@@ -21,13 +21,8 @@ export class TestSharedLibComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild('menuDancingChildren') private menuDancingChildren!: MenuTemplateDirective;
   menuDancingChildrenDeferred = () => this.menuDancingChildren;
 
-  constructor() { }
-
   ngAfterViewInit(): void {
     this.overflowWndTempAsap.check();
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

@@ -6,7 +6,7 @@ import { GenImg } from 'projects/w98w/src/lib/genimg';
   templateUrl: './wbutton-test.component.html',
   styleUrls: ['./wbutton-test.component.scss']
 })
-export class WButtonTestComponent implements OnInit {
+export class WButtonTestComponent {
 
   readonly longText =
 `oh when the saints go marching in oh when the saints go marching in
@@ -21,10 +21,5 @@ when the saints go marching in
   readonly GENIMG = GenImg;
 
   whichDisabled = 0;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
