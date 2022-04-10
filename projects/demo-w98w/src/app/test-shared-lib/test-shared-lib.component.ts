@@ -1,18 +1,18 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
-import { asapScheduler, Observable, observeOn, ReplaySubject } from 'rxjs';
+import { asapScheduler, observeOn, ReplaySubject } from 'rxjs';
 
 @Component({
-  selector: 'app-test-menu-lib',
-  templateUrl: './test-menu-lib.component.html',
-  styleUrls: ['./test-menu-lib.component.css']
+  selector: 'app-test-shared-lib',
+  templateUrl: './test-shared-lib.component.html',
+  styleUrls: ['./test-shared-lib.component.scss']
 })
-export class TestMenuLibComponent implements OnInit, AfterViewInit {
+export class TestSharedLibComponent implements OnInit, AfterViewInit {
 
   @ViewChild('menuTemp') menuTemp!: MenuTemplateDirective;
 
   // workaround to be able to use the value as an input param, as views are resolved after inputs are
-  menuTempDeferred = (function (this: TestMenuLibComponent) {
+  menuTempDeferred = (function (this: TestSharedLibComponent) {
     return this.menuTemp;
   }).bind(this);
 
