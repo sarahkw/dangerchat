@@ -9,13 +9,16 @@ import { templateViewChildAsap } from 'projects/w98w/src/lib/rx/template-view-ch
 })
 export class TestSharedLibComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('menuTemp') menuTemp!: MenuTemplateDirective;
-
-  // workaround to be able to use the value as an input param, as views are resolved after inputs are
-  readonly menuTempDeferred = () => this.menuTemp;
+  @ViewChild('menuTemp') private menuTemp!: MenuTemplateDirective;
+  readonly menuTempDeferred = () => this.menuTemp;  // view init happens after input is processed
 
   @ViewChild('overflowWndTemp') private overflowWndTemp!: TemplateRef<any>;
   readonly overflowWndTempAsap = templateViewChildAsap(() => this.overflowWndTemp);
+
+  readonly numbers = [...Array(10).keys()];
+
+  @ViewChild('menuDelayedChildren') private menuDelayedChildren!: MenuTemplateDirective;
+  menuDelayedChildrenDeferred = () => this.menuDelayedChildren;
 
   constructor() { }
 

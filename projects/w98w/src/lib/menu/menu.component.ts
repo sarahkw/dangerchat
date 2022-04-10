@@ -60,12 +60,12 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   static readonly borderPadding = Bevels.MENU.getPadding();
   @HostBinding('style.--menu-border-padding.px') readonly hbMBP = MenuComponent.borderPadding;
   @HostBinding('style.--menu-n') get hbMN() {
-    return this.childItems.length;
+    return this.childItems?.length;
   }
 
   openedChild?: MenuItemComponent;
 
-  @ContentChildren(MenuItemComponent) childItems!: QueryList<MenuItemComponent>;
+  @ContentChildren(MenuItemComponent) childItems?: QueryList<MenuItemComponent>; // maybe not yet set so can be undefined
 
   constructor(
     private imgService: PixelImageService,
@@ -114,9 +114,11 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // TODO maybe cache this so that it's not linear searching each time
   getChildGridIndex(instance: MenuItemComponent) {
-    for (let i = 0; i < this.childItems.length; ++i) {
-      if (this.childItems.get(i) === instance) {
-        return i + 1;
+    if (this.childItems) {
+      for (let i = 0; i < this.childItems.length; ++i) {
+        if (this.childItems.get(i) === instance) {
+          return i + 1;
+        }
       }
     }
 
