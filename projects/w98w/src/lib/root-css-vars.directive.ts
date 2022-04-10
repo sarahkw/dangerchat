@@ -12,14 +12,21 @@ function camelCaseToDashCase(input: string): string {
 //#endregion
 
 type Descriptor = {
-  readonly _getter: () => void,
+  readonly _getter: () => any,
   readonly _styleName: string,
   readonly var: string
 };
 
-function WRAP(fn: () => void): Descriptor {
+function WRAP<T>(value: (() => T) | T): Descriptor {
+  let _getter: () => T;
+  if (value instanceof Function) {
+    _getter = value;
+  } else {
+    _getter = function () { return value };
+  }
+
   return {
-    _getter: fn,
+    _getter,
     _styleName: undefined as any,
     var: undefined as any
   }
@@ -27,7 +34,7 @@ function WRAP(fn: () => void): Descriptor {
 
 export const ROOTVARS = {
   colorDesktop: WRAP(() => Colors.DESKTOP),
-  colorDesktopDebug: WRAP(() => '#0e8585'),  // Like desktop, but if placed onto a desktop you'd be able to slightly see the difference
+  colorDesktopDebug: WRAP('#0e8585'),  // Like desktop, but if placed onto a desktop you'd be able to slightly see the difference
 
   colorText: WRAP(() => Colors.WIDGET_TEXT),
   colorTextDisabled: WRAP(() => Colors.WIDGET_TEXT_DISABLED),
@@ -37,11 +44,14 @@ export const ROOTVARS = {
   widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG),
 
   titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
-  titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT)
+  titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT),
+
+  moveResizeHitAreaWidth: WRAP('3em'),
+  moveResizeHitAreaHeight: WRAP('3em')
 };
 
-(function (generate: boolean) {
-  const accumulate = generate ? <string[]>[] : undefined;
+(function (alsoGenerateConsoleOutput: boolean) {
+  const accumulate = alsoGenerateConsoleOutput ? <string[]>[] : undefined;
 
   Object.entries(ROOTVARS).forEach(([k, v]) => {
     const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
@@ -60,10 +70,11 @@ export const ROOTVARS = {
 //
 // DIRTY FLAG: Set to YES if you've edited the dict without updating below. Tsk tsk.
 //
-//             YES
+//             NO
 
 /*
 --w98w-root-color-desktop
+--w98w-root-color-desktop-debug
 --w98w-root-color-text
 --w98w-root-color-text-disabled
 --w98w-root-label-font-size
@@ -71,6 +82,8 @@ export const ROOTVARS = {
 --w98w-root-widget-background-color
 --w98w-root-title-bar-active-color
 --w98w-root-title-bar-text-color
+--w98w-root-move-resize-hit-area-width
+--w98w-root-move-resize-hit-area-height
 */
 
 @Directive({
