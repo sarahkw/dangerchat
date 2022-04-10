@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { templateViewChildAsap } from 'projects/w98w/src/lib/rx/template-view-child-asap';
+import { interval, map } from 'rxjs';
 
 @Component({
   selector: 'app-test-shared-lib',
@@ -19,6 +20,11 @@ export class TestSharedLibComponent implements OnInit, AfterViewInit, OnDestroy 
 
   @ViewChild('menuDelayedChildren') private menuDelayedChildren!: MenuTemplateDirective;
   menuDelayedChildrenDeferred = () => this.menuDelayedChildren;
+
+  readonly dancing$ = interval(500).pipe(map(value => [...Array(value % 5).keys()]));
+
+  @ViewChild('menuDancingChildren') private menuDancingChildren!: MenuTemplateDirective;
+  menuDancingChildrenDeferred = () => this.menuDancingChildren;
 
   constructor() { }
 

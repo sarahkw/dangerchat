@@ -96,6 +96,12 @@
     </menu>
 </ng-template>
 
+<ng-template w98w-menu-template #menuDancingChildren="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
+        <li *ngFor="let number of (dancing$ | async)" w98w-menu-item="{{ number + 1 }}"></li>
+    </menu>
+</ng-template>
+
 <ng-template #overflowWndTemp>
     <!-- need overflow hidden so that scrollbars aren't drawn here. scrollbars need to be drawn inside. -->
     <w98w-window [drawFrame]="true" style="overflow: hidden; resize: both;">
