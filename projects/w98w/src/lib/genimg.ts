@@ -1,4 +1,4 @@
-import { DisplayImage, PixelImageBuilderBasic, PixelImageBuilderFactory, VOrigin } from "./pixel-image-builder";
+import { DisplayImage, PixelImageBuilderBasic, PixelImageBuilderFactory } from "./pixel-image-builder";
 
 type HeightToWidthFn = (drawCssHeight: number) => number;
 

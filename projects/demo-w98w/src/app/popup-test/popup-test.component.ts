@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PopupService } from 'projects/w98w/src/lib/popup/popup.service';
 
 @Component({

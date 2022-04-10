@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { range, toArray } from 'rxjs';
 
 import { DprService } from 'projects/w98w/src/lib/dpr.service';

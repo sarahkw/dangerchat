@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { templateViewChildAsap } from 'projects/w98w/src/lib/rx/template-view-child-asap';
 import { interval, map } from 'rxjs';

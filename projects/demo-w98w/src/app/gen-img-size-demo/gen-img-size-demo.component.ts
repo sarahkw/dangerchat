@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GenImg } from 'projects/w98w/src/lib/genimg';
 import { BehaviorSubject, combineLatest, mergeMap, range, toArray } from 'rxjs';
 

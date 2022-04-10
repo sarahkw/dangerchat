@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ROOTVARS } from 'projects/w98w/src/lib/root-css-vars.directive';
 
 @Component({

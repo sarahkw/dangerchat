@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { DprService } from 'projects/w98w/src/lib/dpr.service';
 import { PixelDrawConfig } from 'projects/w98w/src/lib/pixel-image.service';

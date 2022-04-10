@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RectImage } from '../bevel';
 import { DisplayImage } from '../pixel-image-builder';
 
@@ -68,12 +68,7 @@ const PROVIDE_CONTAINER_H = [
   templateUrl: './bevel-8split.component.html',
   styleUrls: ['./bevel-8split.component.scss']
 })
-export class Bevel8SplitComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class Bevel8SplitComponent {
 
   static genCss(prefix: string, input: GenCssInput) {
     return SELECTORS.map((s, i) => {
