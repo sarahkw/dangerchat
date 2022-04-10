@@ -1,6 +1,7 @@
-import { Component, Directive, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Directive, HostBinding, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
+import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
@@ -41,6 +42,8 @@ export class WindowComponent implements OnInit, OnDestroy {
     // 2 extra pixels spacing, as seen in screenshot
     return this.drawFrame ? (Bevels.WINDOW.getPadding() + 2) : 0;
   }
+
+  @ViewChild('menuWindow') menuWindow!: MenuTemplateDirective;
 
   constructor(private imgService: PixelImageService) { }
 

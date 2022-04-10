@@ -1,5 +1,6 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit, Optional } from '@angular/core';
 import { Observable, share, Unsubscribable } from 'rxjs';
+import { WindowComponent } from '../window/window.component';
 
 @Component({
   selector: 'menu[w98w-menu-bar]',
@@ -31,7 +32,11 @@ export class MenuBarComponent implements OnInit, OnDestroy {
     };
   })).pipe(share());
 
-  constructor() { }
+  get windowMenu() { return this.window?.menuWindow; }
+
+
+  constructor(@Optional() private window: WindowComponent | null) {
+  }
 
   ngOnInit(): void {
   }
