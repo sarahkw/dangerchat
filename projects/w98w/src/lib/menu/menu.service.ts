@@ -11,8 +11,6 @@ export class MenuService {
 
   currentCancel: (() => void) | undefined;
 
-  constructor() { }
-
   beginMenu$(template: MenuTemplateDirective, anchor: HTMLElement): Observable<null> {
     return new Observable<null>(subscriber => {
       if (this.currentCancel) {

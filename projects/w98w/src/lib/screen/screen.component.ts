@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MenuService } from '../menu/menu.service';
 
 type Style = {[key: string]: string} | string | null;
@@ -9,7 +9,7 @@ type Style = {[key: string]: string} | string | null;
   styleUrls: ['./screen.component.scss'],
   providers: [MenuService]
 })
-export class ScreenComponent implements OnInit {
+export class ScreenComponent {
 
   // pass to sliding screen
   @Input() unfixedHeight = false;
@@ -18,8 +18,5 @@ export class ScreenComponent implements OnInit {
   @Input() slidingScreenMainContentStyle: Style = null;
 
   constructor(public menuService: MenuService) { }
-
-  ngOnInit(): void {
-  }
 
 }

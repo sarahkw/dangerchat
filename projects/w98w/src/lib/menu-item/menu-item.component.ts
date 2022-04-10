@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit, Optional, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { Component, ContentChild, ElementRef, HostBinding, HostListener, Input, OnDestroy, Optional, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Colors } from '../colors';
 import { GenImg } from '../genimg';
@@ -11,7 +11,7 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.scss']
 })
-export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
+export class MenuItemComponent implements OnDestroy, OnSubMenuClose {
 
   @Input('w98w-menu-item') label!: string;
 
@@ -66,9 +66,6 @@ export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
 
   ngOnDestroy(): void {
     this.childItemsSubscription?.unsubscribe();
-  }
-
-  ngOnInit(): void {
   }
 
   get subMenu() {

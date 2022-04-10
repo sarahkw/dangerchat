@@ -1,4 +1,4 @@
-import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, ElementRef, Input, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { resolveContentRect } from '../../rx/resize-observer';
 import { SlidingScreenOverlayDirective } from '../sliding-screen-overlay.directive';
@@ -16,7 +16,7 @@ type InitialObservationMap = Map<Element, ResizeObserverEntry>;
   templateUrl: './sliding-screen.component.html',
   styleUrls: ['./sliding-screen.component.scss']
 })
-export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentChecked {
+export class SlidingScreenComponent implements OnDestroy, AfterContentChecked {
 
   // If unfixedHeight, we will have to freeze the height to our measured value when entering overlay mode.
   // Warning: if unfixedHeight is true, then we will take control of the style height, clobbering it.
@@ -34,9 +34,6 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
     } else {
       this.actionOverlayIsUnset();
     }
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

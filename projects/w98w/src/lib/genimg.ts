@@ -30,7 +30,7 @@ function debug_overdraw(drawCssWidth: number, drawCssHeight: number, builder: Pi
 }
 */
 
-function debug_overdraw(..._: any[]) {}
+function debug_overdraw(..._: any[]) {} // eslint-disable-line
 
 const TBarColors = {
     default: 'black',

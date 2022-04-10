@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit, Optional } from '@angular/core';
+import { Component, HostBinding, OnDestroy, Optional } from '@angular/core';
 import { Observable, share, Unsubscribable } from 'rxjs';
 import { WindowComponent } from '../window/window.component';
 
@@ -7,7 +7,7 @@ import { WindowComponent } from '../window/window.component';
   templateUrl: './menu-bar.component.html',
   styleUrls: ['./menu-bar.component.scss']
 })
-export class MenuBarComponent implements OnInit, OnDestroy {
+export class MenuBarComponent implements OnDestroy {
 
   @HostBinding('class.menu-item-can-hover') hbcMICH = true;
 
@@ -36,9 +36,6 @@ export class MenuBarComponent implements OnInit, OnDestroy {
 
 
   constructor(@Optional() private window: WindowComponent | null) {
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

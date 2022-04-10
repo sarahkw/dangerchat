@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PopupService } from '../popup/popup.service';
 
 @Component({
@@ -6,11 +6,8 @@ import { PopupService } from '../popup/popup.service';
   templateUrl: './msgbox.component.html',
   styleUrls: ['./msgbox.component.scss']
 })
-export class MsgboxComponent implements OnInit {
+export class MsgboxComponent {
 
   constructor(public popupService: PopupService) { }
-
-  ngOnInit(): void {
-  }
 
 }
