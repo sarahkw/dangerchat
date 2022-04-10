@@ -4,7 +4,7 @@ import { GenImg } from 'projects/w98w/src/lib/genimg';
 @Component({
   selector: 'app-wbutton-test',
   templateUrl: './wbutton-test.component.html',
-  styleUrls: ['./wbutton-test.component.css']
+  styleUrls: ['./wbutton-test.component.scss']
 })
 export class WButtonTestComponent implements OnInit {
 

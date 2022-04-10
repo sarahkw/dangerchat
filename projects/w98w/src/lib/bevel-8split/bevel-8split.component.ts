@@ -66,7 +66,7 @@ const PROVIDE_CONTAINER_H = [
 @Component({
   selector: 'w98w-bevel-8split',
   templateUrl: './bevel-8split.component.html',
-  styleUrls: ['./bevel-8split.component.css']
+  styleUrls: ['./bevel-8split.component.scss']
 })
 export class Bevel8SplitComponent implements OnInit {
 

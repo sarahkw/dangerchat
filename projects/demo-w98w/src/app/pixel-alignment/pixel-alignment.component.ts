@@ -6,7 +6,7 @@ import { PixelDrawConfig } from 'projects/w98w/src/lib/pixel-image.service';
 @Component({
   selector: 'app-pixel-alignment',
   templateUrl: './pixel-alignment.component.html',
-  styleUrls: ['./pixel-alignment.component.css']
+  styleUrls: ['./pixel-alignment.component.scss']
 })
 export class PixelAlignmentComponent implements OnInit {
 

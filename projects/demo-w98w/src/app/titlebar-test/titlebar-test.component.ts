@@ -4,7 +4,7 @@ import { GenImg } from 'projects/w98w/src/lib/genimg';
 @Component({
   selector: 'app-titlebar-test',
   templateUrl: './titlebar-test.component.html',
-  styleUrls: ['./titlebar-test.component.css']
+  styleUrls: ['./titlebar-test.component.scss']
 })
 export class TitlebarTestComponent implements OnInit {
 

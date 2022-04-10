@@ -26,7 +26,7 @@ type Dim = {x: number, y: number};
 @Component({
   selector: 'w98w-menu-host',
   templateUrl: './menu-host.component.html',
-  styleUrls: ['./menu-host.component.css']
+  styleUrls: ['./menu-host.component.scss']
 })
 export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
 

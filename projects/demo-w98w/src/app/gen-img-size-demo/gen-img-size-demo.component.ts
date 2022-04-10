@@ -5,7 +5,7 @@ import { BehaviorSubject, combineLatest, map, mergeMap, range, toArray } from 'r
 @Component({
   selector: 'app-gen-img-size-demo',
   templateUrl: './gen-img-size-demo.component.html',
-  styleUrls: ['./gen-img-size-demo.component.css']
+  styleUrls: ['./gen-img-size-demo.component.scss']
 })
 export class GenImgSizeDemoComponent implements OnInit {
 

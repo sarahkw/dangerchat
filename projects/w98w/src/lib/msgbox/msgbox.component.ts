@@ -4,7 +4,7 @@ import { PopupService } from '../popup/popup.service';
 @Component({
   selector: 'w98w-msgbox',
   templateUrl: './msgbox.component.html',
-  styleUrls: ['./msgbox.component.css']
+  styleUrls: ['./msgbox.component.scss']
 })
 export class MsgboxComponent implements OnInit {
 

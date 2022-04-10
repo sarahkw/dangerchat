@@ -4,7 +4,7 @@ import { Observable, share, Unsubscribable } from 'rxjs';
 @Component({
   selector: 'menu[w98w-menu-bar]',
   templateUrl: './menu-bar.component.html',
-  styleUrls: ['./menu-bar.component.css']
+  styleUrls: ['./menu-bar.component.scss']
 })
 export class MenuBarComponent implements OnInit, OnDestroy {
 

@@ -9,7 +9,7 @@ import Fraction from 'fraction.js';
 @Component({
   selector: 'app-dpr',
   templateUrl: './dpr.component.html',
-  styleUrls: ['./dpr.component.css'],
+  styleUrls: ['./dpr.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DprComponent implements OnInit {
