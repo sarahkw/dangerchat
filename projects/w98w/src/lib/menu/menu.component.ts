@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
-import { Observable, share, Subscription } from 'rxjs';
+import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, HostBinding, Input, OnDestroy, OnInit, QueryList, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
+import { map, Observable, ReplaySubject, share, Subscription } from 'rxjs';
 import { Bevels } from '../bevel';
 import { Bevel8SplitComponent, GenCssInput, genGenCssInput } from '../bevel-8split/bevel-8split.component';
 import { MenuItemComponent } from '../menu-item/menu-item.component';
@@ -7,7 +7,9 @@ import { PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
 import { ROOTVARS } from '../root-css-vars.directive';
+import { syncGetOne } from '../rx/sync-get';
 import { StyleInjector } from '../style-injector';
+import { coalesce2 } from '../util/coalesce';
 import { MenuContext } from './menu-context';
 import { menuCalculateSelf, MenuContinuation, menuCalculateNext } from './menu-continuation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
@@ -18,7 +20,7 @@ import { MenuTemplateDirective } from './menu-template.directive';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
 
   readonly ROOTVARS = ROOTVARS;
 
@@ -65,7 +67,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openedChild?: MenuItemComponent;
 
-  @ContentChildren(MenuItemComponent) childItems?: QueryList<MenuItemComponent>; // maybe not yet set so can be undefined
+  @ContentChildren(MenuItemComponent) private childItems?: QueryList<MenuItemComponent>; // maybe not yet set so can be undefined
+  private childItemsSubscription?: Subscription;
+  childCssIndexes$: ReplaySubject<Map<MenuItemComponent, number>> = new ReplaySubject(1);
 
   constructor(
     private imgService: PixelImageService,
@@ -105,25 +109,27 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  ngAfterContentInit(): void {
+    console.assert(!!this.childItems);
+    if (this.childItems) {
+      function mapper(value: QueryList<MenuItemComponent>) {
+        const ret: Map<MenuItemComponent, number> = new Map();
+        value.forEach((item, index) => ret.set(item, index + 1)); // CSS counts from 1
+        return ret;
+      }
+
+      this.childCssIndexes$.next(mapper(this.childItems));
+      console.assert(!this.childItemsSubscription);
+      this.childItemsSubscription = this.childItems.changes.pipe(map(mapper)).subscribe(this.childCssIndexes$);
+    }
+  }
+
   ngOnDestroy(): void {
+    this.childItemsSubscription?.unsubscribe();
     this.menuRenderSubscription?.unsubscribe();
     this.nextMenuSubscription?.unsubscribe();
 
     this.imgService.pidUnregister(MenuComponent.PID);
-  }
-
-  // TODO maybe cache this so that it's not linear searching each time
-  getChildGridIndex(instance: MenuItemComponent) {
-    if (this.childItems) {
-      for (let i = 0; i < this.childItems.length; ++i) {
-        if (this.childItems.get(i) === instance) {
-          return i + 1;
-        }
-      }
-    }
-
-    console.error('getChildGridIndex cannot find instance');
-    return 0;
   }
 
   @HostBinding('style.--menu-ruler-grid-index') hbRulerGridIndex: number | 'initial' = 'initial';
@@ -138,7 +144,11 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    this.hbRulerGridIndex = this.getChildGridIndex(fromItem);
+    const indexMap = syncGetOne(this.childCssIndexes$);
+    console.assert(!!indexMap);
+    if (indexMap) {
+      this.hbRulerGridIndex = coalesce2<number | 'initial'>(indexMap.get(fromItem), 'initial');
+    }
 
     menuContext.appendMenu(
       toOpenTemplate,

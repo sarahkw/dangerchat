@@ -1,4 +1,5 @@
-import { Component, ContentChild, HostBinding, HostListener, Input, OnInit, Optional } from '@angular/core';
+import { Component, ContentChild, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit, Optional, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Colors } from '../colors';
 import { GenImg } from '../genimg';
 import { OnSubMenuClose } from '../menu/menu-host/menu-host.component';
@@ -10,7 +11,7 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.css']
 })
-export class MenuItemComponent implements OnInit, OnSubMenuClose {
+export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
 
   @Input('w98w-menu-item') label!: string;
 
@@ -19,12 +20,11 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
 
   @Input() debugShowSubMenuIndicator = false;
 
+  // TODO using class is workaround for angular bug, where *ngFor drops the attribute
+  @HostBinding('class') readonly hbc = 'w98w-menu-item';
+
   @HostBinding('style.--menu-sel-text-color') readonly hbSTC = Colors.MENU_SELECTED_TEXT;
   @HostBinding('style.--menu-sel-bg-color') readonly hbSBC = Colors.MENU_SELECTED_BG;
-
-  @HostBinding('style.--menu-item-index') get hbMII() {
-    return this.menu?.getChildGridIndex(this);
-  }
 
   @ContentChild(MenuTemplateDirective) implicitSubMenu: MenuTemplateDirective | undefined;
 
@@ -50,7 +50,23 @@ export class MenuItemComponent implements OnInit, OnSubMenuClose {
   arrowImg = GenImg.ARROW_RIGHT(Colors.WIDGET_TEXT);
   arrowImgSelected = GenImg.ARROW_RIGHT(Colors.MENU_SELECTED_TEXT);
 
-  constructor(@Optional() private menu: MenuComponent | null) { }
+  childItemsSubscription?: Subscription;
+
+  constructor(@Optional() private menu: MenuComponent | null,
+    elementRef: ElementRef<HTMLElement>,
+    renderer: Renderer2) {
+
+    if (menu) {
+      this.childItemsSubscription = menu.childCssIndexes$.subscribe(value => {
+        renderer.setStyle(elementRef.nativeElement, '--menu-item-index', value.get(this), RendererStyleFlags2.DashCase);
+      });
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    this.childItemsSubscription?.unsubscribe();
+  }
 
   ngOnInit(): void {
   }
