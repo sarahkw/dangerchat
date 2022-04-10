@@ -9,7 +9,7 @@ import { MenuComponent } from '../menu/menu.component';
 @Component({
   selector: 'li[w98w-menu-item]',
   templateUrl: './menu-item.component.html',
-  styleUrls: ['./menu-item.component.css']
+  styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemComponent implements OnInit, OnDestroy, OnSubMenuClose {
 

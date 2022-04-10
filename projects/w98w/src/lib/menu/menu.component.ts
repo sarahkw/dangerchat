@@ -18,7 +18,7 @@ import { MenuTemplateDirective } from './menu-template.directive';
 @Component({
   selector: 'menu[w98w-menu]',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
 
