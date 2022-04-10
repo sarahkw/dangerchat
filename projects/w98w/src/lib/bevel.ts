@@ -1,22 +1,28 @@
 import { Color, Colors } from "./colors";
 import { VOrigin, DisplayImage, PixelImageBuilderFactory, HOrigin, ElbowOrigin, SlantOrigin } from "./pixel-image-builder";
 
-export interface Bevel {
+// XXX don't know if it's worth doing this just for the type
+export class Bevel {
 }
 
-export class HLineBevel implements Bevel {
-    constructor(public topToBottom: Color[]) {}
+export class HLineBevel extends Bevel {
+    constructor(public topToBottom: Color[]) {
+        super();
+    }
 }
 
-export class VLineBevel implements Bevel {
-    constructor(public leftToRight: Color[]) {}
+export class VLineBevel extends Bevel {
+    constructor(public leftToRight: Color[]) {
+        super();
+    }
 }
 
-export class OutToInLineBevel implements Bevel {
+export class OutToInLineBevel extends Bevel {
     // out-to-in for consistency with rect. think of the panel as a window with only 1 border shown.
 
     private reversedOutToIn: Color[];
     constructor(private outToIn: Color[]) {
+        super();
         this.reversedOutToIn = outToIn.slice().reverse();
     }
 
@@ -48,16 +54,19 @@ export enum RectImage {
     BR
 }
 
-export class RectBevel implements Bevel {
-    constructor(public outIn: Color[]) {}
+export class RectBevel extends Bevel {
+    constructor(public outIn: Color[]) {
+        super();
+    }
 }
 
-export class SlantRectBevel implements Bevel {
+export class SlantRectBevel extends Bevel {
     // topLeft and bottomRight go from outside towards inside
     constructor(
         public topLeft: Color[],
         public bottomRight: Color[],
         public antiSlant: boolean = false) {
+        super();
 
         console.assert(topLeft.length == bottomRight.length);
     }
