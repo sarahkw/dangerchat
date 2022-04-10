@@ -1,4 +1,4 @@
-import { Component, Directive, HostBinding, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Directive, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
