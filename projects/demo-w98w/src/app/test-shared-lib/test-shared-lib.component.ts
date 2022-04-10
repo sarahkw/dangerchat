@@ -12,9 +12,7 @@ export class TestSharedLibComponent implements OnInit, AfterViewInit {
   @ViewChild('menuTemp') menuTemp!: MenuTemplateDirective;
 
   // workaround to be able to use the value as an input param, as views are resolved after inputs are
-  menuTempDeferred = (function (this: TestSharedLibComponent) {
-    return this.menuTemp;
-  }).bind(this);
+  menuTempDeferred = () => this.menuTemp;
 
   // TODO this is a lot of boilerplate maybe we need to factor it
   @ViewChild('overflowWndTemp') overflowWndTemp!: TemplateRef<any>;
