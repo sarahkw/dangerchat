@@ -90,35 +90,37 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   private stateExit(oldState: State) {
     switch (oldState) {
       case State.Hidden:
-        console.assert(this.resizeObserver === undefined);
+        {
+          console.assert(this.resizeObserver === undefined);
 
-        const toObserve = [this.innerDiv.nativeElement, this.rootDiv.nativeElement];
-        let observeMap: InitialObservationMap | undefined = new Map();
+          const toObserve = [this.innerDiv.nativeElement, this.rootDiv.nativeElement];
+          let observeMap: InitialObservationMap | undefined = new Map();
 
-        this.resizeObserver = new ResizeObserver((entries, _observer) => {
+          this.resizeObserver = new ResizeObserver(entries => {
 
-          for (const entry of entries) {
-            if (observeMap === undefined) {
-              this.actionResizeContinuedObservation(entry);
-            } else {
-              observeMap.set(entry.target, entry);
-              if (observeMap.size == toObserve.length) {
-                this.actionResizeInitialObservation(observeMap);
-                observeMap = undefined;
+            for (const entry of entries) {
+              if (observeMap === undefined) {
+                this.actionResizeContinuedObservation(entry);
+              } else {
+                observeMap.set(entry.target, entry);
+                if (observeMap.size == toObserve.length) {
+                  this.actionResizeInitialObservation(observeMap);
+                  observeMap = undefined;
+                }
               }
             }
-          }
 
-        });
-        setTimeout(() => {
-          // i don't know if running later is necessary, but it's here just so we're safe I guess.
-          // just don't want a weird state where we want to leave the measuring state
-          // before we even got settled, if the browser ends up calling the callback synchronously.
+          });
+          setTimeout(() => {
+            // i don't know if running later is necessary, but it's here just so we're safe I guess.
+            // just don't want a weird state where we want to leave the measuring state
+            // before we even got settled, if the browser ends up calling the callback synchronously.
 
-          for (const target of toObserve) {
-            this.resizeObserver?.observe(target);
-          }
-        }, 0);
+            for (const target of toObserve) {
+              this.resizeObserver?.observe(target);
+            }
+          }, 0);
+        }
         break;
       case State.Measuring:
         break;
@@ -170,21 +172,23 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
       case State.Hidden:
         break;
       case State.Measuring:
-        if (this.unfixedHeight) {
-          const crRootDiv = resolveContentRect(initObservation.get(this.rootDiv.nativeElement)!);
-          this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${crRootDiv.height}px`);
+        {
+          if (this.unfixedHeight) {
+            const crRootDiv = resolveContentRect(initObservation.get(this.rootDiv.nativeElement)!);
+            this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${crRootDiv.height}px`);
+          }
+
+          // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
+          const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
+          this.mainContentFixedSize$.next({
+            width: `${bcr.width}px`,
+            height: (!this.unfixedHeight) ? `${bcr.height}px` : null
+          });
+
+          this.stateChange(State.Visible);
+
+          this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
         }
-
-        // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
-        const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
-        this.mainContentFixedSize$.next({
-          width: `${bcr.width}px`,
-          height: (!this.unfixedHeight) ? `${bcr.height}px` : null
-        });
-
-        this.stateChange(State.Visible);
-
-        this.appRef.tick();  // change detection doesn't happen automatically on resize observer callback
         break;
       case State.Visible:
         break;
@@ -198,23 +202,24 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
       case State.Measuring:
         break;
       case State.Visible:
-        const cr = resolveContentRect(entry);
-        if (entry.target === this.innerDiv.nativeElement) {
-          if (this.unfixedHeight) {
-            this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${cr.height}px`);
+        {
+          const cr = resolveContentRect(entry);
+          if (entry.target === this.innerDiv.nativeElement) {
+            if (this.unfixedHeight) {
+              this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${cr.height}px`);
+            }
+          } else if (entry.target === this.rootDiv.nativeElement) {
+            // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
+            const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
+            this.mainContentFixedSize$.next({
+              width: `${bcr.width}px`,
+              // old comment: this actually shouldn't change, we probably don't really need this here but it is here for consistency
+              height: (!this.unfixedHeight) ? `${bcr.height}px` : null
+            });
+
+            // no change detection! w00t!  i hope it was worth it. ideally we should also throttle how often we respond to resize observer
           }
-        } else if (entry.target === this.rootDiv.nativeElement) {
-          // yeah ... this was tested to work so we don't read from the entry and we just fetch it again
-          const bcr = this.rootDiv.nativeElement.getBoundingClientRect();
-          this.mainContentFixedSize$.next({
-            width: `${bcr.width}px`,
-            // old comment: this actually shouldn't change, we probably don't really need this here but it is here for consistency
-            height: (!this.unfixedHeight) ? `${bcr.height}px` : null
-          });
-
-          // no change detection! w00t!  i hope it was worth it. ideally we should also throttle how often we respond to resize observer
         }
-
         break;
     }
   }

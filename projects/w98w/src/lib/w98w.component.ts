@@ -10,11 +10,5 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class W98wComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class W98wComponent {
 }

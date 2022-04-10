@@ -15,8 +15,6 @@ export class TitlebarComponent implements OnInit {
 
   @HostBinding('class') readonly hbClass = "w98w-titlebar";
 
-  constructor() { }
-
   ngOnInit(): void {
     console.assert(!!this.iconSrc);
   }
