@@ -43,9 +43,9 @@ export abstract class GenImg {
     static readonly DEBUG_X: GenImgDescriptor = {
         draw(drawCssWidth, drawCssHeight, pibf): DisplayImage {
             console.assert(drawCssWidth == drawCssHeight);
-            let cssSize = Math.min(drawCssWidth, drawCssHeight);
+            const cssSize = Math.min(drawCssWidth, drawCssHeight);
 
-            let builder = pibf.basic(cssSize, cssSize);
+            const builder = pibf.basic(cssSize, cssSize);
 
             const SQUARE_SZ = 1;
             incXincY(cssSize, (x, y) => {
@@ -63,7 +63,7 @@ export abstract class GenImg {
 
     static readonly DEBUG_BORDER: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
-            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+            const { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
@@ -80,8 +80,8 @@ export abstract class GenImg {
     };
 
     private static readonly _tbar_min_draw =
-        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled: boolean = false): DisplayImage {
-            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled = false): DisplayImage {
+            const { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
@@ -166,7 +166,7 @@ export abstract class GenImg {
 
     private static readonly _tbar_max_draw =
         function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled = false): DisplayImage {
-            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+            const { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
@@ -207,7 +207,7 @@ export abstract class GenImg {
 
     static readonly TBAR_UNMAX: GenImgDescriptor = {
         draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
-            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+            const { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
@@ -252,8 +252,8 @@ export abstract class GenImg {
     };
 
     private static readonly _tbar_x_draw =
-        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled: boolean = false): DisplayImage {
-            let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+        function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory, disabled = false): DisplayImage {
+            const { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
             const builder = pibf.basic(artPixelWidth, artPixelHeight);
 
@@ -318,7 +318,7 @@ export abstract class GenImg {
     static readonly ARROW_RIGHT = function (color: string): GenImgDescriptor {
         return {
             draw: function (drawCssWidth: number, drawCssHeight: number, pibf: PixelImageBuilderFactory): DisplayImage {
-                let { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
+                const { artPixelWidth, artPixelHeight } = pibf.howManyArtPixelsCanIDraw(drawCssWidth, drawCssHeight);
 
                 const builder = pibf.basic(artPixelWidth, artPixelHeight);
 

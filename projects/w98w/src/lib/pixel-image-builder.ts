@@ -116,8 +116,8 @@ class PixelImageBuilderBasic {
 
 class PixelImageBuilderCol extends PixelImageBuilderBasic {
 
-    private pos: number = 0;
-    private reverse: boolean = false;
+    private pos = 0;
+    private reverse = false;
 
     constructor(pdc: PixelDrawConfig, artPixelHeight: number, origin: VOrigin) {
         super(pdc, 0, artPixelHeight, HOrigin.Left, origin);
@@ -148,8 +148,8 @@ class PixelImageBuilderCol extends PixelImageBuilderBasic {
 
 class PixelImageBuilderRow extends PixelImageBuilderBasic {
 
-    private pos: number = 0;
-    private reverse: boolean = false;
+    private pos = 0;
+    private reverse = false;
 
     constructor(pdc: PixelDrawConfig, artPixelWidth: number, origin: HOrigin) {
         super(pdc, artPixelWidth, 0, origin, VOrigin.Top);
@@ -195,8 +195,8 @@ class PixelImageBuilderElbow extends PixelImageBuilderBasic {
         [ElbowOrigin.BottomRight]: VOrigin.Bottom
     };
 
-    private pos: number = 0;
-    private reverse: boolean = false;
+    private pos = 0;
+    private reverse = false;
 
     constructor(pdc: PixelDrawConfig, private artPixelSize: number, origin: ElbowOrigin) {
         super(pdc, artPixelSize, artPixelSize, PixelImageBuilderElbow.H_ELBOW_MAP[origin], PixelImageBuilderElbow.V_ELBOW_MAP[origin]);

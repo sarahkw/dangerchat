@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
 export function syncGet<T>(source: Observable<T>): T[] {
-    let values: T[] = [];
+    const values: T[] = [];
     source.subscribe(next => values.push(next)).unsubscribe();
     return values;
 }

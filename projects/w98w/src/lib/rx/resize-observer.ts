@@ -18,7 +18,7 @@ export type ResizeObserverFrame = {
 
 export function resizeObserver(targets: Element[]) {
     return new Observable<ResizeObserverFrame>(subscription => {
-        let ro = new ResizeObserver((entries, _observer) => {
+        const ro = new ResizeObserver((entries, _observer) => {
             subscription.next({
                 entries,
                 resolveContentRect

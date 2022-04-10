@@ -30,8 +30,8 @@ export class PixelDrawConfig {
     const LIM = 20;
 
     for (const denom of this.denoms) {
-      let jumpTo = Math.ceil(scalar / denom) * denom;
-      let left = jumpTo - scalar;
+      const jumpTo = Math.ceil(scalar / denom) * denom;
+      const left = jumpTo - scalar;
 
       if (left <= LIM) {
         return jumpTo;
@@ -80,7 +80,7 @@ export class PixelImageService {
   }
 
   pidUnregister(pid: PixelImageDrawer<any>) {
-    let pidState = this.pids.get(pid);
+    const pidState = this.pids.get(pid);
     if (pidState === undefined) {
       console.error('tried to unregister unknown pid');
       return;

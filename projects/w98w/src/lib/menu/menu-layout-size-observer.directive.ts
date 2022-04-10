@@ -70,7 +70,7 @@ function generate(rootElement_: Element) {
    let subscriber_: Subscriber<ResizeUpdates> | undefined;
    let ro_: ResizeObserver | undefined;
 
-   let contextObservations_: Map<Element, {observers: Set<any>, latestValue: DOMRectReadOnly | undefined}> = new Map();
+   const contextObservations_: Map<Element, {observers: Set<any>, latestValue: DOMRectReadOnly | undefined}> = new Map();
    let rootLatestValue_: DOMRectReadOnly | undefined;
 
    function ensureObservationOfBy(of: Element, by: any) {

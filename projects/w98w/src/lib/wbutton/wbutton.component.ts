@@ -12,10 +12,10 @@ import { StyleInjector } from '../style-injector';
 })
 export class WButtonBodyDirective implements OnInit {
 
-  @Input() stretchImg: boolean = false;
-  @Input() emHeightImg: boolean = false;
-  @Input() allowShrinking: boolean = false;
-  @Input() showDisabledEffect: boolean = true;
+  @Input() stretchImg = false;
+  @Input() emHeightImg = false;
+  @Input() allowShrinking = false;
+  @Input() showDisabledEffect = true;
 
   @HostBinding('style') get hbStyleEmHeightImg() {
     if (this.emHeightImg) {
@@ -71,10 +71,10 @@ export class WButtonBodyDirective implements OnInit {
 })
 export class WButtonComponent implements OnInit, OnDestroy, Pressable {
 
-  @Input() pressed: boolean = false;
+  @Input() pressed = false;
   @Input() extraLabel: string | undefined;
-  @Input() externalFocus: boolean = false;
-  @Input() @HostBinding('disabled') disabled: boolean = false;
+  @Input() externalFocus = false;
+  @Input() @HostBinding('disabled') disabled = false;
 
   private static calculateOffsets(externalFocus: boolean) {
     let focusAnts;

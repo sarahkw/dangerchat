@@ -101,7 +101,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
       let currentRootAnchorDims: Dim | undefined;
       let resizeUpdateOutBuffer: ResizeUpdates | undefined;
 
-      let subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
+      const subscription = distinctRootAnchorDims$.subscribe(new class implements Observer<Dim | undefined> {
         next(value: Dim | undefined): void {
           if (value) {
             currentRootAnchorDims = value;
@@ -282,7 +282,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
         return;  // unexpected situation, why a menu that doesn't exist want to close its children?
       } else {
         const KEEP_CURRENT = 1;
-        let newval = oldval.slice(0, idx + KEEP_CURRENT);
+        const newval = oldval.slice(0, idx + KEEP_CURRENT);
 
         let hasClosed = false;
         for (let i = idx + KEEP_CURRENT; i < oldval.length; ++i) {

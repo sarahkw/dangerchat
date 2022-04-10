@@ -7,7 +7,7 @@ enum State {
   Hidden,
   Measuring,
   Visible
-};
+}
 
 type InitialObservationMap = Map<Element, ResizeObserverEntry>;
 

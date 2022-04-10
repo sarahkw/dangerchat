@@ -58,7 +58,7 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   private resetPids() {
-    for (let pid of this.pids) {
+    for (const pid of this.pids) {
       pid.cleanup();
       this.pixelImageService.pidUnregister(pid);
     }
@@ -68,7 +68,7 @@ export class PixelImageCssVarDirective implements OnInit, OnChanges, OnDestroy {
   private onNewConfig(nextConfig: PixelImageCssVarConfig[]) {
     this.resetPids();
 
-    for (let config of nextConfig) {
+    for (const config of nextConfig) {
       const thiz = this;
 
       const pid = new class implements PixelImageDrawer<DisplayImage>, Cleanupable {

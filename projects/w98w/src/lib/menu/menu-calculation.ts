@@ -165,7 +165,7 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
         return curr;
     }
 
-    let passthrough = {
+    const passthrough = {
         ...curr.passthrough
     };
 

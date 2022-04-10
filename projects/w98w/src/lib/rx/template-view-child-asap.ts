@@ -9,8 +9,8 @@ import { Observable, observeOn, asapScheduler } from "rxjs";
 // the template didn't try to get rendered.
 
 export function templateViewChildAsap<T>(getter: () => T) {
-    let checkEvent = new EventEmitter<null>();
-    let completeEvent = new EventEmitter<null>();
+    const checkEvent = new EventEmitter<null>();
+    const completeEvent = new EventEmitter<null>();
 
     return {
         $: new Observable<T>(subscriber => {
