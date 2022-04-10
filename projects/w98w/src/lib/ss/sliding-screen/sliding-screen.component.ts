@@ -50,11 +50,10 @@ export class SlidingScreenComponent implements OnInit, OnDestroy, AfterContentCh
   private currentState = State.Hidden;
   private resizeObserver?: ResizeObserver;
 
-  mainContentFixedSize$: BehaviorSubject<{width: string | null, height: string | null}> =
-    new BehaviorSubject({
-      width: null as any,
-      height: null as any  // if the overlay does stretch the height (which it probably shouldn't anyway), we don't want the main content affected
-    });
+  mainContentFixedSize$ = new BehaviorSubject({
+    width: null as string | null,
+    height: null as string | null  // if the overlay does stretch the height (which it probably shouldn't anyway), we don't want the main content affected
+  });
 
   private stateChange(newState: State) {
     if (newState == this.currentState) {
