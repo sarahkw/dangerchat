@@ -1,5 +1,19 @@
 :host {
-    display: block;
+    display: grid;
 
     position: relative;  // for bevels
+
+    grid-template-rows: [frame-start] var(--window-padding) [titlebar-start] auto
+                        [titlebar-end menubar-start] auto [menubar-end body-start] 1fr [body-end]
+                        var(--window-padding) [frame-end];
+    grid-template-columns: [frame-start] var(--window-padding)
+                        [titlebar-start menubar-start body-start] 1fr
+                        [titlebar-end menubar-end body-end] var(--window-padding) [frame-end];
+}
+
+.w98w-window-body {
+    grid-area: body;
+
+    min-width: 0;
+    overflow: auto;
 }

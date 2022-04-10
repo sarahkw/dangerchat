@@ -9,11 +9,15 @@ import { StyleInjector } from '../style-injector';
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
   @HostBinding('class') readonly hbClass = 'w98w-window-title-bar';
+
+  @HostBinding('style.gridArea') readonly hbsGA = 'titlebar';
 }
 
 @Directive({ selector: '[w98w-window-menu-bar]'})
 export class WindowMenuBarDirective {
   @HostBinding('class') readonly hbClass = 'w98w-window-menu-bar';
+
+  @HostBinding('style.gridArea') readonly hbsGA = 'menubar';
 }
 
 @Component({
@@ -27,9 +31,9 @@ export class WindowComponent implements OnInit, OnDestroy {
 
   @HostBinding('class') readonly hbc = 'w98w-window';
 
-  @HostBinding('style.padding.px') get hbsPadding() {
+  @HostBinding('style.--window-padding.px') get hbsPadding() {
     // 2 extra pixels spacing, as seen in screenshot
-    return this.drawFrame && (Bevels.WINDOW.getPadding() + 2);
+    return this.drawFrame ? (Bevels.WINDOW.getPadding() + 2) : 0;
   }
 
   constructor(private imgService: PixelImageService) { }

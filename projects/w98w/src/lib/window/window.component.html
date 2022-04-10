@@ -1,4 +1,6 @@
 <w98w-bevel-8split *ngIf="drawFrame"></w98w-bevel-8split>
 <ng-content select="[w98w-window-title-bar]"></ng-content>
 <ng-content select="[w98w-window-menu-bar]"></ng-content>
-<ng-content></ng-content>
+<div class="w98w-window-body">
+    <ng-content></ng-content>
+</div>
