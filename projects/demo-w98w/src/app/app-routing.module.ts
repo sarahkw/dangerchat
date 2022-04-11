@@ -5,6 +5,7 @@ import { DemoHomeComponent } from './demo-home/demo-home.component';
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { DprComponent } from './dpr/dpr.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
+import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
 import { MenuTestComponent } from './menu-test/menu-test.component';
 import { PixelAlignmentComponent } from './pixel-alignment/pixel-alignment.component';
 import { PopupTestComponent } from './popup-test/popup-test.component';
@@ -28,7 +29,8 @@ const routes: Routes = [
       { path: 'screen-test', component: ScreenTestComponent },
       { path: 'menu-test', component: MenuTestComponent },
       { path: 'popup-test', component: PopupTestComponent },
-      { path: 'window-test', component: WindowTestComponent }
+      { path: 'window-test', component: WindowTestComponent },
+      { path: 'interactjs-test', component: InteractjsTestComponent }
     ]
   },
 ];
