@@ -23,10 +23,10 @@ export class PixelImageCssVarDirective implements OnChanges, OnDestroy {
 
   private currentConfig$ = new Subject<PixelImageCssVarConfig[]>();
 
-  public debugImg$ = new BehaviorSubject<{
+  public debugImg$ = new BehaviorSubject(undefined as {
     config: PixelImageCssVarConfig,
     imgs: DisplayImage
-  } | undefined>(undefined as any);
+  } | undefined);
 
   private pids: (PixelImageDrawer<DisplayImage> & Cleanupable)[] = [];
 
