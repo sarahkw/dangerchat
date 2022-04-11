@@ -12,8 +12,7 @@ function camelCaseToDashCase(input: string): string {
 //#endregion
 
 type Descriptor = {
-  // goes to Angular setStyle which is 'any' type
-  readonly _getter: () => any, // eslint-disable-line
+  readonly _getter: () => unknown,
 
   readonly _styleName: string,
   readonly var: string
@@ -30,8 +29,7 @@ function WRAP<T>(value: (() => T) | T): Descriptor {
   return {
     _getter,
 
-    // i think this weirdness is worth the benefits it provides -- users of the Descriptor
-    // can't modify it. should be ok because the weirdness is limited to this file.
+    // placeholder values, they'll be populated very soon
     _styleName: undefined as any, // eslint-disable-line
     var: undefined as any // eslint-disable-line
   }
@@ -39,6 +37,7 @@ function WRAP<T>(value: (() => T) | T): Descriptor {
 
 export const ROOTVARS = {
   colorDesktop: WRAP(() => Colors.DESKTOP),
+  // TODO make a fn called lighter(), darker()
   colorDesktopDebug: WRAP('#0e8585'),  // Like desktop, but if placed onto a desktop you'd be able to slightly see the difference
 
   colorText: WRAP(() => Colors.WIDGET_TEXT),
