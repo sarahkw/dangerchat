@@ -52,7 +52,8 @@ export const ROOTVARS = {
   titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT),
 
   moveResizeHitAreaWidth: WRAP('2em'),
-  moveResizeHitAreaHeight: WRAP('2em')
+  moveResizeHitAreaHeight: WRAP('2em'),
+  moveResizeHitAreaGap: WRAP('2px')
 };
 
 (function (generateDirectAccessOutput: boolean) {
@@ -88,6 +89,7 @@ export const ROOTVARS = {
 --w98w-root-title-bar-text-color
 --w98w-root-move-resize-hit-area-width
 --w98w-root-move-resize-hit-area-height
+--w98w-root-move-resize-hit-area-gap
 */
 
 @Directive({
