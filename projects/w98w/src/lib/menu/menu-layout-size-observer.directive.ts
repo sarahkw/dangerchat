@@ -61,19 +61,19 @@ export class ResizeUpdates {
 }
 
 export interface MlsoMenuContext {
-   observe(caller: any, targets: Element[], redeliver: boolean): void;
-   unobserve(caller: any, target: Element): void;
-   unobserveAll(caller: any): void;
+   observe(caller: unknown, targets: Element[], redeliver: boolean): void;
+   unobserve(caller: unknown, target: Element): void;
+   unobserveAll(caller: unknown): void;
 }
 
 function generate(rootElement_: Element) {
    let subscriber_: Subscriber<ResizeUpdates> | undefined;
    let ro_: ResizeObserver | undefined;
 
-   const contextObservations_: Map<Element, {observers: Set<any>, latestValue: DOMRectReadOnly | undefined}> = new Map();
+   const contextObservations_: Map<Element, {observers: Set<unknown>, latestValue: DOMRectReadOnly | undefined}> = new Map();
    let rootLatestValue_: DOMRectReadOnly | undefined;
 
-   function ensureObservationOfBy(of: Element, by: any) {
+   function ensureObservationOfBy(of: Element, by: unknown) {
       let details = contextObservations_.get(of);
       if (!details) { // haven't seen before
          details = {observers: new Set(), latestValue: undefined};
@@ -91,7 +91,7 @@ function generate(rootElement_: Element) {
    const context: MlsoMenuContext = new class implements MlsoMenuContext {
 
       // is OK to only wait for root by passing blank array to targets
-      observe(caller: any, targets: Element[], redeliver: boolean): void {
+      observe(caller: unknown, targets: Element[], redeliver: boolean): void {
 
          const batch = redeliver ? new ResizeUpdates() : undefined;
 
@@ -108,7 +108,7 @@ function generate(rootElement_: Element) {
             subscriber_?.next(batch);
          }
       }
-      unobserve(caller: any, target: Element): void {
+      unobserve(caller: unknown, target: Element): void {
          const details = contextObservations_.get(target);
          if (details) {
             details.observers.delete(caller);
@@ -118,7 +118,7 @@ function generate(rootElement_: Element) {
             }
          }
       }
-      unobserveAll(caller: any): void {
+      unobserveAll(caller: unknown): void {
          const toDiscard: Element[] = [];
 
          contextObservations_.forEach((details, elem) => {

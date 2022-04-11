@@ -6,6 +6,6 @@ import { Directive, TemplateRef } from '@angular/core';
 })
 export class MenuTemplateDirective {
 
-  constructor(public template: TemplateRef<any>) { }
+  constructor(public template: TemplateRef<unknown>) { }
 
 }

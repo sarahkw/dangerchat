@@ -109,7 +109,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             resizeUpdateOutBuffer = undefined;
           }
         }
-        error(err: any): void {
+        error(err: unknown): void {
           subscriber.error(err);
         }
         complete(): void {
@@ -141,7 +141,7 @@ export class MenuHostComponent implements OnInit, OnDestroy, DoCheck {
             nextContinuation(subscriber, currentRootAnchorDims!, value);
           }
         }
-        error(err: any): void {
+        error(err: unknown): void {
           subscriber.error(err);
           subscription.unsubscribe(); // the other one
         }

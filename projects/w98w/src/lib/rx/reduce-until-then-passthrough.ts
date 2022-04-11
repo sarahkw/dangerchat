@@ -28,7 +28,7 @@ export function reduceUntilThenPassthrough<T>(
                         subscriber.next(value);
                     }
                 }
-                error(err: any): void {
+                error(err: unknown): void {
                     subscriber.error(err);
                 }
                 complete(): void {

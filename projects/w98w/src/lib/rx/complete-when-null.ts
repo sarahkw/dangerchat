@@ -28,7 +28,7 @@ export function completeWhenNull<T>() {
                         subscriber.next(value);
                     }
                 },
-                error(err: any): void {
+                error(err: unknown): void {
                     subscriber.error(err);
                     box.needToUnsubscribeSynchronously = false;
                 },

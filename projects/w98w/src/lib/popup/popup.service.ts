@@ -4,9 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class PopupService {
 
-  currentPopup$: BehaviorSubject<TemplateRef<any>[]> = new BehaviorSubject([] as TemplateRef<any>[]);
+  currentPopup$: BehaviorSubject<TemplateRef<unknown>[]> = new BehaviorSubject([] as TemplateRef<unknown>[]);
 
-  openPopup(childTemplate: TemplateRef<any>) {
+  openPopup(childTemplate: TemplateRef<unknown>) {
     this.currentPopup$.next([childTemplate]);
   }
 

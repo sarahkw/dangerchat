@@ -91,7 +91,7 @@ export function menuCalculateSelf(
 
                         subscription.next(mc);
                     }
-                    error(err: any): void {
+                    error(err: unknown): void {
                         subscription.error(err);
                     }
                     complete(): void {
@@ -149,7 +149,7 @@ export function menuCalculateNext(
 
                     subscription.next(mc);
                 }
-                error(err: any): void {
+                error(err: unknown): void {
                     subscription.error(err);
                 }
                 complete(): void {
@@ -179,7 +179,7 @@ function accumulateMenuContinuationTakeNewerData(prev: MenuContinuation | undefi
 }
 
 // also waits for root
-function observeAndBlock(identity: any, mlsoMenuContext: MlsoMenuContext, targets: Element[]) {
+function observeAndBlock(identity: unknown, mlsoMenuContext: MlsoMenuContext, targets: Element[]) {
     return pipe(
         reduceUntilThenPassthrough(accumulateMenuContinuationTakeNewerData, undefined,
             mc => {
