@@ -7,7 +7,7 @@ import { MenuTemplateDirective } from './menu-template.directive';
 export class MenuService {
 
   // null means no menu, and is also how we cancel
-  activeRootMenu$: BehaviorSubject<RootMenuDescriptor | null> = new BehaviorSubject(null as any);
+  activeRootMenu$ = new BehaviorSubject(null as RootMenuDescriptor | null);
 
   currentCancel: (() => void) | undefined;
 
