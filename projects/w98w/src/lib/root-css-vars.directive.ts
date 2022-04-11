@@ -51,8 +51,8 @@ export const ROOTVARS = {
   titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
   titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT),
 
-  moveResizeHitAreaWidth: WRAP('2em'),
-  moveResizeHitAreaHeight: WRAP('2em'),
+  moveResizeHitAreaWidth: WRAP('40px'),
+  moveResizeHitAreaHeight: WRAP('40px'),
   moveResizeHitAreaGap: WRAP('2px'),
 
   windowMinWidth: WRAP('200px'),
