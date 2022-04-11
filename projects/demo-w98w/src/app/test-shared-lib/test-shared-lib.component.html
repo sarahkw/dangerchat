@@ -97,8 +97,8 @@
 </ng-template>
 
 <ng-template #overflowWndTemp>
-    <!-- need overflow hidden so that scrollbars aren't drawn here. scrollbars need to be drawn inside. -->
-    <w98w-window [drawFrame]="true" style="overflow: hidden; resize: both;">
+    <!-- TODO: can no longer be using CSS resize, need to use JS -->
+    <w98w-window [drawFrame]="true" innerGridStyle="overflow: hidden; resize: both;">
         <w98w-titlebar w98w-window-title-bar label="Yeet" iconSrc="/assets/w98w/vbicon.png"></w98w-titlebar>
         <menu w98w-window-menu-bar w98w-menu-bar>
             <li w98w-menu-bar-item [autoMenu]="menuTemp">File</li>

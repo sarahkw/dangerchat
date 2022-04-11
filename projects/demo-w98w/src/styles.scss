@@ -124,7 +124,7 @@ w98w-titlebar > div.controlarea {
     @extend %w98w-titlebar-em-height;
 }
 
-w98w-window {
+.w98w-window-inner-grid {
     // not a widget-base. don't want text styles, because i want to be able to make a 'webview' window
     // which isn't styled like w98w.
 

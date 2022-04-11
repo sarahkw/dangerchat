@@ -27,6 +27,12 @@ export class WindowMenuBarDirective {
   };
 }
 
+enum MoveResizeMode {
+  None = 0,
+  Move,
+  Resize
+}
+
 @Component({
   selector: 'w98w-window',
   templateUrl: './window.component.html',
@@ -35,8 +41,7 @@ export class WindowMenuBarDirective {
 export class WindowComponent implements OnInit, OnDestroy {
 
   @Input() drawFrame = true;  // if maximized this will be false
-
-  @HostBinding('class') readonly hbc = 'w98w-window';
+  @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
 
   @HostBinding('style.--window-padding.px') get hbsPadding() {
     // 2 extra pixels spacing, as seen in screenshot
@@ -45,7 +50,8 @@ export class WindowComponent implements OnInit, OnDestroy {
 
   @ViewChild('menuWindow') menuWindow!: MenuTemplateDirective;
 
-  moveResizeMode = false;
+  readonly enumMoveResizeMode = MoveResizeMode;
+  moveResizeMode = MoveResizeMode.None;
 
   constructor(private imgService: PixelImageService) { }
 
@@ -57,10 +63,6 @@ export class WindowComponent implements OnInit, OnDestroy {
     this.imgService.pidUnregister(WindowComponent.PID_FRAME);
   }
 
-  toggleMoveResize() {
-    this.moveResizeMode = !this.moveResizeMode;
-  }
-
   static readonly PID_FRAME = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
@@ -69,7 +71,7 @@ export class WindowComponent implements OnInit, OnDestroy {
     }
 
     pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-window", imgs));
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-window-inner-grid", imgs));
     }
 
     pidDestroy(): void {

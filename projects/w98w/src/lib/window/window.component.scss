@@ -1,5 +1,14 @@
 :host {
     display: grid;
+    // TODO quite sure there's an easier way of specifying this
+    grid-template-rows: [viewport-start] auto [viewport-end];
+    grid-template-columns: [viewport-start] auto [viewport-end];
+}
+
+.w98w-window-inner-grid {
+    grid-area: viewport;
+
+    display: grid;
 
     position: relative;  // for bevels
 
@@ -19,52 +28,38 @@
 }
 
 .w98w-move-resize-overlay-base {
-    grid-area: frame;
+    grid-area: viewport;
     z-index: 2;
 
     background-color: white;
     opacity: 40%;
 }
 
-.w98w-move-resize-overlay {
-    grid-area: frame;
+:is(.w98w-move-resize-overlay-move, .w98w-move-resize-overlay-resize) {
+    grid-area: viewport;
     z-index: 3;
+    pointer-events: none;
 
-    display: grid;
-
-    grid-template-rows: [mro-full-start] 1fr [mro-full-end];
-    grid-template-columns: [mro-full-start] 1fr [mro-full-end];
-
-    .w98w-move-resize-overlay-move {
-        grid-area: mro-full;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--w98w-root-move-resize-hit-area-gap);
-
-        pointer-events: none;
-    }
-    .w98w-move-resize-overlay-resize {
-        grid-area: mro-full;
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
-
-        pointer-events: none;
-    }
+    border: 1px solid blue;
 }
 
-.w98w-move-resize-overlay .hit-area, .w98w-move-resize-overlay .accept-area {
+.w98w-move-resize-overlay-move {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--w98w-root-move-resize-hit-area-gap);
+}
+
+.w98w-move-resize-overlay-resize {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+:is(.w98w-move-resize-overlay-move, .w98w-move-resize-overlay-resize) .hit-area {
     width: var(--w98w-root-move-resize-hit-area-width);
     height: var(--w98w-root-move-resize-hit-area-height);
 
     pointer-events: auto;
-}
-
-.w98w-move-resize-overlay .hit-area {
     background-color: red;
-}
-
-.w98w-move-resize-overlay .accept-area {
-    background-color: green;
 }

@@ -1,26 +1,25 @@
-<w98w-bevel-8split *ngIf="drawFrame"></w98w-bevel-8split>
-<ng-content select="[w98w-window-title-bar]"></ng-content>
-<ng-content select="[w98w-window-menu-bar]"></ng-content>
-<div class="w98w-window-body">
-    <ng-content></ng-content>
+<div class="w98w-window-inner-grid" [style]="innerGridStyle">
+  <w98w-bevel-8split *ngIf="drawFrame"></w98w-bevel-8split>
+  <ng-content select="[w98w-window-title-bar]"></ng-content>
+  <ng-content select="[w98w-window-menu-bar]"></ng-content>
+  <div class="w98w-window-body">
+      <ng-content></ng-content>
+  </div>
+
+  <ng-template w98w-menu-template #menuWindow="menuTemplate" let-context>
+      <menu w98w-menu [menuContext]="context">
+          <li w98w-menu-item="Move" (activate)="moveResizeMode = enumMoveResizeMode.Move"></li>
+          <li w98w-menu-item="Resize" (activate)="moveResizeMode = enumMoveResizeMode.Resize"></li>
+      </menu>
+  </ng-template>
 </div>
 
 <div *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base"></div>
 
-<div *ngIf="moveResizeMode" class="w98w-move-resize-overlay">
-  <div class="w98w-move-resize-overlay-move">
-    <div class="accept-area"></div>
-    <div class="hit-area"></div>
-  </div>
-  <div class="w98w-move-resize-overlay-resize">
-    <div class="hit-area"></div>
-  </div>
-
+<div *ngIf="moveResizeMode == enumMoveResizeMode.Move" class="w98w-move-resize-overlay-move">
+  <div class="hit-area"></div>
 </div>
 
-<ng-template w98w-menu-template #menuWindow="menuTemplate" let-context>
-    <menu w98w-menu [menuContext]="context">
-        <li w98w-menu-item="Move" (activate)="toggleMoveResize()"></li>
-        <li w98w-menu-item="Resize" (activate)="toggleMoveResize()"></li>
-    </menu>
-</ng-template>
+<div *ngIf="moveResizeMode == enumMoveResizeMode.Resize" class="w98w-move-resize-overlay-resize">
+  <div class="hit-area"></div>
+</div>
