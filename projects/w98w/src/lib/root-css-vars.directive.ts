@@ -64,9 +64,8 @@ export const ROOTVARS = {
   Object.entries(ROOTVARS).forEach(([k, v]) => {
     const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
     (v as any)._styleName = styleName; // eslint-disable-line
-    const varRef = `var(${styleName})`;
-    (v as any).var = varRef; // eslint-disable-line
-    accumulate?.push(varRef);
+    (v as any).var = `var(${styleName})`; // eslint-disable-line
+    accumulate?.push(v.var);
   });
 
   accumulate && console.debug(accumulate.join("\n"));
