@@ -12,7 +12,9 @@ function camelCaseToDashCase(input: string): string {
 //#endregion
 
 type Descriptor = {
-  readonly _getter: () => any,
+  // goes to Angular setStyle which is 'any' type
+  readonly _getter: () => any, // eslint-disable-line
+
   readonly _styleName: string,
   readonly var: string
 };
@@ -27,8 +29,11 @@ function WRAP<T>(value: (() => T) | T): Descriptor {
 
   return {
     _getter,
-    _styleName: undefined as any,
-    var: undefined as any
+
+    // i think this weirdness is worth the benefits it provides -- users of the Descriptor
+    // can't modify it. should be ok because the weirdness is limited to this file.
+    _styleName: undefined as any, // eslint-disable-line
+    var: undefined as any // eslint-disable-line
   }
 }
 
@@ -55,8 +60,8 @@ export const ROOTVARS = {
 
   Object.entries(ROOTVARS).forEach(([k, v]) => {
     const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
-    (v as any)._styleName = styleName;
-    (v as any).var = `var(${styleName})`;
+    (v as any)._styleName = styleName; // eslint-disable-line
+    (v as any).var = `var(${styleName})`; // eslint-disable-line
     accumulate?.push(styleName);
   });
 
