@@ -5,6 +5,18 @@
     <ng-content></ng-content>
 </div>
 
+<div *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base"></div>
+
+<div *ngIf="moveResizeMode" class="w98w-move-resize-overlay">
+  <div class="hit-area hit-area-t-t"></div>
+  <div class="hit-area hit-area-t-b"></div>
+  <div class="hit-area hit-area-b-t"></div>
+  <div class="hit-area hit-area-b-b"></div>
+  <div class="hit-area hit-area-c-c"></div>
+
+  <div class="accept-area"></div>
+</div>
+
 <ng-template w98w-menu-template #menuWindow="menuTemplate" let-context>
     <menu w98w-menu [menuContext]="context">
         <li w98w-menu-item="Move / resize" (activate)="toggleMoveResize()"></li>

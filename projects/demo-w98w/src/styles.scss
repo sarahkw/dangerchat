@@ -129,4 +129,8 @@ w98w-window {
     // which isn't styled like w98w.
 
     background-color: var(--w98w-root-widget-background-color);
+
+    min-width: calc(var(--w98w-root-move-resize-hit-area-width) * 3);
+    min-height: calc(var(--w98w-root-move-resize-hit-area-height) * 3);
 }
+

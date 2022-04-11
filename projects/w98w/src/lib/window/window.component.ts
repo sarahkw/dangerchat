@@ -45,6 +45,8 @@ export class WindowComponent implements OnInit, OnDestroy {
 
   @ViewChild('menuWindow') menuWindow!: MenuTemplateDirective;
 
+  moveResizeMode = false;
+
   constructor(private imgService: PixelImageService) { }
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class WindowComponent implements OnInit, OnDestroy {
   }
 
   toggleMoveResize() {
-    console.debug('not implemented');
+    this.moveResizeMode = !this.moveResizeMode;
   }
 
   static readonly PID_FRAME = new class implements PixelImageDrawer<GenCssInput> {

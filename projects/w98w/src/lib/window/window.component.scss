@@ -17,3 +17,65 @@
     min-width: 0;
     overflow: auto;
 }
+
+.w98w-move-resize-overlay-base {
+    grid-area: frame;
+    z-index: 2;
+
+    background-color: white;
+    opacity: 40%;
+}
+
+.w98w-move-resize-overlay {
+    grid-area: frame;
+    z-index: 3;
+
+    display: grid;
+
+    // TODO: try the ASCII art way to configure the grid
+
+    grid-template-rows:
+        [mro-t-start] auto
+        [mro-t-end mro-s-start] 1fr [mro-s-end mro-c-start] auto
+        [mro-c-end mro-s-start] 1fr [mro-s-end mro-b-start] auto
+        [mro-b-end];
+
+    grid-template-columns:
+        [mro-t-start] auto
+        [mro-t-end mro-s-start] 1fr [mro-s-end mro-c-start] auto
+        [mro-c-end mro-s-start] 1fr [mro-s-end mro-b-start] auto
+        [mro-b-end];
+}
+
+.w98w-move-resize-overlay > .hit-area, .w98w-move-resize-overlay > .accept-area {
+    width: var(--w98w-root-move-resize-hit-area-width);
+    height: var(--w98w-root-move-resize-hit-area-height);
+}
+
+.w98w-move-resize-overlay > .hit-area {
+    background-color: red;
+}
+
+.w98w-move-resize-overlay > .accept-area {
+    background-color: green;
+}
+
+.w98w-move-resize-overlay > .hit-area-t-t { grid-row: mro-t; grid-column: mro-t; cursor: nwse-resize; }
+.w98w-move-resize-overlay > .hit-area-t-b { grid-row: mro-t; grid-column: mro-b; cursor: nesw-resize; }
+.w98w-move-resize-overlay > .hit-area-b-t { grid-row: mro-b; grid-column: mro-t; cursor: nesw-resize; }
+.w98w-move-resize-overlay > .hit-area-b-b { grid-row: mro-b; grid-column: mro-b; cursor: nwse-resize; }
+.w98w-move-resize-overlay > .hit-area-c-c { grid-row: mro-c; grid-column: mro-c; cursor: move; }
+
+.w98w-move-resize-overlay > .accept-area { grid-row: mro-t; grid-column: mro-c; }
+
+/* Maybe scss can do this but I don't know how.
+
+import itertools
+def cssclass(a, b): return f"hit-area-{a}-{b}"
+def mro(a): return f"mro-{a}"
+X = "tb"
+def sequence(): return itertools.chain(itertools.product(X, X), [('c', 'c')])
+for a, b in sequence(): print(f'<div class="hit-area {cssclass(a, b)}"></div>')
+for a, b in sequence(): print(f'.w98w-move-resize-overlay > .{cssclass(a, b)} {{ grid-row: {mro(a)}; grid-column: {mro(b)}; }}')
+
+*/
