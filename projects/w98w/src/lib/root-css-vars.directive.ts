@@ -55,8 +55,8 @@ export const ROOTVARS = {
   moveResizeHitAreaHeight: WRAP('3em')
 };
 
-(function (alsoGenerateConsoleOutput: boolean) {
-  const accumulate = alsoGenerateConsoleOutput ? <string[]>[] : undefined;
+(function (generateDirectAccessOutput: boolean) {
+  const accumulate = generateDirectAccessOutput ? <string[]>[] : undefined;
 
   Object.entries(ROOTVARS).forEach(([k, v]) => {
     const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
@@ -70,8 +70,7 @@ export const ROOTVARS = {
 
 // ROOT CSS VARS DIRECT ACCESS
 //
-// Design: keep these updated and don't use these besides in styles.scss
-//         read `.var` to use otherwise, so TS can verify
+// Keep the following list updated.
 //
 // DIRTY FLAG: Set to YES if you've edited the dict without updating below. Tsk tsk.
 //
