@@ -64,8 +64,9 @@ export const ROOTVARS = {
   Object.entries(ROOTVARS).forEach(([k, v]) => {
     const styleName = `--w98w-root-${camelCaseToDashCase(k)}`;
     (v as any)._styleName = styleName; // eslint-disable-line
-    (v as any).var = `var(${styleName})`; // eslint-disable-line
-    accumulate?.push(styleName);
+    const varRef = `var(${styleName})`;
+    (v as any).var = varRef; // eslint-disable-line
+    accumulate?.push(varRef);
   });
 
   accumulate && console.debug(accumulate.join("\n"));
@@ -80,20 +81,20 @@ export const ROOTVARS = {
 //             NO
 
 /*
---w98w-root-color-desktop
---w98w-root-color-desktop-debug
---w98w-root-color-text
---w98w-root-color-text-disabled
---w98w-root-label-font-size
---w98w-root-label-font-family
---w98w-root-widget-background-color
---w98w-root-title-bar-active-color
---w98w-root-title-bar-text-color
---w98w-root-move-resize-hit-area-width
---w98w-root-move-resize-hit-area-height
---w98w-root-move-resize-hit-area-gap
---w98w-root-window-min-width
---w98w-root-window-min-height
+var(--w98w-root-color-desktop)
+var(--w98w-root-color-desktop-debug)
+var(--w98w-root-color-text)
+var(--w98w-root-color-text-disabled)
+var(--w98w-root-label-font-size)
+var(--w98w-root-label-font-family)
+var(--w98w-root-widget-background-color)
+var(--w98w-root-title-bar-active-color)
+var(--w98w-root-title-bar-text-color)
+var(--w98w-root-move-resize-hit-area-width)
+var(--w98w-root-move-resize-hit-area-height)
+var(--w98w-root-move-resize-hit-area-gap)
+var(--w98w-root-window-min-width)
+var(--w98w-root-window-min-height)
 */
 
 @Directive({
