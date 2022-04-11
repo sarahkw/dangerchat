@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges, ViewChild } from '@angular/core';
-import { asapScheduler, BehaviorSubject, distinctUntilChanged, filter, map, Observable, observeOn, of, ReplaySubject, Subject, Subscription, switchMap } from 'rxjs';
+import { asapScheduler, BehaviorSubject, distinctUntilChanged, map, Observable, observeOn, of, ReplaySubject, Subject, Subscription, switchMap } from 'rxjs';
 import { GenImgDescriptor } from '../genimg';
 import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
 import { PixelImageDrawer } from '../pixel-image-drawer';
 import { PixelImageService } from '../pixel-image.service';
+import { filterOutNullAndUndefined } from '../rx/filter-out-null-and-undefined';
 import { resizeObserver } from '../rx/resize-observer';
 
 export type PixelImageCssVarConfig = {
@@ -165,9 +166,8 @@ export class PixelImageComponent implements OnInit, OnChanges, AfterViewInit, On
     this.actualConfigSubscription = this.currentActualConfig$.subscribe(this.imgCssVarGen.giveConfig.bind(this.imgCssVarGen));
 
     this.debugGenImgSize$ = this.imgCssVarGen.debugImg$.pipe(
-      filter(value => !!value),
-      map(value => {
-        const { imgs } = value!;
+      filterOutNullAndUndefined(),
+      map(({ imgs }) => {
         return [
           imgs.cssRequestedWidth, imgs.cssRequestedHeight,
           imgs.cssRequestedWidthCautious, imgs.cssRequestedHeightCautious
