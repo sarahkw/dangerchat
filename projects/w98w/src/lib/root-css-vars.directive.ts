@@ -53,7 +53,10 @@ export const ROOTVARS = {
 
   moveResizeHitAreaWidth: WRAP('2em'),
   moveResizeHitAreaHeight: WRAP('2em'),
-  moveResizeHitAreaGap: WRAP('2px')
+  moveResizeHitAreaGap: WRAP('2px'),
+
+  windowMinWidth: WRAP('200px'),
+  windowMinHeight: WRAP('100px')
 };
 
 (function (generateDirectAccessOutput: boolean) {
@@ -90,6 +93,8 @@ export const ROOTVARS = {
 --w98w-root-move-resize-hit-area-width
 --w98w-root-move-resize-hit-area-height
 --w98w-root-move-resize-hit-area-gap
+--w98w-root-window-min-width
+--w98w-root-window-min-height
 */
 
 @Directive({

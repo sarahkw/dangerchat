@@ -130,7 +130,7 @@ w98w-window {
 
     background-color: var(--w98w-root-widget-background-color);
 
-    min-width: calc(var(--w98w-root-move-resize-hit-area-width) * 2 + var(--w98w-root-move-resize-hit-area-gap));
-    min-height: calc(var(--w98w-root-move-resize-hit-area-height));
+    min-width: var(--w98w-root-window-min-width);
+    min-height: var(--w98w-root-window-min-height);
 }
 
