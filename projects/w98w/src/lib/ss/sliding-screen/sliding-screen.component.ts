@@ -22,7 +22,7 @@ export class SlidingScreenComponent implements OnDestroy, AfterContentChecked {
   // Warning: if unfixedHeight is true, then we will take control of the style height, clobbering it.
   @Input() unfixedHeight = false;
 
-  @ContentChild(SlidingScreenOverlayDirective) private overlay: any;
+  @ContentChild(SlidingScreenOverlayDirective) private overlay: unknown;
 
   @ViewChild('innerDiv') private innerDiv!: ElementRef;
 
