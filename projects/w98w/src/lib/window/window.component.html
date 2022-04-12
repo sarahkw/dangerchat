@@ -14,12 +14,12 @@
   </ng-template>
 </div>
 
-<a *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base" title="{{ doneText() }}" (click)="moveResizeMode = enumMoveResizeMode.None"></a>
+<a *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base" title="{{ doneText() }}"></a>
 
-<div *ngIf="moveResizeMode == enumMoveResizeMode.Move" class="w98w-move-resize-overlay-move">
-  <div class="hit-area" title="Drag to move"></div>
+<div *ngIf="moveResizeMode == enumMoveResizeMode.Move" class="w98w-move-resize-overlay-move" title="Drag to move">
+  <img src="/assets/w98w/SGI_61.PNG">
 </div>
 
-<div *ngIf="moveResizeMode == enumMoveResizeMode.Resize" class="w98w-move-resize-overlay-resize">
-  <div class="hit-area" title="Drag to resize"></div>
+<div *ngIf="moveResizeMode == enumMoveResizeMode.Resize" class="w98w-move-resize-overlay-resize" title="Drag to resize">
+  <img src="/assets/w98w/en_craft_44.png">
 </div>

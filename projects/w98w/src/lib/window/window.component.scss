@@ -31,8 +31,6 @@
     grid-area: viewport;
     z-index: 2;
 
-    cursor: pointer;
-
     background-color: white;
     opacity: 40%;
 }
@@ -40,7 +38,7 @@
 :is(.w98w-move-resize-overlay-move, .w98w-move-resize-overlay-resize) {
     grid-area: viewport;
     z-index: 3;
-    pointer-events: none;
+    pointer-events: auto;
 
     display: flex;
 }
@@ -49,30 +47,20 @@
     align-items: center;
     justify-content: center;
 
-    .hit-area {
-        pointer-events: auto;
-        width: var(--w98w-root-move-resize-hit-area-width);
-        height: var(--w98w-root-move-resize-hit-area-height);
-        background-image: url("/assets/w98w/SGI_61.PNG");
-        background-size: contain;
-        background-repeat: no-repeat;
-
-        cursor: move;
+    img {
+        pointer-events: none;
+        max-height: var(--w98w-root-move-resize-hit-area-height);
+        user-select: none;
     }
 }
 
 .w98w-move-resize-overlay-resize {
-    align-items: flex-end;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
 
-    .hit-area {
-        pointer-events: auto;
-        width: var(--w98w-root-move-resize-hit-area-width);
-        height: var(--w98w-root-move-resize-hit-area-height);
-        background-image: url("/assets/w98w/en_craft_44.png");
-        background-size: contain;
-        background-repeat: no-repeat;
-
-        cursor: nwse-resize;
+    img {
+        pointer-events: none;
+        max-height: var(--w98w-root-move-resize-hit-area-height);
+        user-select: none;
     }
 }
