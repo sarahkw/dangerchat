@@ -130,7 +130,8 @@ w98w-titlebar > div.controlarea {
 
     background-color: var(--w98w-root-widget-background-color);
 
-    min-width: var(--w98w-root-window-min-width);
-    min-height: var(--w98w-root-window-min-height);
+    // TODO: remove these comments once the proper solution is sorted
+    //min-width: var(--w98w-root-window-min-width);
+    //min-height: var(--w98w-root-window-min-height);
 }
 
