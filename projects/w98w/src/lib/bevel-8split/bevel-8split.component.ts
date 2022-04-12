@@ -73,9 +73,9 @@ type CacheEntry = {
   cssclass: string
 };
 
-@Directive({selector: '[w98w-bevel-8split-simple]'})
-export class Bevel8SplitSimpleDirective implements OnInit, OnDestroy, OnChanges {
-  @Input('w98w-bevel-8split-simple') bevel!: SlantRectBevel;
+@Directive({selector: '[w98w-bevel-8split-simple-host]'})
+export class Bevel8SplitSimpleHostDirective implements OnInit, OnDestroy, OnChanges {
+  @Input('w98w-bevel-8split-simple-host') bevel!: SlantRectBevel;
 
   @HostBinding('class') private hbClass: string | undefined;
   @HostBinding('style.position') private hbsPosition = 'relative';
@@ -86,11 +86,11 @@ export class Bevel8SplitSimpleDirective implements OnInit, OnDestroy, OnChanges 
   }
 
   ngOnInit(): void {
-    console.assert(!!this.bevel);
-    let cacheEntry = Bevel8SplitSimpleDirective.cache.get(this.bevel);
     const bevel = this.bevel;
+    console.assert(!!bevel);
+    let cacheEntry = Bevel8SplitSimpleHostDirective.cache.get(bevel);
     if (!cacheEntry) {
-      const pendingCssClass = `w98w-bevel-8split-simple-${CSSID_COUNTER++}`;
+      const pendingCssClass = `w98w-bevel-8split-simple-host-${CSSID_COUNTER++}`;
 
       cacheEntry = {
         pid: new class implements PixelImageDrawer<GenCssInput> {
@@ -110,6 +110,8 @@ export class Bevel8SplitSimpleDirective implements OnInit, OnDestroy, OnChanges 
         },
         cssclass: pendingCssClass
       }
+
+      Bevel8SplitSimpleHostDirective.cache.set(bevel, cacheEntry);
     }
 
     this.hbClass = cacheEntry.cssclass;
@@ -122,7 +124,7 @@ export class Bevel8SplitSimpleDirective implements OnInit, OnDestroy, OnChanges 
   }
 
   ngOnDestroy(): void {
-    const cacheEntry = Bevel8SplitSimpleDirective.cache.get(this.bevel);
+    const cacheEntry = Bevel8SplitSimpleHostDirective.cache.get(this.bevel);
     console.assert(!!cacheEntry);
     if (cacheEntry) {
       this.imgService.pidUnregister(cacheEntry.pid);

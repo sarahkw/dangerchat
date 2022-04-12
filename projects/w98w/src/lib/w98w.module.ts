@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { W98wComponent } from './w98w.component';
-import { Bevel8SplitComponent, Bevel8SplitSimpleDirective } from './bevel-8split/bevel-8split.component';
+import { Bevel8SplitComponent, Bevel8SplitSimpleHostDirective } from './bevel-8split/bevel-8split.component';
 import { PixelImageComponent, PixelImageCssVarDirective } from './pixel-image/pixel-image.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { WButtonBodyDirective, WButtonComponent } from './wbutton/wbutton.component';
@@ -52,7 +52,7 @@ import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from
     WindowComponent,
     WindowTitleBarDirective,
     WindowMenuBarDirective,
-    Bevel8SplitSimpleDirective
+    Bevel8SplitSimpleHostDirective
   ],
   imports: [
     CommonModule
@@ -81,7 +81,7 @@ import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from
     WindowComponent,
     WindowTitleBarDirective,
     WindowMenuBarDirective,
-    Bevel8SplitSimpleDirective,
+    Bevel8SplitSimpleHostDirective,
     Bevel8SplitComponent
   ]
 })
