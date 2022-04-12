@@ -14,12 +14,12 @@
   </ng-template>
 </div>
 
-<div *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base"></div>
+<div *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base" title="{{ doneText() }}"></div>
 
 <div *ngIf="moveResizeMode == enumMoveResizeMode.Move" class="w98w-move-resize-overlay-move">
-  <div class="hit-area"></div>
+  <div class="hit-area" title="Drag to move"></div>
 </div>
 
 <div *ngIf="moveResizeMode == enumMoveResizeMode.Resize" class="w98w-move-resize-overlay-resize">
-  <div class="hit-area"></div>
+  <div class="hit-area" title="Drag to resize"></div>
 </div>

@@ -63,6 +63,17 @@ export class WindowComponent implements OnInit, OnDestroy {
     this.imgService.pidUnregister(WindowComponent.PID_FRAME);
   }
 
+  doneText() {
+    switch (this.moveResizeMode) {
+      case MoveResizeMode.Move: return "Done moving";
+      case MoveResizeMode.Resize: return "Done resizing";
+      default: {
+        console.assert(false);
+        return "";
+      }
+    }
+  }
+
   static readonly PID_FRAME = new class implements PixelImageDrawer<GenCssInput> {
     private styleInjector = new StyleInjector();
 
