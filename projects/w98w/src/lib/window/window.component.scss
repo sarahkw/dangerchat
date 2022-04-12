@@ -45,18 +45,14 @@
     display: flex;
 }
 
-:is(.w98w-move-resize-overlay-move, .w98w-move-resize-overlay-resize) .hit-area {
-    width: var(--w98w-root-move-resize-hit-area-width);
-    height: var(--w98w-root-move-resize-hit-area-height);
-
-    pointer-events: auto;
-}
-
 .w98w-move-resize-overlay-move {
     align-items: center;
     justify-content: center;
 
     .hit-area {
+        pointer-events: auto;
+        width: var(--w98w-root-move-resize-hit-area-width);
+        height: var(--w98w-root-move-resize-hit-area-height);
         background-image: url("/assets/w98w/SGI_61.PNG");
         background-size: contain;
         background-repeat: no-repeat;
@@ -70,6 +66,9 @@
     justify-content: flex-end;
 
     .hit-area {
+        pointer-events: auto;
+        width: var(--w98w-root-move-resize-hit-area-width);
+        height: var(--w98w-root-move-resize-hit-area-height);
         background-image: url("/assets/w98w/en_craft_44.png");
         background-size: contain;
         background-repeat: no-repeat;
