@@ -50,9 +50,8 @@ export const ROOTVARS = {
   titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
   titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT),
 
-  moveResizeHitAreaWidth: WRAP('40px'),
-  moveResizeHitAreaHeight: WRAP('40px'),
-  moveResizeHitAreaGap: WRAP('2px'),
+  moveResizeHitAreaWidth: WRAP('50px'),
+  moveResizeHitAreaHeight: WRAP('50px'),
 
   windowMinWidth: WRAP('200px'),
   windowMinHeight: WRAP('100px')
@@ -91,7 +90,6 @@ var(--w98w-root-title-bar-active-color)
 var(--w98w-root-title-bar-text-color)
 var(--w98w-root-move-resize-hit-area-width)
 var(--w98w-root-move-resize-hit-area-height)
-var(--w98w-root-move-resize-hit-area-gap)
 var(--w98w-root-window-min-width)
 var(--w98w-root-window-min-height)
 */
