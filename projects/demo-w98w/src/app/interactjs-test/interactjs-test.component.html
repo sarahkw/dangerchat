@@ -20,9 +20,13 @@
 
     <h3>Resize mode</h3>
 
-    <div class="interactable" #resizable></div>
+    <div class="interactable" #resizable [w98w-bevel-8split-simple-host]="BEVELS.WINDOW">
+        <w98w-bevel-8split></w98w-bevel-8split>
+    </div>
 
     <h3>Drag mode</h3>
 
-    <div class="interactable" #draggable></div>
+    <div class="interactable" #draggable [w98w-bevel-8split-simple-host]="BEVELS.WINDOW">
+        <w98w-bevel-8split></w98w-bevel-8split>
+    </div>
 </div>
