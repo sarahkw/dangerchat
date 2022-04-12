@@ -14,7 +14,7 @@
   </ng-template>
 </div>
 
-<div *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base" title="{{ doneText() }}"></div>
+<a *ngIf="moveResizeMode" class="w98w-move-resize-overlay-base" title="{{ doneText() }}" (click)="moveResizeMode = enumMoveResizeMode.None"></a>
 
 <div *ngIf="moveResizeMode == enumMoveResizeMode.Move" class="w98w-move-resize-overlay-move">
   <div class="hit-area" title="Drag to move"></div>
