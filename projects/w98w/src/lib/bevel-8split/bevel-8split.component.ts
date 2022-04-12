@@ -73,6 +73,9 @@ type CacheEntry = {
   cssclass: string
 };
 
+// use if the bevel you need to draw is static. meaning like not the case where
+// you have a button, and the bevel needs to be different depending on whether
+// the button is pressed.
 @Directive({selector: '[w98w-bevel-8split-simple-host]'})
 export class Bevel8SplitSimpleHostDirective implements OnInit, OnDestroy, OnChanges {
   @Input('w98w-bevel-8split-simple-host') bevel!: SlantRectBevel;

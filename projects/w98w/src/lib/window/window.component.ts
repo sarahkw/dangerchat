@@ -1,11 +1,6 @@
-import { Component, Directive, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, HostBinding, Input, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
-import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
-import { PixelImageBuilderFactory } from '../pixel-image-builder';
-import { PixelImageDrawer } from '../pixel-image-drawer';
-import { PixelImageService } from '../pixel-image.service';
-import { StyleInjector } from '../style-injector';
 
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
@@ -38,7 +33,7 @@ enum MoveResizeMode {
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.scss']
 })
-export class WindowComponent implements OnInit, OnDestroy {
+export class WindowComponent {
 
   @Input() drawFrame = true;  // if maximized this will be false
   @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
@@ -53,15 +48,7 @@ export class WindowComponent implements OnInit, OnDestroy {
   readonly enumMoveResizeMode = MoveResizeMode;
   moveResizeMode = MoveResizeMode.None;
 
-  constructor(private imgService: PixelImageService) { }
-
-  ngOnInit(): void {
-    this.imgService.pidRegister(WindowComponent.PID_FRAME);
-  }
-
-  ngOnDestroy(): void {
-    this.imgService.pidUnregister(WindowComponent.PID_FRAME);
-  }
+  readonly WINDOW_BEVEL = Bevels.WINDOW;
 
   doneText() {
     switch (this.moveResizeMode) {
@@ -73,22 +60,4 @@ export class WindowComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  static readonly PID_FRAME = new class implements PixelImageDrawer<GenCssInput> {
-    private styleInjector = new StyleInjector();
-
-    pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
-      return genGenCssInput(ri => Bevels.WINDOW.genImage(ri, pibf));
-    }
-
-    pidApplyImages(imgs: GenCssInput): void {
-      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-window-inner-grid", imgs));
-    }
-
-    pidDestroy(): void {
-      this.styleInjector.destroy();
-    }
-  };  // PID_FRAME
-
-
 }
