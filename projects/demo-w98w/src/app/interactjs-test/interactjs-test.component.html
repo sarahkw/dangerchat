@@ -9,6 +9,11 @@
 
         margin: 1em 0;
     }
+
+    .modelTitleBar {
+        background-color: var(--w98w-root-title-bar-active-color);
+        height: 1.3em;
+    }
 </style>
 
 <div style="height: 600px; max-height: 90vh; background-color: var(--w98w-root-color-desktop-debug);">
@@ -16,17 +21,20 @@
 
     <div class="interactable" #normal [w98w-bevel-8split-simple-host]="BEVELS.WINDOW">
         <w98w-bevel-8split></w98w-bevel-8split>
+        <div class="modelTitleBar"></div>
     </div>
 
     <h3>Resize mode</h3>
 
     <div class="interactable" #resizable [w98w-bevel-8split-simple-host]="BEVELS.WINDOW">
         <w98w-bevel-8split></w98w-bevel-8split>
+        <div class="modelTitleBar"></div>
     </div>
 
     <h3>Drag mode</h3>
 
     <div class="interactable" #draggable [w98w-bevel-8split-simple-host]="BEVELS.WINDOW">
         <w98w-bevel-8split></w98w-bevel-8split>
+        <div class="modelTitleBar"></div>
     </div>
 </div>

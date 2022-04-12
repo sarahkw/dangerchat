@@ -12,12 +12,23 @@ export class InteractjsTestComponent implements OnInit {
 
   readonly BEVELS = Bevels;
 
+  @ViewChild('normal', { static: true }) normalElement!: ElementRef<HTMLElement>;
   @ViewChild('resizable', { static: true }) resizableElement!: ElementRef<HTMLElement>;
   @ViewChild('draggable', { static: true }) draggableElement!: ElementRef<HTMLElement>;
 
   constructor() { }
 
   ngOnInit(): void {
+    interact(this.normalElement.nativeElement)
+      .resizable({
+        edges: { top: true, right: true, bottom: true, left: true },
+        listeners: {
+          move(event) {
+            console.log(event);
+          }
+        }
+      });
+
     interact(this.resizableElement.nativeElement)
       .resizable({
         edges: { top: true, right: true, bottom: true, left: true },
