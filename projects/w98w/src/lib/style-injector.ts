@@ -3,6 +3,7 @@ export class StyleInjector {
     private element?: HTMLStyleElement;
 
     destroy(): void {
+        console.assert(!!this.element);
         if (this.element) {
             this.element.remove();
             this.element = undefined;

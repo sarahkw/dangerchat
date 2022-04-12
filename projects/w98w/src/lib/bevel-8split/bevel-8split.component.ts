@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { RectImage } from '../bevel';
-import { DisplayImage } from '../pixel-image-builder';
+import { Component, Directive, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Bevel, RectImage, SlantRectBevel } from '../bevel';
+import { DisplayImage, PixelImageBuilderFactory } from '../pixel-image-builder';
+import { PixelImageDrawer } from '../pixel-image-drawer';
+import { PixelImageService } from '../pixel-image.service';
+import { StyleInjector } from '../style-injector';
 
 export type GenCssInput = {
   [RectImage.Left]: DisplayImage,
@@ -62,6 +65,72 @@ const PROVIDE_CONTAINER_H = [
     true,
     true,
 ];
+
+let CSSID_COUNTER = 0;
+
+type CacheEntry = {
+  pid: PixelImageDrawer<GenCssInput>;
+  cssclass: string
+};
+
+@Directive({selector: '[w98w-bevel-8split-simple]'})
+export class Bevel8SplitSimpleDirective implements OnInit, OnDestroy, OnChanges {
+  @Input('w98w-bevel-8split-simple') bevel!: SlantRectBevel;
+
+  @HostBinding('class') private hbClass: string | undefined;
+  @HostBinding('style.position') private hbsPosition = 'relative';
+
+  private static cache: Map<Bevel, CacheEntry> = new Map();
+
+  constructor(private imgService: PixelImageService) {
+  }
+
+  ngOnInit(): void {
+    console.assert(!!this.bevel);
+    let cacheEntry = Bevel8SplitSimpleDirective.cache.get(this.bevel);
+    const bevel = this.bevel;
+    if (!cacheEntry) {
+      const pendingCssClass = `w98w-bevel-8split-simple-${CSSID_COUNTER++}`;
+
+      cacheEntry = {
+        pid: new class implements PixelImageDrawer<GenCssInput> {
+          private styleInjector = new StyleInjector();
+
+          pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
+            return genGenCssInput(ri => bevel.genImage(ri, pibf));
+          }
+
+          pidApplyImages(imgs: GenCssInput): void {
+            this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(`.${pendingCssClass}`, imgs));
+          }
+
+          pidDestroy(): void {
+            this.styleInjector.destroy();
+          }
+        },
+        cssclass: pendingCssClass
+      }
+    }
+
+    this.hbClass = cacheEntry.cssclass;
+    this.imgService.pidRegister(cacheEntry.pid);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const chbevel = changes['bevel'];
+    chbevel && console.assert(!!chbevel.firstChange); // change not supported
+  }
+
+  ngOnDestroy(): void {
+    const cacheEntry = Bevel8SplitSimpleDirective.cache.get(this.bevel);
+    console.assert(!!cacheEntry);
+    if (cacheEntry) {
+      this.imgService.pidUnregister(cacheEntry.pid);
+      // TODO we may leave dead items in the cache, but not a big deal rn because they don't take much resources
+      //      is ok because StyleInjector, after being destroyed, can renew itself
+    }
+  }
+}
 
 @Component({
   selector: 'w98w-bevel-8split',

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import interact from 'interactjs';
+import { Bevels } from 'projects/w98w/src/lib/bevel';
 
 @Component({
   selector: 'app-interactjs-test',
@@ -8,6 +9,8 @@ import interact from 'interactjs';
   styleUrls: ['./interactjs-test.component.scss']
 })
 export class InteractjsTestComponent implements OnInit {
+
+  readonly BEVELS = Bevels;
 
   @ViewChild('resizable', { static: true }) resizableElement!: ElementRef<HTMLElement>;
   @ViewChild('draggable', { static: true }) draggableElement!: ElementRef<HTMLElement>;
