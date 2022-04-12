@@ -1,7 +1,17 @@
 :host {
     display: flex;
     align-items: flex-start;
+}
 
-    /* keep some room for controls */
-    margin-right: 44px;
+.close-menu {
+    pointer-events: auto;
+    width: var(--w98w-root-move-resize-hit-area-width);
+    height: var(--w98w-root-move-resize-hit-area-height);
+    background-image: url("/assets/w98w/pirates_01.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    z-index: 0; // i don't know why this is necessary
+
+    cursor: pointer;
 }
