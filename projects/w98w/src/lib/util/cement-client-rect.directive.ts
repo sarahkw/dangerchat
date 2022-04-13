@@ -70,6 +70,7 @@ export class CementClientRectDirective implements OnDestroy {
         console.assert(!!clientRect);
         if (clientRect) {
           this.renderer.setStyle(element, 'position', 'absolute');
+          this.renderer.setStyle(element, 'margin', 0);
           this.renderer.setStyle(element, 'top', `${clientRect.top - rootRect.top}px`);
           this.renderer.setStyle(element, 'left', `${clientRect.left - rootRect.left}px`);
           this.renderer.setStyle(element, 'width', `${rect.width}px`);
