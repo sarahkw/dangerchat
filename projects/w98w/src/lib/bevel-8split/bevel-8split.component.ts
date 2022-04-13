@@ -79,9 +79,10 @@ type CacheEntry = {
 @Directive({selector: '[w98w-bevel-8split-simple-host]'})
 export class Bevel8SplitSimpleHostDirective implements OnInit, OnDestroy, OnChanges {
   @Input('w98w-bevel-8split-simple-host') bevel!: SlantRectBevel;
+  @Input() simpleHostNoPositionRelative = false;
 
   @HostBinding('class') private hbClass: string | undefined;
-  @HostBinding('style.position') private hbsPosition = 'relative';
+  @HostBinding('style.position') private hbsPosition: string | undefined;
 
   private static cache: Map<Bevel, CacheEntry> = new Map();
 
@@ -89,6 +90,10 @@ export class Bevel8SplitSimpleHostDirective implements OnInit, OnDestroy, OnChan
   }
 
   ngOnInit(): void {
+    if (!this.simpleHostNoPositionRelative) {
+      this.hbsPosition = 'relative';
+    }
+
     const bevel = this.bevel;
     console.assert(!!bevel);
     let cacheEntry = Bevel8SplitSimpleHostDirective.cache.get(bevel);

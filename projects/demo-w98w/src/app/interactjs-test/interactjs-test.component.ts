@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import interact from 'interactjs';
 import { Bevels } from 'projects/w98w/src/lib/bevel';
+import { CementClientRectDirective } from 'projects/w98w/src/lib/util/cement-client-rect.directive';
 
 @Component({
   selector: 'app-interactjs-test',
@@ -12,6 +13,8 @@ export class InteractjsTestComponent implements OnInit {
 
   readonly BEVELS = Bevels;
 
+  @ViewChild('cement', { static: true }) cementDirective!: CementClientRectDirective;
+
   @ViewChild('normal', { static: true }) normalElement!: ElementRef<HTMLElement>;
   @ViewChild('resizable', { static: true }) resizableElement!: ElementRef<HTMLElement>;
   @ViewChild('draggable', { static: true }) draggableElement!: ElementRef<HTMLElement>;
@@ -19,6 +22,8 @@ export class InteractjsTestComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.cementDirective.cement();
+
     interact(this.normalElement.nativeElement)
       .resizable({
         edges: { top: true, right: true, bottom: true, left: true },

@@ -22,6 +22,7 @@ import { MenuAnchorDirective } from './menu/menu-anchor.directive';
 import { MenuLayoutSizeObserverDirective } from './menu/menu-layout-size-observer.directive';
 import { RootCssVarsDirective } from './root-css-vars.directive';
 import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from './window/window.component';
+import { CementClientRectDirective } from './util/cement-client-rect.directive';
 
 
 
@@ -52,7 +53,8 @@ import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from
     WindowComponent,
     WindowTitleBarDirective,
     WindowMenuBarDirective,
-    Bevel8SplitSimpleHostDirective
+    Bevel8SplitSimpleHostDirective,
+    CementClientRectDirective
   ],
   imports: [
     CommonModule
@@ -82,7 +84,8 @@ import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from
     WindowTitleBarDirective,
     WindowMenuBarDirective,
     Bevel8SplitSimpleHostDirective,
-    Bevel8SplitComponent
+    Bevel8SplitComponent,
+    CementClientRectDirective
   ]
 })
 export class W98wModule { }

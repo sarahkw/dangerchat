@@ -1,4 +1,5 @@
-import { Observable, Unsubscribable } from "rxjs";
+import { map, Observable, Unsubscribable } from "rxjs";
+import { reduceUntilThenPassthrough } from "./reduce-until-then-passthrough";
 
 export function resolveContentRect(entry: ResizeObserverEntry): DOMRectReadOnly {
     // support firefox ESR, which doesn't give array
@@ -35,4 +36,34 @@ export function resizeObserver(targets: Element[]) {
             }
         };
     });
+}
+
+type ROWFA = Map<Element, DOMRectReadOnly>;
+
+export function resizeObserverWaitForAll(targets: Element[]) {
+    return resizeObserver(targets).pipe(
+        map((rof: ResizeObserverFrame) => {
+            const ret: ROWFA = new Map();
+            rof.entries.forEach(value => {
+                ret.set(value.target, rof.resolveContentRect(value));
+            });
+            return ret;
+        }),
+        reduceUntilThenPassthrough<ROWFA>(
+            (prev, curr) => {
+                if (!prev) {
+                    throw Error('assertion failure, missing prev');
+                }
+                curr.forEach((value, key) => {
+                    prev.set(key, value);
+                })
+                return prev;
+            },
+            new Map<Element, DOMRectReadOnly>(),
+            candidate => {
+                // 'probably' ok to take size equality to mean we got all the data we need
+                return !!candidate && candidate.size === targets.length;
+            }
+        )
+    );
 }
