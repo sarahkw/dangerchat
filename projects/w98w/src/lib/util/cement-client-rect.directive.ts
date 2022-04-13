@@ -12,17 +12,6 @@ function* iterateElementChildren<ElementType>(element: Element) {
   }
 }
 
-function copyValue(dr: DOMRect) {
-  return {
-    left: dr.left,
-    top: dr.top,
-    width: dr.width,
-    height: dr.height
-  }
-}
-
-type DOMCopy = ReturnType<typeof copyValue>;
-
 @Directive({
   selector: '[w98w-cement-client-rect]',
   exportAs: 'cement'
@@ -58,11 +47,11 @@ export class CementClientRectDirective implements OnDestroy {
 
     this.subscription = resizeObserverWaitForAll(targets).pipe(take(1)).subscribe(rowfa => {
 
-      const rootClientRect = copyValue(this.rootElementRef.nativeElement.getBoundingClientRect());
-      const clientRects: Map<Element, DOMCopy> = new Map();
+      const rootClientRect = this.rootElementRef.nativeElement.getBoundingClientRect();
+      const clientRects: Map<Element, DOMRect> = new Map();
 
       rowfa.forEach((_rect, element) => {
-        clientRects.set(element, copyValue(element.getBoundingClientRect()));
+        clientRects.set(element, element.getBoundingClientRect());
       });
 
       rowfa.forEach((rect, element) => {
