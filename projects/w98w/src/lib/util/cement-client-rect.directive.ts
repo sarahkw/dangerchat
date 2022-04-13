@@ -2,12 +2,12 @@ import { Directive, ElementRef, HostBinding, OnDestroy, Renderer2 } from '@angul
 import { Subscription, take } from 'rxjs';
 import { resizeObserverWaitForAll } from '../rx/resize-observer';
 
-function* iterateElementChildren<ElementType>(element: Element) {
+function* iterateElementChildren(element: Element) {
   let ptr: Element | null;
   ptr = element.firstElementChild;
 
   while (ptr) {
-    yield ptr as unknown as ElementType;
+    yield ptr;
     ptr = ptr.nextElementSibling;
   }
 }
@@ -38,7 +38,7 @@ export class CementClientRectDirective implements OnDestroy {
     this.cementedAssertionFlag = true;
 
     const targets: Element[] = [];
-    for (const child of iterateElementChildren<HTMLElement>(this.rootElementRef.nativeElement)) {
+    for (const child of iterateElementChildren(this.rootElementRef.nativeElement)) {
       targets.push(child);
     }
 
