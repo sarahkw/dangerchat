@@ -54,15 +54,15 @@ export function resizeObserverWaitForAll(targets: Element[]) {
                 if (!prev) {
                     throw Error('assertion failure, missing prev');
                 }
-                curr.forEach((value, key) => {
-                    prev.set(key, value);
+                curr.forEach((valueRect, keyElement) => {
+                    prev.set(keyElement, valueRect);
                 })
                 return prev;
             },
             new Map<Element, DOMRectReadOnly>(),
-            candidate => {
+            candidateROWFA => {
                 // 'probably' ok to take size equality to mean we got all the data we need
-                return !!candidate && candidate.size === targets.length;
+                return !!candidateROWFA && candidateROWFA.size === targets.length;
             }
         )
     );

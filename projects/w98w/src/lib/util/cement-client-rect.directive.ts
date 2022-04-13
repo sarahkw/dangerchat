@@ -43,10 +43,10 @@ export class CementClientRectDirective implements OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  private cemented = false;
+  private cementedAssertionFlag = false;  // it's just weird to do it multiple times. maybe it's ok though? idk.
   cement() {
-    console.assert(!this.cemented);
-    this.cemented = true;
+    console.assert(!this.cementedAssertionFlag);
+    this.cementedAssertionFlag = true;
 
     const targets: Element[] = [];
     for (const child of iterateElementChildren<HTMLElement>(this.rootElementRef.nativeElement)) {
@@ -58,7 +58,7 @@ export class CementClientRectDirective implements OnDestroy {
 
     this.subscription = resizeObserverWaitForAll(targets).pipe(take(1)).subscribe(rowfa => {
 
-      const rootRect = copyValue(this.rootElementRef.nativeElement.getBoundingClientRect());
+      const rootClientRect = copyValue(this.rootElementRef.nativeElement.getBoundingClientRect());
       const clientRects: Map<Element, DOMCopy> = new Map();
 
       rowfa.forEach((_rect, element) => {
@@ -71,8 +71,8 @@ export class CementClientRectDirective implements OnDestroy {
         if (clientRect) {
           this.renderer.setStyle(element, 'position', 'absolute');
           this.renderer.setStyle(element, 'margin', 0);
-          this.renderer.setStyle(element, 'top', `${clientRect.top - rootRect.top}px`);
-          this.renderer.setStyle(element, 'left', `${clientRect.left - rootRect.left}px`);
+          this.renderer.setStyle(element, 'top', `${clientRect.top - rootClientRect.top}px`);
+          this.renderer.setStyle(element, 'left', `${clientRect.left - rootClientRect.left}px`);
           this.renderer.setStyle(element, 'width', `${rect.width}px`);
           this.renderer.setStyle(element, 'height', `${rect.height}px`);
         }
