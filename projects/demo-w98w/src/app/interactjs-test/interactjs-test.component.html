@@ -1,9 +1,7 @@
 <h2>InteractJS Test</h2>
 
 <style>
-    .interactable {
-        background-color: var(--w98w-root-widget-background-color);
-
+    w98w-window {
         width: 20em;
         height: 5em;
 
@@ -27,22 +25,20 @@
 
     <h3>Normal window</h3>
 
-    <div class="interactable" #normal [w98w-bevel-8split-simple-host]="BEVELS.WINDOW" [simpleHostNoPositionRelative]="true">
-        <w98w-bevel-8split></w98w-bevel-8split>
-        <div class="modelTitleBar"></div>
-    </div>
+    <w98w-window>
+        <div w98w-window-title-bar class="modelTitleBar"></div>
+    </w98w-window>
 
     <h3>Resize mode</h3>
 
-    <div class="interactable" #resizable [w98w-bevel-8split-simple-host]="BEVELS.WINDOW" [simpleHostNoPositionRelative]="true">
-        <w98w-bevel-8split></w98w-bevel-8split>
-        <div class="modelTitleBar"></div>
-    </div>
+    <w98w-window>
+        <div w98w-window-title-bar class="modelTitleBar"></div>
+    </w98w-window>
 
     <h3>Drag mode</h3>
 
-    <div class="interactable" #draggable [w98w-bevel-8split-simple-host]="BEVELS.WINDOW" [simpleHostNoPositionRelative]="true">
-        <w98w-bevel-8split></w98w-bevel-8split>
-        <div class="modelTitleBar"></div>
-    </div>
+    <w98w-window>
+        <div w98w-window-title-bar class="modelTitleBar"></div>
+    </w98w-window>
+
 </div>

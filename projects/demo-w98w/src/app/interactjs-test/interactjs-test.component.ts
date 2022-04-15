@@ -24,37 +24,37 @@ export class InteractjsTestComponent implements OnInit {
   ngOnInit(): void {
     this.cementDirective.cement();
 
-    interact(this.normalElement.nativeElement)
-      .resizable({
-        edges: { top: true, right: true, bottom: true, left: true },
-        listeners: {
-          move(event) {
-            console.log(event);
-          }
-        }
-      });
+    // interact(this.normalElement.nativeElement)
+    //   .resizable({
+    //     edges: { top: true, right: true, bottom: true, left: true },
+    //     listeners: {
+    //       move(event) {
+    //         console.log(event);
+    //       }
+    //     }
+    //   });
 
-    interact(this.resizableElement.nativeElement)
-      .resizable({
-        edges: { top: true, right: true, bottom: true, left: true },
-        listeners: {
-          move(event) {
-            console.log(event);
-          }
-        }
-      });
+    // interact(this.resizableElement.nativeElement)
+    //   .resizable({
+    //     edges: { top: true, right: true, bottom: true, left: true },
+    //     listeners: {
+    //       move(event) {
+    //         console.log(event);
+    //       }
+    //     }
+    //   });
 
-    interact(this.draggableElement.nativeElement)
-      .draggable({
-        listeners: {
-          start(event) {
-            console.log('start', event);
-          },
-          move(event) {
-            console.log('move', event);
-          }
-        }
-      });
+    // interact(this.draggableElement.nativeElement)
+    //   .draggable({
+    //     listeners: {
+    //       start(event) {
+    //         console.log('start', event);
+    //       },
+    //       move(event) {
+    //         console.log('move', event);
+    //       }
+    //     }
+    //   });
   }
 
 }
