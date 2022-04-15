@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 
