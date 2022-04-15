@@ -9,7 +9,6 @@ import { PixelImageService } from '../pixel-image.service';
 import { ROOTVARS } from '../root-css-vars.directive';
 import { syncGetOne } from '../rx/sync-get';
 import { StyleInjector } from '../style-injector';
-import { coalesce2 } from '../util/coalesce';
 import { MenuContext } from './menu-context';
 import { menuCalculateSelf, MenuContinuation, menuCalculateNext } from './menu-calculation';
 import { OnSubMenuClose } from './menu-host/menu-host.component';
@@ -151,7 +150,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit, AfterCon
     const indexMap = syncGetOne(this.childCssIndexes$);
     console.assert(!!indexMap);
     if (indexMap) {
-      this.hbRulerGridIndex = coalesce2<number | 'initial'>(indexMap.get(fromItem), 'initial');
+      this.hbRulerGridIndex = indexMap.get(fromItem) ?? 'initial';
     }
 
     menuContext.appendMenu(
