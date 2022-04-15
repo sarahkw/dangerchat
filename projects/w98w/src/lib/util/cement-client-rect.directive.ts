@@ -42,7 +42,7 @@ export class CementClientRectDirective implements OnDestroy {
       targets.push(child);
     }
 
-    console.assert(!!this.subscription);
+    console.assert(!this.subscription);
     this.subscription?.unsubscribe();
 
     this.subscription = resizeObserverWaitForAll(targets).pipe(take(1)).subscribe(rowfa => {
