@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import interact from 'interactjs';
 import { Bevels } from 'projects/w98w/src/lib/bevel';
 import { CementClientRectDirective } from 'projects/w98w/src/lib/util/cement-client-rect.directive';
+import { asapScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-interactjs-test',
@@ -22,7 +23,8 @@ export class InteractjsTestComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.cementDirective.cement();
+    // TODO Fix this hack
+    asapScheduler.schedule(() => this.cementDirective.cement());
 
     // interact(this.normalElement.nativeElement)
     //   .resizable({
