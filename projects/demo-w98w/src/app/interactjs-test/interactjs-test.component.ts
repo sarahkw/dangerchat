@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import interact from 'interactjs';
 import { Bevels } from 'projects/w98w/src/lib/bevel';
 import { CementClientRectDirective } from 'projects/w98w/src/lib/util/cement-client-rect.directive';
+import { MoveResizeMode } from 'projects/w98w/src/lib/window/window.component';
 import { asapScheduler } from 'rxjs';
 
 @Component({
@@ -13,6 +14,7 @@ import { asapScheduler } from 'rxjs';
 export class InteractjsTestComponent implements OnInit {
 
   readonly BEVELS = Bevels;
+  readonly MOVERESIZEMODE = MoveResizeMode;
 
   @ViewChild('cement', { static: true }) cementDirective!: CementClientRectDirective;
 

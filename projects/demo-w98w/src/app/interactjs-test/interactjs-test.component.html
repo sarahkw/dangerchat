@@ -29,16 +29,15 @@
         <div w98w-window-title-bar class="modelTitleBar"></div>
     </w98w-window>
 
+    <h3>Move mode</h3>
+
+    <w98w-window [moveResizeMode]="MOVERESIZEMODE.Move">
+        <div w98w-window-title-bar class="modelTitleBar"></div>
+    </w98w-window>
+
     <h3>Resize mode</h3>
 
-    <w98w-window>
+    <w98w-window [moveResizeMode]="MOVERESIZEMODE.Resize">
         <div w98w-window-title-bar class="modelTitleBar"></div>
     </w98w-window>
-
-    <h3>Drag mode</h3>
-
-    <w98w-window>
-        <div w98w-window-title-bar class="modelTitleBar"></div>
-    </w98w-window>
-
 </div>

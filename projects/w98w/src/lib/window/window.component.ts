@@ -22,7 +22,7 @@ export class WindowMenuBarDirective {
   };
 }
 
-enum MoveResizeMode {
+export enum MoveResizeMode {
   None = 0,
   Move,
   Resize
@@ -63,7 +63,7 @@ export class WindowComponent implements Floatable {
   @ViewChild('menuWindow') menuWindow!: MenuTemplateDirective;
 
   readonly enumMoveResizeMode = MoveResizeMode;
-  moveResizeMode = MoveResizeMode.None;
+  @Input() moveResizeMode = MoveResizeMode.None; // is an input for testing purposes only
 
   readonly WINDOW_BEVEL = Bevels.WINDOW;
 
