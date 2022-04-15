@@ -29,8 +29,8 @@ enum MoveResizeMode {
 }
 
 export interface Floatable {
-  set top(value: number | undefined);
   set left(value: number | undefined);
+  set top(value: number | undefined);
   set width(value: number | undefined);
   set height(value: number | undefined);
 

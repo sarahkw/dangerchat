@@ -73,13 +73,13 @@ export class CementClientRectDirective implements OnDestroy {
 
           const floatable = elementToFloatable.get(element);
           if (floatable) {
-            floatable.top = clientRect.top - rootClientRect.top;
             floatable.left = clientRect.left - rootClientRect.left;
+            floatable.top = clientRect.top - rootClientRect.top;
             floatable.width = rect.width;
             floatable.height = rect.height;
           } else {
-            this.renderer.setStyle(element, 'top', `${clientRect.top - rootClientRect.top}px`);
             this.renderer.setStyle(element, 'left', `${clientRect.left - rootClientRect.left}px`);
+            this.renderer.setStyle(element, 'top', `${clientRect.top - rootClientRect.top}px`);
             this.renderer.setStyle(element, 'width', `${rect.width}px`);
             this.renderer.setStyle(element, 'height', `${rect.height}px`);
           }
