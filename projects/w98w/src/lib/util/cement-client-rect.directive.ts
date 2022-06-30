@@ -37,6 +37,7 @@ export class CementClientRectDirective implements OnDestroy {
   }
 
   private cementedAssertionFlag = false;  // it's just weird to do it multiple times. maybe it's ok though? idk.
+
   cement() {
     console.assert(!this.cementedAssertionFlag);
     this.cementedAssertionFlag = true;
