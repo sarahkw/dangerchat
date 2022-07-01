@@ -20,6 +20,7 @@ import { PopupTestComponent } from './popup-test/popup-test.component';
 import { TestSharedLibComponent } from './test-shared-lib/test-shared-lib.component';
 import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
+import { LauncherTestComponent } from './launcher-test/launcher-test.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { InteractjsTestComponent } from './interactjs-test/interactjs-test.compo
     PopupTestComponent,
     TestSharedLibComponent,
     WindowTestComponent,
-    InteractjsTestComponent
+    InteractjsTestComponent,
+    LauncherTestComponent
   ],
   imports: [
     BrowserModule,
