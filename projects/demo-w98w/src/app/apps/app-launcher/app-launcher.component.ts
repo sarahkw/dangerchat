@@ -18,6 +18,9 @@ export class AppLauncherComponent implements OnInit {
     setTimeout(() => {
       this.screen.contentParent.viewContainer.createEmbeddedView(this.wnd);
     }, 1000);
+    setTimeout(() => {
+      this.screen.contentParent.viewContainer.createEmbeddedView(this.wnd);
+    }, 2000);
   }
 
 }
