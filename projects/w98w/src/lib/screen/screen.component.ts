@@ -14,7 +14,6 @@ export class ScreenComponent {
   // pass to sliding screen
   @Input() unfixedHeight = false;
 
-  @Input() slidingScreenStyle: Style = null;
   @Input() slidingScreenMainContentStyle: Style = null;
 
   constructor(public menuService: MenuService) { }
