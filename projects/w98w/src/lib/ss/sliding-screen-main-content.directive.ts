@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, OnDestroy, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostBinding, OnDestroy, Renderer2, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SlidingScreenComponent } from './sliding-screen/sliding-screen.component';
 
@@ -20,7 +20,12 @@ export class SlidingScreenMainContentDirective implements OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(ss: SlidingScreenComponent, public element: ElementRef<HTMLElement>, private renderer: Renderer2) {
+  constructor(
+    ss: SlidingScreenComponent,
+    public element: ElementRef<HTMLElement>,
+    private renderer: Renderer2,
+    public viewContainer: ViewContainerRef
+    ) {
 
     // screen should have its own stacking context because we don't want anything on the screen to draw
     // above any overlays

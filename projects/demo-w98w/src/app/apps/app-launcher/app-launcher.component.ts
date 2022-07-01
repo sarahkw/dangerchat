@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ScreenComponent } from 'projects/w98w/src/lib/screen/screen.component';
 
 @Component({
   selector: 'app-app-launcher',
@@ -7,11 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppLauncherComponent implements OnInit {
 
+  @Input() screen!: ScreenComponent;
+
+  @ViewChild('overflowWndTemp', {static: true}) wnd!: TemplateRef<unknown>;
+
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.screen.contentParent.viewContainer.createEmbeddedView(this.wnd);
+    }, 1000);
   }
-
-  // be able to setTimeout and add the launcher window "soon"
 
 }
