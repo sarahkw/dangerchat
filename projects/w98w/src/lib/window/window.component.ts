@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { Subscription } from 'rxjs';
@@ -48,7 +48,7 @@ export const floatableToken = new InjectionToken<Floatable>("Floatable");
   styleUrls: ['./window.component.scss'],
   providers: [{ provide: floatableToken, useExisting: forwardRef(() => WindowComponent) }]
 })
-export class WindowComponent implements OnDestroy, Floatable {
+export class WindowComponent implements AfterContentChecked, OnDestroy, Floatable {
 
   @Input() drawFrame = true;  // if maximized this will be false
   @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
@@ -70,26 +70,56 @@ export class WindowComponent implements OnDestroy, Floatable {
 
   readonly WINDOW_BEVEL = Bevels.WINDOW;
 
-  private moveDivSubscription?: Subscription;
-  private moveDivElement?: ElementRef<HTMLElement>;
-  @ViewChild('moveDiv') set moveDiv(v: ElementRef<HTMLElement> | undefined) {
+  ///////////////////////////////////////////////////
 
-    if (elementRefIsSame(v, this.moveDivElement)) {
+  private mrSubscription?: Subscription;
+  private mrElement?: ElementRef<HTMLElement>;
+
+  @ViewChild('moveDiv') mrMoveDiv: ElementRef<HTMLElement> | undefined;
+  @ViewChild('resizeDiv') mrResizeDiv: ElementRef<HTMLElement> | undefined;
+
+  private mrAfterContentChecked() {
+    let realizedMoveResizeMode: MoveResizeMode = MoveResizeMode.None;
+    let currentElement: typeof this.mrMoveDiv;
+
+    if (this.mrMoveDiv) {
+      currentElement = this.mrMoveDiv;
+      realizedMoveResizeMode = MoveResizeMode.Move;
+    } else if (this.mrResizeDiv) {
+      currentElement = this.mrResizeDiv;
+      realizedMoveResizeMode = MoveResizeMode.Resize;
+    } else {
+      currentElement = undefined;
+      realizedMoveResizeMode = MoveResizeMode.None;
+    }
+
+    if (elementRefIsSame(currentElement, this.mrElement)) {
       return;
     }
-    this.moveDivElement = v;
+    this.mrElement = currentElement;
 
-    this.moveDivSubscription && this.moveDivSubscription.unsubscribe();
+    this.mrSubscription?.unsubscribe();
 
     const thiz = this;
 
-    if (v) {
-      this.moveDivSubscription = rxInteract(v.nativeElement, i => {
+    if (currentElement) {
+      this.mrSubscription = rxInteract(currentElement.nativeElement, i => {
         i.draggable({
           listeners: {
             move(event) {
-              thiz.left += event.dx;
-              thiz.top += event.dy;
+              switch (realizedMoveResizeMode) {
+                case MoveResizeMode.None: break;
+                case MoveResizeMode.Move: {
+                  thiz.left += event.dx;
+                  thiz.top += event.dy;
+                  break;
+                }
+                case MoveResizeMode.Resize: {
+                  thiz.width += event.dx;
+                  thiz.height += event.dy;
+                  break;
+                }
+              }
             },
             end(_event) {
               thiz.moveResizeMode = MoveResizeMode.None;
@@ -102,10 +132,16 @@ export class WindowComponent implements OnDestroy, Floatable {
     }
   }
 
+  ///////////////////////////////////////////////////
+
   constructor(public elementRef: ElementRef<HTMLElement>) {}
 
+  ngAfterContentChecked(): void {
+    this.mrAfterContentChecked();
+  }
+
   ngOnDestroy(): void {
-    this.moveDivSubscription?.unsubscribe();
+    this.mrSubscription?.unsubscribe();
   }
 
   doneText() {
