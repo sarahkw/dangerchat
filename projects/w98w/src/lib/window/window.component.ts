@@ -1,6 +1,9 @@
-import { Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
+import { Subscription } from 'rxjs';
+import { rxInteract } from '../rx/rx-interact';
+import { elementRefIsSame } from '../util/element-ref-is-same';
 
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
@@ -45,7 +48,7 @@ export const floatableToken = new InjectionToken<Floatable>("Floatable");
   styleUrls: ['./window.component.scss'],
   providers: [{ provide: floatableToken, useExisting: forwardRef(() => WindowComponent) }]
 })
-export class WindowComponent implements Floatable {
+export class WindowComponent implements OnDestroy, Floatable {
 
   @Input() drawFrame = true;  // if maximized this will be false
   @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
@@ -67,7 +70,43 @@ export class WindowComponent implements Floatable {
 
   readonly WINDOW_BEVEL = Bevels.WINDOW;
 
+  private moveDivSubscription?: Subscription;
+  private moveDivElement?: ElementRef<HTMLElement>;
+  @ViewChild('moveDiv') set moveDiv(v: ElementRef<HTMLElement> | undefined) {
+
+    if (elementRefIsSame(v, this.moveDivElement)) {
+      return;
+    }
+    this.moveDivElement = v;
+
+    this.moveDivSubscription && this.moveDivSubscription.unsubscribe();
+
+    const thiz = this;
+
+    if (v) {
+      this.moveDivSubscription = rxInteract(v.nativeElement, i => {
+        i.draggable({
+          listeners: {
+            move(event) {
+              thiz.left += event.dx;
+              thiz.top += event.dy;
+            },
+            end(_event) {
+              thiz.moveResizeMode = MoveResizeMode.None;
+            }
+          }
+        });
+
+        i.preventDefault('always'); // firefox esr would select text without this
+      }).subscribe();
+    }
+  }
+
   constructor(public elementRef: ElementRef<HTMLElement>) {}
+
+  ngOnDestroy(): void {
+    this.moveDivSubscription?.unsubscribe();
+  }
 
   doneText() {
     switch (this.moveResizeMode) {

@@ -52,6 +52,8 @@
         max-height: var(--w98w-root-move-resize-hit-area-height);
         user-select: none;
     }
+
+    touch-action: none;
 }
 
 .w98w-move-resize-overlay-resize {

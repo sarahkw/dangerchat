@@ -8,36 +8,30 @@
         margin: 1em 0;
     }
 
-    .modelTitleBar {
-        background-color: var(--w98w-root-title-bar-active-color);
-        height: 1.3em;
-    }
-
     h3 {
         display: inline-block;
         margin: 0;
     }
 </style>
 
-<div
-    style="height: 600px; max-height: 90vh; background-color: var(--w98w-root-color-desktop-debug);"
-    w98w-cement-client-rect #cement="cement">
+<w98w-screen [unfixedHeight]="false" [slidingScreenStyle]="'height: 600px; max-height: 90vh;'">
 
-    <h3>Normal window</h3>
+    <div style="height: 100%; background-color: var(--w98w-root-color-desktop-debug);" w98w-cement-client-rect
+        #cement="cement">
 
-    <w98w-window>
-        <div w98w-window-title-bar class="modelTitleBar"></div>
-    </w98w-window>
+        <h3>Move/Resize</h3>
+        <w98w-window [drawFrame]="true">
+            <w98w-titlebar w98w-window-title-bar label="Generic Window" iconSrc="/assets/w98w/vbicon.png">
+            </w98w-titlebar>
+            <menu w98w-window-menu-bar w98w-menu-bar>
+                <li w98w-menu-bar-item [autoMenu]="library.menuTemp">File</li>
+                <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Edit</li>
+                <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Help</li>
+            </menu>
+            <p>window works!</p>
+        </w98w-window>
+    </div>
 
-    <h3>Move mode</h3>
+    <app-test-shared-lib #library></app-test-shared-lib>
 
-    <w98w-window [moveResizeMode]="MOVERESIZEMODE.Move">
-        <div w98w-window-title-bar class="modelTitleBar"></div>
-    </w98w-window>
-
-    <h3>Resize mode</h3>
-
-    <w98w-window [moveResizeMode]="MOVERESIZEMODE.Resize">
-        <div w98w-window-title-bar class="modelTitleBar"></div>
-    </w98w-window>
-</div>
+</w98w-screen>
