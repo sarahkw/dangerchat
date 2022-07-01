@@ -1,3 +1,5 @@
+// SLATED FOR REMOVAL, NO LONGER USED AS OF THIS WRITING
+
 import { ApplicationRef, ContentChildren, Directive, ElementRef, HostBinding, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription, take } from 'rxjs';
 import { resizeObserverWaitForAll } from '../rx/resize-observer';

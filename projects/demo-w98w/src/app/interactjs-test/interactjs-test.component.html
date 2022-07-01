@@ -4,23 +4,14 @@
     w98w-window {
         width: 20em;
         height: 5em;
-
-        margin: 1em 0;
-    }
-
-    h3 {
-        display: inline-block;
-        margin: 0;
     }
 </style>
 
-<w98w-screen [unfixedHeight]="false" [slidingScreenStyle]="'height: 600px; max-height: 90vh;'">
+<w98w-screen [unfixedHeight]="false"
+    [slidingScreenStyle]="'height: 600px; max-height: 90vh;'"
+    [slidingScreenMainContentStyle]="'background-color: var(--w98w-root-color-desktop-debug); position: relative;'">
 
-    <div style="height: 100%; background-color: var(--w98w-root-color-desktop-debug);" w98w-cement-client-rect
-        #cement="cement">
-
-        <h3>Move/Resize</h3>
-        <w98w-window [drawFrame]="true">
+        <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="0" [absTop]="0">
             <w98w-titlebar w98w-window-title-bar label="Generic Window" iconSrc="/assets/w98w/vbicon.png">
             </w98w-titlebar>
             <menu w98w-window-menu-bar w98w-menu-bar>
@@ -30,7 +21,6 @@
             </menu>
             <p>window works!</p>
         </w98w-window>
-    </div>
 
     <app-test-shared-lib #library></app-test-shared-lib>
 

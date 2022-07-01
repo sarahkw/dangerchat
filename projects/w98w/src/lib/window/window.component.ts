@@ -53,8 +53,9 @@ export class WindowComponent implements AfterContentChecked, OnDestroy, Floatabl
   @Input() drawFrame = true;  // if maximized this will be false
   @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
 
-  @HostBinding('style.left.px') left: number | undefined;
-  @HostBinding('style.top.px') top: number | undefined;
+  // left and top need to go through us because moving/resizing is delta those
+  @Input('absLeft') @HostBinding('style.left.px') left: number | undefined;
+  @Input('absTop') @HostBinding('style.top.px') top: number | undefined;
   @HostBinding('style.width.px') width: number | undefined;
   @HostBinding('style.height.px') height: number | undefined;
 
