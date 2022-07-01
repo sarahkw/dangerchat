@@ -1,4 +1,4 @@
-<ng-template #overflowWndTemp>
+<ng-template #appLauncherMain>
 
     <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="0" [absTop]="0">
         <w98w-titlebar w98w-window-title-bar label="Generic Window" iconSrc="/assets/w98w/vbicon.png">
@@ -10,6 +10,23 @@
         </menu>
         <button w98w-wbutton (click)="launchHello()">launch hello</button>
 
+    </w98w-window>
+
+    <app-test-shared-lib #library></app-test-shared-lib>
+
+</ng-template>
+
+<ng-template #appHelloMain>
+
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="0" [absTop]="0">
+        <w98w-titlebar w98w-window-title-bar label="Hello" iconSrc="/assets/w98w/vbicon.png">
+        </w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">File</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Edit</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Help</li>
+        </menu>
+        <p>Hello</p>
     </w98w-window>
 
     <app-test-shared-lib #library></app-test-shared-lib>

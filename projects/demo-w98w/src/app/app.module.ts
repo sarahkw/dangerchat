@@ -22,7 +22,6 @@ import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
 import { LauncherTestComponent } from './launcher-test/launcher-test.component';
 import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component';
-import { HelloAppComponent } from './apps/hello-app/hello-app.component';
 
 @NgModule({
   declarations: [
@@ -42,8 +41,7 @@ import { HelloAppComponent } from './apps/hello-app/hello-app.component';
     WindowTestComponent,
     InteractjsTestComponent,
     LauncherTestComponent,
-    AppLauncherComponent,
-    HelloAppComponent
+    AppLauncherComponent
   ],
   imports: [
     BrowserModule,
