@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ScreenComponent } from 'projects/w98w/src/lib/screen/screen.component';
+import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'app-app-launcher',
@@ -8,22 +7,20 @@ import { ScreenComponent } from 'projects/w98w/src/lib/screen/screen.component';
 })
 export class AppLauncherComponent implements OnInit {
 
-  @Input() screen!: ScreenComponent;
-
   @ViewChild('appLauncherMain', {static: true}) wndAppLauncherMain!: TemplateRef<unknown>;
 
   @ViewChild('appHelloMain', {static: true}) wndAppHelloMain!: TemplateRef<unknown>;
 
-  constructor() { }
+  constructor(private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.screen.contentParent.viewContainer.createEmbeddedView(this.wndAppLauncherMain);
+      this.viewContainerRef.createEmbeddedView(this.wndAppLauncherMain);
     }, 500);
   }
 
   launchHello() {
-    this.screen.contentParent.viewContainer.createEmbeddedView(this.wndAppHelloMain);
+    this.viewContainerRef.createEmbeddedView(this.wndAppHelloMain);
   }
 
 }

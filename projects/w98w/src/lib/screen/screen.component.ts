@@ -1,6 +1,5 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MenuService } from '../menu/menu.service';
-import { SlidingScreenMainContentDirective } from '../ss/sliding-screen-main-content.directive';
 
 type Style = {[key: string]: string} | string | null;
 
@@ -17,8 +16,6 @@ export class ScreenComponent {
 
   @Input() slidingScreenStyle: Style = null;
   @Input() slidingScreenMainContentStyle: Style = null;
-
-  @ViewChild(SlidingScreenMainContentDirective, {static: true}) contentParent!: SlidingScreenMainContentDirective;
 
   constructor(public menuService: MenuService) { }
 
