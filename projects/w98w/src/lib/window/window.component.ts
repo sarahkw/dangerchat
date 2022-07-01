@@ -104,28 +104,43 @@ export class WindowComponent implements AfterContentChecked, OnDestroy, Floatabl
 
     if (currentElement) {
       this.mrSubscription = rxInteract(currentElement.nativeElement, i => {
-        i.draggable({
-          listeners: {
-            move(event) {
-              switch (realizedMoveResizeMode) {
-                case MoveResizeMode.None: break;
-                case MoveResizeMode.Move: {
+
+        switch (realizedMoveResizeMode) {
+          case MoveResizeMode.None: break;
+          case MoveResizeMode.Move: {
+            i.draggable({
+              listeners: {
+                move(event) {
                   thiz.left += event.dx;
                   thiz.top += event.dy;
-                  break;
-                }
-                case MoveResizeMode.Resize: {
-                  thiz.width += event.dx;
-                  thiz.height += event.dy;
-                  break;
+                },
+                end(_event) {
+                  thiz.moveResizeMode = MoveResizeMode.None;
                 }
               }
-            },
-            end(_event) {
-              thiz.moveResizeMode = MoveResizeMode.None;
-            }
+            });
+            break;
           }
-        });
+          case MoveResizeMode.Resize: {
+            i.resizable({
+              edges: { bottom: true, right: true, left: true, top: true },
+              listeners: {
+                move(event) {
+                  thiz.width = event.rect.width;
+                  thiz.height = event.rect.height;
+                  thiz.left += event.deltaRect.left;
+                  thiz.top += event.deltaRect.top;
+                },
+                end(_event) {
+                  thiz.moveResizeMode = MoveResizeMode.None;
+                }
+              }
+            });
+            break;
+          }
+        }
+
+
 
         i.preventDefault('always'); // firefox esr would select text without this
       }).subscribe();

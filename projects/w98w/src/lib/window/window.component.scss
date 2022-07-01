@@ -65,4 +65,6 @@
         max-height: var(--w98w-root-move-resize-hit-area-height);
         user-select: none;
     }
+
+    touch-action: none;
 }
