@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { Subscription } from 'rxjs';
@@ -103,55 +103,65 @@ export class WindowComponent implements AfterContentChecked, OnDestroy, Floatabl
     const thiz = this;
 
     if (currentElement) {
-      this.mrSubscription = rxInteract(currentElement.nativeElement, i => {
+      this.ngZone.runOutsideAngular(() => {
+        this.mrSubscription = rxInteract(currentElement!.nativeElement, i => {
 
-        switch (realizedMoveResizeMode) {
-          case MoveResizeMode.None: break;
-          case MoveResizeMode.Move: {
-            i.draggable({
-              listeners: {
-                move(event) {
-                  thiz.left += event.dx;
-                  thiz.top += event.dy;
-                },
-                end(_event) {
-                  thiz.moveResizeMode = MoveResizeMode.None;
+          switch (realizedMoveResizeMode) {
+            case MoveResizeMode.None: break;
+            case MoveResizeMode.Move: {
+              i.draggable({
+                listeners: {
+                  move(event) {
+                    thiz.ngZone.run(() => {
+                      thiz.left += event.dx;
+                      thiz.top += event.dy;
+                    });
+                  },
+                  end(_event) {
+                    thiz.ngZone.run(() => {
+                      thiz.moveResizeMode = MoveResizeMode.None;
+                    });
+                  }
                 }
-              }
-            });
-            break;
-          }
-          case MoveResizeMode.Resize: {
-            i.resizable({
-              edges: { bottom: true, right: true, left: true, top: true },
-              listeners: {
-                move(event) {
-                  thiz.width = event.rect.width;
-                  thiz.height = event.rect.height;
-                  thiz.left += event.deltaRect.left;
-                  thiz.top += event.deltaRect.top;
-                },
-                end(_event) {
-                  thiz.moveResizeMode = MoveResizeMode.None;
+              });
+              break;
+            }
+            case MoveResizeMode.Resize: {
+              i.resizable({
+                edges: { bottom: true, right: true, left: true, top: true },
+                listeners: {
+                  move(event) {
+                    thiz.ngZone.run(() => {
+                      thiz.width = event.rect.width;
+                      thiz.height = event.rect.height;
+                      thiz.left += event.deltaRect.left;
+                      thiz.top += event.deltaRect.top;
+                    });
+                  },
+                  end(_event) {
+                    thiz.ngZone.run(() => {
+                      thiz.moveResizeMode = MoveResizeMode.None;
+                    });
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
+            }
           }
-        }
-
-
-
-        i.preventDefault('always'); // firefox esr would select text without this
-      }).subscribe();
+          i.preventDefault('always'); // firefox esr would select text without this
+        }).subscribe();
+      });
     }
   }
 
   ///////////////////////////////////////////////////
 
-  constructor(public elementRef: ElementRef<HTMLElement>) {}
+  constructor(public elementRef: ElementRef<HTMLElement>, private ngZone: NgZone) {}
 
   ngAfterContentChecked(): void {
+    // This is to test that using interactjs isn't causing change detection even when not interacting.
+    //console.info('acc');
+
     this.mrAfterContentChecked();
   }
 
