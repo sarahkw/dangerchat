@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ScreenComponent } from 'projects/w98w/src/lib/screen/screen.component';
+import { HelloAppComponent } from '../hello-app/hello-app.component';
 
 @Component({
   selector: 'app-app-launcher',
@@ -17,10 +18,13 @@ export class AppLauncherComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.screen.contentParent.viewContainer.createEmbeddedView(this.wnd);
-    }, 1000);
-    setTimeout(() => {
-      this.screen.contentParent.viewContainer.createEmbeddedView(this.wnd);
-    }, 2000);
+    }, 500);
+  }
+
+  launchHello() {
+    const helloComponent = this.screen.contentParent.viewContainer.createComponent(HelloAppComponent);
+    helloComponent.instance.screen = this.screen;
+    this.screen.contentParent.viewContainer.createEmbeddedView(helloComponent.instance.wnd);
   }
 
 }
