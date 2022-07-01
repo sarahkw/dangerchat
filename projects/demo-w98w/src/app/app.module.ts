@@ -21,6 +21,7 @@ import { TestSharedLibComponent } from './test-shared-lib/test-shared-lib.compon
 import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
 import { LauncherTestComponent } from './launcher-test/launcher-test.component';
+import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LauncherTestComponent } from './launcher-test/launcher-test.component';
     TestSharedLibComponent,
     WindowTestComponent,
     InteractjsTestComponent,
-    LauncherTestComponent
+    LauncherTestComponent,
+    AppLauncherComponent
   ],
   imports: [
     BrowserModule,
