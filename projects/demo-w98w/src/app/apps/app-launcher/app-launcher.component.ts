@@ -11,6 +11,7 @@ export class AppLauncherComponent implements OnInit {
 
   @ViewChild('appHelloMain', {static: true}) wndAppHelloMain!: TemplateRef<unknown>;
 
+  readonly demo_text = "!";
   count = 1;
 
   constructor(private viewContainerRef: ViewContainerRef) { }
