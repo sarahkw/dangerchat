@@ -16,7 +16,7 @@
 
 </ng-template>
 
-<ng-template #appHelloMain>
+<ng-template #appHelloMain let-context>
 
     <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5">
         <w98w-titlebar w98w-window-title-bar label="Hello" iconSrc="/assets/w98w/vbicon.png">
@@ -26,7 +26,7 @@
             <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Edit</li>
             <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Help</li>
         </menu>
-        <p>Hello</p>
+        <p>Hello {{ context }}.</p>
     </w98w-window>
 
     <app-test-shared-lib #library></app-test-shared-lib>

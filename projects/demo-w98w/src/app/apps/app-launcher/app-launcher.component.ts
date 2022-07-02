@@ -11,6 +11,8 @@ export class AppLauncherComponent implements OnInit {
 
   @ViewChild('appHelloMain', {static: true}) wndAppHelloMain!: TemplateRef<unknown>;
 
+  count = 1;
+
   constructor(private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
@@ -20,7 +22,8 @@ export class AppLauncherComponent implements OnInit {
   }
 
   launchHello() {
-    this.viewContainerRef.createEmbeddedView(this.wndAppHelloMain);
+    // https://stackoverflow.com/a/42421087
+    this.viewContainerRef.createEmbeddedView(this.wndAppHelloMain, {$implicit: this.count++});
   }
 
 }
