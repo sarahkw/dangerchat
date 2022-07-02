@@ -3,5 +3,10 @@
     [slidingScreenMainContentStyle]="slidingScreenMainContentStyle"
     >
 
-    <ng-content></ng-content>
+    <div class="docked-host">
+        <div class="dock"></div>
+        <div class="desktop">
+            <ng-content></ng-content>
+        </div>
+    </div>
 </w98w-screen>
