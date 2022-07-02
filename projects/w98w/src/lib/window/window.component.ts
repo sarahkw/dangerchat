@@ -169,15 +169,4 @@ export class WindowComponent implements AfterContentChecked, OnDestroy, Floatabl
   ngOnDestroy(): void {
     this.mrSubscription?.unsubscribe();
   }
-
-  doneText() {
-    switch (this.moveResizeMode) {
-      case MoveResizeMode.Move: return "Done moving";
-      case MoveResizeMode.Resize: return "Done resizing";
-      default: {
-        console.assert(false);
-        return "";
-      }
-    }
-  }
 }
