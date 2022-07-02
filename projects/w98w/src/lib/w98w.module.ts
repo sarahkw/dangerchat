@@ -24,6 +24,7 @@ import { RootCssVarsDirective } from './root-css-vars.directive';
 import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from './window/window.component';
 import { CementClientRectDirective } from './util/cement-client-rect.directive';
 import { DesktopComponent } from './desktop/desktop.component';
+import { TaskbarComponent } from './taskbar/taskbar.component';
 
 
 
@@ -56,7 +57,8 @@ import { DesktopComponent } from './desktop/desktop.component';
     WindowMenuBarDirective,
     Bevel8SplitSimpleHostDirective,
     CementClientRectDirective,
-    DesktopComponent
+    DesktopComponent,
+    TaskbarComponent
   ],
   imports: [
     CommonModule
