@@ -3,7 +3,9 @@ import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
 import { RootMenuDescriptor } from './menu-host/menu-host.component';
 import { MenuTemplateDirective } from './menu-template.directive';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class MenuService {
 
   // null means no menu, and is also how we cancel

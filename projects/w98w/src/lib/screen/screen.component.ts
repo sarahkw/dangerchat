@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { MenuService } from '../menu/menu.service';
 
-type Style = {[key: string]: string} | string | null;
+type Style = {[key: string]: string} | string | null; // TODO: Refactor
 
 @Component({
   selector: 'w98w-screen',
   templateUrl: './screen.component.html',
-  styleUrls: ['./screen.component.scss'],
-  providers: [MenuService]
+  styleUrls: ['./screen.component.scss']
 })
 export class ScreenComponent {
 

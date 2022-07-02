@@ -23,6 +23,7 @@ import { MenuLayoutSizeObserverDirective } from './menu/menu-layout-size-observe
 import { RootCssVarsDirective } from './root-css-vars.directive';
 import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from './window/window.component';
 import { CementClientRectDirective } from './util/cement-client-rect.directive';
+import { DesktopComponent } from './desktop/desktop.component';
 
 
 
@@ -54,7 +55,8 @@ import { CementClientRectDirective } from './util/cement-client-rect.directive';
     WindowTitleBarDirective,
     WindowMenuBarDirective,
     Bevel8SplitSimpleHostDirective,
-    CementClientRectDirective
+    CementClientRectDirective,
+    DesktopComponent
   ],
   imports: [
     CommonModule
@@ -85,7 +87,8 @@ import { CementClientRectDirective } from './util/cement-client-rect.directive';
     WindowMenuBarDirective,
     Bevel8SplitSimpleHostDirective,
     Bevel8SplitComponent,
-    CementClientRectDirective
+    CementClientRectDirective,
+    DesktopComponent
   ]
 })
 export class W98wModule { }
