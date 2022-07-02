@@ -11,7 +11,7 @@ div.docked-host {
 
 div.dock {
     grid-area: dock;
-    background-color: gray;
+    background-color: var(--w98w-root-widget-background-color);
     z-index: 1; // taskbar above windows
 }
 
