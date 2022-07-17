@@ -1,9 +1,10 @@
-import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { Subscription } from 'rxjs';
 import { rxInteract } from '../rx/rx-interact';
 import { elementRefIsSame } from '../util/element-ref-is-same';
+import { DesktopComponent } from '../desktop/desktop.component';
 
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
@@ -48,7 +49,7 @@ export const floatableToken = new InjectionToken<Floatable>("Floatable");
   styleUrls: ['./window.component.scss'],
   providers: [{ provide: floatableToken, useExisting: forwardRef(() => WindowComponent) }]
 })
-export class WindowComponent implements AfterContentChecked, OnDestroy, Floatable {
+export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, Floatable {
 
   @Input() drawFrame = true;  // if maximized this will be false
   @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
@@ -157,7 +158,20 @@ export class WindowComponent implements AfterContentChecked, OnDestroy, Floatabl
 
   ///////////////////////////////////////////////////
 
-  constructor(public elementRef: ElementRef<HTMLElement>, private ngZone: NgZone) {}
+  wmSubscription?: Subscription;
+
+  constructor(
+    public elementRef: ElementRef<HTMLElement>,
+    private ngZone: NgZone,
+    @Optional() private desktop: DesktopComponent
+    ) {
+  }
+
+  ngOnInit(): void {
+    if (this.desktop) {
+      this.wmSubscription = this.desktop.windowManager.registerFor(this).subscribe();
+    }
+  }
 
   ngAfterContentChecked(): void {
     // This is to test that using interactjs isn't causing change detection even when not interacting.
@@ -168,5 +182,6 @@ export class WindowComponent implements AfterContentChecked, OnDestroy, Floatabl
 
   ngOnDestroy(): void {
     this.mrSubscription?.unsubscribe();
+    this.wmSubscription?.unsubscribe();
   }
 }
