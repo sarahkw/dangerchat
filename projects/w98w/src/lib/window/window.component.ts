@@ -57,8 +57,8 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   // left and top need to go through us because moving/resizing is delta those
   @Input('absLeft') @HostBinding('style.left.px') left: number | undefined;
   @Input('absTop') @HostBinding('style.top.px') top: number | undefined;
-  @HostBinding('style.width.px') width: number | undefined;
-  @HostBinding('style.height.px') height: number | undefined;
+  @Input('absWidth') @HostBinding('style.width.px') width: number | undefined;
+  @Input('absHeight') @HostBinding('style.height.px') height: number | undefined;
 
   @HostBinding('style.--window-padding.px') get hbsPadding() {
     // 2 extra pixels spacing, as seen in screenshot

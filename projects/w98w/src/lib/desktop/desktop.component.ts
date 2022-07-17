@@ -46,7 +46,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
     this.wmDebugSub = this.windowManager.windows$.subscribe(value => {
       console.log("windows:");
       value.forEach(window => {
-        console.info(`[${window.left}, ${window.top}]`)
+        console.info(`[${window.left}, ${window.top}, ${window.width}, ${window.height}]`)
       });
     });
   }
