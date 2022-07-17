@@ -24,7 +24,7 @@ export class AppLauncherComponent implements OnInit {
 
   launchHello() {
     // https://stackoverflow.com/a/42421087
-    this.viewContainerRef.createEmbeddedView(this.wndAppHelloMain, {$implicit: this.count++});
+    this.viewContainerRef.createEmbeddedView(this.wndAppHelloMain, {data: this.count++});
   }
 
 }
