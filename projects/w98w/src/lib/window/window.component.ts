@@ -43,6 +43,7 @@ export interface Floatable {
 
 export const floatableToken = new InjectionToken<Floatable>("Floatable");
 
+// TODO Maybe move this somewhere else
 export interface WindowCloserContext {
   destroy(): void;
 }
@@ -75,8 +76,6 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   @Input() moveResizeMode = MoveResizeMode.None; // is an input for testing purposes only
 
   readonly WINDOW_BEVEL = Bevels.WINDOW;
-
-  @Input() windowCloser?: WindowCloserContext;
 
   ///////////////////////////////////////////////////
 

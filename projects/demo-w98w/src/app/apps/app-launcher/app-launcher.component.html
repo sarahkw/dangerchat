@@ -1,7 +1,6 @@
 <ng-template #appLauncherMain let-windowCloser="windowCloser">
 
     <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="220" [absHeight]="100"
-        [windowCloser]="windowCloser"
         >
         <w98w-titlebar w98w-window-title-bar label="Generic Window" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
@@ -21,7 +20,6 @@
 <ng-template #appHelloMain let-count="data" let-windowCloser="windowCloser">
 
     <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="200" [absHeight]="100"
-        [windowCloser]="windowCloser"
         >
         <w98w-titlebar w98w-window-title-bar label="Hello" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
