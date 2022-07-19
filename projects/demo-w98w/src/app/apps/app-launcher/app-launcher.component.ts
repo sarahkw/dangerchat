@@ -1,4 +1,13 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EmbeddedViewRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
+
+class LaunchedWindowCloser implements WindowCloserContext {
+  viewRef?: EmbeddedViewRef<unknown>;
+
+  destroy(): void {
+    this.viewRef?.destroy();
+  }
+}
 
 @Component({
   selector: 'app-app-launcher',
@@ -17,14 +26,20 @@ export class AppLauncherComponent implements OnInit {
   constructor(private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.viewContainerRef.createEmbeddedView(this.wndAppLauncherMain);
-    }, 500);
+    const lwc = new LaunchedWindowCloser();
+    lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppLauncherMain, {windowCloser: lwc});
   }
 
   launchHello() {
+    const lwc = new LaunchedWindowCloser();
+
     // https://stackoverflow.com/a/42421087
-    this.viewContainerRef.createEmbeddedView(this.wndAppHelloMain, {data: this.count++});
+    lwc.viewRef = this.viewContainerRef.createEmbeddedView(
+      this.wndAppHelloMain,
+      {
+        data: this.count++,
+        windowCloser: lwc
+      });
   }
 
 }

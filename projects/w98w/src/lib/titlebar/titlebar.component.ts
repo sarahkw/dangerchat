@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { GenImg } from '../genimg';
 
 @Component({
@@ -12,6 +12,8 @@ export class TitlebarComponent implements OnInit {
 
   @Input() iconSrc!: string;
   @Input() label = "";
+
+  @Output() wm_close = new EventEmitter<null>();
 
   @HostBinding('class') readonly hbClass = "w98w-titlebar";
 

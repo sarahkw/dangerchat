@@ -43,6 +43,10 @@ export interface Floatable {
 
 export const floatableToken = new InjectionToken<Floatable>("Floatable");
 
+export interface WindowCloserContext {
+  destroy(): void;
+}
+
 @Component({
   selector: 'w98w-window',
   templateUrl: './window.component.html',
@@ -71,6 +75,8 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   @Input() moveResizeMode = MoveResizeMode.None; // is an input for testing purposes only
 
   readonly WINDOW_BEVEL = Bevels.WINDOW;
+
+  @Input() windowCloser?: WindowCloserContext;
 
   ///////////////////////////////////////////////////
 
