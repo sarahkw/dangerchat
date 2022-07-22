@@ -197,6 +197,9 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   }
 
   @HostBinding('style.zIndex') hbSZI = 0;
+  @HostBinding('class.window-is-inactive') get hbcWII() {
+    return this.desktop?.windowIsBottom(this.hbSZI);
+  }
 
   @HostListener('click') onClick() {
     if (this.desktop) {

@@ -58,7 +58,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
   windowToTop(currentZIndex: number) {
 
-    if (currentZIndex == 0) {
+    if (currentZIndex == 0) {  // unassigned yet
       ++this.currentTopZ;
       return this.currentTopZ;
 
@@ -70,5 +70,9 @@ export class DesktopComponent implements OnInit, OnDestroy {
       return this.currentTopZ;
 
     }
+  }
+
+  windowIsBottom(currentZIndex: number) {
+    return currentZIndex !== 0 && this.currentTopZ !== currentZIndex;
   }
 }

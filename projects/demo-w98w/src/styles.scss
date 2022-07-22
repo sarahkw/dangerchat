@@ -95,6 +95,10 @@ w98w-titlebar {
     gap: 2px;
 }
 
+w98w-window.window-is-inactive w98w-titlebar {
+    background-color: var(--w98w-root-title-bar-inactive-color);
+}
+
 w98w-titlebar > span.w98w-label {
     @extend %unwrappable-text;
 

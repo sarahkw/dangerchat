@@ -48,6 +48,7 @@ export const ROOTVARS = {
   widgetBackgroundColor: WRAP(() => Colors.WIDGET_BG),
 
   titleBarActiveColor: WRAP(() => Colors.TITLEBAR_ACTIVE),
+  titleBarInactiveColor: WRAP(() => Colors.TITLEBAR_INACTIVE),
   titleBarTextColor: WRAP(() => Colors.TITLEBAR_TEXT),
 
   moveResizeHitAreaWidth: WRAP('50px'),
@@ -87,6 +88,7 @@ var(--w98w-root-label-font-size)
 var(--w98w-root-label-font-family)
 var(--w98w-root-widget-background-color)
 var(--w98w-root-title-bar-active-color)
+var(--w98w-root-title-bar-inactive-color)
 var(--w98w-root-title-bar-text-color)
 var(--w98w-root-move-resize-hit-area-width)
 var(--w98w-root-move-resize-hit-area-height)
