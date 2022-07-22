@@ -1,7 +1,7 @@
-import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
-import { Subscription } from 'rxjs';
+import { asyncScheduler, Subscription } from 'rxjs';
 import { rxInteract } from '../rx/rx-interact';
 import { elementRefIsSame } from '../util/element-ref-is-same';
 import { DesktopComponent } from '../desktop/desktop.component';
@@ -175,6 +175,12 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   ngOnInit(): void {
     if (this.desktop) {
       this.wmSubscription = this.desktop.windowManager.registerFor(this).subscribe();
+
+      // XXX A hack to resolve the issue where if a click action opens a new window,
+      //     then the click action will be processed after the new window.
+      asyncScheduler.schedule(() => {
+        this.hbSZI = this.desktop.windowToTop(this.hbSZI);
+      });
     }
   }
 
@@ -188,5 +194,13 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   ngOnDestroy(): void {
     this.mrSubscription?.unsubscribe();
     this.wmSubscription?.unsubscribe();
+  }
+
+  @HostBinding('style.zIndex') hbSZI = 0;
+
+  @HostListener('click') onClick() {
+    if (this.desktop) {
+      this.hbSZI = this.desktop.windowToTop(this.hbSZI);
+    }
   }
 }

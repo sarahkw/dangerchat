@@ -54,4 +54,21 @@ export class DesktopComponent implements OnInit, OnDestroy {
     this.wmDebugSub?.unsubscribe();
   }
 
+  private currentTopZ = 0;
+
+  windowToTop(currentZIndex: number) {
+
+    if (currentZIndex == 0) {
+      ++this.currentTopZ;
+      return this.currentTopZ;
+
+    } else if (currentZIndex == this.currentTopZ) {
+      return currentZIndex;
+
+    } else {
+      ++this.currentTopZ;
+      return this.currentTopZ;
+
+    }
+  }
 }
