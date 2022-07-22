@@ -5,9 +5,7 @@
         <w98w-titlebar w98w-window-title-bar label="Generic Window" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
         <menu w98w-window-menu-bar w98w-menu-bar>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">File</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Edit</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Help</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Test Menu</li>
         </menu>
         <button w98w-wbutton (click)="launchHello()">launch hello</button>
 
@@ -24,9 +22,7 @@
         <w98w-titlebar w98w-window-title-bar label="Hello" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
         <menu w98w-window-menu-bar w98w-menu-bar>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">File</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Edit</li>
-            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Help</li>
+            <li w98w-menu-bar-item [autoMenu]="library.menuTemp">Test Menu</li>
         </menu>
         <p>Hello {{ count }}{{ demo_text }}</p>
     </w98w-window>
