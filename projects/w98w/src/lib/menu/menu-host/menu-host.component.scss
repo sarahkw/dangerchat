@@ -2,13 +2,3 @@
     display: flex;
     align-items: flex-start;
 }
-
-.close-menu {
-    pointer-events: auto;
-    user-select: none;
-    max-height: var(--w98w-root-move-resize-hit-area-height);
-
-    z-index: 0; // i don't know why this is necessary
-
-    cursor: pointer;
-}
