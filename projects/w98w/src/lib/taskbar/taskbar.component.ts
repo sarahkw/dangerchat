@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MenuTemplateDirective } from '../menu/menu-template.directive';
 
 @Component({
   selector: 'w98w-taskbar',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./taskbar.component.scss']
 })
 export class TaskbarComponent implements OnInit {
+
+  @Input() menuStart!: MenuTemplateDirective;
 
   constructor() { }
 

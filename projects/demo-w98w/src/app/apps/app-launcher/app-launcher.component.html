@@ -1,3 +1,9 @@
+<ng-template w98w-menu-template #menuStart="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
+        <li w98w-menu-item="Hello, world!"></li>
+    </menu>
+</ng-template>
+
 <ng-template #appLauncherMain let-windowCloser="windowCloser">
 
     <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="220" [absHeight]="100"

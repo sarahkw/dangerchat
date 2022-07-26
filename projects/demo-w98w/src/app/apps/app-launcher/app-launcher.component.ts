@@ -1,4 +1,5 @@
 import { Component, EmbeddedViewRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
 
 class LaunchedWindowCloser implements WindowCloserContext {
@@ -15,6 +16,8 @@ class LaunchedWindowCloser implements WindowCloserContext {
   styleUrls: ['./app-launcher.component.scss']
 })
 export class AppLauncherComponent implements OnInit {
+
+  @ViewChild('menuStart', {static: true}) menuStart!: MenuTemplateDirective;
 
   @ViewChild('appLauncherMain', {static: true}) wndAppLauncherMain!: TemplateRef<unknown>;
 

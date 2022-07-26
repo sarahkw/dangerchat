@@ -4,6 +4,6 @@
     [slidingScreenStyle]="'height: 600px; max-height: 90vh;'"
     [slidingScreenMainContentStyle]="'background-color: var(--w98w-root-color-desktop-debug); position: relative;'"
     >
-
-    <app-app-launcher></app-app-launcher>
+    <w98w-taskbar [menuStart]="appLauncher.menuStart"></w98w-taskbar>
+    <app-app-launcher #appLauncher></app-app-launcher>
 </w98w-desktop>

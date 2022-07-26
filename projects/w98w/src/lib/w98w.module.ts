@@ -84,7 +84,8 @@ import { TaskbarComponent } from './taskbar/taskbar.component';
     Bevel8SplitSimpleHostDirective,
     Bevel8SplitComponent,
     CementClientRectDirective,
-    DesktopComponent
+    DesktopComponent,
+    TaskbarComponent
   ]
 })
 export class W98wModule { }
