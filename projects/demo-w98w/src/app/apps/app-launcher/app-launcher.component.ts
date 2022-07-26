@@ -15,7 +15,7 @@ class LaunchedWindowCloser implements WindowCloserContext {
   templateUrl: './app-launcher.component.html',
   styleUrls: ['./app-launcher.component.scss']
 })
-export class AppLauncherComponent implements OnInit {
+export class AppLauncherComponent {
 
   @ViewChild('menuStart', {static: true}) menuStart!: MenuTemplateDirective;
 
@@ -28,7 +28,7 @@ export class AppLauncherComponent implements OnInit {
 
   constructor(private viewContainerRef: ViewContainerRef) { }
 
-  ngOnInit(): void {
+  launchLauncher() {
     const lwc = new LaunchedWindowCloser();
     lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppLauncherMain, {windowCloser: lwc});
   }
