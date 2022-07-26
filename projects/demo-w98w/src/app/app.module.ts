@@ -12,7 +12,6 @@ import { ButtonDemoComponent } from './button-demo/button-demo.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
 import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
-import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { MenuTestComponent } from './menu-test/menu-test.component';
@@ -32,7 +31,6 @@ import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component
     GenImgSizeDemoComponent,
     WButtonTestComponent,
     TitlebarTestComponent,
-    DesktopTestComponent,
     DemoHomeComponent,
     ScreenTestComponent,
     MenuTestComponent,

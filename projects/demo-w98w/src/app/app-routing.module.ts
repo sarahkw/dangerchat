@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonDemoComponent } from './button-demo/button-demo.component';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
-import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { DprComponent } from './dpr/dpr.component';
 import { GenImgSizeDemoComponent } from './gen-img-size-demo/gen-img-size-demo.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
@@ -16,7 +15,6 @@ import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 import { WindowTestComponent } from './window-test/window-test.component';
 
 const routes: Routes = [
-  { path: 'desktop', component: DesktopTestComponent },
   {
     path: '',
     component: DemoHomeComponent,
