@@ -11,8 +11,6 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { MenuBarItemComponent } from './menu-bar-item/menu-bar-item.component';
-import { PopupHostComponent } from './popup/popup-host/popup-host.component';
-import { MsgboxComponent } from './msgbox/msgbox.component';
 import { MenuHostComponent } from './menu/menu-host/menu-host.component';
 import { MenuTemplateDirective } from './menu/menu-template.directive';
 import { SlidingScreenComponent } from './ss/sliding-screen/sliding-screen.component';
@@ -41,8 +39,6 @@ import { TaskbarComponent } from './taskbar/taskbar.component';
     MenuItemComponent,
     MenuBarComponent,
     MenuBarItemComponent,
-    PopupHostComponent,
-    MsgboxComponent,
     MenuHostComponent,
     MenuTemplateDirective,
     SlidingScreenComponent,
@@ -74,8 +70,6 @@ import { TaskbarComponent } from './taskbar/taskbar.component';
     MenuItemComponent,
     MenuBarComponent,
     MenuBarItemComponent,
-    PopupHostComponent,
-    MsgboxComponent,
     MenuHostComponent,
     MenuTemplateDirective,
     SlidingScreenComponent,

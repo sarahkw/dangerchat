@@ -1,13 +1,5 @@
 <h2>Popup Test</h2>
 
-<h3>Generic Popup</h3>
-
-<button w98w-wbutton (click)="popupService.openPopup(msgbox)">show message</button>
-
-<ng-template #msgbox>
-    <w98w-msgbox>Hello world!</w98w-msgbox>
-</ng-template>
-
 <h3>Menu</h3>
 
 <w98w-screen
@@ -35,7 +27,3 @@
 
     <app-test-shared-lib #library></app-test-shared-lib>
 </w98w-screen>
-
-<div>
-    <w98w-popup-host></w98w-popup-host>
-</div>
