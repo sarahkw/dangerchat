@@ -15,8 +15,9 @@ import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 import { WindowTestComponent } from './window-test/window-test.component';
 
 const routes: Routes = [
+  { path: '', component: DesktopTestComponent },
   {
-    path: '',
+    path: 'tests',
     component: DemoHomeComponent,
     children: [
       { path: 'pixel-alignment', component: PixelAlignmentComponent },

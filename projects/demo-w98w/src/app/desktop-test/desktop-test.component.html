@@ -1,9 +1,9 @@
-<h2>Desktop Test</h2>
-
-<w98w-desktop
-    [slidingScreenStyle]="'height: 600px; max-height: 90vh;'"
-    [slidingScreenMainContentStyle]="'background-color: var(--w98w-root-color-desktop-debug); position: relative;'"
-    >
-    <w98w-taskbar [menuStart]="appLauncher.menuStart"></w98w-taskbar>
-    <app-app-launcher #appLauncher></app-app-launcher>
-</w98w-desktop>
+<div w98w-root-css-vars>
+    <w98w-desktop
+        [slidingScreenStyle]="'height: 600px; max-height: 90vh;'"
+        [slidingScreenMainContentStyle]="'background-color: var(--w98w-root-color-desktop-debug); position: relative;'"
+        >
+        <w98w-taskbar [menuStart]="appLauncher.menuStart"></w98w-taskbar>
+        <app-app-launcher #appLauncher></app-app-launcher>
+    </w98w-desktop>
+</div>

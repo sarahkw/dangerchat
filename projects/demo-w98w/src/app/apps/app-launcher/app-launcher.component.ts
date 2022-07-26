@@ -1,4 +1,5 @@
 import { Component, EmbeddedViewRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
 
@@ -26,7 +27,7 @@ export class AppLauncherComponent {
   readonly demo_text = "!";
   count = 1;
 
-  constructor(private viewContainerRef: ViewContainerRef) { }
+  constructor(private viewContainerRef: ViewContainerRef, public router: Router) { }
 
   launchLauncher() {
     const lwc = new LaunchedWindowCloser();
