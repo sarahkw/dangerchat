@@ -19,7 +19,7 @@ import { PopupTestComponent } from './popup-test/popup-test.component';
 import { TestSharedLibComponent } from './test-shared-lib/test-shared-lib.component';
 import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
-import { LauncherTestComponent } from './launcher-test/launcher-test.component';
+import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component';
 
 @NgModule({
@@ -38,7 +38,7 @@ import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component
     TestSharedLibComponent,
     WindowTestComponent,
     InteractjsTestComponent,
-    LauncherTestComponent,
+    DesktopTestComponent,
     AppLauncherComponent
   ],
   imports: [
