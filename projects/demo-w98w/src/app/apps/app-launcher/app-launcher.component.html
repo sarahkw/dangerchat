@@ -38,7 +38,8 @@
 
 <ng-template #appWhatIsThis let-windowCloser="windowCloser">
 
-    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="270" [absHeight]="200"
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="270" [absHeight]="300"
+        innerGridStyle="overflow: hidden;"
         >
         <w98w-titlebar w98w-window-title-bar label="What is this?" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
