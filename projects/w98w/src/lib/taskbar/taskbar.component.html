@@ -6,7 +6,8 @@
 </div>
 
 <ng-template [ngIf]="desktop">
-    <div *ngFor="let item of desktop.windowManager.windows$ | async">
-        <button w98w-wbutton style="width: 100%;">{{ item }}</button>
-    </div>
+    <button *ngFor="let item of desktop.windowManager.windows$ | async"
+        w98w-wbutton extraLabel="{{ item.wndTitlebar?.label }}">
+        <img src="{{ item.wndTitlebar?.iconSrc }}" wbuttonBody [emHeightImg]="true">
+    </button>
 </ng-template>

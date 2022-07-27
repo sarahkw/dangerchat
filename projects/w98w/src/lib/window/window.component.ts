@@ -1,10 +1,11 @@
-import { AfterContentChecked, Component, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, ContentChild, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { asyncScheduler, Subscription } from 'rxjs';
 import { rxInteract } from '../rx/rx-interact';
 import { elementRefIsSame } from '../util/element-ref-is-same';
 import { DesktopComponent } from '../desktop/desktop.component';
+import { TitlebarComponent } from '../titlebar/titlebar.component';
 
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
@@ -76,6 +77,8 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   @Input() moveResizeMode = MoveResizeMode.None; // is an input for testing purposes only
 
   readonly WINDOW_BEVEL = Bevels.WINDOW;
+
+  @ContentChild(TitlebarComponent, { static: true }) wndTitlebar?: TitlebarComponent;
 
   ///////////////////////////////////////////////////
 
