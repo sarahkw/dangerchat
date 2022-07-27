@@ -16,7 +16,7 @@ class LaunchedWindowCloser implements WindowCloserContext {
   templateUrl: './app-launcher.component.html',
   styleUrls: ['./app-launcher.component.scss']
 })
-export class AppLauncherComponent {
+export class AppLauncherComponent implements OnInit {
 
   @ViewChild('menuStart', {static: true}) menuStart!: MenuTemplateDirective;
 
@@ -30,6 +30,10 @@ export class AppLauncherComponent {
   count = 1;
 
   constructor(private viewContainerRef: ViewContainerRef, public router: Router) { }
+
+  ngOnInit(): void {
+    this.launchWhatIsThis();
+  }
 
   launchWhatIsThis() {
     const lwc = new LaunchedWindowCloser();
