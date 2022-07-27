@@ -1,4 +1,12 @@
 
-<button w98w-wbutton extraLabel="Start" w98w-menu-anchor [autoMenu]="menuStart">
-    <img src="/assets/w98w/start-win.png" wbuttonBody [emHeightImg]="true">
-</button>
+<div style="margin-bottom: 6px;">
+    <button w98w-wbutton extraLabel="Start" w98w-menu-anchor [autoMenu]="menuStart">
+        <img src="/assets/w98w/start-win.png" wbuttonBody [emHeightImg]="true">
+    </button>
+</div>
+
+<ng-template [ngIf]="desktop">
+    <div *ngFor="let item of desktop.windowManager.windows$ | async">
+        <button w98w-wbutton style="width: 100%;">{{ item }}</button>
+    </div>
+</ng-template>

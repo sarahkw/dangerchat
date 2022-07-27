@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Optional } from '@angular/core';
+import { DesktopComponent } from '../desktop/desktop.component';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 
 @Component({
@@ -10,7 +11,7 @@ export class TaskbarComponent implements OnInit {
 
   @Input() menuStart!: MenuTemplateDirective;
 
-  constructor() { }
+  constructor(@Optional() public desktop: DesktopComponent) { }
 
   ngOnInit(): void {
   }
