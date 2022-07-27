@@ -20,6 +20,8 @@ export class AppLauncherComponent {
 
   @ViewChild('menuStart', {static: true}) menuStart!: MenuTemplateDirective;
 
+  @ViewChild('appWhatIsThis', {static: true}) wndAppWhatIsThis!: TemplateRef<unknown>;
+
   @ViewChild('appLauncherMain', {static: true}) wndAppLauncherMain!: TemplateRef<unknown>;
 
   @ViewChild('appHelloMain', {static: true}) wndAppHelloMain!: TemplateRef<unknown>;
@@ -28,6 +30,11 @@ export class AppLauncherComponent {
   count = 1;
 
   constructor(private viewContainerRef: ViewContainerRef, public router: Router) { }
+
+  launchWhatIsThis() {
+    const lwc = new LaunchedWindowCloser();
+    lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppWhatIsThis, {windowCloser: lwc});
+  }
 
   launchLauncher() {
     const lwc = new LaunchedWindowCloser();

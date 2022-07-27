@@ -1,5 +1,6 @@
 <ng-template w98w-menu-template #menuStart="menuTemplate" let-context>
     <menu w98w-menu [menuContext]="context">
+        <li w98w-menu-item="What is this?" (activate)="launchWhatIsThis()"></li>
         <li w98w-menu-item="Window Launcher Test" (activate)="launchLauncher()"></li>
         <li w98w-menu-item="More Tests" (activate)="router.navigateByUrl('/tests')"></li>
         <li w98w-menu-item="Show Long Menu" [explicitSubMenu]="library.menuTemp"></li>
@@ -31,6 +32,32 @@
         <menu w98w-window-menu-bar w98w-menu-bar>
         </menu>
         <p>Hello {{ count }}{{ demo_text }}</p>
+    </w98w-window>
+
+</ng-template>
+
+<ng-template #appWhatIsThis let-windowCloser="windowCloser">
+
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="270" [absHeight]="200"
+        >
+        <w98w-titlebar w98w-window-title-bar label="What is this?" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
+        </w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+        </menu>
+
+        <h3 style="margin-top: 0;">What is this?</h3>
+
+        <p>The original purpose of this is to make a chat program that feels like chatting on AIM on Windows 98.</p>
+
+        <p>However due to a change in priority, this will only be a collection of widgets that act like Windows 98
+            on the web.</p>
+
+        <p>Maybe one day this will rise from the ashes and reclaim its nostalgic glory.</p>
+
+        <p>In the meanwhile, feel free to poke around.</p>
+
+        <p>-nck</p>
+
     </w98w-window>
 
 </ng-template>
