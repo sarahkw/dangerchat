@@ -7,7 +7,8 @@
 
 <ng-template [ngIf]="desktop">
     <button *ngFor="let item of desktop.windowManager.windows$ | async"
-        w98w-wbutton extraLabel="{{ item.wndTitlebar?.label }}">
+        w98w-wbutton extraLabel="{{ item.wndTitlebar?.label }}"
+        (click)="item.toTop()">
         <img src="{{ item.wndTitlebar?.iconSrc }}" wbuttonBody [emHeightImg]="true">
     </button>
 </ng-template>

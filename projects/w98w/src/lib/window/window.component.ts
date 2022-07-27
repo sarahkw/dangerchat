@@ -204,9 +204,13 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
     return this.desktop?.windowIsBottom(this.hbSZI);
   }
 
-  @HostListener('click') onClick() {
+  toTop() {
     if (this.desktop) {
       this.hbSZI = this.desktop.windowToTop(this.hbSZI);
     }
+  }
+
+  @HostListener('click') onClick() {
+    this.toTop();
   }
 }
