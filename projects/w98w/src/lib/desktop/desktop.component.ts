@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, Unsubscribable } from 'rxjs';
 import { WindowComponent } from '../window/window.component';
 
@@ -35,6 +35,8 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
   @Input() slidingScreenStyle: Style = null;
   @Input() slidingScreenMainContentStyle: Style = null;
+
+  @ViewChild('desktopArea', {static: true}) desktopArea!: ElementRef<HTMLDivElement>;
 
   windowManager = new WindowManager();
 

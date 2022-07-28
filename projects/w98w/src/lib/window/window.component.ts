@@ -1,11 +1,12 @@
-import { AfterContentChecked, Component, ContentChild, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
-import { asyncScheduler, Subscription } from 'rxjs';
+import { asyncScheduler, Subscription, take } from 'rxjs';
 import { rxInteract } from '../rx/rx-interact';
 import { elementRefIsSame } from '../util/element-ref-is-same';
 import { DesktopComponent } from '../desktop/desktop.component';
 import { TitlebarComponent } from '../titlebar/titlebar.component';
+import { resizeObserverWaitForAll } from '../rx/resize-observer';
 
 @Directive({ selector: '[w98w-window-title-bar]'})
 export class WindowTitleBarDirective {
@@ -167,10 +168,12 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   ///////////////////////////////////////////////////
 
   wmSubscription?: Subscription;
+  resizeObserverSubscription?: Subscription;
 
   constructor(
     public elementRef: ElementRef<HTMLElement>,
     private ngZone: NgZone,
+    private applicationRef: ApplicationRef,
     @Optional() private desktop: DesktopComponent
     ) {
   }
@@ -184,6 +187,31 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
       asyncScheduler.schedule(() => {
         this.hbSZI = this.desktop.windowToTop(this.hbSZI);
       });
+
+      // If we get clipped by the screen, let's try to fit to the screen.
+      const elem = this.desktop.desktopArea.nativeElement;
+      this.resizeObserverSubscription = resizeObserverWaitForAll([elem])
+        .pipe(take(1))
+        .subscribe(rowfa => {
+          const PAD = 5;
+          const rect = rowfa.get(elem)!;
+          let changed = false;
+          if ((this.left ?? 0) + (this.width ?? 0) > rect.width) {
+            this.left = PAD;
+            this.width = rect.width - PAD * 2;
+            changed = true;
+          }
+
+          if ((this.top ?? 0) + (this.height ?? 0) > rect.height) {
+            this.top = PAD;
+            this.height = rect.height - PAD * 2;
+            changed = true;
+          }
+
+          if (changed) {
+            this.applicationRef.tick();
+          }
+        });
     }
   }
 
@@ -197,6 +225,7 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   ngOnDestroy(): void {
     this.mrSubscription?.unsubscribe();
     this.wmSubscription?.unsubscribe();
+    this.resizeObserverSubscription?.unsubscribe();
   }
 
   isBottom() {
