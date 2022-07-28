@@ -6,7 +6,7 @@ div.docked-host {
     height: 100%;
     display: grid;
     grid-template-rows: [dock-start desktop-start] 1fr [desktop-end dock-end];
-    grid-template-columns: [dock-start] 100px [dock-end desktop-start] 1fr [desktop-end];
+    grid-template-columns: [dock-start] 80px [dock-end desktop-start] 1fr [desktop-end];
 }
 
 div.dock {
