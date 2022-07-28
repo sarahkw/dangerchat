@@ -59,7 +59,6 @@ export interface WindowCloserContext {
 export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, Floatable {
 
   @Input() drawFrame = true;  // if maximized this will be false
-  @Input() innerGridStyle: unknown = undefined; // TODO slated for removal
 
   // left and top need to go through us because moving/resizing is delta those
   @Input('absLeft') @HostBinding('style.left.px') left: number | undefined;
