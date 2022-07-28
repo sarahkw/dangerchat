@@ -22,6 +22,8 @@ export class AppLauncherComponent implements OnInit {
 
   @ViewChild('appWhatIsThis', {static: true}) wndAppWhatIsThis!: TemplateRef<unknown>;
 
+  @ViewChild('appMoveResize', {static: true}) wndAppMoveResize!: TemplateRef<unknown>;
+
   @ViewChild('appLauncherMain', {static: true}) wndAppLauncherMain!: TemplateRef<unknown>;
 
   @ViewChild('appHelloMain', {static: true}) wndAppHelloMain!: TemplateRef<unknown>;
@@ -38,6 +40,11 @@ export class AppLauncherComponent implements OnInit {
   launchWhatIsThis() {
     const lwc = new LaunchedWindowCloser();
     lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppWhatIsThis, {windowCloser: lwc});
+  }
+
+  launchMoveResize() {
+    const lwc = new LaunchedWindowCloser();
+    lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppMoveResize, {windowCloser: lwc});
   }
 
   launchLauncher() {
