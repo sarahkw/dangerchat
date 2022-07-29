@@ -37,7 +37,7 @@ export class AppLauncherComponent implements OnInit {
   constructor(private viewContainerRef: ViewContainerRef, public router: Router) { }
 
   ngOnInit(): void {
-    this.launchWhatIsThis();
+    // this.launchWhatIsThis();
   }
 
   launchWhatIsThis() {
