@@ -66,6 +66,9 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   @Input('absWidth') @HostBinding('style.width.px') width: number | undefined;
   @Input('absHeight') @HostBinding('style.height.px') height: number | undefined;
 
+  // for example textareas want more space than the height/width you give it.
+  @Input() mainBodyOverflowHidden = false;
+
   @HostBinding('style.--window-padding.px') get hbsPadding() {
     // 2 extra pixels spacing, as seen in screenshot
     return this.drawFrame ? (Bevels.WINDOW.getPadding() + 2) : 0;

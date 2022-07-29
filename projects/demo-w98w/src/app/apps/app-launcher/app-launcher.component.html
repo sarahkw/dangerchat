@@ -2,6 +2,7 @@
     <menu w98w-menu [menuContext]="context">
         <li w98w-menu-item="What is this?" (activate)="launchWhatIsThis()"></li>
         <li w98w-menu-item="Moving and Resizing" (activate)="launchMoveResize()"></li>
+        <li w98w-menu-item="Notepad" (activate)="launchNotepad()"></li>
         <li w98w-menu-item="Tests and Demos">
             <menu w98w-menu *w98w-menu-template="let context" [menuContext]="context">
                 <li w98w-menu-item="Window Launcher Test" (activate)="launchLauncher()"></li>
@@ -84,6 +85,34 @@
             in order to move or resize.</p>
 
         <p>-nck</p>
+
+    </w98w-window>
+
+</ng-template>
+
+<ng-template #appNotepad let-windowCloser="windowCloser">
+
+    <style>
+        textarea {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            resize: none;
+            outline: 0;
+            border: 0;
+            border-radius: 0; /* safari */
+        }
+    </style>
+
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="400" [absHeight]="400"
+        [mainBodyOverflowHidden]="true"
+        >
+        <w98w-titlebar w98w-window-title-bar label="Notepad" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
+        </w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+        </menu>
+
+        <textarea></textarea>
 
     </w98w-window>
 
