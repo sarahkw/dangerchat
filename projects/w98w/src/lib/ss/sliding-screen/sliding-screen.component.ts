@@ -170,11 +170,6 @@ export class SlidingScreenComponent implements OnDestroy, AfterContentChecked {
       case State.Measuring:
         {
           if (this.unfixedHeight) {
-            // TODO: lint error. need to rewrite this using rxjs to fix this. if ResizeObserver
-            //       doesn't give us rootDiv in the initial observation we're in trouble.
-            //       state machines turn out to be a lot more difficult to understand than
-            //       rxjs.
-
             const crRootDiv = resolveContentRect(initObservation.get(this.rootDiv.nativeElement)!);
             this.renderer.setStyle(this.rootDiv.nativeElement, 'height', `${crRootDiv.height}px`);
           }
