@@ -31,7 +31,7 @@ class WindowManager {
   templateUrl: './desktop.component.html',
   styleUrls: ['./desktop.component.scss']
 })
-export class DesktopComponent implements OnInit, OnDestroy {
+export class DesktopComponent {
 
   @Input() slidingScreenStyle: Style = null;
   @Input() slidingScreenMainContentStyle: Style = null;
@@ -39,22 +39,6 @@ export class DesktopComponent implements OnInit, OnDestroy {
   @ViewChild('desktopArea', {static: true}) desktopArea!: ElementRef<HTMLDivElement>;
 
   windowManager = new WindowManager();
-
-  constructor() { }
-
-  wmDebugSub?: Subscription;
-
-  ngOnInit(): void {
-    this.wmDebugSub = this.windowManager.windows$.subscribe(value => {
-      console.log("windows:");
-      value.forEach(window => {
-        console.info(`[${window.left}, ${window.top}, ${window.width}, ${window.height}]`)
-      });
-    });
-  }
-  ngOnDestroy(): void {
-    this.wmDebugSub?.unsubscribe();
-  }
 
   private currentTopZ = 0;
 
