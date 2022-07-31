@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-notepad',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotepadComponent implements OnInit {
 
+  @ViewChild('textArea', { static: true }) childTextArea!: ElementRef<HTMLTextAreaElement>;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  new_() {
+    this.childTextArea.nativeElement.value = '';
   }
 
 }
