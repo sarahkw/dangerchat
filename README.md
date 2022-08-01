@@ -6,6 +6,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 https://dev.danger.chat/
 
+## copyassets.py
+
+Run `copyassets.py` to copy assets to the proper location.
 
 ## Development server
 
