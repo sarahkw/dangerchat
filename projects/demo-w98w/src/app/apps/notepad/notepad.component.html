@@ -1,1 +1,26 @@
-<textarea #textArea></textarea>
+<ng-template w98w-menu-template #menuNotepadFile="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
+        <li w98w-menu-item="New" (activate)="new_()"></li>
+        <li w98w-menu-item="Exit" (activate)="windowCloser?.destroy()"></li>
+    </menu>
+</ng-template>
+
+<ng-template w98w-menu-template #menuNotepadEdit="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
+        <li w98w-menu-item="Set Font"></li>
+    </menu>
+</ng-template>
+
+<w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="400" [absHeight]="400"
+    [mainBodyOverflowHidden]="true"
+    >
+    <w98w-titlebar w98w-window-title-bar label="Notepad" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser?.destroy()">
+    </w98w-titlebar>
+    <menu w98w-window-menu-bar w98w-menu-bar>
+        <li w98w-menu-bar-item [autoMenu]="menuNotepadFile">File</li>
+        <li w98w-menu-bar-item [autoMenu]="menuNotepadEdit">Edit</li>
+    </menu>
+
+    <textarea #textArea></textarea>
+
+</w98w-window>

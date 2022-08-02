@@ -1,13 +1,16 @@
-import { Component, EmbeddedViewRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, EmbeddedViewRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
+import { NotepadComponent } from '../notepad/notepad.component';
 
-class LaunchedWindowCloser implements WindowCloserContext {
+class LaunchedWindowCloser<T> implements WindowCloserContext {
   viewRef?: EmbeddedViewRef<unknown>;
+  componentRef?: ComponentRef<T>;
 
   destroy(): void {
     this.viewRef?.destroy();
+    this.componentRef?.destroy();
   }
 }
 
@@ -27,8 +30,6 @@ export class AppLauncherComponent implements OnInit {
   @ViewChild('appLauncherMain', {static: true}) wndAppLauncherMain!: TemplateRef<unknown>;
 
   @ViewChild('appHelloMain', {static: true}) wndAppHelloMain!: TemplateRef<unknown>;
-
-  @ViewChild('appNotepad', {static: true}) wndAppNotepad!: TemplateRef<unknown>;
 
   @ViewChild('appNotepadFontDialog', {static: true}) wndAppNotepadFontDialog!: TemplateRef<unknown>;
 
@@ -75,8 +76,9 @@ export class AppLauncherComponent implements OnInit {
   }
 
   launchNotepad() {
-    const lwc = new LaunchedWindowCloser();
-    lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppNotepad, {windowCloser: lwc});
+    const lwc = new LaunchedWindowCloser<NotepadComponent>();
+    lwc.componentRef = this.viewContainerRef.createComponent(NotepadComponent);
+    lwc.componentRef.instance.windowCloser = lwc;
   }
 
 }
