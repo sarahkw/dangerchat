@@ -51,6 +51,10 @@ export interface WindowCloserContext {
   launch<T>(c: Type<T>): void;
 }
 
+export interface WindowCloserRequestor {
+  windowCloser?: WindowCloserContext;
+}
+
 @Component({
   selector: 'w98w-window',
   templateUrl: './window.component.html',

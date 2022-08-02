@@ -1,7 +1,7 @@
 import { Component, ComponentRef, EmbeddedViewRef, NgModuleRef, OnInit, TemplateRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
-import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
+import { WindowCloserContext, WindowCloserRequestor } from 'projects/w98w/src/lib/window/window.component';
 import { NotepadComponent } from '../notepad/notepad.component';
 
 class LaunchedWindowCloser<T> implements WindowCloserContext {
@@ -83,17 +83,16 @@ export class AppLauncherComponent implements OnInit {
     this.launchGeneric(NotepadComponent);
   }
 
-  launchGeneric<T>(c: Type<T>) {
+  launchGeneric<T extends WindowCloserRequestor>(c: Type<T>) {
     const thiz = this;
     const cref = this.viewContainerRef.createComponent<T>(c, {ngModuleRef: this.ngModuleRef});
-    (cref.instance as any).windowCloser = new class implements WindowCloserContext {
+    cref.instance.windowCloser = new class implements WindowCloserContext {
       destroy(): void {
         cref.destroy();
       }
       launch<T>(c: Type<T>): void {
         thiz.launchGeneric(c);
       }
-
     };
   }
 
