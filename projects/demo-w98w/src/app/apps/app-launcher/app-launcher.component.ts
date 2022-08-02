@@ -1,4 +1,4 @@
-import { Component, ComponentRef, EmbeddedViewRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, EmbeddedViewRef, NgModuleRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
@@ -37,7 +37,8 @@ export class AppLauncherComponent implements OnInit {
   readonly demo_text = "!";
   count = 1;
 
-  constructor(private viewContainerRef: ViewContainerRef, public router: Router) { }
+  constructor(private viewContainerRef: ViewContainerRef, public router: Router, private ngModuleRef: NgModuleRef<unknown>) {
+  }
 
   ngOnInit(): void {
     // this.launchWhatIsThis();
@@ -77,7 +78,7 @@ export class AppLauncherComponent implements OnInit {
 
   launchNotepad() {
     const lwc = new LaunchedWindowCloser<NotepadComponent>();
-    lwc.componentRef = this.viewContainerRef.createComponent(NotepadComponent);
+    lwc.componentRef = this.viewContainerRef.createComponent(NotepadComponent, {ngModuleRef: this.ngModuleRef});
     lwc.componentRef.instance.windowCloser = lwc;
   }
 
