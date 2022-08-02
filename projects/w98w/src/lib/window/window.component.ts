@@ -1,4 +1,4 @@
-import { AfterContentChecked, ApplicationRef, Component, ContentChild, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, ViewChild } from '@angular/core';
+import { AfterContentChecked, ApplicationRef, Component, ContentChild, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Type, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
 import { asyncScheduler, Subscription, take } from 'rxjs';
@@ -48,6 +48,7 @@ export const floatableToken = new InjectionToken<Floatable>("Floatable");
 // TODO Maybe move this somewhere else
 export interface WindowCloserContext {
   destroy(): void;
+  launch<T>(c: Type<T>): void;
 }
 
 @Component({
