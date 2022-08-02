@@ -30,6 +30,8 @@ export class AppLauncherComponent implements OnInit {
 
   @ViewChild('appNotepad', {static: true}) wndAppNotepad!: TemplateRef<unknown>;
 
+  @ViewChild('appNotepadFontDialog', {static: true}) wndAppNotepadFontDialog!: TemplateRef<unknown>;
+
 
   readonly demo_text = "!";
   count = 1;
@@ -65,6 +67,11 @@ export class AppLauncherComponent implements OnInit {
         data: this.count++,
         windowCloser: lwc
       });
+  }
+
+  launchNotepadFontDialog() {
+    const lwc = new LaunchedWindowCloser();
+    lwc.viewRef = this.viewContainerRef.createEmbeddedView(this.wndAppNotepadFontDialog, {windowCloser: lwc});
   }
 
   launchNotepad() {

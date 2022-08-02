@@ -90,12 +90,33 @@
 
 </ng-template>
 
+<!-- Notepad -->
+
+<ng-template #appNotepadFontDialog let-windowCloser="windowCloser">
+
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="200" [absHeight]="120"
+        >
+        <w98w-titlebar w98w-window-title-bar label="Font" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
+        </w98w-titlebar>
+        <menu w98w-window-menu-bar w98w-menu-bar>
+        </menu>
+        <p>Font size: </p>
+    </w98w-window>
+
+</ng-template>
+
 <ng-template #appNotepad let-windowCloser="windowCloser">
 
     <ng-template w98w-menu-template #menuNotepadFile="menuTemplate" let-context>
         <menu w98w-menu [menuContext]="context">
             <li w98w-menu-item="New" (activate)="appNotepadComponent.new_()"></li>
             <li w98w-menu-item="Exit" (activate)="windowCloser.destroy()"></li>
+        </menu>
+    </ng-template>
+
+    <ng-template w98w-menu-template #menuNotepadEdit="menuTemplate" let-context>
+        <menu w98w-menu [menuContext]="context">
+            <li w98w-menu-item="Set Font" (activate)="launchNotepadFontDialog()"></li>
         </menu>
     </ng-template>
 
@@ -106,6 +127,7 @@
         </w98w-titlebar>
         <menu w98w-window-menu-bar w98w-menu-bar>
             <li w98w-menu-bar-item [autoMenu]="menuNotepadFile">File</li>
+            <li w98w-menu-bar-item [autoMenu]="menuNotepadEdit">Edit</li>
         </menu>
 
         <app-notepad #appNotepadComponent></app-notepad>
