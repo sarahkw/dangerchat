@@ -21,4 +21,10 @@ export class NotepadComponent implements OnInit {
     this.childTextArea.nativeElement.value = '';
   }
 
+  setFont() {
+    if (this.windowCloser) {
+      this.windowCloser.launch(NotepadComponent);
+    }
+  }
+
 }

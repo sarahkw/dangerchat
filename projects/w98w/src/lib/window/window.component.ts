@@ -48,7 +48,7 @@ export const floatableToken = new InjectionToken<Floatable>("Floatable");
 // TODO Maybe move this somewhere else
 export interface WindowCloserContext {
   destroy(): void;
-  launch<T>(c: Type<T>): void;
+  launch<T extends WindowCloserRequestor>(c: Type<T>): void;
 }
 
 export interface WindowCloserRequestor {

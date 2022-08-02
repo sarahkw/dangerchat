@@ -7,7 +7,7 @@
 
 <ng-template w98w-menu-template #menuNotepadEdit="menuTemplate" let-context>
     <menu w98w-menu [menuContext]="context">
-        <li w98w-menu-item="Set Font"></li>
+        <li w98w-menu-item="Set Font" (activate)="setFont()"></li>
     </menu>
 </ng-template>
 
