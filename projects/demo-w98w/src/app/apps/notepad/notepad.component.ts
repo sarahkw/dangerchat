@@ -27,6 +27,7 @@ export class NotepadComponent implements OnInit, OnDestroy {
   private fontDialogSubscription?: Subscription;
 
   setFont() {
+    this.fontDialogSubscription?.unsubscribe();
     if (this.windowCloser) {
       this.fontDialogSubscription = this.windowCloser.launchGenericSubscription(NotepadSetFontComponent).subscribe();
     }
