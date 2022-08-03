@@ -22,6 +22,7 @@ import { InteractjsTestComponent } from './interactjs-test/interactjs-test.compo
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component';
 import { NotepadComponent } from './apps/notepad/notepad.component';
+import { NotepadSetFontComponent } from './apps/notepad/notepad-set-font/notepad-set-font.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NotepadComponent } from './apps/notepad/notepad.component';
     InteractjsTestComponent,
     DesktopTestComponent,
     AppLauncherComponent,
-    NotepadComponent
+    NotepadComponent,
+    NotepadSetFontComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
+import { NotepadSetFontComponent } from './notepad-set-font/notepad-set-font.component';
 
 @Component({
   selector: 'app-notepad',
@@ -23,7 +24,7 @@ export class NotepadComponent implements OnInit {
 
   setFont() {
     if (this.windowCloser) {
-      this.windowCloser.launch(NotepadComponent);
+      this.windowCloser.launch(NotepadSetFontComponent);
     }
   }
 
