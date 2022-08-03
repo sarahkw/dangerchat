@@ -1,7 +1,7 @@
 import { AfterContentChecked, ApplicationRef, Component, ContentChild, Directive, ElementRef, forwardRef, HostBinding, HostListener, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Type, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { MenuTemplateDirective } from '../menu/menu-template.directive';
-import { asyncScheduler, Subscription, take } from 'rxjs';
+import { asyncScheduler, Observable, Subscription, take } from 'rxjs';
 import { rxInteract } from '../rx/rx-interact';
 import { elementRefIsSame } from '../util/element-ref-is-same';
 import { DesktopComponent } from '../desktop/desktop.component';
@@ -49,6 +49,9 @@ export const floatableToken = new InjectionToken<Floatable>("Floatable");
 export interface WindowCloserContext {
   destroy(): void;
   launch<T extends WindowCloserRequestor>(c: Type<T>): void;
+  launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null>;
+
+  _destroy(): void;  // tell the source that we're being destroyed
 }
 
 export interface WindowCloserRequestor {

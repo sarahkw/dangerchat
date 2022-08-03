@@ -2,9 +2,13 @@ import { Component, ComponentRef, EmbeddedViewRef, NgModuleRef, OnInit, Template
 import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext, WindowCloserRequestor } from 'projects/w98w/src/lib/window/window.component';
+import { Observable, Unsubscribable } from 'rxjs';
 import { NotepadComponent } from '../notepad/notepad.component';
 
 class LaunchedWindowCloser<T> implements WindowCloserContext {
+  launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
+    throw new Error('Method not implemented.');
+  }
   launch<T>(): void {
     throw new Error('Method not implemented.');
   }
@@ -14,6 +18,10 @@ class LaunchedWindowCloser<T> implements WindowCloserContext {
   destroy(): void {
     this.viewRef?.destroy();
     this.componentRef?.destroy();
+  }
+
+  _destroy(): void {
+    // no-op: this is deprecated
   }
 }
 
@@ -85,7 +93,41 @@ export class AppLauncherComponent implements OnInit {
       launch<T>(c: Type<T>): void {
         thiz.launchGeneric(c);
       }
+      launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
+        return thiz.launchGenericSubscription(c);
+      }
+      _destroy() {
+        // no-op: source isn't listening
+      }
     };
   }
 
+  launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
+    const thiz = this;
+
+    return new Observable(subscriber => {
+      const cref = thiz.viewContainerRef.createComponent<T>(c, {ngModuleRef: thiz.ngModuleRef});
+
+      cref.instance.windowCloser = new class implements WindowCloserContext {
+        destroy(): void {
+          cref.destroy();
+        }
+        launch<T>(c: Type<T>): void {
+          thiz.launchGeneric(c);
+        }
+        launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
+          return thiz.launchGenericSubscription(c);
+        }
+        _destroy() {
+          subscriber.complete();
+        }
+      };
+
+      return new class implements Unsubscribable {
+        unsubscribe(): void {
+          cref.destroy();
+        }
+      };
+    });
+  }
 }

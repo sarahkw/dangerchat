@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
 
 @Component({
@@ -6,7 +6,7 @@ import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.compone
   templateUrl: './notepad-set-font.component.html',
   styleUrls: ['./notepad-set-font.component.scss']
 })
-export class NotepadSetFontComponent implements OnInit {
+export class NotepadSetFontComponent implements OnInit, OnDestroy {
 
   @Input() windowCloser?: WindowCloserContext;
 
@@ -15,4 +15,7 @@ export class NotepadSetFontComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {  // boilerplate
+    this.windowCloser?._destroy();
+  }
 }
