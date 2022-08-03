@@ -1,14 +1,12 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
-import { Subscription } from 'rxjs';
-import { NotepadSetFontComponent } from './notepad-set-font/notepad-set-font.component';
 
 @Component({
   selector: 'app-notepad',
   templateUrl: './notepad.component.html',
   styleUrls: ['./notepad.component.scss']
 })
-export class NotepadComponent implements OnInit, OnDestroy {
+export class NotepadComponent implements OnInit {
 
   @ViewChild('textArea', { static: true }) childTextArea!: ElementRef<HTMLTextAreaElement>;
 
@@ -22,18 +20,5 @@ export class NotepadComponent implements OnInit, OnDestroy {
 
   new_() {
     this.childTextArea.nativeElement.value = '';
-  }
-
-  private fontDialogSubscription?: Subscription;
-
-  setFont() {
-    this.fontDialogSubscription?.unsubscribe();
-    if (this.windowCloser) {
-      this.fontDialogSubscription = this.windowCloser.launchGenericSubscription(NotepadSetFontComponent).subscribe();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.fontDialogSubscription?.unsubscribe();
   }
 }

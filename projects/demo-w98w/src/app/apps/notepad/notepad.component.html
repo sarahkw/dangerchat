@@ -5,12 +5,6 @@
     </menu>
 </ng-template>
 
-<ng-template w98w-menu-template #menuNotepadEdit="menuTemplate" let-context>
-    <menu w98w-menu [menuContext]="context">
-        <li w98w-menu-item="Set Font" (activate)="setFont()"></li>
-    </menu>
-</ng-template>
-
 <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="400" [absHeight]="400"
     [mainBodyOverflowHidden]="true"
     >
@@ -18,7 +12,6 @@
     </w98w-titlebar>
     <menu w98w-window-menu-bar w98w-menu-bar>
         <li w98w-menu-bar-item [autoMenu]="menuNotepadFile">File</li>
-        <li w98w-menu-bar-item [autoMenu]="menuNotepadEdit">Edit</li>
     </menu>
 
     <textarea #textArea></textarea>
