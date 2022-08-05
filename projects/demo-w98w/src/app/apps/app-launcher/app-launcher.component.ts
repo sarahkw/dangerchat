@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext, WindowCloserRequestor } from 'projects/w98w/src/lib/window/window.component';
 import { Observable, Unsubscribable } from 'rxjs';
-import { NotepadComponent } from '../notepad/notepad.component';
+import { NotepadComponent } from '../notepad/main/notepad.component';
 
 class LaunchedWindowCloser<T> implements WindowCloserContext {
   launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
