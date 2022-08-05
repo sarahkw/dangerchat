@@ -21,7 +21,7 @@ import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component';
-import { NotepadComponent } from './apps/notepad/main/notepad.component';
+import { NotepadMainComponent } from './apps/notepad/notepad-main/notepad-main.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { NotepadComponent } from './apps/notepad/main/notepad.component';
     InteractjsTestComponent,
     DesktopTestComponent,
     AppLauncherComponent,
-    NotepadComponent
+    NotepadMainComponent
   ],
   imports: [
     BrowserModule,
