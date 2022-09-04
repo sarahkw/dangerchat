@@ -125,6 +125,7 @@ export abstract class Bevels {
     static readonly FRAME = new SlantRectBevel([Colors.BEV_DARKGRAY, Colors.BEV_WHITE], [Colors.BEV_WHITE, Colors.BEV_DARKGRAY], true /*antiSlant*/);
 
     // taskbar
+    // TODO: this is more like WINDOW, but without the slant.
     static readonly DOCKED_PANEL = new OutToInLineBevel([Colors.BEV_BLACK, Colors.BEV_DARKGRAY]);
 
     // taskbar, menu
