@@ -23,6 +23,7 @@ import { WindowComponent, WindowMenuBarDirective, WindowTitleBarDirective } from
 import { CementClientRectDirective } from './util/cement-client-rect.directive';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TaskbarComponent } from './taskbar/taskbar.component';
+import { TextareaComponent } from './textarea/textarea.component';
 
 
 
@@ -54,7 +55,8 @@ import { TaskbarComponent } from './taskbar/taskbar.component';
     Bevel8SplitSimpleHostDirective,
     CementClientRectDirective,
     DesktopComponent,
-    TaskbarComponent
+    TaskbarComponent,
+    TextareaComponent
   ],
   imports: [
     CommonModule
@@ -85,7 +87,8 @@ import { TaskbarComponent } from './taskbar/taskbar.component';
     Bevel8SplitComponent,
     CementClientRectDirective,
     DesktopComponent,
-    TaskbarComponent
+    TaskbarComponent,
+    TextareaComponent
   ]
 })
 export class W98wModule { }
