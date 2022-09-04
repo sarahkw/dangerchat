@@ -22,6 +22,7 @@ import { InteractjsTestComponent } from './interactjs-test/interactjs-test.compo
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { ProgramLauncherComponent } from './program/launcher.component';
 import { ProgramNotepadMainComponent } from './program/notepad/notepad-main/notepad-main.component';
+import { TextinputTestComponent } from './textinput-test/textinput-test.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ProgramNotepadMainComponent } from './program/notepad/notepad-main/note
     InteractjsTestComponent,
     DesktopTestComponent,
     ProgramLauncherComponent,
-    ProgramNotepadMainComponent
+    ProgramNotepadMainComponent,
+    TextinputTestComponent
   ],
   imports: [
     BrowserModule,

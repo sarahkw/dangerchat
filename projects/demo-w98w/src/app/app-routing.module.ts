@@ -13,6 +13,7 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { TitlebarTestComponent } from './titlebar-test/titlebar-test.component';
 import { WButtonTestComponent } from './wbutton-test/wbutton-test.component';
 import { WindowTestComponent } from './window-test/window-test.component';
+import { TextinputTestComponent } from './textinput-test/textinput-test.component';
 
 const routes: Routes = [
   { path: '', component: DesktopTestComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
       { path: 'popup-test', component: PopupTestComponent },
       { path: 'window-test', component: WindowTestComponent },
       { path: 'interactjs-test', component: InteractjsTestComponent },
-      { path: 'desktop-test', component: DesktopTestComponent }
+      { path: 'desktop-test', component: DesktopTestComponent },
+      { path: 'textinput-test', component: TextinputTestComponent}
     ]
   },
 ];
