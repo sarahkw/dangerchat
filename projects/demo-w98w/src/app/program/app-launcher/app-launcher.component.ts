@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext, WindowCloserRequestor } from 'projects/w98w/src/lib/window/window.component';
 import { Observable, Unsubscribable } from 'rxjs';
-import { NotepadMainComponent } from '../notepad/notepad-main/notepad-main.component';
+import { ProgramNotepadMainComponent } from '../notepad/notepad-main/notepad-main.component';
 
 class LaunchedWindowCloser<T> implements WindowCloserContext {
   launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
@@ -80,7 +80,7 @@ export class AppLauncherComponent implements OnInit {
   }
 
   launchNotepad() {
-    this.launchGeneric(NotepadMainComponent);
+    this.launchGeneric(ProgramNotepadMainComponent);
   }
 
   launchGeneric<T extends WindowCloserRequestor>(c: Type<T>) {
