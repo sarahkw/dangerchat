@@ -20,8 +20,8 @@ import { TestSharedLibComponent } from './test-shared-lib/test-shared-lib.compon
 import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
-import { AppLauncherComponent } from './apps/app-launcher/app-launcher.component';
-import { NotepadMainComponent } from './apps/notepad/notepad-main/notepad-main.component';
+import { AppLauncherComponent } from './programs/app-launcher/app-launcher.component';
+import { NotepadMainComponent } from './programs/notepad/notepad-main/notepad-main.component';
 
 @NgModule({
   declarations: [
