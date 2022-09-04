@@ -20,7 +20,7 @@ import { TestSharedLibComponent } from './test-shared-lib/test-shared-lib.compon
 import { WindowTestComponent } from './window-test/window-test.component';
 import { InteractjsTestComponent } from './interactjs-test/interactjs-test.component';
 import { DesktopTestComponent } from './desktop-test/desktop-test.component';
-import { AppLauncherComponent } from './program/app-launcher/app-launcher.component';
+import { ProgramLauncherComponent } from './program/launcher.component';
 import { ProgramNotepadMainComponent } from './program/notepad/notepad-main/notepad-main.component';
 
 @NgModule({
@@ -40,7 +40,7 @@ import { ProgramNotepadMainComponent } from './program/notepad/notepad-main/note
     WindowTestComponent,
     InteractjsTestComponent,
     DesktopTestComponent,
-    AppLauncherComponent,
+    ProgramLauncherComponent,
     ProgramNotepadMainComponent
   ],
   imports: [

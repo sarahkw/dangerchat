@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuTemplateDirective } from 'projects/w98w/src/lib/menu/menu-template.directive';
 import { WindowCloserContext, WindowCloserRequestor } from 'projects/w98w/src/lib/window/window.component';
 import { Observable, Unsubscribable } from 'rxjs';
-import { ProgramNotepadMainComponent } from '../notepad/notepad-main/notepad-main.component';
+import { ProgramNotepadMainComponent } from './notepad/notepad-main/notepad-main.component';
 
 class LaunchedWindowCloser<T> implements WindowCloserContext {
   launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
@@ -26,11 +26,11 @@ class LaunchedWindowCloser<T> implements WindowCloserContext {
 }
 
 @Component({
-  selector: 'app-app-launcher',
-  templateUrl: './app-launcher.component.html',
-  styleUrls: ['./app-launcher.component.scss']
+  selector: 'app-program-launcher',
+  templateUrl: './launcher.component.html',
+  styleUrls: ['./launcher.component.scss']
 })
-export class AppLauncherComponent implements OnInit {
+export class ProgramLauncherComponent implements OnInit {
 
   @ViewChild('menuStart', {static: true}) menuStart!: MenuTemplateDirective;
 
