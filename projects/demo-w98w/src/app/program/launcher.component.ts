@@ -13,11 +13,9 @@ class LaunchedWindowCloser<T> implements WindowCloserContext {
     throw new Error('Method not implemented.');
   }
   viewRef?: EmbeddedViewRef<unknown>;
-  componentRef?: ComponentRef<T>;
 
   destroy(): void {
     this.viewRef?.destroy();
-    this.componentRef?.destroy();
   }
 
   _destroy(): void {
