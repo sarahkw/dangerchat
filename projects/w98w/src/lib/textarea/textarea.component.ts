@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
@@ -16,6 +16,8 @@ export class TextareaComponent implements OnInit, OnDestroy {
   @HostBinding('style.--w98w-padding') get hbsp() {
     return `${Bevels.INPUTBOX.getPadding()}px`;
   }
+
+  @Input() textareaStyle?: string;
 
   constructor(private imgService: PixelImageService) {}
 
