@@ -5,6 +5,12 @@
     </menu>
 </ng-template>
 
+<ng-template w98w-menu-template #menuNotepadPublish="menuTemplate" let-context>
+    <menu w98w-menu [menuContext]="context">
+        <li w98w-menu-item="To web" (activate)="publish()"></li>
+    </menu>
+</ng-template>
+
 <w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="400"
     [mainBodyOverflowHidden]="true"
     >
@@ -12,6 +18,7 @@
     </w98w-titlebar>
     <menu w98w-window-menu-bar w98w-menu-bar>
         <li w98w-menu-bar-item [autoMenu]="menuNotepadFile">File</li>
+        <li w98w-menu-bar-item [autoMenu]="menuNotepadPublish">Publish</li>
     </menu>
 
     <w98w-textarea style="width: 100%; height: 100%; box-sizing: border-box;"

@@ -1,1 +1,11 @@
-<p>program-notepad-publish works!</p>
+<w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="400"
+    [mainBodyOverflowHidden]="true"
+    >
+    <w98w-titlebar w98w-window-title-bar label="Publish" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser?.destroy()">
+    </w98w-titlebar>
+    <menu w98w-window-menu-bar w98w-menu-bar>
+    </menu>
+
+    <p>TODO: Publish</p>
+
+</w98w-window>
