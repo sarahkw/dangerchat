@@ -88,6 +88,7 @@ export class DesktopComponent {
     private styleInjector = new StyleInjector();
 
     pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
+      // TODO: Calculating all of 8-split while we only need one
       return genGenCssInput(ri => Bevels.WINDOW.genImage(ri, pibf));
     }
 
