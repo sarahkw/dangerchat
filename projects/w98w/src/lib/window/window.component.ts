@@ -69,8 +69,8 @@ export class WindowComponent implements OnInit, AfterContentChecked, OnDestroy, 
   @Input() drawFrame = true;  // if maximized this will be false
 
   // left and top need to go through us because moving/resizing is delta those
-  @Input('absLeft') @HostBinding('style.left.px') left: number | undefined;
-  @Input('absTop') @HostBinding('style.top.px') top: number | undefined;
+  @Input('absLeft') @HostBinding('style.left.px') left: number | undefined = 5;
+  @Input('absTop') @HostBinding('style.top.px') top: number | undefined = 5;
   @Input('absWidth') @HostBinding('style.width.px') width: number | undefined;
   @Input('absHeight') @HostBinding('style.height.px') height: number | undefined;
 

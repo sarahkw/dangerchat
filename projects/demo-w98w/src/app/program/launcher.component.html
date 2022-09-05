@@ -17,7 +17,7 @@
 
 <ng-template #appLauncherMain let-windowCloser="windowCloser">
 
-    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="220" [absHeight]="100"
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="220" [absHeight]="100"
         >
         <w98w-titlebar w98w-window-title-bar label="Window Launcher Test" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
@@ -31,7 +31,7 @@
 
 <ng-template #appHelloMain let-count="data" let-windowCloser="windowCloser">
 
-    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="200" [absHeight]="120"
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="200" [absHeight]="120"
         >
         <w98w-titlebar w98w-window-title-bar label="Hello {{ count }}" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
@@ -44,7 +44,7 @@
 
 <ng-template #appWhatIsThis let-windowCloser="windowCloser">
 
-    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="320" [absHeight]="440"
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="320" [absHeight]="440"
         >
         <w98w-titlebar w98w-window-title-bar label="What is this?" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
@@ -70,7 +70,7 @@
 
 <ng-template #appMoveResize let-windowCloser="windowCloser">
 
-    <w98w-window [drawFrame]="true" style="position: absolute;" [absLeft]="5" [absTop]="5" [absWidth]="350" [absHeight]="300"
+    <w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="350" [absHeight]="300"
         >
         <w98w-titlebar w98w-window-title-bar label="Moving and Resizing" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser.destroy()">
         </w98w-titlebar>
