@@ -1,0 +1,15 @@
+<w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="200"
+    [mainBodyOverflowHidden]="true"
+    >
+    <w98w-titlebar w98w-window-title-bar label="Notepad" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser?.destroy()">
+    </w98w-titlebar>
+    <menu w98w-window-menu-bar w98w-menu-bar>
+    </menu>
+
+    <p>The text in the Untitled file has changed.</p>
+
+    <p>Do you wish to save the changes?</p>
+
+    <p>[Yes] [No] [Cancel]</p>
+
+</w98w-window>

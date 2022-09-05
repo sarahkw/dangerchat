@@ -23,6 +23,7 @@ import { DesktopTestComponent } from './desktop-test/desktop-test.component';
 import { ProgramLauncherComponent } from './program/launcher.component';
 import { ProgramNotepadMainComponent } from './program/notepad/notepad-main/notepad-main.component';
 import { TextinputTestComponent } from './textinput-test/textinput-test.component';
+import { ProgramNotepadConfirmLossComponent } from './program/notepad/notepad-confirm-loss/notepad-confirm-loss.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { TextinputTestComponent } from './textinput-test/textinput-test.componen
     DesktopTestComponent,
     ProgramLauncherComponent,
     ProgramNotepadMainComponent,
-    TextinputTestComponent
+    TextinputTestComponent,
+    ProgramNotepadConfirmLossComponent
   ],
   imports: [
     BrowserModule,
