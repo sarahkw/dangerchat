@@ -149,6 +149,10 @@ export class Bevel8SplitSimpleHostDirective implements OnInit, OnDestroy, OnChan
 })
 export class Bevel8SplitComponent {
 
+  readonly RECTIMAGE = RectImage;
+
+  @Input() only: RectImage | null = null;
+
   static genCss(prefix: string, input: GenCssInput) {
     return SELECTORS.map((s, i) => {
       const w = PROVIDE_CONTAINER_W[i] ? `width: ${input[s].cssRequestedWidthCautious}px; ` : '';

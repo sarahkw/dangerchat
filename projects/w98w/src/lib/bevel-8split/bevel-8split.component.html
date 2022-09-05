@@ -1,10 +1,10 @@
-<div class="w98w-bevel-8split-left"></div>
-<div class="w98w-bevel-8split-right"></div>
+<div *ngIf="only === null || only === RECTIMAGE.Left" class="w98w-bevel-8split-left"></div>
+<div *ngIf="only === null || only === RECTIMAGE.Right" class="w98w-bevel-8split-right"></div>
 
-<div class="w98w-bevel-8split-top"></div>
-<div class="w98w-bevel-8split-bottom"></div>
+<div *ngIf="only === null || only === RECTIMAGE.Top" class="w98w-bevel-8split-top"></div>
+<div *ngIf="only === null || only === RECTIMAGE.Bottom" class="w98w-bevel-8split-bottom"></div>
 
-<div class="w98w-bevel-8split-tl"></div>
-<div class="w98w-bevel-8split-tr"></div>
-<div class="w98w-bevel-8split-bl"></div>
-<div class="w98w-bevel-8split-br"></div>
+<div *ngIf="only === null || only === RECTIMAGE.TL" class="w98w-bevel-8split-tl"></div>
+<div *ngIf="only === null || only === RECTIMAGE.TR" class="w98w-bevel-8split-tr"></div>
+<div *ngIf="only === null || only === RECTIMAGE.BL" class="w98w-bevel-8split-bl"></div>
+<div *ngIf="only === null || only === RECTIMAGE.BR" class="w98w-bevel-8split-br"></div>

@@ -1,5 +1,11 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, Unsubscribable } from 'rxjs';
+import { Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
+import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
+import { Bevels, RectImage } from '../bevel';
+import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
+import { PixelImageBuilderFactory } from '../pixel-image-builder';
+import { PixelImageDrawer } from '../pixel-image-drawer';
+import { PixelImageService } from '../pixel-image.service';
+import { StyleInjector } from '../style-injector';
 import { WindowComponent } from '../window/window.component';
 
 type Style = {[key: string]: string} | string | null;
@@ -36,6 +42,8 @@ export class DesktopComponent {
   @Input() slidingScreenStyle: Style = null;
   @Input() slidingScreenMainContentStyle: Style = null;
 
+  readonly RECTIMAGE = RectImage;
+
   @ViewChild('desktopArea', {static: true}) desktopArea!: ElementRef<HTMLDivElement>;
 
   windowManager = new WindowManager();
@@ -61,4 +69,36 @@ export class DesktopComponent {
   windowIsBottom(currentZIndex: number) {
     return currentZIndex !== 0 && this.currentTopZ !== currentZIndex;
   }
+
+  @HostBinding('style.--w98w-dock-padding') get hbsp() {
+    return `${Bevels.WINDOW.getPadding()}px`;
+  }
+
+  constructor(private imgService: PixelImageService) { }
+
+  ngOnInit(): void {
+    this.imgService.pidRegister(DesktopComponent.PID_NORMAL);
+  }
+
+  ngOnDestroy(): void {
+    this.imgService.pidUnregister(DesktopComponent.PID_NORMAL);
+  }
+
+  static readonly PID_NORMAL = new class implements PixelImageDrawer<GenCssInput> {
+    private styleInjector = new StyleInjector();
+
+    pidGenerateImages(pibf: PixelImageBuilderFactory): GenCssInput {
+      return genGenCssInput(ri => Bevels.WINDOW.genImage(ri, pibf));
+    }
+
+    pidApplyImages(imgs: GenCssInput): void {
+      this.styleInjector.replaceStyle(Bevel8SplitComponent.genCss(".w98w-desktop-dock", imgs));
+    }
+
+    pidDestroy(): void {
+      this.styleInjector.destroy();
+    }
+  };  // PID_NORMAL
+
+
 }

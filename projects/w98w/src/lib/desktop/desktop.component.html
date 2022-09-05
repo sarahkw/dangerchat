@@ -4,7 +4,8 @@
     >
 
     <div class="docked-host">
-        <div class="dock">
+        <div class="dock w98w-desktop-dock">
+            <w98w-bevel-8split [only]="RECTIMAGE.Right"></w98w-bevel-8split>
             <ng-content select="w98w-taskbar"></ng-content>
         </div>
         <div class="desktop" #desktopArea>
