@@ -1,4 +1,5 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { TextareaComponent } from 'projects/w98w/src/lib/textarea/textarea.component';
 import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.component';
 
 @Component({
@@ -8,7 +9,7 @@ import { WindowCloserContext } from 'projects/w98w/src/lib/window/window.compone
 })
 export class ProgramNotepadMainComponent implements OnInit {
 
-  @ViewChild('textArea', { static: true }) childTextArea!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild(TextareaComponent, { static: true }) textareaComponent!: TextareaComponent;
 
   @Input() windowCloser?: WindowCloserContext;
 
@@ -19,6 +20,6 @@ export class ProgramNotepadMainComponent implements OnInit {
   }
 
   new_() {
-    this.childTextArea.nativeElement.value = '';
+    this.textareaComponent.childTextArea.nativeElement.value = '';
   }
 }

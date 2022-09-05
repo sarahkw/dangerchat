@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Bevels } from '../bevel';
 import { GenCssInput, genGenCssInput, Bevel8SplitComponent } from '../bevel-8split/bevel-8split.component';
 import { PixelImageBuilderFactory } from '../pixel-image-builder';
@@ -12,6 +12,8 @@ import { StyleInjector } from '../style-injector';
   styleUrls: ['./textarea.component.scss']
 })
 export class TextareaComponent implements OnInit, OnDestroy {
+
+  @ViewChild('textArea', { static: true }) childTextArea!: ElementRef<HTMLTextAreaElement>;
 
   @HostBinding('style.--w98w-padding') get hbsp() {
     return `${Bevels.INPUTBOX.getPadding()}px`;
