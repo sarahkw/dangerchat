@@ -13,7 +13,9 @@ import { StyleInjector } from '../style-injector';
 })
 export class TextareaComponent implements OnInit, OnDestroy {
 
-  @ViewChild('textArea', { static: true }) childTextArea!: ElementRef<HTMLTextAreaElement>;
+  @Input() multiLine: boolean = false;
+
+  @ViewChild('textArea') childTextArea!: ElementRef<HTMLTextAreaElement>;
 
   @HostBinding('style.--w98w-padding') get hbsp() {
     return `${Bevels.INPUTBOX.getPadding()}px`;

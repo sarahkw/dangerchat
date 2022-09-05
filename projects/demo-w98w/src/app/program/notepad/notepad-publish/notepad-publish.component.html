@@ -1,4 +1,4 @@
-<w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="400"
+<w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="200"
     [mainBodyOverflowHidden]="true"
     >
     <w98w-titlebar w98w-window-title-bar label="Publish" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser?.destroy()">
@@ -6,6 +6,19 @@
     <menu w98w-window-menu-bar w98w-menu-bar>
     </menu>
 
-    <p>TODO: Publish</p>
+    <div class="container">
+        <div>
+            URL: <w98w-textarea></w98w-textarea>
+            <button w98w-wbutton>Copy</button>
+        </div>
+        <div>
+            Raw URL: <w98w-textarea></w98w-textarea>
+            <button w98w-wbutton>Copy</button>
+        </div>
+        <div>
+            <button w98w-wbutton>Cancel</button>
+            <button w98w-wbutton>Publish</button>
+        </div>
+    </div>
 
 </w98w-window>
