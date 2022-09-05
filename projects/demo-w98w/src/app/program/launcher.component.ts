@@ -17,10 +17,6 @@ class LaunchedWindowCloser<T> implements WindowCloserContext {
   destroy(): void {
     this.viewRef?.destroy();
   }
-
-  _destroy(): void {
-    // no-op: this is deprecated
-  }
 }
 
 @Component({
@@ -94,9 +90,6 @@ export class ProgramLauncherComponent implements OnInit {
       launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
         return thiz.launchGenericSubscription(c);
       }
-      _destroy() {
-        // no-op: source isn't listening
-      }
     };
   }
 
@@ -109,15 +102,13 @@ export class ProgramLauncherComponent implements OnInit {
       cref.instance.windowCloser = new class implements WindowCloserContext {
         destroy(): void {
           cref.destroy();
+          subscriber.complete();
         }
         launch<T>(c: Type<T>): void {
           thiz.launchGeneric(c);
         }
         launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null> {
           return thiz.launchGenericSubscription(c);
-        }
-        _destroy() {
-          subscriber.complete();
         }
       };
 

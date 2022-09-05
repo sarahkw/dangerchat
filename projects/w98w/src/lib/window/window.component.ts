@@ -50,8 +50,6 @@ export interface WindowCloserContext {
   destroy(): void;
   launch<T extends WindowCloserRequestor>(c: Type<T>): void;
   launchGenericSubscription<T extends WindowCloserRequestor>(c: Type<T>): Observable<null>;
-
-  _destroy(): void;  // tell the source that we're being destroyed
 }
 
 export interface WindowCloserRequestor {
