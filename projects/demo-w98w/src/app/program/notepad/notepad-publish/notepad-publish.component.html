@@ -1,4 +1,4 @@
-<w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="200"
+<w98w-window [drawFrame]="true" style="position: absolute;" [absWidth]="400" [absHeight]="300"
     [mainBodyOverflowHidden]="true"
     >
     <w98w-titlebar w98w-window-title-bar label="Publish" iconSrc="/assets/w98w/vbicon.png" (wm_close)="windowCloser?.destroy()">
@@ -6,19 +6,25 @@
     <menu w98w-window-menu-bar w98w-menu-bar>
     </menu>
 
-    <div class="container">
-        <div>
-            URL: <w98w-textarea></w98w-textarea>
-            <button w98w-wbutton>Copy</button>
+    <div class="container" style="display: flex; flex-direction: column; height: 100%;">
+        <div>URL:</div>
+        <div class="copyrow">
+            <w98w-textarea></w98w-textarea><button w98w-wbutton>Copy</button>
         </div>
-        <div>
-            Raw URL: <w98w-textarea></w98w-textarea>
-            <button w98w-wbutton>Copy</button>
+        <div>Raw URL:</div>
+        <div class="copyrow">
+            <w98w-textarea></w98w-textarea><button w98w-wbutton>Copy</button>
         </div>
-        <div>
+        <div>Status:</div>
+        <p>
+            Press Publish to upload. (not implemented yet)
+        </p>
+        <div style="flex: 1 0 auto;"></div>
+        <div style="text-align: right;">
             <button w98w-wbutton>Cancel</button>
             <button w98w-wbutton>Publish</button>
         </div>
+        <p></p>
     </div>
 
 </w98w-window>

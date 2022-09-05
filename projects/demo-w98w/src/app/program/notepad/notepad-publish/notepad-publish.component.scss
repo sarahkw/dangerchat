@@ -1,0 +1,8 @@
+div.copyrow {
+    width: 100%;
+    display: flex;
+}
+
+div.copyrow > *:first-child {
+    flex: 1 0 auto;
+}
