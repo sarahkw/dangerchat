@@ -1,13 +1,6 @@
 <ng-template w98w-menu-template #menuNotepadFile="menuTemplate" let-context>
     <menu w98w-menu [menuContext]="context">
-        <li w98w-menu-item="New" (activate)="new_()"></li>
-        <li w98w-menu-item="Exit" (activate)="windowCloser?.destroy()"></li>
-    </menu>
-</ng-template>
-
-<ng-template w98w-menu-template #menuNotepadPublish="menuTemplate" let-context>
-    <menu w98w-menu [menuContext]="context">
-        <li w98w-menu-item="To web" (activate)="publish()"></li>
+        <li w98w-menu-item="Publish to web..." (activate)="publish()"></li>
     </menu>
 </ng-template>
 
@@ -18,7 +11,6 @@
     </w98w-titlebar>
     <menu w98w-window-menu-bar w98w-menu-bar>
         <li w98w-menu-bar-item [autoMenu]="menuNotepadFile">File</li>
-        <li w98w-menu-bar-item [autoMenu]="menuNotepadPublish">Publish</li>
     </menu>
 
     <w98w-textarea [multiLine]="true"

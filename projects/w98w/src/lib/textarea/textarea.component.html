@@ -1,3 +1,3 @@
 <w98w-bevel-8split></w98w-bevel-8split>
-<textarea *ngIf="multiLine; else notMultiLine" #textArea [style]="textareaStyle"></textarea>
+<textarea *ngIf="multiLine; else notMultiLine" [style]="textareaStyle"></textarea>
 <ng-template #notMultiLine><input type="text" [style]="textareaStyle" /></ng-template>

@@ -15,8 +15,6 @@ export class TextareaComponent implements OnInit, OnDestroy {
 
   @Input() multiLine: boolean = false;
 
-  @ViewChild('textArea') childTextArea!: ElementRef<HTMLTextAreaElement>;
-
   @HostBinding('style.--w98w-padding') get hbsp() {
     return `${Bevels.INPUTBOX.getPadding()}px`;
   }
